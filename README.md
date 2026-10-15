@@ -1,11 +1,11 @@
 # Simulación de bigbags · SESUVECA
 
-Explorador interactivo del funcionamiento de la estación de izaje y descarga de bigbags, revisión P05. Incluye recepción, elevación, traslado, dos modos de descarga y ensacado de 25 o 50 kg, con vistas del conjunto y datos del proyecto.
+Explorador interactivo de la revisión técnica integral P05 del 15/10/2026. Cruceta nominal de 2 t y proceso de bolsas de hasta 1 t, con tolva de 2,30 m³ / 1,84 m³ útiles, pared a 60° y revestimiento disipativo de 10 mm. Incluye corte piramidal fijo, compuerta manual y ensacado de 25 o 50 kg.
 
-Sitio estático para GitHub Pages. La publicación usa los archivos de esta carpeta como raíz del sitio; no requiere servicios de servidor. Para revisarlo en un equipo, servir la carpeta mediante un servidor HTTP local y abrir su dirección en el navegador.
+Sitio estático publicado en GitHub Pages. Servir mediante HTTP para revisión local. Conserva la identidad SESUVECA y la autoría de Javier Acevedo.
 
-Los datos públicos de `data/project.json` proceden de las comprobaciones y del ensamblaje CAD P05. Las cantidades de los grupos cuentan elementos de CAD; las masas identifican su alcance y excluyen los volúmenes de referencia de bolsas y equipos comerciales.
+Los datos y las mallas se sincronizan desde revision_P05 mediante support/sync_engineering.py. Las dimensiones, masas y verificaciones identifican su alcance. Los nativos CAD de referencia contienen 153 piezas y 537 componentes; no se atribuye reapertura de SolidWorks del rediseño.
 
-La animación es ilustrativa. No sustituye los planos ni acredita análisis por elementos finitos, caudal, hermeticidad o seguridad frente a explosiones. La aprobación de fabricación del proyecto se limita al acero de los accesos según IZA-14.
+Estado único: revisión técnica integral. Los cuatro grupos de anclajes M16 con empotramiento de 125 mm no verifican la envolvente calculada. La alternativa de 275 mm verifica el modelo y requiere aceptación documentada del responsable. No se atribuye aprobación para fabricación completa, ensayos físicos ni certificación integral.
 
-Identidad visual: SESUVECA. Proyecto: Javier Acevedo.
+La animación es ilustrativa y conserva la masa transferida. No acredita caudal, seguridad funcional instalada, hermeticidad o protección frente a explosiones. La memoria y los planos actualizados se encuentran en assets/docs.

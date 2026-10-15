@@ -9,14 +9,14 @@ const groupNames = {
   Porticos: 'Pórticos y arriostres', Monorriel: 'Monorriel y carro', Tolva: 'Tolva de 2,30 m³',
   'Soporte bolsa': 'Apoyo del bigbag', Cruceta: 'Cruceta de cuatro puntos', Plataforma: 'Plataforma lateral',
   Escalera: 'Escalera de acceso', Barandas: 'Barandas y guardas', Compuerta: 'Compuerta y ensacado',
-  Complementos: 'Uniones y complementos', Accesorios: 'Accesorios', Bigbag: 'Bigbag de 1 m³',
+  Complementos: 'Uniones y complementos', Accesorios: 'Accesorios', Bigbag: 'Bigbag de proceso · 1 t',
   Montacargas: 'Montacargas de abastecimiento', Operarios: 'Operación y amarre', Rodillos: 'Mesa elevadora y rodillos'
 };
 const groupIds = {Porticos:'porticos',Monorriel:'monorriel',Tolva:'tolva','Soporte bolsa':'soporte-bolsa',Cruceta:'cruceta',Plataforma:'plataforma',Escalera:'escalera',Barandas:'barandas',Complementos:'complementos',Accesorios:'complementos',Compuerta:'complementos',Rodillos:'complementos',Bigbag:'soporte-bolsa',Montacargas:'porticos',Operarios:'complementos'};
 const canonicalGroup = id => Object.keys(groupIds).find(k => groupIds[k] === id) || id;
 
 // The progress bar is a process diagram. Mass transfer is conservative; it is not a flow solver.
-export function processState(progress, payload = 1000, bagSize = 50, mode = 'spout', data) {
+export function processState(progress, payload = 1000, bagSize = 50, mode = 'closed', data) {
   const p = clamp(Number(progress) || 0), C = data.config, stages = data.stages;
   const index = Math.min(stages.findIndex(s => p < s.b) < 0 ? stages.length - 1 : stages.findIndex(s => p < s.b), stages.length - 1);
   const stage = stages[index], q = clamp((p - stage.a) / (stage.b - stage.a));
@@ -28,7 +28,7 @@ export function processState(progress, payload = 1000, bagSize = 50, mode = 'spo
   if (index === 2) z = lerp(C.pickup_bottom, C.travel_bottom, smooth(q));
   if (index === 3) { z = C.travel_bottom; x = lerp(C.pickup_x, C.discharge_x, smooth(q)); }
   if (index >= 4) { x = C.discharge_x; z = C.support_z; }
-  if (index === 4) z = lerp(C.travel_bottom, C.support_z, smooth(q));
+  if (index === 4) z = q < .08 ? C.travel_bottom : lerp(C.travel_bottom, C.support_z, smooth((q-.08)/.92));
   if (index === 5) { bigbagKg = payload * (1 - q); hopperKg = payload * q; }
   if (index >= 6) { bigbagKg = 0; hopperKg = payload; }
   const first = Math.min(payload, bagSize);
@@ -57,13 +57,22 @@ export function processState(progress, payload = 1000, bagSize = 50, mode = 'spo
       q > .82 ? lerp(C.travel_bottom, C.pickup_bottom, smooth((q - .82) / .18)) : C.travel_bottom;
     x = q < .24 ? C.discharge_x : lerp(C.discharge_x, C.pickup_x, smooth((q - .24) / .58));
   }
+  const carriageLocked = (index >= 4 && index < 9) || (index === 9 && q < .24);
+  const lockingPin = carriageLocked && (index !== 4 || q >= .08);
+  const hoistEnabled = index < 4 || (index === 4 && lockingPin) || index === 9;
+  const interlockState = index === 9 && q < .24 ? 'Retorno vertical · carro bloqueado y pasador insertado' :
+    index === 9 ? 'Cortador despejado · pasador retirado y traslado habilitado' :
+    index >= 5 && index < 9 ? 'Descarga · carro bloqueado, pasador insertado e izaje inhibido' :
+    index === 4 ? (lockingPin ? 'Apoyo · pasador insertado y descenso controlado' : 'Posición de descarga · traslación inhibida') :
+    'Recepción y traslado · zona de descarga sin habilitar';
   return { progress: p, phaseIndex: index, phase: stage.name, phaseId: stage.id, phaseProgress: q,
-    detail: index === 5 ? (mode === 'spout' ? 'Apertura de manga dentro del módulo protegido.' : 'Apertura protegida de fondo cerrado; la bolsa se sacrifica.') : stage.detail,
+    detail: index === 5 ? (mode === 'spout' ? 'Alternativa de manga: cortador retirado del módulo antes del ciclo.' : 'Corte por descenso sobre cuatro filos fijos AISI 304 dentro del recinto.') : stage.detail,
     cyclePhase, cycleProgress, bigbagKg, hopperKg, sackKg, finishedKg, completedSacks,
     totalSacks: count, sackNumber: count ? Math.min(count, completedSacks + 1) : 0,
-    hopperM3: hopperKg / 550, bagBottomM: z, hookM: z + 1 + C.headpack,
+    hopperM3: hopperKg / (data.densityKgM3 || 550), bagBottomM: z, hookM: z + (C.bag_height || 1) + C.headpack,
     carriageM: x - C.pickup_x, x, z, transfer, gateOpening: clamp(gate),
     mode, bagSize, payload, runningFlow: (index === 5 && q > 0 && q < 1) || gate > .01,
+    carriageLocked, lockingPin, hoistEnabled, interlockState,
     massBalanceKg: bigbagKg + hopperKg + sackKg + finishedKg };
 }
 
@@ -71,7 +80,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=p05-integral-20261015', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría P05.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -91,7 +100,7 @@ window.BigbagScene = BigbagScene;
 class SceneEngine {
   constructor(container, data, onSelect) {
     this.container = container; this.data = data; this.onSelect = onSelect;
-    this.progress = 0; this.payload = 1000; this.bagSize = 50; this.mode = 'spout';
+    this.progress = 0; this.payload = 1000; this.bagSize = 50; this.mode = 'closed';
     this.edgesOn = true; this.section = false; this.exploded = false; this.selected = null;
     this.parts = []; this.groupRoots = new Map(); this.edgeLines = []; this.sectionMeshes = [];
     this.scene = new THREE.Scene(); this.scene.background = new THREE.Color('#edf2f4');
@@ -124,10 +133,13 @@ class SceneEngine {
     const grid = new THREE.GridHelper(22, 44, 0xcbd7dc, 0xdce5e8); grid.rotation.x = Math.PI / 2; grid.position.z = -.023;
     grid.material.transparent = true; grid.material.opacity = .65; this.scene.add(grid);
     this.model = new THREE.Group(); this.scene.add(this.model);
+    this.cutterMeshes = []; this.spoutMeshes = [];
     data.static.forEach(m => {
-      if (m.tag === 'pallet_referencia' || m.tag === 'balanza_envolvente') return;
+      if (m.tag === 'pallet_referencia' || m.tag === 'balanza_envolvente' || /^BALANZA_|^MESA_/i.test(m.tag)) return;
       const mesh = this.addDataMesh(m, this.group(m.group));
       if (m.tag === 'TOL_TAPA_POLVO') this.sectionMeshes.push(mesh);
+      if (/^CORTE_/.test(m.tag)) this.cutterMeshes.push(mesh);
+      if (/^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
     });
     this.buildHopper(); this.buildBag(); this.buildHoist(); this.buildScaleAndRollers();
     this.buildForklift(); this.buildOperators(); this.buildFlow(); this.buildDimensions();
@@ -209,19 +221,38 @@ class SceneEngine {
   buildHopper() {
     const H = this.data.hopper, square = (z, w) => [[H.center_x-w/2,-w/2,z],[H.center_x+w/2,-w/2,z],[H.center_x+w/2,w/2,z],[H.center_x-w/2,w/2,z]];
     const faces = [0, 4].flatMap(j => [0, 1, 2, 3].map(i => [j+i,j+(i+1)%4,j+(i+1)%4+4,j+i+4]));
-    this.hopper = this.addDataMesh({ v: [...square(H.outlet_z,H.outlet_width),...square(H.outlet_z+H.cone_height,H.mouth_width),...square(H.mouth_z,H.mouth_width)], f: faces, c: [59,98,120], tag: 'TOL-01', group: 'Tolva' }, this.group('Tolva'));
+    const liner = H.liner_thickness_m || .01, shell = H.shell_thickness_m || .006;
+    const outside = 2 * (liner + shell);
+    this.hopper = this.addDataMesh({ v: [...square(H.outlet_z,H.outlet_width+outside),...square(H.outlet_z+H.cone_height,H.mouth_width+outside),...square(H.mouth_z,H.mouth_width+outside)], f: faces, c: [59,98,120], tag: 'TOL-01', group: 'Tolva' }, this.group('Tolva'));
     this.sectionMeshes.push(this.hopper);
+    if (!this.data.static.some(m => /^LINER_/.test(m.tag))) {
+      const lining = this.addDataMesh({v:[...square(H.outlet_z,H.outlet_width),...square(H.outlet_z+H.cone_height,H.mouth_width),...square(H.mouth_z,H.mouth_width)],f:faces,c:[75,94,86],tag:'UHMWPE disipativo 10 mm',group:'Tolva'},this.group('Tolva'));
+      this.sectionMeshes.push(lining);
+    }
     this.coal = new THREE.Mesh(new THREE.BufferGeometry(), this.material('#242a2d', { roughness: 1, metalness: 0 })); this.group('Tolva').add(this.coal);
     const connection = this.group('Tolva');
-    const duct = this.cylinder(connection, .075, .24, 2.35, -.925, 2.36, '#547b90', 'Tolva', { openEnded: true }); duct.rotation.x = 0;
-    const flange = this.cylinder(connection, .105, .02, 2.35, -1.05, 2.36, '#2d5266', 'Tolva', { openEnded: true }); flange.rotation.x = 0;
+    const dustZ = H.mouth_z - .15;
+    const duct = this.cylinder(connection, .075, .24, H.center_x, -.925, dustZ, '#547b90', 'Tolva', { openEnded: true }); duct.rotation.x = 0;
+    const flange = this.cylinder(connection, .105, .02, H.center_x, -1.05, dustZ, '#2d5266', 'Tolva', { openEnded: true }); flange.rotation.x = 0;
+    const dustTube = this.tube(connection,[[H.center_x,-1.06,dustZ],[H.center_x,-1.38,dustZ],[H.center_x+.7,-1.52,1.65],[H.center_x+1.25,-1.52,1.65]],.075,'#76888d','Tolva');
+    dustTube.userData.part='Conexión DN150 · 800 m³/h @ 1 500 Pa';
     this.boot = this.cylinder(connection, .128, H.bag_support_z - H.mouth_z, H.center_x, 0, (H.bag_support_z+H.mouth_z)/2, '#47555e', 'Tolva', { roughness: 1, metalness: 0, openEnded: true });
     for (let i = 0; i < 10; i++) {
       const ring = new THREE.Mesh(new THREE.TorusGeometry(.13,.006,6,32), this.material('#65757e'));
       ring.position.set(H.center_x,0,H.mouth_z+.025+i*.03); connection.add(ring);
     }
-    this.closedGuard = this.box(connection,.35,.35,.06,H.center_x,0,H.bag_support_z-.11,'#375c70','Tolva');
-    this.cutter = this.box(connection,.25,.008,.11,H.center_x,0,H.bag_support_z-.10,'#a6b7bf','Tolva');
+    this.closedGuard = new THREE.Group(); connection.add(this.closedGuard);
+    const guardTop = this.data.config.guard_top_m || 3.43, guardBase=H.bag_support_z;
+    for(const y of [-.64,.64]) {
+      const panel=this.box(this.closedGuard,1.32,.012,guardTop-guardBase,H.center_x,y,(guardTop+guardBase)/2,'#6c9aaa','Tolva',{transparent:true,opacity:.18,depthWrite:false});
+      this.sectionMeshes.push(panel);
+    }
+    for(const x of [H.center_x-.66,H.center_x+.66]) {
+      const panel=this.box(this.closedGuard,.012,1.28,guardTop-guardBase,x,0,(guardTop+guardBase)/2,'#6c9aaa','Tolva',{transparent:true,opacity:.18,depthWrite:false});
+      this.sectionMeshes.push(panel);
+    }
+    this.interlockLamp=this.box(connection,.10,.06,.07,H.center_x-.72,-.69,guardTop-.08,'#dfad33','Tolva');
+    this.interlockLamp.userData.part='Indicador ilustrativo de enclavamiento';
     this.gate = new THREE.Group(); this.gate.name = 'Compuerta'; this.model.add(this.gate);
     (this.data.gate_blade || []).forEach(m => this.addDataMesh({ ...m, group: 'Compuerta' }, this.gate));
     this.box(this.group('Compuerta'),.38,.31,.07,H.center_x,0,1.07,'#557e93','Compuerta');
@@ -266,26 +297,42 @@ class SceneEngine {
   buildHoist() {
     this.hoist=new THREE.Group();this.hoist.name='Monorriel';this.model.add(this.hoist);
     const z=this.data.config.beam_bottom;
-    this.box(this.hoist,.37,.32,.35,0,0,z-.30,'#156087','Monorriel');
-    this.cylinder(this.hoist,.12,.45,0,.23,z-.30,'#1f7297','Monorriel').rotation.x=0;
-    this.box(this.hoist,.30,.11,.35,0,-.20,z-.30,'#223e50','Monorriel');
+    const headroom=this.data.config.hoist_headroom || .475;
+    this.box(this.hoist,.46,.30,.25,0,.22,z-.15,'#156087','Monorriel');
+    this.cylinder(this.hoist,.11,.48,0,.23,z-.15,'#1f7297','Monorriel').rotation.x=0;
+    this.box(this.hoist,.30,.10,.24,0,-.19,z-.15,'#223e50','Monorriel');
     for(const x of [-.12,.12])for(const y of [-.10,.10]){
       const wheel=this.cylinder(this.hoist,.052,.045,x,y,z+.042,'#677c88','Monorriel');wheel.rotation.x=0;
       this.box(this.hoist,.06,.025,.17,x,y*1.42,z-.028,'#2b5268','Monorriel');
+    }
+    this.lockPin=this.cylinder(this.group('Monorriel'),.016,.22,this.data.config.discharge_x,.14,z+.075,'#e3b72d','Monorriel');this.lockPin.rotation.x=0;
+    this.lockPin.userData.part='Pasador cautivo de inmovilización del carro';
+    for(const x of [.12,3.08]) {
+      this.box(this.group('Monorriel'),.05,.20,.17,x,0,z+.04,'#5d7480','Monorriel');
+      const bumper=this.box(this.group('Monorriel'),.065,.16,.12,x+(x<1?.06:-.06),0,z+.04,'#26383f','Monorriel');
+      bumper.userData.part='Amortiguador de goma en fin de carrera';
     }
     this.chain=new THREE.Group();this.model.add(this.chain);
     this.chainLine=this.cylinder(this.chain,.009,1,0,0,0,'#293940','Monorriel');
     this.chainLine2=this.cylinder(this.chain,.009,1,.035,0,0,'#43545c','Monorriel');
     this.hook=new THREE.Mesh(new THREE.TorusGeometry(.055,.014,8,20,Math.PI*1.6),this.material('#b4a663'));
     this.hook.rotation.x=Math.PI/2;this.chain.add(this.hook);
-    this.controlCable=this.tube(this.hoist,[[.16,-.06,z-.38],[.19,-.06,1.7],[.19,-.06,1.15]],.005,'#293f49');
+    this.controlCable=this.tube(this.hoist,[[.16,-.06,z-headroom+.08],[.19,-.06,1.7],[.19,-.06,1.15]],.005,'#293f49');
     this.box(this.hoist,.07,.05,.22,.19,-.06,1.10,'#e0b42f','Monorriel');
   }
   buildScaleAndRollers() {
-    const g=this.group('Rodillos');
-    this.box(g,.54,.58,.10,2.35,0,.08,'#2d657f','Compuerta');
-    this.scaleDeck=this.box(g,.51,.55,.018,2.35,0,.142,'#a0afb5','Compuerta');
-    this.liftBellows=this.box(g,.32,.35,.04,2.35,0,.12,'#3d5a6a','Rodillos');
+    const g=this.group('Rodillos'), x=this.data.hopper.center_x;
+    this.box(g,1.20,1.20,.12,x,0,.075,'#2d657f','Compuerta');
+    this.scaleDeck=this.box(g,1.20,1.20,.025,x,0,.15,'#a0afb5','Compuerta');
+    this.scaleDeck.userData.part='Balanza 1 200 × 1 200 mm · capacidad 2 t';
+    this.liftRoot=new THREE.Group();g.add(this.liftRoot);this.liftRoot.position.set(x,0,.01);
+    this.liftBellows=this.box(this.liftRoot,.40,.44,.07,0,0,.07,'#3d5a6a','Rodillos');
+    this.liftDeck=this.box(this.liftRoot,.62,.62,.025,0,0,.14,'#738b97','Rodillos');
+    this.scissorArms=[];
+    for(const y of [-.22,.22])for(const sign of [-1,1]) {
+      const arm=this.box(this.liftRoot,.49,.035,.025,0,y,.10,'#dda921','Rodillos');
+      arm.rotation.y=sign*.35;this.scissorArms.push([arm,sign]);
+    }
     this.box(g,.035,.04,.72,2.67,.20,.40,'#315b72','Compuerta');
     this.box(g,.23,.065,.15,2.67,.20,.79,'#173e55','Compuerta');
     this.box(g,.16,.005,.075,2.67,.163,.80,'#7ca6ad');
@@ -293,12 +340,12 @@ class SceneEngine {
     this.sackBody=new THREE.Mesh(this.roundedBagGeometry(.40,.70),this.clothMaterial());this.sack.add(this.sackBody);this.sackBody.castShadow=true;
     this.sackBody.userData={group:'Compuerta',part:'Saco de producto'};this.parts.push(this.sackBody);this.sectionMeshes.push(this.sackBody);
     this.tie=new THREE.Mesh(new THREE.TorusGeometry(.042,.008,6,24),this.material('#b9a36d'));this.tie.position.z=.68;this.sack.add(this.tie);
-    this.rollerStart={x:2.35,y:-.63,z:.16};
-    this.box(g,.64,1.65,.06,2.35,-1.15,.10,'#2d607c','Rodillos');
-    for(let i=0;i<10;i++){const roll=this.cylinder(g,.035,.58,2.35,-.45-i*.15,.165,'#9dadb4','Rodillos');roll.rotation.z=Math.PI/2;roll.rotation.x=0;roll.rotation.z=Math.PI/2;}
+    this.rollerStart={x,y:-.63,z:.35};
+    this.box(g,.64,1.65,.06,x,-1.15,.285,'#2d607c','Rodillos');
+    for(let i=0;i<10;i++){const roll=this.cylinder(g,.035,.58,x,-.65-i*.15,.315,'#9dadb4','Rodillos');roll.rotation.x=0;roll.rotation.z=Math.PI/2;}
     for(const x of [2.12,2.58])for(const y of [-.5,-1.8]){
-      this.box(g,.04,.045,.12,x,y,.04,'#365e71','Rodillos');
-      this.tube(g,[[x,-.50,.08],[x,-1.77,.145]],.018,'#3e728b','Rodillos');
+      this.box(g,.04,.045,.28,x,y,.14,'#365e71','Rodillos');
+      this.tube(g,[[x,-.50,.16],[x,-1.77,.28]],.018,'#3e728b','Rodillos');
     }
     this.output=new THREE.Group();this.model.add(this.output);
     this.box(this.output,1.1,1.05,.12,0,0,.06,'#a1845b');
@@ -369,10 +416,12 @@ class SceneEngine {
       for(const p of [a,b]){const v=d.clone().cross(new THREE.Vector3(1,1,.3)).normalize().multiplyScalar(.08);this.dimensions.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...p).add(v),new THREE.Vector3(...p).sub(v)]),new THREE.LineBasicMaterial({color:0x2b718b,depthTest:false})));}
       const s=this.label(label);s.position.set(...pos);this.dimensions.add(s);
     };
-    line([-.85,-1.2,0],[-.85,-1.2,5.3],'5 300 mm',[-.85,-1.2,2.7]);
-    line([0,-1.30,5.65],[3.2,-1.30,5.65],'3 200 mm',[1.6,-1.30,5.65]);
+    const C=this.data.config, top=C.beam_top;
+    const mm=v=>`${Math.round(v*1000).toLocaleString('fr-FR')} mm`;
+    line([-.85,-1.2,0],[-.85,-1.2,top],mm(top),[-.85,-1.2,top/2]);
+    line([0,-1.30,top+.35],[3.2,-1.30,top+.35],'3 200 mm',[1.6,-1.30,top+.35]);
     line([3.8,1.3,0],[3.8,1.3,2.1],'2 100 mm',[3.8,1.3,1.1]);
-    line([.65,-.30,4.55],[2.35,-.30,4.55],'1 700 mm',[1.5,-.3,4.6]);
+    line([C.pickup_x,-.30,C.travel_bottom+1.1],[C.discharge_x,-.30,C.travel_bottom+1.1],mm(C.discharge_x-C.pickup_x),[1.5,-.3,C.travel_bottom+1.15]);
   }
   fillHeight(volume) {
     const H=this.data.hopper;let lo=0,hi=H.cone_height+H.body_height;
@@ -399,13 +448,16 @@ class SceneEngine {
     const remaining=this.payload ? s.bigbagKg/this.payload : 0;
     this.bag.scale.set(lerp(.70,1,remaining),lerp(.56,1,remaining),1);
     this.hoist.position.x=s.x;
-    const top=C.beam_bottom-.46,bottom=s.z+1.52,drop=Math.max(.03,top-bottom);
+    const top=C.beam_bottom-.15,bottom=s.hookM+.045,drop=Math.max(.03,top-bottom);
     this.chain.position.x=s.x;
     for(const l of [this.chainLine,this.chainLine2]){l.position.z=(top+bottom)/2;l.scale.y=drop;}
     this.hook.position.z=s.hookM;
     this.gate.position.y=.28*s.gateOpening;
-    this.boot.visible=this.mode==='spout';this.closedGuard.visible=this.cutter.visible=this.mode==='closed';
-    this.cutter.position.y=this.mode==='closed'&&s.phaseIndex===5?lerp(.15,0,smooth(s.phaseProgress*8)):0;
+    this.boot.visible=this.mode==='spout';this.closedGuard.visible=this.mode==='closed';
+    this.cutterMeshes.forEach(mesh=>mesh.visible=this.mode==='closed');
+    this.lockPin.position.y=s.lockingPin?.02:.24;
+    this.interlockLamp.material.color.set(s.lockingPin?'#52a67d':s.carriageLocked?'#dfad33':'#597482');
+    this.interlockLamp.userData.part=s.interlockState;
     this.updateCoal(s.hopperKg);
     const receiptY=lerp(-1.8,0,smooth(s.phaseProgress));
     this.forklift.visible=s.phaseIndex<2;
@@ -413,11 +465,12 @@ class SceneEngine {
     this.pallet.position.y=s.phaseIndex===0?receiptY:0;
     this.bagRoot.position.y=s.phaseIndex===0?receiptY:0;
     this.sack.visible=s.phaseIndex>=6&&s.phaseIndex<=8&&s.sackKg>=0;
-    const raising=this.bagSize===25?.21:0,lowering=1-smooth(s.transfer/.22);
-    const liftHeight=raising*lowering;
-    this.sack.position.set(2.35,-s.transfer*1.62,.15+liftHeight);
-    this.scaleDeck.position.z=.142+liftHeight;
-    this.liftBellows.scale.z=1+liftHeight/.04;this.liftBellows.position.z=.12+liftHeight/2;
+    const workingHeight=this.bagSize===25?.36:.15;
+    const deckHeight=lerp(workingHeight,.35,smooth(s.transfer/.22)),liftHeight=deckHeight-.15;
+    this.sack.position.set(this.data.hopper.center_x,-s.transfer*1.82,deckHeight);
+    this.liftDeck.position.z=.14+liftHeight;
+    this.liftBellows.scale.z=1+liftHeight/.07;this.liftBellows.position.z=.07+liftHeight/2;
+    this.scissorArms.forEach(([arm,sign])=>{arm.position.z=.08+liftHeight/2;arm.rotation.y=sign*Math.asin(clamp((.13+liftHeight)/.49,0,.95));});
     const fill=this.bagSize?s.sackKg/this.bagSize:0;
     const sackHeight=this.bagSize===25?.49:.70;
     this.sackBody.scale.set(lerp(.75,1,fill),lerp(.6,1,fill),sackHeight/.70);
@@ -429,7 +482,7 @@ class SceneEngine {
     this.worker2.userData.arms?.forEach((a,i)=>a.rotation.z=tying?Math.sin(s.cycleProgress*Math.PI*4)*(i?-.13:.13):0);
     this.flow.visible=s.runningFlow;
     if(this.flow.visible){
-      const bulk=s.phaseIndex===5,z0=bulk?this.data.hopper.mouth_z+.025:.84,z1=bulk?C.support_z:1.04,r=bulk?(this.mode==='closed'?.105:.075):.045;
+      const bulk=s.phaseIndex===5,z0=bulk?this.data.hopper.mouth_z+.025:deckHeight+(this.bagSize===25?.49:.70),z1=bulk?C.support_z:.865,r=bulk?(this.mode==='closed'?.105:.075):.045;
       for(let i=0;i<160;i++){
         const angle=i*2.399963,rad=Math.sqrt((i*.618033)%1)*r,fall=(i*.071+this.progress*(bulk?70:260))%1;
         this.dummy.position.set(2.35+Math.cos(angle)*rad,Math.sin(angle)*rad,lerp(z1,z0,fall));
@@ -464,17 +517,18 @@ class SceneEngine {
     const aliases={isometrica:'iso','isométrica':'iso',frontal:'front',lateral:'side',posterior:'back',planta:'top',isometric:'iso'};
     name=aliases[String(name).toLowerCase()]||name;
     const focus={discharge:{target:[2.35,0,2.8],offset:[6,-8,4],zoom:1.6},bagging:{target:[2.35,-.55,1.0],offset:[5,-7,3],zoom:2.7},pickup:{target:[.65,-.45,1.6],offset:[6,-8,3],zoom:1.65}};
-    const view=focus[name];this.controls.target.set(...(view?.target||[1.15,-.02,2.5]));
+    focus.discharge.target[2]=this.data.config.support_z;
+    const view=focus[name];this.controls.target.set(...(view?.target||[1.15,-.02,this.data.config.beam_top/2]));
     const t=this.controls.target,views={iso:[8,-12,7.3],front:[0,-14,.01],side:[14,0,.01],back:[0,14,.01],top:[0,-.001,15],left:[-14,0,.01]};
     const d=view?.offset||views[name]||views.iso;
     this.camera.up.copy(name==='top'?new THREE.Vector3(0,1,0):UP);
     this.camera.position.copy(t).add(new THREE.Vector3(...d));this.camera.zoom=view?.zoom||1;this.controls.update();this.render();
   }
-  resetCamera() { this.controls.target.set(1.15,-.02,2.5);this.setView('iso'); }
-  getState() { return {...this.state,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:'P05',nativeParts:143,nativeComponents:526}; }
+  resetCamera() { this.setView('iso'); }
+  getState() { return {...this.state,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:this.data.revision,nativeParts:this.data.nativeParts,nativeComponents:this.data.nativeComponents}; }
   resize() {
     const w=Math.max(1,this.container.clientWidth),h=Math.max(1,this.container.clientHeight);
-    this.renderer.setSize(w,h,false);const half=4.05,ratio=w/h;
+    this.renderer.setSize(w,h,false);const half=Math.max(4.05,(this.data.config.beam_top+.9)*.65),ratio=w/h;
     this.camera.left=-half*ratio;this.camera.right=half*ratio;this.camera.top=half;this.camera.bottom=-half;
     this.camera.updateProjectionMatrix();this.render();
   }
