@@ -6,13 +6,13 @@ const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
 const lerp = (a, b, t) => a + (b - a) * t;
 const UP = new THREE.Vector3(0, 0, 1);
 const groupNames = {
-  Porticos: 'Pórticos y arriostres', Monorriel: 'Monorriel y carro', Tolva: 'Tolva de 2,30 m³',
+  Cimentacion: 'Cimentación y anclajes', Porticos: 'Pórticos y arriostres', Monorriel: 'Monorriel y carro', Tolva: 'Tolva de 2,30 m³',
   'Soporte bolsa': 'Apoyo del bigbag', Cruceta: 'Cruceta de cuatro puntos', Plataforma: 'Plataforma lateral',
   Escalera: 'Escalera de acceso', Barandas: 'Barandas y guardas', Compuerta: 'Compuerta y ensacado',
   Complementos: 'Uniones y complementos', Accesorios: 'Accesorios', Bigbag: 'Bigbag de proceso · 1 t',
   Montacargas: 'Montacargas de abastecimiento', Operarios: 'Operación y amarre', Rodillos: 'Mesa elevadora y rodillos'
 };
-const groupIds = {Porticos:'porticos',Monorriel:'monorriel',Tolva:'tolva','Soporte bolsa':'soporte-bolsa',Cruceta:'cruceta',Plataforma:'plataforma',Escalera:'escalera',Barandas:'barandas',Complementos:'complementos',Accesorios:'complementos',Compuerta:'complementos',Rodillos:'complementos',Bigbag:'soporte-bolsa',Montacargas:'porticos',Operarios:'complementos'};
+const groupIds = {Cimentacion:'cimentacion',Porticos:'porticos',Monorriel:'monorriel',Tolva:'tolva','Soporte bolsa':'soporte-bolsa',Cruceta:'cruceta',Plataforma:'plataforma',Escalera:'escalera',Barandas:'barandas',Complementos:'complementos',Accesorios:'complementos',Compuerta:'complementos',Rodillos:'complementos',Bigbag:'soporte-bolsa',Montacargas:'porticos',Operarios:'complementos'};
 const canonicalGroup = id => Object.keys(groupIds).find(k => groupIds[k] === id) || id;
 
 // The progress bar is a process diagram. Mass transfer is conservative; it is not a flow solver.
@@ -80,7 +80,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=p05-integral-20261015', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=p05-solid-7a2e1c52950a', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría P05.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -137,7 +137,7 @@ class SceneEngine {
     data.static.forEach(m => {
       if (m.tag === 'pallet_referencia' || m.tag === 'balanza_envolvente' || /^BALANZA_|^MESA_/i.test(m.tag)) return;
       const mesh = this.addDataMesh(m, this.group(m.group));
-      if (m.tag === 'TOL_TAPA_POLVO') this.sectionMeshes.push(mesh);
+      if (/^TOL_PANEL|^TOL_TAPA_POLVO|^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
       if (/^CORTE_/.test(m.tag)) this.cutterMeshes.push(mesh);
       if (/^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
     });
@@ -223,19 +223,23 @@ class SceneEngine {
     const faces = [0, 4].flatMap(j => [0, 1, 2, 3].map(i => [j+i,j+(i+1)%4,j+(i+1)%4+4,j+i+4]));
     const liner = H.liner_thickness_m || .01, shell = H.shell_thickness_m || .006;
     const outside = 2 * (liner + shell);
+    if (!this.data.exactCAD) {
     this.hopper = this.addDataMesh({ v: [...square(H.outlet_z,H.outlet_width+outside),...square(H.outlet_z+H.cone_height,H.mouth_width+outside),...square(H.mouth_z,H.mouth_width+outside)], f: faces, c: [59,98,120], tag: 'TOL-01', group: 'Tolva' }, this.group('Tolva'));
     this.sectionMeshes.push(this.hopper);
     if (!this.data.static.some(m => /^LINER_/.test(m.tag))) {
       const lining = this.addDataMesh({v:[...square(H.outlet_z,H.outlet_width),...square(H.outlet_z+H.cone_height,H.mouth_width),...square(H.mouth_z,H.mouth_width)],f:faces,c:[75,94,86],tag:'UHMWPE disipativo 10 mm',group:'Tolva'},this.group('Tolva'));
       this.sectionMeshes.push(lining);
     }
+    }
     this.coal = new THREE.Mesh(new THREE.BufferGeometry(), this.material('#242a2d', { roughness: 1, metalness: 0 })); this.group('Tolva').add(this.coal);
     const connection = this.group('Tolva');
+    if (!this.data.exactCAD) {
     const dustZ = H.mouth_z - .15;
     const duct = this.cylinder(connection, .075, .24, H.center_x, -.925, dustZ, '#547b90', 'Tolva', { openEnded: true }); duct.rotation.x = 0;
     const flange = this.cylinder(connection, .105, .02, H.center_x, -1.05, dustZ, '#2d5266', 'Tolva', { openEnded: true }); flange.rotation.x = 0;
     const dustTube = this.tube(connection,[[H.center_x,-1.06,dustZ],[H.center_x,-1.38,dustZ],[H.center_x+.7,-1.52,1.65],[H.center_x+1.25,-1.52,1.65]],.075,'#76888d','Tolva');
     dustTube.userData.part='Conexión DN150 · 800 m³/h @ 1 500 Pa';
+    }
     this.boot = this.cylinder(connection, .128, H.bag_support_z - H.mouth_z, H.center_x, 0, (H.bag_support_z+H.mouth_z)/2, '#47555e', 'Tolva', { roughness: 1, metalness: 0, openEnded: true });
     for (let i = 0; i < 10; i++) {
       const ring = new THREE.Mesh(new THREE.TorusGeometry(.13,.006,6,32), this.material('#65757e'));
@@ -243,6 +247,7 @@ class SceneEngine {
     }
     this.closedGuard = new THREE.Group(); connection.add(this.closedGuard);
     const guardTop = this.data.config.guard_top_m || 3.43, guardBase=H.bag_support_z;
+    if (!this.data.exactCAD) {
     for(const y of [-.64,.64]) {
       const panel=this.box(this.closedGuard,1.32,.012,guardTop-guardBase,H.center_x,y,(guardTop+guardBase)/2,'#6c9aaa','Tolva',{transparent:true,opacity:.18,depthWrite:false});
       this.sectionMeshes.push(panel);
@@ -251,12 +256,15 @@ class SceneEngine {
       const panel=this.box(this.closedGuard,.012,1.28,guardTop-guardBase,x,0,(guardTop+guardBase)/2,'#6c9aaa','Tolva',{transparent:true,opacity:.18,depthWrite:false});
       this.sectionMeshes.push(panel);
     }
+    }
     this.interlockLamp=this.box(connection,.10,.06,.07,H.center_x-.72,-.69,guardTop-.08,'#dfad33','Tolva');
     this.interlockLamp.userData.part='Indicador ilustrativo de enclavamiento';
     this.gate = new THREE.Group(); this.gate.name = 'Compuerta'; this.model.add(this.gate);
     (this.data.gate_blade || []).forEach(m => this.addDataMesh({ ...m, group: 'Compuerta' }, this.gate));
+    if (!this.data.exactCAD) {
     this.box(this.group('Compuerta'),.38,.31,.07,H.center_x,0,1.07,'#557e93','Compuerta');
     this.cylinder(this.group('Compuerta'),.13,.18,H.center_x,0,.955,'#a5b1b7','Compuerta',{openEnded:true});
+    }
   }
   clothMaterial() {
     const canvas = document.createElement('canvas'); canvas.width = canvas.height = 128;
@@ -298,6 +306,11 @@ class SceneEngine {
     this.hoist=new THREE.Group();this.hoist.name='Monorriel';this.model.add(this.hoist);
     const z=this.data.config.beam_bottom;
     const headroom=this.data.config.hoist_headroom || .475;
+    if (this.data.exactCAD) {
+      this.data.hoistMeshes.forEach(m=>this.addDataMesh({...m,group:'Monorriel'},this.hoist));
+      this.lockPin=new THREE.Group();this.group('Monorriel').add(this.lockPin);
+      this.data.lockPinMeshes.forEach(m=>this.addDataMesh({...m,group:'Monorriel'},this.lockPin));
+    } else {
     this.box(this.hoist,.46,.30,.25,0,.22,z-.15,'#156087','Monorriel');
     this.cylinder(this.hoist,.11,.48,0,.23,z-.15,'#1f7297','Monorriel').rotation.x=0;
     this.box(this.hoist,.30,.10,.24,0,-.19,z-.15,'#223e50','Monorriel');
@@ -311,6 +324,7 @@ class SceneEngine {
       this.box(this.group('Monorriel'),.05,.20,.17,x,0,z+.04,'#5d7480','Monorriel');
       const bumper=this.box(this.group('Monorriel'),.065,.16,.12,x+(x<1?.06:-.06),0,z+.04,'#26383f','Monorriel');
       bumper.userData.part='Amortiguador de goma en fin de carrera';
+    }
     }
     this.chain=new THREE.Group();this.model.add(this.chain);
     this.chainLine=this.cylinder(this.chain,.009,1,0,0,0,'#293940','Monorriel');
@@ -455,7 +469,7 @@ class SceneEngine {
     this.gate.position.y=.28*s.gateOpening;
     this.boot.visible=this.mode==='spout';this.closedGuard.visible=this.mode==='closed';
     this.cutterMeshes.forEach(mesh=>mesh.visible=this.mode==='closed');
-    this.lockPin.position.y=s.lockingPin?.02:.24;
+    this.lockPin.position.y=this.data.exactCAD?(s.lockingPin?0:.08):(s.lockingPin?.02:.24);
     this.interlockLamp.material.color.set(s.lockingPin?'#52a67d':s.carriageLocked?'#dfad33':'#597482');
     this.interlockLamp.userData.part=s.interlockState;
     this.updateCoal(s.hopperKg);
