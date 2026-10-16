@@ -160,6 +160,28 @@
       "status": "Verifica cálculo analítico",
       "description": "Categoría B, Clase de servicio 2; carga nominal de cruceta diferenciada del proceso de bolsas de 1 t.",
       "scope": "Cálculo de resistencia y fatiga conforme a las hipótesis y detalles descritos en la memoria."
+    },
+    {
+      "id": "acreditacion_analitica_final",
+      "title": "Fijaciones y topes: comprobación local",
+      "count": 24,
+      "maxUtilization": 0.8682579296133878,
+      "failedCount": 0,
+      "status": "Componentes conformes bajo las hipótesis indicadas",
+      "description": "Topes: FS mínimo 1,9285 para 10,75 kN y 1,7276 para la envolvente activa de 12 kN. Pernos propios M20, carga centrada: FS 17,4195.",
+      "scope": "Los 24 controles de esta tarjeta verifican componentes bajo hipótesis explícitas. Los cuatro M20 pertenecen al soporte fijo de la traba; no son los suspensores originales del KITO. El caso adicional de colgar carga por el receptor Y300 es hipotético: sus cuatro controles se presentan por separado en el Anexo D, con dos franjas de placa no conformes, y no forman parte del camino instalado. 10,75 kN es una acción estática impuesta; no es un pico comercial acreditado. La energía activa exige una fuerza media mínima de 10,755 kN. Se mantienen 12 kN de cálculo estructural y la distinción entre conformidad analítica y aceptación comercial.",
+      "source": "engineering/acreditacion_analitica_final_p05.json",
+      "matrixSource": "engineering/matriz_acreditacion_p05.json",
+      "analyticalReportSha256": "735d6594180d474e4b71a3d59ac54a72ffad3cb55be6c3222890f27abf385b76",
+      "matrixSha256": "c15fd5a4351ef3f98a16aaebaf4b71e1b7eb4b6c2bd5ac92785dfa7d8bbf96a5",
+      "totalSupplementaryChecks": 28,
+      "excludedHypotheticalChecks": 4,
+      "excludedHypotheticalFailedCount": 2,
+      "minimumStopFactorOfSafetyAt10750N": 1.9284806363896234,
+      "minimumStopFactorOfSafetyAt12000N": 1.7275972367657042,
+      "centeredM20FactorOfSafety": 17.419545600652324,
+      "commercialAccreditation": false,
+      "fullReleaseAllowed": false
     }
   ],
   "groups": [
@@ -2351,7 +2373,9 @@
     "sourceHashes": {
       "native_manifest.json": "94a640a753105e139f3c125aa09197e284288eff3cffc7e14b9a231200b3988b",
       "solidworks_model.bas": "50b807d76162c8384f0e3db149d14ad2847a05e91852153ebd6dd9da596dc241"
-    }
+    },
+    "analyticalSupplementSha256": "735d6594180d474e4b71a3d59ac54a72ffad3cb55be6c3222890f27abf385b76",
+    "accreditationMatrixSha256": "c15fd5a4351ef3f98a16aaebaf4b71e1b7eb4b6c2bd5ac92785dfa7d8bbf96a5"
   },
   "anchorDesign": {
     "title": "Anclajes adoptados · M16 / hef 275 mm / L400 mm",
