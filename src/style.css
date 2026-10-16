@@ -15,3 +15,9 @@
 .interlock-readout{font-size:10px;line-height:1.6;color:#637d8b;background:#f1f5f7;border-left:2px solid #9db1bd;padding:8px 10px;margin:-2px 0 14px}.interlock-readout.locked{border-color:#b69555;background:#faf6ed;color:#74603f}
 
 @media(min-width:1400px){.calc-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+
+.view-buttons #extraView{width:150px;color:var(--ink)}
+.render-style{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:10px;white-space:nowrap;margin-right:5px}
+.render-style select{color:var(--ink);width:93px;background:#fff}
+@media(max-width:1100px){.view-toolbar{flex-wrap:wrap}.display-buttons{margin-left:auto}}
+@media(max-width:600px){.view-buttons #extraView{width:138px}.display-buttons{gap:4px;flex-wrap:wrap}.render-style{font-size:9px;gap:4px;margin-right:1px}.render-style select{width:82px}}

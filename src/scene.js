@@ -1,5 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
+import {buildWorkshop} from './workshop.js?v=eb-solid-11ce75abe83b';
+import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-11ce75abe83b';
+import {buildProcessDetails} from './process-details.js?v=eb-solid-11ce75abe83b';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -80,8 +83,8 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=eb-solid-755af84f39e0', import.meta.url));
-    if (!response.ok) throw new Error('No se pudo cargar la geometría P05.');
+    const response = await fetch(new URL('../data/model.json?v=eb-solid-11ce75abe83b', import.meta.url));
+    if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
   },
@@ -89,6 +92,7 @@ export const BigbagScene = {
   setView(name) { active?.setView(name); }, resetCamera() { active?.resetCamera(); },
   setEdges(v) { active?.setEdges(v); }, setSection(v) { active?.setSection(v); },
   setDimensions(v) { active?.setDimensions(v); }, setExploded(v) { active?.setExploded(v); },
+  setStyle(v) { active?.setStyle(v); },
   highlight(id) { active?.highlight(id); },
   setMode(v) { active?.setMode(v); }, setBagSize(v) { active?.setBagSize(v); },
   setPayload(v) { active?.setPayload(v); }, getState() { return active?.getState(); },
@@ -101,7 +105,7 @@ class SceneEngine {
   constructor(container, data, onSelect) {
     this.container = container; this.data = data; this.onSelect = onSelect;
     this.progress = 0; this.payload = 1000; this.bagSize = 50; this.mode = 'closed';
-    this.edgesOn = true; this.section = false; this.exploded = false; this.selected = null;
+    this.edgesOn = false; this.section = false; this.exploded = false; this.selected = null;this.renderStyle='realistic';this.currentView='iso';
     this.parts = []; this.groupRoots = new Map(); this.edgeLines = []; this.sectionMeshes = [];
     this.scene = new THREE.Scene(); this.scene.background = new THREE.Color('#edf2f4');
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
@@ -110,32 +114,26 @@ class SceneEngine {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1.25;
     this.renderer.shadowMap.enabled = true; this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.localClippingEnabled = true;
-    this.renderer.domElement.setAttribute('aria-label', 'Modelo 3D P05. Arrastrar para girar, rueda para acercar y clic para identificar.');
+    this.renderer.domElement.setAttribute('aria-label', 'Estación de bigbags. Arrastrar para girar, rueda para acercar y clic para identificar.');
     this.renderer.domElement.setAttribute('role', 'img'); this.renderer.domElement.tabIndex = 0;
     this.renderer.domElement.style.cssText = 'display:block;width:100%;height:100%;touch-action:none;outline-offset:-4px;';
     container.appendChild(this.renderer.domElement);
-    this.camera = new THREE.OrthographicCamera(-5, 5, 4, -4, .02, 100);
+    this.perspectiveCamera=new THREE.PerspectiveCamera(37,1,.025,150);
+    this.technicalCamera=new THREE.OrthographicCamera(-5,5,4,-4,.025,150);
+    this.camera = this.perspectiveCamera;
     this.camera.up.copy(UP); this.camera.position.set(9, -12, 8);
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(1.15, -.05, 2.45); this.controls.enableDamping = false;
     this.controls.minZoom = .45; this.controls.maxZoom = 5;
     this.controls.maxPolarAngle = Math.PI * .49;
+    this.controls.minDistance=.45;this.controls.maxDistance=38;
     this.controls.addEventListener('change', () => this.render());
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0x738697, 2.3));
-    const light = new THREE.DirectionalLight(0xffffff, 3.0);
-    light.position.set(-3, -5, 11); light.castShadow = true;
-    Object.assign(light.shadow.camera, { left: -6, right: 7, top: 7, bottom: -7, near: .5, far: 24 });
-    light.shadow.mapSize.set(2048, 2048); light.shadow.bias = -.0003; light.shadow.normalBias = .02;
-    light.target.position.set(1, 0, 2); this.scene.add(light, light.target);
-    const fill = new THREE.DirectionalLight(0xd6e9ff, 1.5); fill.position.set(6, 6, 7); this.scene.add(fill);
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(24, 24), new THREE.MeshStandardMaterial({ color: '#edf2f3', roughness: 1 }));
-    ground.position.z = -.027; ground.receiveShadow = true; this.scene.add(ground);
-    const grid = new THREE.GridHelper(22, 44, 0xcbd7dc, 0xdce5e8); grid.rotation.x = Math.PI / 2; grid.position.z = -.023;
-    grid.material.transparent = true; grid.material.opacity = .65; this.scene.add(grid);
+    this.workshop=buildWorkshop(this);
     this.model = new THREE.Group(); this.scene.add(this.model);
     this.cutterMeshes = []; this.spoutMeshes = [];
     data.static.forEach(m => {
       if (m.tag === 'pallet_referencia' || m.tag === 'balanza_envolvente' || /^BALANZA_|^MESA_/i.test(m.tag)) return;
+      if (/^(?:BIGBAG_1t_REF|CADENA_REF|ASA_REF_\d+|SACO_50kg_REF)$/.test(m.tag)) return;
       const mesh = this.addDataMesh(m, this.group(m.group));
       if (/^TOL_PANEL|^TOL_TAPA_POLVO|^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
       if (/^CORTE_/.test(m.tag)) this.cutterMeshes.push(mesh);
@@ -143,6 +141,7 @@ class SceneEngine {
     });
     this.buildHopper(); this.buildBag(); this.buildHoist(); this.buildScaleAndRollers();
     this.buildForklift(); this.buildOperators(); this.buildFlow(); this.buildDimensions();
+    this.equipmentDetails=buildEquipmentDetails(this);this.processDetails=buildProcessDetails(this);
     this.raycaster = new THREE.Raycaster(); this.pointer = new THREE.Vector2();
     this.pointerDown = e => { this.clickOrigin = [e.clientX, e.clientY]; };
     this.pointerUp = e => {
@@ -151,7 +150,7 @@ class SceneEngine {
       this.pointer.set((e.clientX - rect.left) / rect.width * 2 - 1, -(e.clientY - rect.top) / rect.height * 2 + 1);
       this.raycaster.setFromCamera(this.pointer, this.camera);
       const hit = this.raycaster.intersectObjects(this.parts, false).find(h => h.object.visible && this.parentsVisible(h.object));
-      if (hit) { const d = hit.object.userData; this.highlight(d.group); this.onSelect?.({ id: groupIds[d.group] || d.group, groupId: groupIds[d.group] || d.group, label: groupNames[d.group] || d.group, name: groupNames[d.group] || d.group, part: d.part }); }
+      if (hit) { const d = hit.object.userData; this.highlight(d.group); this.onSelect?.({ id: groupIds[d.group] || d.group, groupId: groupIds[d.group] || d.group, label: d.equipmentDetail?d.part:(groupNames[d.group] || d.group), name: groupNames[d.group] || d.group, part: d.part }); }
       else { this.highlight(null); this.onSelect?.(null); }
     };
     this.keydown = e => {
@@ -180,7 +179,7 @@ class SceneEngine {
       roughness: .58, metalness: .3, side: THREE.DoubleSide, ...options });
   }
   geometry(m) {
-    const positions = [];
+    const positions = [],uv=[];
     for (const face of m.f) {
       let triangles;
       if (face.length === 3) triangles = [[0, 1, 2]];
@@ -190,17 +189,24 @@ class SceneEngine {
         const drop = ax.indexOf(Math.max(...ax)), axes = [0, 1, 2].filter(i => i !== drop);
         triangles = THREE.ShapeUtils.triangulateShape(face.map(i => new THREE.Vector2(m.v[i][axes[0]], m.v[i][axes[1]])), []);
       }
-      for (const t of triangles) for (const j of t) positions.push(...m.v[face[j]]);
+      for (const t of triangles) {
+        const a=new THREE.Vector3(...m.v[face[t[0]]]),b=new THREE.Vector3(...m.v[face[t[1]]]),c=new THREE.Vector3(...m.v[face[t[2]]]);
+        const n=b.sub(a).cross(c.sub(a));const axes=Math.abs(n.z)>Math.max(Math.abs(n.x),Math.abs(n.y))?[0,1]:Math.abs(n.x)>Math.abs(n.y)?[1,2]:[0,2];
+        for (const j of t){const p=m.v[face[j]];positions.push(...p);uv.push(p[axes[0]]*4,p[axes[1]]*4);}
+      }
     }
-    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3)); g.computeVertexNormals(); return g;
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.computeVertexNormals(); return g;
   }
   addDataMesh(m, parent) {
-    const mesh = new THREE.Mesh(this.geometry(m), this.material(m.c)); parent.add(mesh);
+    const tag=m.tag||'';
+    const kind=/LINER/.test(tag)?'polymer':/AMORT|BUFFER/.test(tag)?'rubber':/CORTE_.*(?:FILO|CUCHILLA)|MG.*(?:EJE|PIÑON|PINON)|RODILLO/.test(tag)?'stainless':/PERNO|ARANDELA|TUERCA|ANCLA_HAS|TC11|PASADOR/.test(tag)?'zinc':'paint';
+    const color=Array.isArray(m.c)?new THREE.Color(...m.c.map(v=>v/255)).convertSRGBToLinear():m.c;
+    const mesh = new THREE.Mesh(this.geometry(m), this.workshop.materialFor(color,kind)); parent.add(mesh);
     mesh.castShadow = true; mesh.receiveShadow = true;
     mesh.userData = { group: m.group || parent.name, part: m.tag || parent.name };
     this.parts.push(mesh);
     const edge = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry, 30), new THREE.LineBasicMaterial({ color: 0x203a4a, transparent: true, opacity: .27 }));
-    edge.renderOrder = 1; mesh.add(edge); this.edgeLines.push(edge); return mesh;
+    edge.renderOrder = 1;edge.visible=this.edgesOn; mesh.add(edge); this.edgeLines.push(edge); return mesh;
   }
   box(parent, w, d, h, x, y, z, color, group, options) {
     const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, d, h), this.material(color, options));
@@ -503,6 +509,7 @@ class SceneEngine {
         this.dummy.scale.setScalar(.45+(i%5)*.11);this.dummy.rotation.set(i,i*.3,i*.7);this.dummy.updateMatrix();this.flow.setMatrixAt(i,this.dummy.matrix);
       }this.flow.instanceMatrix.needsUpdate=true;
     }
+    this.equipmentDetails?.update(s);this.processDetails?.update(s);
     this.render();return {...s};
   }
   setMode(v) { this.mode=v==='closed'?'closed':'spout';this.setProgress(this.progress); }
@@ -513,9 +520,22 @@ class SceneEngine {
     this.section=!!v;
     this.sectionMeshes.forEach(mesh=>{mesh.material.clippingPlanes=this.section?[new THREE.Plane(new THREE.Vector3(0,1,0),0)]:[];
       mesh.material.transparent=this.section;mesh.material.opacity=this.section?.40:1;mesh.material.depthWrite=!this.section;mesh.material.needsUpdate=true;});
-    this.render();
+    this.applyDetailFocus(this.currentView);this.render();
+  }
+  applyDetailFocus(name) {
+    const cutter=name==='cutter';
+    this.sectionMeshes.forEach(mesh=>{
+      if(mesh!==this.bag&&!/^TOL_GUARDA|^GUARDA_CORTE/.test(mesh.userData.part||''))return;
+      mesh.material.transparent=this.section||cutter;mesh.material.opacity=this.section?.40:cutter?.16:1;
+      mesh.material.depthWrite=!(this.section||cutter);mesh.material.needsUpdate=true;
+    });
   }
   setDimensions(v) { this.dimensions.visible=!!v;this.render(); }
+  setStyle(v) {
+    this.renderStyle=v==='technical'?'technical':'realistic';this.workshop.applyStyle(this.renderStyle);
+    this.camera=this.renderStyle==='technical'?this.technicalCamera:this.perspectiveCamera;
+    this.controls.object=this.camera;this.setEdges(this.renderStyle==='technical');this.resize();this.setView(this.currentView);
+  }
   setExploded(v) {
     this.exploded=!!v;
     const offsets={Porticos:[-.45,0,0],Tolva:[.35,0,.25],Plataforma:[0,.55,.08],Escalera:[-.5,.55,0],Barandas:[0,.55,.55],Monorriel:[0,0,.55],'Soporte bolsa':[0,0,.6],Complementos:[0,0,.05]};
@@ -530,26 +550,33 @@ class SceneEngine {
   setView(name) {
     const aliases={isometrica:'iso','isométrica':'iso',frontal:'front',lateral:'side',posterior:'back',planta:'top',isometric:'iso'};
     name=aliases[String(name).toLowerCase()]||name;
-    const focus={discharge:{target:[2.35,0,2.8],offset:[6,-8,4],zoom:1.6},bagging:{target:[2.35,-.55,1.0],offset:[5,-7,3],zoom:2.7},pickup:{target:[.65,-.45,1.6],offset:[6,-8,3],zoom:1.65}};
+    const C=this.data.config,H=this.data.hopper;this.currentView=name;
+    const focus={discharge:{target:[H.center_x,0,C.support_z],offset:[2.8,-4,2.1],height:3.2},bagging:{target:[H.center_x,-.25,.55],offset:[0,-2.4,1.0],height:2.1},pickup:{target:[C.pickup_x,-.9,1.15],offset:[3.9,-5.1,2.8],height:4.2},
+      hoist:{target:[this.state?.x??C.pickup_x,0,C.beam_bottom-.23],offset:[1.2,-1.65,.72],height:1.3},
+      locks:{target:[2.9,0,C.beam_bottom+.06],offset:[1.2,-1.9,.85],height:1.5},
+      cutter:{target:[H.center_x,0,C.support_z+.14],offset:[.65,2.25,.8],height:1.7},
+      gate:{target:[2.55,.18,H.outlet_z+.05],offset:[.25,-1.6,.4],height:1.4},
+      anchors:{target:[0,-1,.06],offset:[-1.25,-1.2,.8],height:1.05}};
     focus.discharge.target[2]=this.data.config.support_z;
     const view=focus[name];this.controls.target.set(...(view?.target||[1.15,-.02,this.data.config.beam_top/2]));
-    const t=this.controls.target,views={iso:[8,-12,7.3],front:[0,-14,.01],side:[14,0,.01],back:[0,14,.01],top:[0,-.001,15],left:[-14,0,.01]};
+    const t=this.controls.target,views={iso:[7,-9,5.8],front:[0,-14,.01],side:[14,0,.01],back:[0,14,.01],top:[0,-.001,15],left:[-14,0,.01]};
     const d=view?.offset||views[name]||views.iso;
     this.camera.up.copy(name==='top'?new THREE.Vector3(0,1,0):UP);
-    this.camera.position.copy(t).add(new THREE.Vector3(...d));this.camera.zoom=view?.zoom||1;this.controls.update();this.render();
+    this.camera.position.copy(t).add(new THREE.Vector3(...d));this.camera.zoom=this.camera.isOrthographicCamera&&view?2*this.camera.top/view.height:1;this.camera.updateProjectionMatrix();this.controls.update();this.applyDetailFocus(name);this.render();
   }
   resetCamera() { this.setView('iso'); }
-  getState() { return {...this.state,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:this.data.revision,nativeParts:this.data.nativeParts,nativeComponents:this.data.nativeComponents}; }
+  getState() { const info=this.renderer.info;return {...this.state,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:this.data.revision,nativeParts:this.data.nativeParts,nativeComponents:this.data.nativeComponents,view:this.currentView,renderStyle:this.renderStyle,renderStats:{calls:info.render.calls,triangles:info.render.triangles,geometries:info.memory.geometries,textures:info.memory.textures}}; }
   resize() {
     const w=Math.max(1,this.container.clientWidth),h=Math.max(1,this.container.clientHeight);
     this.renderer.setSize(w,h,false);const half=Math.max(4.05,(this.data.config.beam_top+.9)*.65),ratio=w/h;
-    this.camera.left=-half*ratio;this.camera.right=half*ratio;this.camera.top=half;this.camera.bottom=-half;
-    this.camera.updateProjectionMatrix();this.render();
+    Object.assign(this.technicalCamera,{left:-half*ratio,right:half*ratio,top:half,bottom:-half});
+    this.perspectiveCamera.aspect=ratio;this.perspectiveCamera.updateProjectionMatrix();this.technicalCamera.updateProjectionMatrix();this.render();
   }
   render() { if(this.renderer&&this.camera)this.renderer.render(this.scene,this.camera); }
   toggleFullscreen() { return document.fullscreenElement?document.exitFullscreen():this.container.requestFullscreen?.(); }
   dispose() {
     this.observer?.disconnect();this.controls?.dispose();
+    this.workshop?.dispose();this.equipmentDetails?.dispose?.();this.processDetails?.dispose?.();
     this.renderer.domElement.removeEventListener('pointerdown',this.pointerDown);this.renderer.domElement.removeEventListener('pointerup',this.pointerUp);this.renderer.domElement.removeEventListener('keydown',this.keydown);
     this.scene.traverse(o=>{o.geometry?.dispose();if(o.material){const a=Array.isArray(o.material)?o.material:[o.material];a.forEach(m=>{m.map?.dispose();m.dispose();});}});
     this.renderer.dispose();this.renderer.domElement.remove();

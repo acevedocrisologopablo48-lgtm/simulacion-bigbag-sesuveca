@@ -1,4 +1,4 @@
-import {BigbagScene} from './scene.js?v=eb-solid-755af84f39e0';
+import {BigbagScene} from './scene.js?v=eb-solid-11ce75abe83b';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
@@ -7,7 +7,7 @@ const displayText=value=>String(value??'').replace(/revisi[oó]n\s+t[ée]cnica/g
 const escape=value=>displayText(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let progress=0,playing=false,lastTime=0,speed=1,ready=false,lastPhase=-1,project,model;
 const CYCLE_SECONDS=120;
-const viewNames={iso:'ISOMÉTRICA',front:'FRONTAL',side:'LATERAL',back:'POSTERIOR',top:'PLANTA',discharge:'DESCARGA',bagging:'ENSACADO',pickup:'RECEPCIÓN'};
+const viewNames={iso:'ISOMÉTRICA',front:'FRONTAL',side:'LATERAL',back:'POSTERIOR',top:'PLANTA',hoist:'TECLE Y CARRO',locks:'TRABA Y TOPES',cutter:'CORTE DE BOLSA',gate:'COMPUERTA',bagging:'BALANZA Y MESA',anchors:'BASES Y ANCLAJES',discharge:'DESCARGA',pickup:'RECEPCIÓN'};
 const phaseNames={recepcion:'Recepción',enganche:'Enganche',izaje:'Izaje',traslado:'Traslado',apoyo:'Apoyo',descarga:'Descarga',llenado:'Llenado',amarre:'Amarre',salida:'Salida',retorno:'Retorno'};
 
 function setPlaying(value){
@@ -59,6 +59,14 @@ function setView(name){
   if(!ready)return;
   BigbagScene.setView(name);$('viewName').textContent=`CONJUNTO / ${viewNames[name]||'LIBRE'}`;
   all('.view-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+  $('extraView').value=[...$('extraView').options].some(option=>option.value===name)?name:'';
+}
+function setStyle(value){
+  if(!ready)return;
+  const style=value==='technical'?'technical':'realistic';
+  BigbagScene.setStyle(style);$('renderStyle').value=style;
+  const edges=style==='technical';
+  $('edgesBtn').setAttribute('aria-pressed',String(edges));$('edgesBtn').classList.toggle('active',edges);
 }
 function showTab(id){
   all('.tab-panel').forEach(panel=>panel.hidden=panel.id!==id);
@@ -115,9 +123,10 @@ $('resetBtn').addEventListener('click',()=>setProgress(0));
 $('timeline').addEventListener('input',e=>setProgress(Number(e.target.value)/1000));
 $('speed').addEventListener('change',e=>speed=Number(e.target.value));
 all('.jump-buttons button').forEach(button=>button.addEventListener('click',()=>setProgress(button.dataset.progress)));
-$('fitBtn').addEventListener('click',()=>{BigbagScene.resetCamera();$('viewName').textContent='CONJUNTO / ISOMÉTRICA';all('.view-btn').forEach(b=>b.classList.toggle('active',b.dataset.view==='iso'));});
+$('fitBtn').addEventListener('click',()=>setView('iso'));
 $('fullscreenBtn').addEventListener('click',async()=>{try{await BigbagScene.toggleFullscreen();}catch{$('viewer').scrollIntoView({block:'center'});}});
 $('edgesBtn').addEventListener('click',()=>toggle($('edgesBtn'),'setEdges'));
+$('renderStyle').addEventListener('change',e=>setStyle(e.target.value));
 $('sectionBtn').addEventListener('click',()=>toggle($('sectionBtn'),'setSection'));
 $('dimensionsBtn').addEventListener('click',()=>toggle($('dimensionsBtn'),'setDimensions'));
 $('clearSelection').addEventListener('click',()=>{BigbagScene.highlight(null);selectPart(null);});
@@ -131,16 +140,16 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-755af84f39e0'),fetch('data/model.json?v=eb-solid-755af84f39e0')]);
+  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-11ce75abe83b'),fetch('data/model.json?v=eb-solid-11ce75abe83b')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();
   await BigbagScene.init($('scene'),selectPart);ready=true;
   $('loading').hidden=true;$('playBtn').disabled=false;
-  setProgress(0);showTab(['simulacion','calculos','piezas'].includes(location.hash.slice(1))?location.hash.slice(1):'simulacion');
+  setStyle('realistic');setProgress(0);showTab(['simulacion','calculos','piezas'].includes(location.hash.slice(1))?location.hash.slice(1):'simulacion');
   requestAnimationFrame(tick);
   // Expose deterministic controls for accessibility and repeatable browser checks.
-  window.bigbagApp={getState:()=>({...BigbagScene.getState(),playing,speed,ready}),setProgress,setPlaying,setView,showTab};
+  window.bigbagApp={getState:()=>({...BigbagScene.getState(),playing,speed,ready}),setProgress,setPlaying,setView,setStyle,showTab};
 }catch(error){
   console.error(error);$('loading').innerHTML='<strong>No se pudo abrir el modelo 3D.</strong><small>Recarga la página en un navegador con WebGL habilitado.</small><button type="button" id="retryLoad">Volver a cargar</button>';
   $('retryLoad').addEventListener('click',()=>location.reload());
