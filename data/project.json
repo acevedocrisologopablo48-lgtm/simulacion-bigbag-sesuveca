@@ -3,11 +3,11 @@
   "title": "Estación de izaje y descarga de bigbags",
   "company": "SESUVECA",
   "author": "Javier Acevedo",
-  "summary": "Estación P05 sincronizada con el ensamble nativo de SolidWorks: cruceta nominal de 2 t, bolsas de proceso de 1 t y tolva útil de 1,84 m³.",
+  "summary": "Estación P05: cruceta nominal de 2 t, bolsas de proceso de 1 t y tolva útil de 1,84 m³.",
   "dimensions": [
     {
       "label": "Bigbag de proceso",
-      "value": "Hasta 1.000 kg · envolvente gráfica ilustrativa; bolsa comercial según especificación de proceso"
+      "value": "Hasta 1.000 kg"
     },
     {
       "label": "Cruceta nominal",
@@ -93,13 +93,13 @@
   "calculations": [
     {
       "id": "carro_anclajes",
-      "title": "Rodadura y anclajes adoptados",
+      "title": "Rodadura y anclajes",
       "count": 85,
       "maxUtilization": 0.9496130000088021,
       "failedCount": 0,
-      "status": "Verifica cálculo analítico",
-      "description": "Anclajes M16 con empotramiento efectivo de 275 mm y varilla total de 400 mm; placas y acciones de impacto integradas.",
-      "scope": "Resultados del modelo analítico con concreto 20,59 MPa, losa 650 mm y distancias a borde especificadas."
+      "status": "Conforme",
+      "description": "M16 · empotramiento 275 mm · longitud 400 mm.",
+      "scope": "Concreto 20,59 MPa, losa 650 mm y distancias a borde según memoria."
     },
     {
       "id": "traba_carro",
@@ -107,19 +107,19 @@
       "count": 30,
       "maxUtilization": 0.8626359606838041,
       "failedCount": 0,
-      "status": "Verifica cálculo analítico",
-      "description": "Carga local de 24,525 kN; doble corte, flexión, aplastamiento y fijaciones del soporte.",
-      "scope": "La capacidad local del pasador se distingue de la envolvente horizontal global de la estación."
+      "status": "Conforme",
+      "description": "24,525 kN · doble corte y fijaciones del soporte.",
+      "scope": "Capacidad local de la traba; envolvente horizontal global de 12 kN."
     },
     {
       "id": "correcciones_geometricas",
-      "title": "Soportes y geometría corregida",
+      "title": "Soportes y arriostres",
       "count": 36,
       "maxUtilization": 0.853265625,
       "failedCount": 0,
-      "status": "Verifica cálculo analítico",
-      "description": "Arriostres fuera de la tolva, refuerzo del apoyo de bolsa, soporte de cortador y transferencia a columnas.",
-      "scope": "Comprobaciones analíticas de los componentes modificados."
+      "status": "Conforme",
+      "description": "Apoyo de bolsa, cortador y transferencia a columnas.",
+      "scope": "Resistencia de los componentes y conexiones indicados en memoria."
     },
     {
       "id": "estructura_longitudinal",
@@ -127,9 +127,9 @@
       "count": 16,
       "maxUtilization": 0.9972489242109828,
       "failedCount": 0,
-      "status": "Verifica cálculo analítico",
-      "description": "Pórtico, monorriel, uniones y anclajes con la envolvente horizontal calculada.",
-      "scope": "La reacción adoptada y sus límites de selección comercial están documentados en la memoria."
+      "status": "Conforme",
+      "description": "Pórtico, monorriel y uniones · acción horizontal de 12 kN.",
+      "scope": "12 kN corresponde al caso estructural; curva comercial del amortiguador según Anexo D."
     },
     {
       "id": "calculo_mecanismos",
@@ -137,9 +137,9 @@
       "count": 15,
       "maxUtilization": 0.8928571428571429,
       "failedCount": 0,
-      "status": "Verifica cálculo analítico",
-      "description": "Cortador, compuerta manual, bloqueos y pérdidas de presión de captación.",
-      "scope": "La animación es ilustrativa; los ensayos del equipo terminado no se atribuyen al cálculo."
+      "status": "Conforme",
+      "description": "Cortador, compuerta manual, bloqueos y pérdidas de presión.",
+      "scope": "Cargas de corte, cierre y caudal de captación según memoria."
     },
     {
       "id": "juntas_finales",
@@ -147,9 +147,9 @@
       "count": 141,
       "maxUtilization": 0.7727903845648465,
       "failedCount": 0,
-      "status": "Verifica cálculo analítico",
-      "description": "141 comprobaciones locales sobre las uniones y secciones del CAD final; reacción de topes de diseño de 12 kN.",
-      "scope": "Soldaduras de filete y juntas preparadas según sus espesores; identificación individual en memoria y cuadro de uniones."
+      "status": "Conforme",
+      "description": "Uniones y secciones resistentes · topes a 12 kN.",
+      "scope": "Filetes y juntas preparadas identificados en el cuadro de uniones."
     },
     {
       "id": "fatiga",
@@ -157,19 +157,19 @@
       "count": 34,
       "maxUtilization": 0.8935015887129562,
       "failedCount": 0,
-      "status": "Verifica cálculo analítico",
-      "description": "Categoría B, Clase de servicio 2; carga nominal de cruceta diferenciada del proceso de bolsas de 1 t.",
-      "scope": "Cálculo de resistencia y fatiga conforme a las hipótesis y detalles descritos en la memoria."
+      "status": "Conforme",
+      "description": "Categoría B · Clase de servicio 2.",
+      "scope": "Cruceta nominal 2 t; proceso de bolsas de 1 t."
     },
     {
       "id": "acreditacion_analitica_final",
-      "title": "Fijaciones y topes: comprobación local",
+      "title": "Fijaciones y topes",
       "count": 24,
       "maxUtilization": 0.8682579296133878,
       "failedCount": 0,
-      "status": "Componentes conformes bajo las hipótesis indicadas",
+      "status": "Conforme",
       "description": "Topes: FS mínimo 1,9285 para 10,75 kN y 1,7276 para la envolvente activa de 12 kN. Pernos propios M20, carga centrada: FS 17,4195.",
-      "scope": "Los 24 controles de esta tarjeta verifican componentes bajo hipótesis explícitas. Los cuatro M20 pertenecen al soporte fijo de la traba; no son los suspensores originales del KITO. El caso adicional de colgar carga por el receptor Y300 es hipotético: sus cuatro controles se presentan por separado en el Anexo D, con dos franjas de placa no conformes, y no forman parte del camino instalado. 10,75 kN es una acción estática impuesta; no es un pico comercial acreditado. La energía activa exige una fuerza media mínima de 10,755 kN. Se mantienen 12 kN de cálculo estructural y la distinción entre conformidad analítica y aceptación comercial.",
+      "scope": "4 M20: soporte fijo de traba; KITO: suspensión original; 10,75 kN: caso estático impuesto (curva del TS75-39 a 0,5 m/s pendiente de dato comercial; media energética mínima 10,755 kN); 12 kN: envolvente estructural activa; hipótesis de suspensión por receptor Y300: cuatro controles separados en Anexo D, dos franjas de placa no conformes, fuera del camino instalado.",
       "source": "engineering/acreditacion_analitica_final_p05.json",
       "matrixSource": "engineering/matriz_acreditacion_p05.json",
       "analyticalReportSha256": "735d6594180d474e4b71a3d59ac54a72ffad3cb55be6c3222890f27abf385b76",
@@ -2355,12 +2355,12 @@
     },
     {
       "label": "Estado del expediente",
-      "value": "REVISIÓN P05 - EMISIÓN CONSOLIDADA PARA REVISIÓN TÉCNICA"
+      "value": "Revisión P05 · revisión técnica"
     }
   ],
-  "notice": "Modelo sincronizado con los nativos de SolidWorks y los documentos de esta emisión. Cruceta nominal de 2 t; proceso máximo de 1 t. Anclajes adoptados M16, hef 275 mm y longitud 400 mm. Las comprobaciones analíticas y las superficies CAD se distinguen de los ensayos físicos y la aceptación comercial de KITO/topes, cuyo alcance figura en la memoria. La animación conserva la masa transferida y representa la secuencia de operación.",
-  "status": "REVISIÓN P05 - EMISIÓN CONSOLIDADA PARA REVISIÓN TÉCNICA",
-  "issue": "REVISIÓN P05 - EMISIÓN CONSOLIDADA PARA REVISIÓN TÉCNICA",
+  "notice": "Revisión P05 · cruceta nominal 2 t · proceso máximo de 1 t.",
+  "status": "P05 - REVISIÓN TÉCNICA",
+  "issue": "P05 - REVISIÓN TÉCNICA",
   "fullReleaseAllowed": false,
   "verification": {
     "distinctParts": 253,

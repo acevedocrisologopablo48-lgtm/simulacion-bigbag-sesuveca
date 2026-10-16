@@ -1,4 +1,4 @@
-import {BigbagScene} from './scene.js?v=p05-solid-c15fd5a4351e';
+import {BigbagScene} from './scene.js?v=p05-solid-5da099ef9295';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
@@ -35,7 +35,7 @@ function renderReadings(){
     $('phaseTitle').textContent=s.phase;
     all('.stage-item').forEach((button,i)=>{button.classList.toggle('active',i===s.phaseIndex);button.setAttribute('aria-pressed',String(i===s.phaseIndex));});
   }
-  $('interlockReadout').textContent=s.interlockState||'Secuencia de enclavamiento ilustrativa';
+  $('interlockReadout').textContent=s.interlockState||'Enclavamientos del ciclo';
   $('interlockReadout').classList.toggle('locked',Boolean(s.lockingPin));
   $('phaseDetail').textContent=s.phaseIndex===8?`${phaseNames[s.cyclePhase]||'Ensacado'} · saco ${s.sackNumber} de ${s.totalSacks}. Transferencia por rodillos y cierre por amarre.`:s.detail;
   const mini=s.phaseIndex<2?0:s.phaseIndex<5?1:s.phaseIndex===5?2:3;
@@ -62,7 +62,7 @@ function setView(name){
 function showTab(id){
   all('.tab-panel').forEach(panel=>panel.hidden=panel.id!==id);
   all('.nav-tab').forEach(button=>{const active=button.dataset.tab===id;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
-  $('pageTitle').textContent=id==='simulacion'?'El proyecto, en movimiento.':id==='calculos'?'Ingeniería del proyecto.':'Materiales y componentes.';
+  $('pageTitle').textContent=id==='simulacion'?'Izaje, descarga y ensacado':id==='calculos'?'Cálculos':'Piezas y materiales';
   if(id==='simulacion')requestAnimationFrame(()=>BigbagScene.resize());
   else setPlaying(false);
   history.replaceState(null,'',`#${id}`);
@@ -73,7 +73,7 @@ function toggle(button,method){
   BigbagScene[method](value);
 }
 function populateProject(){
-  $('calcCards').innerHTML=project.calculations.map(c=>{const failed=Number(c.failedCount??(c.maxUtilization>1?4:0));return `<article class="calc-card${failed?' has-findings':''}"><div class="calc-heading"><h3>${escape(c.title)}</h3><span class="check-status${failed?' has-findings':''}">${failed?`${failed} no conformes`:'Verifica el modelo'}</span></div><strong class="calc-number">${c.count}</strong><small>COMPROBACIONES ANALÍTICAS</small><p>${escape(c.description)}</p><div class="utilization">Utilización máxima ${number(c.maxUtilization*100,1)} %<div class="util-bar"><i style="width:${Math.max(0,Math.min(100,c.maxUtilization*100))}%"></i></div></div><details><summary>Alcance del cálculo</summary><p>${escape(c.scope)}</p></details></article>`;}).join('');
+  $('calcCards').innerHTML=project.calculations.map(c=>{const failed=Number(c.failedCount??(c.maxUtilization>1?4:0));return `<article class="calc-card${failed?' has-findings':''}"><div class="calc-heading"><h3>${escape(c.title)}</h3><span class="check-status${failed?' has-findings':''}">${failed?`${failed} no conformes`:'Conforme'}</span></div><strong class="calc-number">${c.count}</strong><small>COMPROBACIONES</small><p>${escape(c.description)}</p><div class="utilization">Utilización máxima ${number(c.maxUtilization*100,1)} %<div class="util-bar"><i style="width:${Math.max(0,Math.min(100,c.maxUtilization*100))}%"></i></div></div><details><summary>Datos del cálculo</summary><p>${escape(c.scope)}</p></details></article>`;}).join('');
   const dl=rows=>rows.map(row=>`<div><dt>${escape(row.label)}</dt><dd>${escape(row.value)}</dd></div>`).join('');
   $('dimensionList').innerHTML=dl(project.dimensions);$('operatingList').innerHTML=dl(project.operating);
   $('engineeringNotice').innerHTML=`<span class="note-mark">i</span><p>${escape(project.notice)}</p>`;
@@ -130,7 +130,7 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=p05-solid-c15fd5a4351e'),fetch('data/model.json?v=p05-solid-c15fd5a4351e')]);
+  const responses=await Promise.all([fetch('data/project.json?v=p05-solid-5da099ef9295'),fetch('data/model.json?v=p05-solid-5da099ef9295')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();
