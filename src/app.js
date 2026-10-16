@@ -1,9 +1,10 @@
-import {BigbagScene} from './scene.js?v=p05-solid-5da099ef9295';
+import {BigbagScene} from './scene.js?v=eb-solid-0490e1070447';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
 const number=(v,d=0)=>Number(v).toLocaleString('es-PE',{minimumFractionDigits:d,maximumFractionDigits:d});
-const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const displayText=value=>String(value??'').replace(/revisi[oó]n\s+t[ée]cnica/gi,'').replace(/(?:[_\s·-]+)?P05(?=$|[_\s·-])/gi,'').replace(/\s+/g,' ').replace(/^[ _·-]+|[ _·-]+$/g,'');
+const escape=value=>displayText(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let progress=0,playing=false,lastTime=0,speed=1,ready=false,lastPhase=-1,project,model;
 const CYCLE_SECONDS=120;
 const viewNames={iso:'ISOMÉTRICA',front:'FRONTAL',side:'LATERAL',back:'POSTERIOR',top:'PLANTA',discharge:'DESCARGA',bagging:'ENSACADO',pickup:'RECEPCIÓN'};
@@ -32,12 +33,12 @@ function renderReadings(){
   if(s.phaseIndex!==lastPhase){
     lastPhase=s.phaseIndex;
     $('phaseNumber').textContent=String(s.phaseIndex+1).padStart(2,'0');
-    $('phaseTitle').textContent=s.phase;
+    $('phaseTitle').textContent=displayText(s.phase);
     all('.stage-item').forEach((button,i)=>{button.classList.toggle('active',i===s.phaseIndex);button.setAttribute('aria-pressed',String(i===s.phaseIndex));});
   }
   $('interlockReadout').textContent=s.interlockState||'Enclavamientos del ciclo';
   $('interlockReadout').classList.toggle('locked',Boolean(s.lockingPin));
-  $('phaseDetail').textContent=s.phaseIndex===8?`${phaseNames[s.cyclePhase]||'Ensacado'} · saco ${s.sackNumber} de ${s.totalSacks}. Transferencia por rodillos y cierre por amarre.`:s.detail;
+  $('phaseDetail').textContent=s.phaseIndex===8?`${phaseNames[s.cyclePhase]||'Ensacado'} · saco ${s.sackNumber} de ${s.totalSacks}. Transferencia por rodillos y cierre por amarre.`:displayText(s.detail);
   const mini=s.phaseIndex<2?0:s.phaseIndex<5?1:s.phaseIndex===5?2:3;
   all('.sequence-mini span').forEach((span,i)=>span.classList.toggle('active',i===mini));
   all('.jump-buttons button').forEach((button,i)=>button.classList.toggle('active',i===0?s.phaseIndex<5:i===1?s.phaseIndex===5:s.phaseIndex>=6&&s.phaseIndex<9));
@@ -51,7 +52,7 @@ function setProgress(value,{pause=true}={}){
 }
 function selectPart(part){
   if(!part){$('selection').hidden=true;return;}
-  $('selectionName').textContent=part.label||part.name||part.part||'Componente P05';
+  $('selectionName').textContent=displayText(part.label||part.name||part.part||'Componente');
   $('selection').hidden=false;
 }
 function setView(name){
@@ -78,7 +79,7 @@ function populateProject(){
   $('dimensionList').innerHTML=dl(project.dimensions);$('operatingList').innerHTML=dl(project.operating);
   $('engineeringNotice').innerHTML=`<span class="note-mark">i</span><p>${escape(project.notice)}</p>`;
   $('groupCards').innerHTML=project.groups.map((group,i)=>`<button class="group-card" data-group="${escape(group.id)}"><span class="group-index">${String(i+1).padStart(2,'0')}</span><div><strong>${escape(group.label)}</strong><p>${escape(group.material)}</p><small>${group.quantity} elementos CAD · ${number(group.massKg,1)} kg de materiales modelados</small></div></button>`).join('');
-  project.groups.forEach(group=>{const option=document.createElement('option');option.value=group.id;option.textContent=group.label;$('groupFilter').appendChild(option);});
+  project.groups.forEach(group=>{const option=document.createElement('option');option.value=group.id;option.textContent=displayText(group.label);$('groupFilter').appendChild(option);});
   all('.group-card').forEach(button=>button.addEventListener('click',()=>{
     setPlaying(false);showTab('simulacion');BigbagScene.highlight(button.dataset.group);
     selectPart({label:project.groups.find(g=>g.id===button.dataset.group)?.label});
@@ -130,7 +131,7 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=p05-solid-5da099ef9295'),fetch('data/model.json?v=p05-solid-5da099ef9295')]);
+  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-0490e1070447'),fetch('data/model.json?v=eb-solid-0490e1070447')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();

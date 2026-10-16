@@ -1,6 +1,6 @@
-# Estación P05 · SESUVECA
+# Estación de bigbags · SESUVECA
 
-Modelo, cálculos y documentos de la revisión P05.
+Modelo, cálculos y documentos de la estación.
 
 253 piezas distintas y 792 componentes. Cruceta nominal 2 t; proceso 1 t.
 

@@ -80,7 +80,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=p05-solid-5da099ef9295', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=eb-solid-0490e1070447', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría P05.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;

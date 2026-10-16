@@ -1,9 +1,9 @@
 {
-  "revision": "P05",
+  "revision": "",
   "title": "Estación de izaje y descarga de bigbags",
   "company": "SESUVECA",
   "author": "Javier Acevedo",
-  "summary": "Estación P05: cruceta nominal de 2 t, bolsas de proceso de 1 t y tolva útil de 1,84 m³.",
+  "summary": "Estación de bigbags: cruceta nominal de 2 t, bolsas de proceso de 1 t y tolva útil de 1,84 m³.",
   "dimensions": [
     {
       "label": "Bigbag de proceso",
@@ -270,7 +270,7 @@
     {
       "code": "SHS150x150x6_L5488000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "SHS150x150x6 L5488 mm",
       "group": "porticos"
@@ -278,7 +278,7 @@
     {
       "code": "IPE200_L2000000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "IPE200 L2000 mm",
       "group": "porticos"
@@ -286,7 +286,7 @@
     {
       "code": "I_A240x140x8x20_L3600000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "I A240x140x8x20 L3600 mm",
       "group": "monorriel"
@@ -294,7 +294,7 @@
     {
       "code": "SHS100x100x5_L2848000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "SHS100x100x5 L2848 mm",
       "group": "tolva"
@@ -302,7 +302,7 @@
     {
       "code": "SHS150x150x6_L2200000_CUTda1945_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS150x150x6 L2200 mm CUTda1945",
       "group": "tolva"
@@ -310,7 +310,7 @@
     {
       "code": "SHS150x150x6_L1650000_CUT8f76b3_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS150x150x6 L1650 mm CUT8f76b3",
       "group": "tolva"
@@ -318,7 +318,7 @@
     {
       "code": "SHS60x60x4_L2100000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS60x60x4 L2100 mm",
       "group": "tolva"
@@ -326,7 +326,7 @@
     {
       "code": "SHS60x60x4_L1550000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS60x60x4 L1550 mm",
       "group": "tolva"
@@ -334,7 +334,7 @@
     {
       "code": "SHS80x80x4_L763138_CUTb93258_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS80x80x4 L763.138 mm CUTb93258",
       "group": "tolva"
@@ -342,7 +342,7 @@
     {
       "code": "SHS80x80x4_L763138_CUTd316ed_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS80x80x4 L763.138 mm CUTd316ed",
       "group": "tolva"
@@ -350,7 +350,7 @@
     {
       "code": "SHS80x80x4_L1113138_CUT3242f9_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS80x80x4 L1113.14 mm CUT3242f9",
       "group": "tolva"
@@ -358,7 +358,7 @@
     {
       "code": "SHS80x80x4_L1113138_CUT49d092_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS80x80x4 L1113.14 mm CUT49d092",
       "group": "tolva"
@@ -366,7 +366,7 @@
     {
       "code": "SHS80x80x4_L1463138_CUTd759b0_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "SHS80x80x4 L1463.14 mm CUTd759b0",
       "group": "tolva"
@@ -374,7 +374,7 @@
     {
       "code": "RHS150x75x5_L1757000_CUT394f60_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "RHS150x75x5 L1757 mm CUT394f60",
       "group": "tolva"
@@ -382,7 +382,7 @@
     {
       "code": "RHS150x75x5_L1757000_CUT3ec3f6_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "RHS150x75x5 L1757 mm CUT3ec3f6",
       "group": "tolva"
@@ -390,7 +390,7 @@
     {
       "code": "SHS60x60x4_L2882256_CUTf8e6e9_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS60x60x4 L2882.26 mm CUTf8e6e9",
       "group": "tolva"
@@ -398,7 +398,7 @@
     {
       "code": "SHS80x80x4_L2050000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS80x80x4 L2050 mm",
       "group": "soporte-bolsa"
@@ -406,7 +406,7 @@
     {
       "code": "SHS80x80x4_L1888000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 3,
       "dimensions": "SHS80x80x4 L1888 mm",
       "group": "plataforma"
@@ -414,7 +414,7 @@
     {
       "code": "SHS80x80x4_L1908000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS80x80x4 L1908 mm",
       "group": "plataforma"
@@ -422,7 +422,7 @@
     {
       "code": "RHS150x75x5_L1780000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "RHS150x75x5 L1780 mm",
       "group": "plataforma"
@@ -430,7 +430,7 @@
     {
       "code": "SHS60x60x4_L725000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 5,
       "dimensions": "SHS60x60x4 L725 mm",
       "group": "plataforma"
@@ -438,7 +438,7 @@
     {
       "code": "SHS40x40x3_L800000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 25,
       "dimensions": "SHS40x40x3 L800 mm",
       "group": "escalera"
@@ -446,7 +446,7 @@
     {
       "code": "SHS50x50x4_L1070000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "SHS50x50x4 L1070 mm",
       "group": "barandas"
@@ -454,7 +454,7 @@
     {
       "code": "SHS40x40x3_L778272_CUT889b01_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L778.272 mm CUT889b01",
       "group": "barandas"
@@ -462,7 +462,7 @@
     {
       "code": "SHS40x40x3_L778272_CUTa64233_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L778.272 mm CUTa64233",
       "group": "barandas"
@@ -470,7 +470,7 @@
     {
       "code": "SHS40x40x3_L778272_CUT095149_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L778.272 mm CUT095149",
       "group": "barandas"
@@ -478,7 +478,7 @@
     {
       "code": "SHS40x40x3_L778272_CUT6865b9_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L778.272 mm CUT6865b9",
       "group": "barandas"
@@ -486,7 +486,7 @@
     {
       "code": "SHS40x40x3_L778272_CUTb7e8da_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L778.272 mm CUTb7e8da",
       "group": "barandas"
@@ -494,7 +494,7 @@
     {
       "code": "SHS40x40x3_L778272_CUTeaa0b6_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L778.272 mm CUTeaa0b6",
       "group": "barandas"
@@ -502,7 +502,7 @@
     {
       "code": "SHS40x40x3_L778272_CUT65b082_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L778.272 mm CUT65b082",
       "group": "barandas"
@@ -510,7 +510,7 @@
     {
       "code": "SHS40x40x3_L778272_CUTfe0482_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L778.272 mm CUTfe0482",
       "group": "barandas"
@@ -518,7 +518,7 @@
     {
       "code": "SHS40x40x3_L750000_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L750 mm",
       "group": "barandas"
@@ -526,7 +526,7 @@
     {
       "code": "SHS150x150x12_L1000000_P05",
       "name": "Componente de cruceta",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS150x150x12 L1000 mm",
       "group": "cruceta"
@@ -534,7 +534,7 @@
     {
       "code": "SHS150x150x12_L850000_P05",
       "name": "Componente de cruceta",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS150x150x12 L850 mm",
       "group": "cruceta"
@@ -542,7 +542,7 @@
     {
       "code": "SHS50x50x4_L1101268_CUT8d077a_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS50x50x4 L1101.27 mm CUT8d077a",
       "group": "barandas"
@@ -550,7 +550,7 @@
     {
       "code": "SHS60x60x4_L62410_P05",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "SHS60x60x4 L62.41 mm",
       "group": "tolva"
@@ -558,7 +558,7 @@
     {
       "code": "TOL_PANEL_CONO_6mm_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "TOL PANEL CONO 6mm",
       "group": "tolva"
@@ -566,7 +566,7 @@
     {
       "code": "TOL_PANEL_CUERPO_6mm_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 3,
       "dimensions": "TOL PANEL CUERPO 6mm",
       "group": "tolva"
@@ -574,7 +574,7 @@
     {
       "code": "TOL_PANEL_CUERPO_DN150_6mm_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "TOL PANEL CUERPO DN150 6mm",
       "group": "tolva"
@@ -582,7 +582,7 @@
     {
       "code": "TOL_TAPA_POLVO_1662x1662x3_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "TOL TAPA POLVO 1662x1662x3",
       "group": "tolva"
@@ -598,7 +598,7 @@
     {
       "code": "BASE_PORTICO_360x360x35",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "BASE PORTICO 360x360x35",
       "group": "porticos"
@@ -606,7 +606,7 @@
     {
       "code": "BASE_TOLVA_250x250x25",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "BASE TOLVA 250x250x25",
       "group": "tolva"
@@ -614,7 +614,7 @@
     {
       "code": "P02_BASE_ACCESO_200x200x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 5,
       "dimensions": "P02 BASE ACCESO 200x200x12",
       "group": "plataforma"
@@ -622,7 +622,7 @@
     {
       "code": "U01_CAP_200x200x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "U01 CAP 200x200x12",
       "group": "porticos"
@@ -630,7 +630,7 @@
     {
       "code": "U01_LATERAL_200x240x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "U01 LATERAL 200x240x12",
       "group": "porticos"
@@ -638,7 +638,7 @@
     {
       "code": "U01_CALCE_200x20x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "U01 CALCE 200x20x6",
       "group": "porticos"
@@ -646,7 +646,7 @@
     {
       "code": "U01_RIGIDIZADOR_44x175x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 24,
       "dimensions": "U01 RIGIDIZADOR 44x175x6",
       "group": "porticos"
@@ -654,7 +654,7 @@
     {
       "code": "U01_CARTELA_100x240x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "U01 CARTELA 100x240x12",
       "group": "porticos"
@@ -662,7 +662,7 @@
     {
       "code": "P01_CAP_COLUMNA_200x200x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "P01 CAP COLUMNA 200x200x12",
       "group": "porticos"
@@ -670,7 +670,7 @@
     {
       "code": "U02_COLLAR_150x200x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "U02 COLLAR 150x200x12",
       "group": "porticos"
@@ -678,7 +678,7 @@
     {
       "code": "U02_COLLAR_174x200x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "U02 COLLAR 174x200x12",
       "group": "porticos"
@@ -686,7 +686,7 @@
     {
       "code": "U02_COLLAR_150x158x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "U02 COLLAR 150x158x12",
       "group": "porticos"
@@ -694,7 +694,7 @@
     {
       "code": "U02_COLLAR_174x158x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "U02 COLLAR 174x158x12",
       "group": "porticos"
@@ -702,7 +702,7 @@
     {
       "code": "U02_CARTELA_BRL-A--1_0_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA BRL-A--1 0",
       "group": "porticos"
@@ -710,7 +710,7 @@
     {
       "code": "U02_CARTELA_BRL-A--1_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA BRL-A--1 1",
       "group": "porticos"
@@ -718,7 +718,7 @@
     {
       "code": "U02_CARTELA_BRL-B--1_0_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA BRL-B--1 0",
       "group": "porticos"
@@ -726,7 +726,7 @@
     {
       "code": "U02_CARTELA_BRL-B--1_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA BRL-B--1 1",
       "group": "porticos"
@@ -734,7 +734,7 @@
     {
       "code": "U02_CARTELA_KNE--1_0_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA KNE--1 0",
       "group": "porticos"
@@ -742,7 +742,7 @@
     {
       "code": "U02_CARTELA_KNE--1_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA KNE--1 1",
       "group": "porticos"
@@ -750,7 +750,7 @@
     {
       "code": "U02_CARTELA_BRL-A-1_0_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA BRL-A-1 0",
       "group": "porticos"
@@ -758,7 +758,7 @@
     {
       "code": "U02_CARTELA_BRL-A-1_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA BRL-A-1 1",
       "group": "porticos"
@@ -766,7 +766,7 @@
     {
       "code": "U02_CARTELA_BRL-B-1_0_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA BRL-B-1 0",
       "group": "porticos"
@@ -774,7 +774,7 @@
     {
       "code": "U02_CARTELA_BRL-B-1_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA BRL-B-1 1",
       "group": "porticos"
@@ -782,7 +782,7 @@
     {
       "code": "U02_CARTELA_KNE-1_0_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA KNE-1 0",
       "group": "porticos"
@@ -790,7 +790,7 @@
     {
       "code": "U02_CARTELA_KNE-1_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U02 CARTELA KNE-1 1",
       "group": "porticos"
@@ -798,7 +798,7 @@
     {
       "code": "U04_CAP_PATA_150x150x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "U04 CAP PATA 150x150x12",
       "group": "tolva"
@@ -806,7 +806,7 @@
     {
       "code": "P02_CAP_COLUMNA_120x120x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "P02 CAP COLUMNA 120x120x12",
       "group": "plataforma"
@@ -814,7 +814,7 @@
     {
       "code": "P02_CARTELA_150x150x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "P02 CARTELA 150x150x6",
       "group": "plataforma"
@@ -822,7 +822,7 @@
     {
       "code": "U04_CARTELA_125x150x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "U04 CARTELA 125x150x12",
       "group": "tolva"
@@ -830,7 +830,7 @@
     {
       "code": "U04_ANGULO_ARMADO_2x100x80x8_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 36,
       "dimensions": "U04 ANGULO ARMADO 2x100x80x8",
       "group": "tolva"
@@ -838,7 +838,7 @@
     {
       "code": "T01_ASIENTO_100x100x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "T01 ASIENTO 100x100x6",
       "group": "tolva"
@@ -846,7 +846,7 @@
     {
       "code": "T02_ASIENTO_INFERIOR_100x100x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "T02 ASIENTO INFERIOR 100x100x20",
       "group": "tolva"
@@ -854,7 +854,7 @@
     {
       "code": "T02_ASIENTO_SUPERIOR_200x214x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "T02 ASIENTO SUPERIOR 200x214x20",
       "group": "tolva"
@@ -862,7 +862,7 @@
     {
       "code": "J01_CARTELA_150x150x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "J01 CARTELA 150x150x6",
       "group": "escalera"
@@ -870,7 +870,7 @@
     {
       "code": "J02_PLACA_100x70x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 22,
       "dimensions": "J02 PLACA 100x70x6",
       "group": "escalera"
@@ -878,7 +878,7 @@
     {
       "code": "U05_BASE_POSTE_110x110x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 14,
       "dimensions": "U05 BASE POSTE 110x110x20",
       "group": "barandas"
@@ -886,7 +886,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 22,
       "dimensions": "U05 CARTELA 30x80x12",
       "group": "barandas"
@@ -894,7 +894,7 @@
     {
       "code": "OREJA_CENTRAL_150x220x20",
       "name": "Componente de cruceta",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "OREJA CENTRAL 150x220x20",
       "group": "cruceta"
@@ -902,7 +902,7 @@
     {
       "code": "OREJA_EXTREMA_90x120x12",
       "name": "Componente de cruceta",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "OREJA EXTREMA 90x120x12",
       "group": "cruceta"
@@ -910,7 +910,7 @@
     {
       "code": "CR_RESPALDO_EXTREMA_90x150x20_P05",
       "name": "Componente de cruceta",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "CR RESPALDO EXTREMA 90x150x20",
       "group": "cruceta"
@@ -918,7 +918,7 @@
     {
       "code": "CR_CARTELA_TRIANGULAR_150x150x12_P05",
       "name": "Componente de cruceta",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "CR CARTELA TRIANGULAR 150x150x12",
       "group": "cruceta"
@@ -926,7 +926,7 @@
     {
       "code": "CR_CAP_CENTRAL_150x300x30_P05",
       "name": "Componente de cruceta",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "CR CAP CENTRAL 150x300x30",
       "group": "cruceta"
@@ -934,7 +934,7 @@
     {
       "code": "CR_CHEEK_300x150x20_P05",
       "name": "Componente de cruceta",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "CR CHEEK 300x150x20",
       "group": "cruceta"
@@ -1006,7 +1006,7 @@
     {
       "code": "CORTE_MARCO_570x620x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "CORTE MARCO 570x620x12",
       "group": "complementos"
@@ -1014,7 +1014,7 @@
     {
       "code": "CORTE_BASE_200x200x16_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "CORTE BASE 200x200x16",
       "group": "complementos"
@@ -1062,7 +1062,7 @@
     {
       "code": "MG02_FLANGE_364x350x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG02 FLANGE 364x350x6",
       "group": "complementos"
@@ -1070,7 +1070,7 @@
     {
       "code": "MG03_FLANGE_364x350x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG03 FLANGE 364x350x6",
       "group": "complementos"
@@ -1078,7 +1078,7 @@
     {
       "code": "MG01_HOJA_310x450x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG01 HOJA 310x450x6",
       "group": "complementos"
@@ -1086,7 +1086,7 @@
     {
       "code": "MG04_SUP_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG04 SUP 1",
       "group": "complementos"
@@ -1094,7 +1094,7 @@
     {
       "code": "MG04_SUP_2_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG04 SUP 2",
       "group": "complementos"
@@ -1102,7 +1102,7 @@
     {
       "code": "MG05_INF_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG05 INF 1",
       "group": "complementos"
@@ -1110,7 +1110,7 @@
     {
       "code": "MG05_INF_2_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG05 INF 2",
       "group": "complementos"
@@ -1118,7 +1118,7 @@
     {
       "code": "MG06_ESP_1_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG06 ESP 1",
       "group": "complementos"
@@ -1126,7 +1126,7 @@
     {
       "code": "MG06_ESP_2_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG06 ESP 2",
       "group": "complementos"
@@ -1190,7 +1190,7 @@
     {
       "code": "MS01_TRANSICION_CUADRADO_REDONDO_3_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MS01 TRANSICION CUADRADO REDONDO 3",
       "group": "complementos"
@@ -1206,7 +1206,7 @@
     {
       "code": "MS03_SECTOR_170deg_ID268_t3_H40_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "MS03 SECTOR 170deg ID268 t3 H40",
       "group": "complementos"
@@ -1222,7 +1222,7 @@
     {
       "code": "MS05_SOPORTE_60x80x6_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "MS05 SOPORTE 60x80x6",
       "group": "complementos"
@@ -1270,7 +1270,7 @@
     {
       "code": "MG11_GUARDA_U_590x645x260_R3_t2_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG11 GUARDA U 590x645x260 R3 t2",
       "group": "complementos"
@@ -1278,7 +1278,7 @@
     {
       "code": "MG12_GUARDA_FONDO_590x645x2_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG12 GUARDA FONDO 590x645x2",
       "group": "complementos"
@@ -1286,7 +1286,7 @@
     {
       "code": "MG13_GUARDA_TESTERO_586x258x2_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "MG13 GUARDA TESTERO 586x258x2",
       "group": "complementos"
@@ -1350,7 +1350,7 @@
     {
       "code": "TC01_SADDLE_300x180x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "TC01 SADDLE 300x180x20",
       "group": "complementos"
@@ -1358,7 +1358,7 @@
     {
       "code": "TC02_DUPLICADOR_ALA_300x60x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "TC02 DUPLICADOR ALA 300x60x12",
       "group": "complementos"
@@ -1382,7 +1382,7 @@
     {
       "code": "TC05_PLACA_HORQUILLA_200x160x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "TC05 PLACA HORQUILLA 200x160x20",
       "group": "complementos"
@@ -1390,7 +1390,7 @@
     {
       "code": "TC06_OREJA_80x100x12_D31_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "TC06 OREJA 80x100x12 D31",
       "group": "complementos"
@@ -1414,7 +1414,7 @@
     {
       "code": "TC09_CARTABON_SADDLE_220x120x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "TC09 CARTABON SADDLE 220x120x20",
       "group": "complementos"
@@ -1422,7 +1422,7 @@
     {
       "code": "TC10_CARTABON_RECEPTOR_60x60x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "TC10 CARTABON RECEPTOR 60x60x12",
       "group": "complementos"
@@ -1438,7 +1438,7 @@
     {
       "code": "TC12_CABEZA_D46_L8_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "TC12 CABEZA D46 L8",
       "group": "complementos"
@@ -1454,7 +1454,7 @@
     {
       "code": "TC17_OJAL_CABLE_40x12x3_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "TC17 OJAL CABLE 40x12x3",
       "group": "complementos"
@@ -1534,7 +1534,7 @@
     {
       "code": "BRT_LENGUETA_BRT-A_0_250x250x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "BRT LENGUETA BRT-A 0 250x250x12",
       "group": "complementos"
@@ -1542,7 +1542,7 @@
     {
       "code": "BRT_LENGUETA_BRT-A_1_250x250x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "BRT LENGUETA BRT-A 1 250x250x12",
       "group": "complementos"
@@ -1558,7 +1558,7 @@
     {
       "code": "BRT_LENGUETA_BRT-B_0_250x250x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "BRT LENGUETA BRT-B 0 250x250x12",
       "group": "complementos"
@@ -1566,7 +1566,7 @@
     {
       "code": "BRT_LENGUETA_BRT-B_1_250x250x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "BRT LENGUETA BRT-B 1 250x250x12",
       "group": "complementos"
@@ -1574,7 +1574,7 @@
     {
       "code": "BRT_COLLAR_150x300x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "BRT COLLAR 150x300x12",
       "group": "complementos"
@@ -1582,7 +1582,7 @@
     {
       "code": "BRT_COLLAR_174x300x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 8,
       "dimensions": "BRT COLLAR 174x300x12",
       "group": "complementos"
@@ -1590,7 +1590,7 @@
     {
       "code": "BRT_RESPALDO_174x300x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "BRT RESPALDO 174x300x20",
       "group": "complementos"
@@ -1606,7 +1606,7 @@
     {
       "code": "BRT_CONTRACARA_250x250x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "BRT CONTRACARA 250x250x20",
       "group": "complementos"
@@ -1622,7 +1622,7 @@
     {
       "code": "GRID_ASIENTO_150x150x20_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "GRID ASIENTO 150x150x20",
       "group": "complementos"
@@ -1630,7 +1630,7 @@
     {
       "code": "GRID_DIAFRAGMA_HUP_138x138x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "GRID DIAFRAGMA HUP 138x138x12",
       "group": "complementos"
@@ -1654,7 +1654,7 @@
     {
       "code": "CORTE_ESPACIADOR_CENTRAL_200x200x12_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "CORTE ESPACIADOR CENTRAL 200x200x12",
       "group": "complementos"
@@ -1694,7 +1694,7 @@
     {
       "code": "HR4_PAD_100x40x5_P05",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 4,
       "dimensions": "HR4 PAD 100x40x5",
       "group": "complementos"
@@ -1726,7 +1726,7 @@
     {
       "code": "SHS40x40x3_L1700000_P05_MITRA_JF_1p1",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L1700 mm MITRA JF 1p1",
       "group": "barandas"
@@ -1734,7 +1734,7 @@
     {
       "code": "SHS40x40x3_L1700000_P05_MITRA_JF_1p9",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L1700 mm MITRA JF 1p9",
       "group": "barandas"
@@ -1742,7 +1742,7 @@
     {
       "code": "SHS50x50x4_L1070000_P05_CAP_JF",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 2,
       "dimensions": "SHS50x50x4 L1070 mm CAP JF",
       "group": "barandas"
@@ -1758,7 +1758,7 @@
     {
       "code": "SHS60x60x4_L6085645_SLOT_P05_JUNTA_1",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L6085.65 mm SLOT JUNTA 1",
       "group": "porticos"
@@ -1766,7 +1766,7 @@
     {
       "code": "SHS60x60x4_L6085645_SLOT_P05_JUNTA_2",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L6085.65 mm SLOT JUNTA 2",
       "group": "porticos"
@@ -1774,7 +1774,7 @@
     {
       "code": "SHS60x60x4_L748810_SLOT_P05_JUNTA_3",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L748.81 mm SLOT JUNTA 3",
       "group": "porticos"
@@ -1782,7 +1782,7 @@
     {
       "code": "SHS60x60x4_L6085645_SLOT_P05_JUNTA_4",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L6085.65 mm SLOT JUNTA 4",
       "group": "porticos"
@@ -1790,7 +1790,7 @@
     {
       "code": "SHS60x60x4_L6085645_SLOT_P05_JUNTA_5",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L6085.65 mm SLOT JUNTA 5",
       "group": "porticos"
@@ -1798,7 +1798,7 @@
     {
       "code": "SHS60x60x4_L748810_SLOT_P05_JUNTA_6",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L748.81 mm SLOT JUNTA 6",
       "group": "porticos"
@@ -1806,7 +1806,7 @@
     {
       "code": "SHS60x60x4_L2399437_P05_JUNTA_7",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L2399.44 mm JUNTA 7",
       "group": "plataforma"
@@ -1814,7 +1814,7 @@
     {
       "code": "SHS60x60x4_L2399437_P05_JUNTA_8",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L2399.44 mm JUNTA 8",
       "group": "plataforma"
@@ -1822,7 +1822,7 @@
     {
       "code": "RHS150x75x5_L3356803_CUTb7de3a_P05_DESEMBARCO_FINAL_JUNTA_9",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "RHS150x75x5 L3356.8 mm CUTb7de3a DESEMBARCO FINAL JUNTA 9",
       "group": "escalera"
@@ -1830,7 +1830,7 @@
     {
       "code": "RHS150x75x5_L3356803_CUTb7de3a_P05_DESEMBARCO_FINAL_JUNTA_10",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "RHS150x75x5 L3356.8 mm CUTb7de3a DESEMBARCO FINAL JUNTA 10",
       "group": "escalera"
@@ -1838,7 +1838,7 @@
     {
       "code": "SHS40x40x3_L800000_P05_JUNTA_11",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L800 mm JUNTA 11",
       "group": "escalera"
@@ -1846,7 +1846,7 @@
     {
       "code": "J01_CARTELA_150x150x6_P05_JUNTA_12",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "J01 CARTELA 150x150x6 JUNTA 12",
       "group": "escalera"
@@ -1854,7 +1854,7 @@
     {
       "code": "J01_CARTELA_150x150x6_P05_JUNTA_13",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "J01 CARTELA 150x150x6 JUNTA 13",
       "group": "escalera"
@@ -1862,7 +1862,7 @@
     {
       "code": "SHS60x60x4_L3050000_P05_JUNTA_14",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L3050 mm JUNTA 14",
       "group": "porticos"
@@ -1870,7 +1870,7 @@
     {
       "code": "SHS60x60x4_L3050000_P05_JUNTA_15",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L3050 mm JUNTA 15",
       "group": "porticos"
@@ -1878,7 +1878,7 @@
     {
       "code": "SHS60x60x4_L3050000_P05_JUNTA_16",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L3050 mm JUNTA 16",
       "group": "porticos"
@@ -1886,7 +1886,7 @@
     {
       "code": "SHS60x60x4_L3050000_P05_JUNTA_17",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS60x60x4 L3050 mm JUNTA 17",
       "group": "porticos"
@@ -1894,7 +1894,7 @@
     {
       "code": "SHS40x40x3_L3357253_P05_MITRA_JF_1p1_JUNTA_18",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L3357.25 mm MITRA JF 1p1 JUNTA 18",
       "group": "barandas"
@@ -1902,7 +1902,7 @@
     {
       "code": "RODAPIE_LARGO_1700x100x5_P05_JUNTA_19",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "RODAPIE LARGO 1700x100x5 JUNTA 19",
       "group": "barandas"
@@ -1910,7 +1910,7 @@
     {
       "code": "RODAPIE_TESTERO_800x100x5_P05_JUNTA_20",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "RODAPIE TESTERO 800x100x5 JUNTA 20",
       "group": "barandas"
@@ -1918,7 +1918,7 @@
     {
       "code": "SHS40x40x3_L800000_P05_JUNTA_21",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L800 mm JUNTA 21",
       "group": "barandas"
@@ -1926,7 +1926,7 @@
     {
       "code": "SHS50x50x4_L1101268_CUT8d077a_P05_JUNTA_22",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS50x50x4 L1101.27 mm CUT8d077a JUNTA 22",
       "group": "barandas"
@@ -1934,7 +1934,7 @@
     {
       "code": "SHS50x50x4_L1101268_CUT8d077a_P05_JUNTA_23",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS50x50x4 L1101.27 mm CUT8d077a JUNTA 23",
       "group": "barandas"
@@ -1942,7 +1942,7 @@
     {
       "code": "SHS50x50x4_L1101268_CUT6737fa_P05_JUNTA_24",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS50x50x4 L1101.27 mm CUT6737fa JUNTA 24",
       "group": "barandas"
@@ -1950,7 +1950,7 @@
     {
       "code": "SHS40x40x3_L3357253_P05_MITRA_JF_1p9_JUNTA_25",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS40x40x3 L3357.25 mm MITRA JF 1p9 JUNTA 25",
       "group": "barandas"
@@ -1958,7 +1958,7 @@
     {
       "code": "RODAPIE_LARGO_1700x100x5_P05_JUNTA_26",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "RODAPIE LARGO 1700x100x5 JUNTA 26",
       "group": "barandas"
@@ -1966,7 +1966,7 @@
     {
       "code": "SHS50x50x4_L1101268_CUT8d077a_P05_JUNTA_27",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS50x50x4 L1101.27 mm CUT8d077a JUNTA 27",
       "group": "barandas"
@@ -1974,7 +1974,7 @@
     {
       "code": "SHS50x50x4_L1101268_CUT8d077a_P05_JUNTA_28",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS50x50x4 L1101.27 mm CUT8d077a JUNTA 28",
       "group": "barandas"
@@ -1982,7 +1982,7 @@
     {
       "code": "SHS50x50x4_L1101268_CUT6737fa_P05_JUNTA_29",
       "name": "Perfil estructural",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "SHS50x50x4 L1101.27 mm CUT6737fa JUNTA 29",
       "group": "barandas"
@@ -1990,7 +1990,7 @@
     {
       "code": "J01_EXTREMO_200x160x12_P05_JUNTA_30",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "J01 EXTREMO 200x160x12 JUNTA 30",
       "group": "escalera"
@@ -1998,7 +1998,7 @@
     {
       "code": "J01_SOPORTE_200x160x12_P05_JUNTA_31",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "J01 SOPORTE 200x160x12 JUNTA 31",
       "group": "escalera"
@@ -2006,7 +2006,7 @@
     {
       "code": "J01_EXTREMO_200x160x12_P05_JUNTA_32",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "J01 EXTREMO 200x160x12 JUNTA 32",
       "group": "escalera"
@@ -2014,7 +2014,7 @@
     {
       "code": "J01_SOPORTE_200x160x12_P05_JUNTA_33",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "J01 SOPORTE 200x160x12 JUNTA 33",
       "group": "escalera"
@@ -2022,7 +2022,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_34",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 34",
       "group": "barandas"
@@ -2030,7 +2030,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_35",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 35",
       "group": "barandas"
@@ -2038,7 +2038,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_36",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 36",
       "group": "barandas"
@@ -2046,7 +2046,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_37",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 37",
       "group": "barandas"
@@ -2054,7 +2054,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_38",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 38",
       "group": "barandas"
@@ -2062,7 +2062,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_39",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 39",
       "group": "barandas"
@@ -2070,7 +2070,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_40",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 40",
       "group": "barandas"
@@ -2078,7 +2078,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_41",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 41",
       "group": "barandas"
@@ -2086,7 +2086,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_42",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 42",
       "group": "barandas"
@@ -2094,7 +2094,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_43",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 43",
       "group": "barandas"
@@ -2102,7 +2102,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_CARA_ZANCA_216_JUNTA_44",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 CARA ZANCA 216 JUNTA 44",
       "group": "barandas"
@@ -2110,7 +2110,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_45",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 45",
       "group": "barandas"
@@ -2118,7 +2118,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_46",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 46",
       "group": "barandas"
@@ -2126,7 +2126,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_CARA_ZANCA_217_JUNTA_47",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 CARA ZANCA 217 JUNTA 47",
       "group": "barandas"
@@ -2134,7 +2134,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_48",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 48",
       "group": "barandas"
@@ -2142,7 +2142,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_49",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 49",
       "group": "barandas"
@@ -2150,7 +2150,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_CARA_ZANCA_218_JUNTA_50",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 CARA ZANCA 218 JUNTA 50",
       "group": "barandas"
@@ -2158,7 +2158,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_51",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 51",
       "group": "barandas"
@@ -2166,7 +2166,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_52",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 52",
       "group": "barandas"
@@ -2174,7 +2174,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_CARA_ZANCA_219_JUNTA_53",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 CARA ZANCA 219 JUNTA 53",
       "group": "barandas"
@@ -2182,7 +2182,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_54",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 54",
       "group": "barandas"
@@ -2190,7 +2190,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_55",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 55",
       "group": "barandas"
@@ -2198,7 +2198,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_CARA_ZANCA_220_JUNTA_56",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 CARA ZANCA 220 JUNTA 56",
       "group": "barandas"
@@ -2206,7 +2206,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_57",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 57",
       "group": "barandas"
@@ -2214,7 +2214,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_58",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 58",
       "group": "barandas"
@@ -2222,7 +2222,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_CARA_ZANCA_221_JUNTA_59",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 CARA ZANCA 221 JUNTA 59",
       "group": "barandas"
@@ -2230,7 +2230,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_60",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 60",
       "group": "barandas"
@@ -2238,7 +2238,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_61",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 61",
       "group": "barandas"
@@ -2246,7 +2246,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_CARA_ZANCA_222_JUNTA_62",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 CARA ZANCA 222 JUNTA 62",
       "group": "barandas"
@@ -2254,7 +2254,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_63",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 63",
       "group": "barandas"
@@ -2262,7 +2262,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_64",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 64",
       "group": "barandas"
@@ -2270,7 +2270,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_CARA_ZANCA_223_JUNTA_65",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 CARA ZANCA 223 JUNTA 65",
       "group": "barandas"
@@ -2278,7 +2278,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_66",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 66",
       "group": "barandas"
@@ -2286,7 +2286,7 @@
     {
       "code": "U05_CARTELA_30x80x12_P05_JUNTA_67",
       "name": "Chapa / componente fabricado",
-      "material": "Según plano P05",
+      "material": "Según plano",
       "quantity": 1,
       "dimensions": "U05 CARTELA 30x80x12 JUNTA 67",
       "group": "barandas"
@@ -2355,12 +2355,12 @@
     },
     {
       "label": "Estado del expediente",
-      "value": "Revisión P05 · revisión técnica"
+      "value": "Diseño de la estación"
     }
   ],
-  "notice": "Revisión P05 · cruceta nominal 2 t · proceso máximo de 1 t.",
-  "status": "P05 - REVISIÓN TÉCNICA",
-  "issue": "P05 - REVISIÓN TÉCNICA",
+  "notice": "Cruceta nominal 2 t · proceso máximo de 1 t.",
+  "status": "Diseño de la estación",
+  "issue": "Diseño de la estación",
   "fullReleaseAllowed": false,
   "verification": {
     "distinctParts": 253,
