@@ -217,7 +217,7 @@ export function buildEquipmentDetails(engine) {
     cylinder(rollers, .018, .018, [xx, yy, .315], [1, 0, 0], dark, 'Rodillos', 'Cojinete sellado de rodillo');
     cylinder(rollers, .008, .023, [xx + sign * .01, yy, .315], [1, 0, 0], bright, 'Rodillos', 'Eje de rodillo', true);
   }
-  for (const sign of [-1, 1]) box(rollers, [.018, 1.63, .075], [H.center_x + sign * .308, -1.15, .284], blue, 'Rodillos', 'Larguero de transportador de rodillos');
+  for (const sign of [-1, 1]) box(rollers, [.018, 1.705, .075], [H.center_x + sign * .308, -1.1875, .284], blue, 'Rodillos', 'Larguero de transportador de rodillos');
   const screen = plate(rollers, .174, .081, [2.67, .160, .80], () => {}, 'Compuerta', 'Indicador digital de la balanza · kg');
   for (const [i, mat] of [[-1, black], [0, green], [1, black]]) cylinder(rollers, .008, .004, [2.67 + i * .041, .160, .748], [0, 1, 0], mat, 'Compuerta', ['Tara', 'Cero', 'Unidad'][i + 1]);
   for (const sx of [-1, 1]) for (const sy of [-1, 1]) {

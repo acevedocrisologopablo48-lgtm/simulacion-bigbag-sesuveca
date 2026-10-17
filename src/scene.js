@@ -1,8 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=eb-solid-68356f3bb586';
-import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-68356f3bb586';
-import {buildProcessDetails} from './process-details.js?v=eb-solid-68356f3bb586';
+import {buildWorkshop} from './workshop.js?v=eb-solid-18cdab1e06dc';
+import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-18cdab1e06dc';
+import {buildProcessDetails} from './process-details.js?v=eb-solid-18cdab1e06dc';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -83,7 +83,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=eb-solid-68356f3bb586', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=eb-solid-18cdab1e06dc', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -258,11 +258,13 @@ class SceneEngine {
     const dustTube = this.tube(connection,[[H.center_x,-1.06,dustZ],[H.center_x,-1.38,dustZ],[H.center_x+.7,-1.52,1.65],[H.center_x+1.25,-1.52,1.65]],.075,'#76888d','Tolva');
     dustTube.userData.part='Conexión DN150 · 800 m³/h @ 1 500 Pa';
     }
-    this.boot = this.cylinder(connection, .128, H.bag_support_z - H.mouth_z, H.center_x, 0, (H.bag_support_z+H.mouth_z)/2, '#47555e', 'Tolva', { roughness: 1, metalness: 0, openEnded: true });
+    this.spoutAssembly = new THREE.Group(); connection.add(this.spoutAssembly);
+    this.spoutAssembly.name='Manguito de descarga';
+    this.boot = this.cylinder(this.spoutAssembly, .128, H.bag_support_z - H.mouth_z, H.center_x, 0, (H.bag_support_z+H.mouth_z)/2, '#47555e', 'Tolva', { roughness: 1, metalness: 0, openEnded: true });
     const bootHeight = H.bag_support_z - H.mouth_z;
     for (let i = 0; i < 10; i++) {
       const ring = new THREE.Mesh(new THREE.TorusGeometry(.13,.006,6,32), this.material('#65757e'));
-      ring.position.set(H.center_x,0,H.mouth_z+bootHeight*(i+.5)/10); connection.add(ring);
+      ring.position.set(H.center_x,0,H.mouth_z+bootHeight*(i+.5)/10); this.spoutAssembly.add(ring);
     }
     this.closedGuard = new THREE.Group(); connection.add(this.closedGuard);
     const guardTop = this.data.config.guard_top_m || 3.43, guardBase=H.bag_support_z;
@@ -276,8 +278,6 @@ class SceneEngine {
       this.sectionMeshes.push(panel);
     }
     }
-    this.interlockLamp=this.box(connection,.10,.06,.07,H.center_x-.72,-.69,guardTop-.08,'#dfad33','Tolva');
-    this.interlockLamp.userData.part='Indicador ilustrativo de enclavamiento';
     this.gate = new THREE.Group(); this.gate.name = 'Compuerta'; this.model.add(this.gate);
     (this.data.gate_blade || []).forEach(m => this.addDataMesh({ ...m, group: 'Compuerta' }, this.gate));
     if (!this.data.exactCAD) {
@@ -374,7 +374,10 @@ class SceneEngine {
     this.sackBody.userData={group:'Compuerta',part:'Saco de producto'};this.parts.push(this.sackBody);this.sectionMeshes.push(this.sackBody);
     this.tie=new THREE.Mesh(new THREE.TorusGeometry(.042,.008,6,24),this.material('#b9a36d'));this.tie.position.z=.68;this.sack.add(this.tie);
     this.rollerStart={x,y:-.63,z:.35};
-    this.box(g,.64,1.65,.06,x,-1.15,.285,'#2d607c','Rodillos');
+    for(const y of [-.5,-1.8]) {
+      const crossbar=this.box(g,.60,.04,.04,x,y,.26,'#2d607c','Rodillos');
+      crossbar.userData.part='Travesaño inferior del transportador';
+    }
     for(let i=0;i<10;i++){const roll=this.cylinder(g,.035,.58,x,-.65-i*.15,.315,'#9dadb4','Rodillos');roll.rotation.x=0;roll.rotation.z=Math.PI/2;}
     for(const x of [2.12,2.58])for(const y of [-.5,-1.8]){
       this.box(g,.04,.045,.28,x,y,.14,'#365e71','Rodillos');
@@ -486,11 +489,9 @@ class SceneEngine {
     for(const l of [this.chainLine,this.chainLine2]){l.position.z=(top+bottom)/2;l.scale.y=drop;}
     this.hook.position.z=s.hookM;
     this.gate.position.y=.28*s.gateOpening;
-    this.boot.visible=this.mode==='spout';this.closedGuard.visible=this.mode==='closed';
+    this.spoutAssembly.visible=this.mode==='spout';this.closedGuard.visible=this.mode==='closed';
     this.cutterMeshes.forEach(mesh=>mesh.visible=this.mode==='closed');
     this.lockPin.position.y=this.data.exactCAD?(s.lockingPin?0:.08):(s.lockingPin?.02:.24);
-    this.interlockLamp.material.color.set(s.lockingPin?'#52a67d':s.carriageLocked?'#dfad33':'#597482');
-    this.interlockLamp.userData.part=s.interlockState;
     this.updateCoal(s.hopperKg);
     const receiptY=lerp(-1.8,0,smooth(s.phaseProgress));
     this.forklift.visible=s.phaseIndex<2;

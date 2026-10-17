@@ -85,14 +85,16 @@ export function buildProcessDetails(engine) {
   const labelMat = new THREE.MeshStandardMaterial({ map: labelTexture, roughness: 1, metalness: 0, side: THREE.DoubleSide });
   const label = draw(E.bag, new THREE.PlaneGeometry(.31, .194), labelMat, [0, -.494, .56]); label.rotation.x = Math.PI / 2;
   const straps = [];
-  for (const x of [-.425, .425]) for (const y of [-.47, .47]) {
-    const pts = [[x, y, .80], [x, y, 1.04], [x * .99, y * .96, 1.11], [x * .95, y * .92, 1.07], [x * .97, y * .91, .81]];
+  for (const x of [-.425, .425]) for (const y of [-.5, .5]) {
+    const pts = [[x, y * .94, .80], [x, y, 1.04], [x, y, 1.11], [x, y * .97, 1.07], [x * .97, y * .91, .81]];
     const path = new THREE.CatmullRomCurve3(pts.map(v => new THREE.Vector3(...v)));
     const positions = [], uv = [], ids = [], count = 28;
     for (let i = 0; i <= count; i++) { const p = path.getPoint(i / count); for (const edge of [-1, 1]) { positions.push(p.x + edge * .024, p.y, p.z); uv.push((edge + 1) / 2, i / count); } }
     for (let i = 0; i < count; i++) { const k = i * 2; ids.push(k, k + 1, k + 2, k + 1, k + 3, k + 2); }
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(ids); g.computeVertexNormals();
-    straps.push(draw(E.bagRoot, g, webbing));
+    const mesh=draw(E.bagRoot, g, webbing);
+    mesh.name='Asa de bigbag';mesh.userData.attachmentAnchor=[x,y,1.11];
+    straps.push({mesh,x,y,count});
   }
 
   E.chainLine.visible = false; E.chainLine2.visible = false; E.hook.visible = false;
@@ -193,8 +195,20 @@ export function buildProcessDetails(engine) {
         lastEmpty = empty;
       }
       label.position.y = -.494 + empty * .014;
-      const pulse = state.phaseId === 'traslado' ? Math.sin(state.phaseProgress * Math.PI * 2) * .006 : 0;
-      straps.forEach((strap, i) => { strap.rotation.x = pulse * (i % 2 ? 1 : -1); strap.scale.x = mix(.70, 1, 1 - empty); strap.scale.y = mix(.56, 1, 1 - empty); });
+      straps.forEach(({mesh,x,y,count}) => {
+        const angle=Math.atan2(Math.sign(y),Math.sign(x));
+        const sewn=(a,h)=>{const p=clothPoint(a,h,empty);return[p[0]*E.bag.scale.x,p[1]*E.bag.scale.y,p[2]];};
+        const path=new THREE.CatmullRomCurve3([
+          sewn(angle-.025,.80),[x,y,1.04],[x,y,1.11],
+          [x,y*.97,1.07],sewn(angle+.025,.81)
+        ].map(v=>new THREE.Vector3(...v)));
+        const positions=mesh.geometry.attributes.position;
+        for(let j=0;j<=count;j++){
+          const p=path.getPoint(j/count);
+          for(let edge=0;edge<2;edge++)positions.setXYZ(j*2+edge,p.x+(edge?1:-1)*.024,p.y,p.z);
+        }
+        positions.needsUpdate=true;mesh.geometry.computeVertexNormals();mesh.geometry.computeBoundingSphere();
+      });
       const top = E.data.config.beam_bottom - .15, bottom = state.hookM + .09, count = Math.min(240, Math.max(1, Math.floor((top - bottom) / .024)));
       chainLinks.count = count * 2;
       for (let side = 0; side < 2; side++) for (let i = 0; i < count; i++) {
