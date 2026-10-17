@@ -1,8 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=eb-solid-e9710555f4bd';
-import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-e9710555f4bd';
-import {buildProcessDetails} from './process-details.js?v=eb-solid-e9710555f4bd';
+import {buildWorkshop} from './workshop.js?v=eb-solid-8a49622cec51';
+import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-8a49622cec51';
+import {buildProcessDetails} from './process-details.js?v=eb-solid-8a49622cec51';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -83,7 +83,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=eb-solid-e9710555f4bd', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=eb-solid-8a49622cec51', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;

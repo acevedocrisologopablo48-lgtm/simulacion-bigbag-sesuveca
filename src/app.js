@@ -1,4 +1,4 @@
-import {BigbagScene} from './scene.js?v=eb-solid-e9710555f4bd';
+import {BigbagScene} from './scene.js?v=eb-solid-8a49622cec51';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
@@ -147,7 +147,7 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-e9710555f4bd'),fetch('data/model.json?v=eb-solid-e9710555f4bd')]);
+  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-8a49622cec51'),fetch('data/model.json?v=eb-solid-8a49622cec51')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();

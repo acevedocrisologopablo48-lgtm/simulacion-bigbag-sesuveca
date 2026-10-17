@@ -202,7 +202,7 @@
     {
       "id": "porticos",
       "label": "Pórticos",
-      "material": "ASTM A500 Gr. B / ASTM A36",
+      "material": "ASTM A36 / ASTM A500 Gr.B",
       "quantity": 106,
       "massKg": 1251.9218816796986,
       "description": "Pórticos con arriostres exteriores y soportes reforzados; encuentros preparados con holguras documentadas."
@@ -210,7 +210,7 @@
     {
       "id": "monorriel",
       "label": "Monorriel",
-      "material": "ASTM A36",
+      "material": "ASTM A36 / Elastómero copoliéster Shore 40D / Tornillo ACE suministrado con TS75-39",
       "quantity": 11,
       "massKg": 329.23880215080305,
       "description": "I armado 240 × 140 × 8 × 20 de 3.600 mm. Cara superior +5.940 mm y ala inferior +5.700 mm."
@@ -218,7 +218,7 @@
     {
       "id": "tolva",
       "label": "Tolva y bastidor",
-      "material": "ASTM A36 / ASTM A500 Gr. B",
+      "material": "ASTM A36 / ASTM A500 Gr.B / EPDM",
       "quantity": 66,
       "massKg": 1377.9000991260991,
       "description": "Cono de 8 mm, cuerpo de 6 mm y tres anillos perimetrales; revestimiento UHMWPE de 10 mm."
@@ -226,7 +226,7 @@
     {
       "id": "soporte-bolsa",
       "label": "Apoyo de la bolsa",
-      "material": "ASTM A500 Gr. B",
+      "material": "ASTM A500 Gr.B",
       "quantity": 4,
       "massKg": 154.48800000000006,
       "description": "Apoyo +3.010 mm con travesaños SHS120 y soporte del cortador; guarda superior +3.430 mm."
@@ -234,7 +234,7 @@
     {
       "id": "plataforma",
       "label": "Plataforma",
-      "material": "ASTM A500 Gr. B / ASTM A36 y rejilla comercial",
+      "material": "ASTM A36 / ASTM A36 galvanizado / ASTM A500 Gr.B",
       "quantity": 31,
       "massKg": 231.00338435698944,
       "description": "Acceso lateral a cota +2.100 mm con piso de rejilla, bastidor y bases."
@@ -242,7 +242,7 @@
     {
       "id": "escalera",
       "label": "Escalera",
-      "material": "ASTM A500 Gr. B / ASTM A36 y rejilla comercial",
+      "material": "ASTM A36 / ASTM A36 galvanizado / ASTM A500 Gr.B",
       "quantity": 65,
       "massKg": 190.19953172100745,
       "description": "Dos zancas, once peldaños y uniones desmontables de acceso a la plataforma."
@@ -250,7 +250,7 @@
     {
       "id": "barandas",
       "label": "Barandas",
-      "material": "ASTM A500 Gr. B / ASTM A36",
+      "material": "ASTM A36 / ASTM A500 Gr.B",
       "quantity": 107,
       "massKg": 208.7158020553493,
       "description": "Pasamanos, postes, protección intermedia y rodapiés. Altura de pasamanos de escalera: 1.100 mm sobre las narices."
@@ -258,7 +258,7 @@
     {
       "id": "cruceta",
       "label": "Cruceta de cuatro puntos",
-      "material": "ASTM A500 Gr. B / ASTM A36",
+      "material": "ASTM A36",
       "quantity": 23,
       "massKg": 198.70007256742755,
       "description": "H en SHS 150 × 150 × 12; carga útil nominal 2 t y 125.000 izajes. Reserva de masa de diseño con herrajes: 225 kg."
@@ -266,7 +266,7 @@
     {
       "id": "complementos",
       "label": "Equipos y descarga",
-      "material": "AISI 304 / acero al carbono / UHMWPE disipativo; equipos comerciales",
+      "material": "Material de cada pieza indicado en la lista.",
       "quantity": 281,
       "massKg": 544.4145490194755,
       "description": "Cortador AISI 304 de cuatro filos de 16 mm, UHMWPE disipativo de 10 mm, compuerta, tecle y equipos comerciales. La masa indica solo acero modelado; equipos y polímeros excluidos."
@@ -274,7 +274,7 @@
     {
       "id": "cimentacion",
       "label": "Cimentación y anclajes",
-      "material": "Acero / anclajes químicos",
+      "material": "ASTM A36 / Acero clase 8.8 / ISO898-1",
       "description": "Bases y anclajes del modelo actualizado.",
       "quantity": 54,
       "massKg": 149.28637300428866
