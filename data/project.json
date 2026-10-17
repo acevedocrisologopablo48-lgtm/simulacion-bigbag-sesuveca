@@ -51,7 +51,7 @@
     },
     {
       "label": "Paredes y revestimiento",
-      "value": "60° · UHMWPE disipativo 10 mm · chapa 6 mm mínimos"
+      "value": "60° · cono 8 mm · cuerpo 6 mm · UHMWPE disipativo 10 mm"
     },
     {
       "label": "Cono / cuerpo recto",
@@ -88,6 +88,10 @@
     {
       "label": "Rodadura documental MR2",
       "value": "Ruedas Ø110 mm · paso 118 mm · superficie de rodadura +5.720 mm"
+    },
+    {
+      "label": "Refuerzos de tolva",
+      "value": "3 anillos: SHS100×100×6 / RHS80×75×5 / RHS150×75×5"
     }
   ],
   "calculations": [
@@ -115,7 +119,7 @@
       "id": "correcciones_geometricas",
       "title": "Soportes y arriostres",
       "count": 36,
-      "maxUtilization": 0.853265625,
+      "maxUtilization": 0.9001021548824479,
       "failedCount": 0,
       "status": "Conforme",
       "description": "Apoyo de bolsa, cortador y transferencia a columnas.",
@@ -182,6 +186,16 @@
       "centeredM20FactorOfSafety": 17.419545600652324,
       "commercialAccreditation": false,
       "fullReleaseAllowed": false
+    },
+    {
+      "id": "optimizacion_refuerzos_tolva",
+      "title": "Tolva y tres anillos",
+      "count": 22,
+      "maxUtilization": 0.9171820708691067,
+      "failedCount": 0,
+      "status": "Conforme",
+      "description": "Cono 8 mm; cuerpo 6 mm. Uniones de anillos con penetración completa.",
+      "scope": "Presión 25 kPa; cascarón de cuatro caras, flexibilidad de bordes y uniones según memoria."
     }
   ],
   "groups": [
@@ -205,9 +219,9 @@
       "id": "tolva",
       "label": "Tolva y bastidor",
       "material": "ASTM A36 / ASTM A500 Gr. B",
-      "quantity": 110,
-      "massKg": 1348.3957533854987,
-      "description": "Tolva terminada de 2,30 m³ y 1,84 m³ útiles; paredes a 60°, cono de 1.212,44 mm y cuerpo de 370,15 mm."
+      "quantity": 66,
+      "massKg": 1377.9000991260991,
+      "description": "Cono de 8 mm, cuerpo de 6 mm y tres anillos perimetrales; revestimiento UHMWPE de 10 mm."
     },
     {
       "id": "soporte-bolsa",
@@ -332,43 +346,11 @@
       "group": "tolva"
     },
     {
-      "code": "SHS80x80x4_L763138_CUTb93258_P05",
-      "name": "Perfil estructural",
-      "material": "Según plano",
-      "quantity": 2,
-      "dimensions": "SHS80x80x4 L763.138 mm CUTb93258",
-      "group": "tolva"
-    },
-    {
-      "code": "SHS80x80x4_L763138_CUTd316ed_P05",
-      "name": "Perfil estructural",
-      "material": "Según plano",
-      "quantity": 2,
-      "dimensions": "SHS80x80x4 L763.138 mm CUTd316ed",
-      "group": "tolva"
-    },
-    {
-      "code": "SHS80x80x4_L1113138_CUT3242f9_P05",
-      "name": "Perfil estructural",
-      "material": "Según plano",
-      "quantity": 2,
-      "dimensions": "SHS80x80x4 L1113.14 mm CUT3242f9",
-      "group": "tolva"
-    },
-    {
-      "code": "SHS80x80x4_L1113138_CUT49d092_P05",
-      "name": "Perfil estructural",
-      "material": "Según plano",
-      "quantity": 2,
-      "dimensions": "SHS80x80x4 L1113.14 mm CUT49d092",
-      "group": "tolva"
-    },
-    {
-      "code": "SHS80x80x4_L1463138_CUTd759b0_P05",
+      "code": "SHS100x100x6_L1499304_TOLVA",
       "name": "Perfil estructural",
       "material": "Según plano",
       "quantity": 4,
-      "dimensions": "SHS80x80x4 L1463.14 mm CUTd759b0",
+      "dimensions": "SHS100x100x6 L1499.3 mm TOLVA",
       "group": "tolva"
     },
     {
@@ -556,11 +538,11 @@
       "group": "tolva"
     },
     {
-      "code": "TOL_PANEL_CONO_6mm_P05",
+      "code": "TOL_PANEL_CONO_8mm",
       "name": "Chapa / componente fabricado",
       "material": "Según plano",
       "quantity": 4,
-      "dimensions": "TOL PANEL CONO 6mm",
+      "dimensions": "TOL PANEL CONO 8mm",
       "group": "tolva"
     },
     {
@@ -825,14 +807,6 @@
       "material": "Según plano",
       "quantity": 8,
       "dimensions": "U04 CARTELA 125x150x12",
-      "group": "tolva"
-    },
-    {
-      "code": "U04_ANGULO_ARMADO_2x100x80x8_P05",
-      "name": "Chapa / componente fabricado",
-      "material": "Según plano",
-      "quantity": 36,
-      "dimensions": "U04 ANGULO ARMADO 2x100x80x8",
       "group": "tolva"
     },
     {
@@ -2351,7 +2325,7 @@
     },
     {
       "label": "Modelo actualizado",
-      "value": "253 piezas distintas · 792 componentes CAD"
+      "value": "248 piezas distintas · 748 componentes CAD"
     },
     {
       "label": "Estado del expediente",
@@ -2363,16 +2337,16 @@
   "issue": "Diseño de la estación",
   "fullReleaseAllowed": false,
   "verification": {
-    "distinctParts": 253,
-    "components": 792,
-    "updatedAnalyticalChecks": 338,
+    "distinctParts": 248,
+    "components": 748,
+    "updatedAnalyticalChecks": 360,
     "criticalFixedInterferences": 0,
     "physicalTestsPerformed": false,
     "technicalApprovalDocumented": false,
     "fullReleaseAllowed": false,
     "sourceHashes": {
-      "native_manifest.json": "94a640a753105e139f3c125aa09197e284288eff3cffc7e14b9a231200b3988b",
-      "solidworks_model.bas": "50b807d76162c8384f0e3db149d14ad2847a05e91852153ebd6dd9da596dc241"
+      "native_manifest.json": "0b37277b197ea12ba97afb704d042868408e182bbe7933717273e51f36c32bd1",
+      "solidworks_model.bas": "6a31b7d9f1e0bc691876e4e415c8e7f899e9ed03a0a94253a6228158ec9aa3e3"
     },
     "analyticalSupplementSha256": "735d6594180d474e4b71a3d59ac54a72ffad3cb55be6c3222890f27abf385b76",
     "accreditationMatrixSha256": "c15fd5a4351ef3f98a16aaebaf4b71e1b7eb4b6c2bd5ac92785dfa7d8bbf96a5"
