@@ -1,4 +1,4 @@
-import {BigbagScene} from './scene.js?v=eb-solid-383ac01b8186';
+import {BigbagScene} from './scene.js?v=eb-solid-e9710555f4bd';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
@@ -68,6 +68,12 @@ function setStyle(value){
   const edges=style==='technical';
   $('edgesBtn').setAttribute('aria-pressed',String(edges));$('edgesBtn').classList.toggle('active',edges);
 }
+function setCameraMode(value){
+  if(!ready)return;
+  const mode=value==='pan'?'pan':'rotate';BigbagScene.setCameraMode(mode);
+  all('button[data-camera-mode]').forEach(button=>{const selected=button.dataset.cameraMode===mode;button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected));});
+  $('cameraHelp').textContent=mode==='pan'?'Arrastrar: desplazar · Rueda: acercar · Dos dedos: mover y zoom':'Arrastrar: girar · Botón derecho: desplazar · Rueda: acercar';
+}
 function showTab(id){
   all('.tab-panel').forEach(panel=>panel.hidden=panel.id!==id);
   all('.nav-tab').forEach(button=>{const active=button.dataset.tab===id;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
@@ -98,8 +104,8 @@ function populateProject(){
 function populateParts(){
   if(!project)return;
   const query=$('partSearch').value.trim().toLocaleLowerCase('es'),group=$('groupFilter').value;
-  const parts=project.parts.filter(p=>(!group||p.group===group)&&[p.code,p.name,p.material,p.dimensions].join(' ').toLocaleLowerCase('es').includes(query));
-  $('partsBody').innerHTML=parts.map(p=>`<tr><td>${escape(p.code)}</td><td>${escape(p.name)}</td><td>${escape(p.material)}</td><td>${escape(p.quantity)}</td><td>${escape(p.dimensions)}</td></tr>`).join('');
+  const parts=project.parts.filter(p=>(!group||p.group===group)&&[p.position,p.code,p.name,p.material,p.dimensions].join(' ').toLocaleLowerCase('es').includes(query));
+  $('partsBody').innerHTML=parts.map(p=>`<tr><td>${escape(p.position??p.code)}</td><td>${escape(p.name)}</td><td>${escape(p.material)}</td><td>${escape(p.quantity)}</td><td>${escape(p.dimensions)}</td></tr>`).join('');
   $('noParts').hidden=parts.length>0;
 }
 function populateStages(){
@@ -127,6 +133,7 @@ $('fitBtn').addEventListener('click',()=>setView('iso'));
 $('fullscreenBtn').addEventListener('click',async()=>{try{await BigbagScene.toggleFullscreen();}catch{$('viewer').scrollIntoView({block:'center'});}});
 $('edgesBtn').addEventListener('click',()=>toggle($('edgesBtn'),'setEdges'));
 $('renderStyle').addEventListener('change',e=>setStyle(e.target.value));
+all('button[data-camera-mode]').forEach(button=>button.addEventListener('click',()=>setCameraMode(button.dataset.cameraMode)));
 $('sectionBtn').addEventListener('click',()=>toggle($('sectionBtn'),'setSection'));
 $('dimensionsBtn').addEventListener('click',()=>toggle($('dimensionsBtn'),'setDimensions'));
 $('clearSelection').addEventListener('click',()=>{BigbagScene.highlight(null);selectPart(null);});
@@ -140,16 +147,16 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-383ac01b8186'),fetch('data/model.json?v=eb-solid-383ac01b8186')]);
+  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-e9710555f4bd'),fetch('data/model.json?v=eb-solid-e9710555f4bd')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();
   await BigbagScene.init($('scene'),selectPart);ready=true;
   $('loading').hidden=true;$('playBtn').disabled=false;
-  setStyle('realistic');setProgress(0);showTab(['simulacion','calculos','piezas'].includes(location.hash.slice(1))?location.hash.slice(1):'simulacion');
+  setStyle('realistic');setCameraMode('rotate');setProgress(0);showTab(['simulacion','calculos','piezas'].includes(location.hash.slice(1))?location.hash.slice(1):'simulacion');
   requestAnimationFrame(tick);
   // Expose deterministic controls for accessibility and repeatable browser checks.
-  window.bigbagApp={getState:()=>({...BigbagScene.getState(),playing,speed,ready}),setProgress,setPlaying,setView,setStyle,showTab};
+  window.bigbagApp={getState:()=>({...BigbagScene.getState(),playing,speed,ready}),setProgress,setPlaying,setView,setStyle,setCameraMode,showTab};
 }catch(error){
   console.error(error);$('loading').innerHTML='<strong>No se pudo abrir el modelo 3D.</strong><small>Recarga la página en un navegador con WebGL habilitado.</small><button type="button" id="retryLoad">Volver a cargar</button>';
   $('retryLoad').addEventListener('click',()=>location.reload());
