@@ -91,7 +91,7 @@
     },
     {
       "label": "Refuerzos de tolva",
-      "value": "3 anillos: SHS100x100x6 / RHS100x60x6.3 / RHS150x75x5"
+      "value": "3 anillos: SHS100x100x5 / RHS100x60x6.3 / RHS150x75x5"
     },
     {
       "label": "Volumen de tolva",
@@ -124,8 +124,8 @@
     {
       "id": "correcciones_geometricas",
       "title": "Soportes y arriostres",
-      "count": 24,
-      "supersededCount": 12,
+      "count": 20,
+      "supersededCount": 16,
       "maxUtilization": 0.853265625,
       "failedCount": 0,
       "status": "Conforme",
@@ -190,8 +190,8 @@
     {
       "id": "optimizacion_refuerzos_tolva",
       "title": "Tolva y tres anillos",
-      "count": 14,
-      "supersededCount": 8,
+      "count": 9,
+      "supersededCount": 13,
       "maxUtilization": 0.9171820708691067,
       "failedCount": 0,
       "status": "Conforme",
@@ -203,7 +203,7 @@
       "title": "Mayor capacidad de tolva",
       "count": 25,
       "supersededCount": 0,
-      "maxUtilization": 0.9938798172663118,
+      "maxUtilization": 0.9834049281492371,
       "failedCount": 0,
       "status": "Conforme",
       "description": "Cuerpo de 470,15 mm; 2,058 m³ útiles.",
@@ -219,6 +219,17 @@
       "status": "Conforme",
       "description": "Celsius S355NH: 150 × 150 × 12,5; 100 × 100 × 10; 100 × 60 × 6,3 mm.",
       "scope": "Resistencia, fatiga y uniones de los perfiles sustituidos."
+    },
+    {
+      "id": "estandarizacion_materiales",
+      "title": "Materiales comunes",
+      "count": 24,
+      "supersededCount": 0,
+      "maxUtilization": 0.9658379967178211,
+      "failedCount": 0,
+      "status": "Conforme",
+      "description": "Tubo100 × 100 × 5 en patas, anillo y cortador; rodapiés6 mm.",
+      "scope": "Sección, deformación y uniones. Planchas A36 agrupadas en ocho espesores de compra."
     }
   ],
   "groups": [
@@ -243,7 +254,7 @@
       "label": "Tolva y bastidor",
       "material": "Material de cada pieza indicado en la lista.",
       "quantity": 66,
-      "massKg": 1428.658671467576,
+      "massKg": 1411.8988488802563,
       "description": "Capacidad útil 2,058 m³. Cono de 8 mm y cuerpo de 6 mm; revestimiento de 10 mm y tres anillos. Cuerpo de 470,15 mm."
     },
     {
@@ -275,7 +286,7 @@
       "label": "Barandas",
       "material": "ASTM A36 / ASTM A500 Gr.B",
       "quantity": 107,
-      "massKg": 208.7158020553493,
+      "massKg": 211.80085205534925,
       "description": "Pasamanos, postes, protección intermedia y rodapiés. Altura de pasamanos de escalera: 1.100 mm sobre las narices."
     },
     {
@@ -291,7 +302,7 @@
       "label": "Equipos y descarga",
       "material": "Material de cada pieza indicado en la lista.",
       "quantity": 281,
-      "massKg": 548.8689859028914,
+      "massKg": 545.3477899028912,
       "description": "Cortador AISI 304 de cuatro filos de 16 mm, UHMWPE disipativo de 10 mm, compuerta, tecle y equipos comerciales. La masa indica solo acero modelado; equipos y polímeros excluidos."
     },
     {
@@ -393,14 +404,14 @@
       "group": "tolva"
     },
     {
-      "code": "SHS100x100x6_L1499304_TOLVA",
+      "code": "SHS100x100x5_L1499304_TOLVA",
       "position": 9,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
-      "purchase": "Tubo 100×100×6 mm, barra 6 m",
+      "purchase": "Tubo 100×100×5 mm, barra 6 m",
       "quantity": 4,
-      "dimensions": "ancho 100; alto 100; largo 1499.3; pared 6 · Fabricar con Tubo 100×100×6 mm, barra 6 m",
+      "dimensions": "ancho 100; alto 100; largo 1499.3; pared 5 · Fabricar con Tubo 100×100×5 mm, barra 6 m",
       "group": "tolva"
     },
     {
@@ -728,9 +739,9 @@
       "name": "Placa base de pata de tolva",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 25 mm",
+      "purchase": "Plancha ASTM A36 de 32 mm",
       "quantity": 2,
-      "dimensions": "ancho 250; alto 250; espesor 25; taladros Ø18 · Fabricar con Plancha ASTM A36 de 25 mm",
+      "dimensions": "ancho 250; alto 250; espesor 25; taladros Ø18 · Fabricar con Plancha ASTM A36 de 32 mm",
       "group": "tolva"
     },
     {
@@ -1278,9 +1289,9 @@
       "name": "Placa base del cortador",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 16 mm",
+      "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 1,
-      "dimensions": "ancho 200; alto 200; espesor 16; taladros Ø13 · Fabricar con Plancha ASTM A36 de 16 mm",
+      "dimensions": "ancho 200; alto 200; espesor 16; taladros Ø13 · Fabricar con Plancha ASTM A36 de 20 mm",
       "group": "complementos"
     },
     {
@@ -1421,9 +1432,9 @@
       "name": "Barra separadora de compuerta",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 32 mm",
+      "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
-      "dimensions": "ancho 6; alto 800; espesor 31.5 · Fabricar con Plancha ASTM A36 de 32 mm",
+      "dimensions": "ancho 31.5; alto 800; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
       "group": "complementos"
     },
     {
@@ -1432,9 +1443,9 @@
       "name": "Barra separadora de compuerta",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 32 mm",
+      "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
-      "dimensions": "ancho 6; alto 800; espesor 31.5 · Fabricar con Plancha ASTM A36 de 32 mm",
+      "dimensions": "ancho 31.5; alto 800; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
       "group": "complementos"
     },
     {
@@ -1806,9 +1817,9 @@
       "name": "Placa central de traba del carro",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 16 mm",
+      "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 1,
-      "dimensions": "ancho 80; alto 96; espesor 16; taladros Ø31 · Fabricar con Plancha ASTM A36 de 16 mm",
+      "dimensions": "ancho 80; alto 96; espesor 16; taladros Ø31 · Fabricar con Plancha ASTM A36 de 20 mm",
       "group": "complementos"
     },
     {
@@ -2142,14 +2153,14 @@
       "group": "soporte-bolsa"
     },
     {
-      "code": "CORTE_TRAVESANO100x100x6_L630_P05",
+      "code": "CORTE_TRAVESANO100x100x5_L630_P05",
       "position": 168,
       "name": "Travesaño de apoyo del cortador",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
-      "purchase": "Tubo 100×100×6 mm, barra 6 m",
+      "purchase": "Tubo 100×100×5 mm, barra 6 m",
       "quantity": 2,
-      "dimensions": "ancho 100; alto 100; largo 630; pared 6 · Fabricar con Tubo 100×100×6 mm, barra 6 m",
+      "dimensions": "ancho 100; alto 100; largo 630; pared 5 · Fabricar con Tubo 100×100×5 mm, barra 6 m",
       "group": "complementos"
     },
     {
@@ -2213,9 +2224,9 @@
       "name": "Placa de apoyo del marco de tolva",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 5 mm",
+      "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 4,
-      "dimensions": "ancho 100; alto 40; espesor 5 · Fabricar con Plancha ASTM A36 de 5 mm",
+      "dimensions": "ancho 100; alto 40; espesor 5 · Fabricar con Plancha ASTM A36 de 6 mm",
       "group": "complementos"
     },
     {
@@ -2494,25 +2505,25 @@
       "group": "barandas"
     },
     {
-      "code": "RODAPIE_LARGO_1700x100x5_P05_JUNTA_19",
+      "code": "RODAPIE_LARGO_1700x100x6_P05_JUNTA_19",
       "position": 200,
       "name": "Banda de borde de plataforma",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 5 mm",
+      "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
-      "dimensions": "ancho 1700; alto 100; espesor 5 · Fabricar con Plancha ASTM A36 de 5 mm",
+      "dimensions": "ancho 1700; alto 100; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
       "group": "barandas"
     },
     {
-      "code": "RODAPIE_TESTERO_800x100x5_P05_JUNTA_20",
+      "code": "RODAPIE_TESTERO_800x100x6_P05_JUNTA_20",
       "position": 201,
       "name": "Banda de borde de plataforma",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 5 mm",
+      "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
-      "dimensions": "ancho 800; alto 100; espesor 5 · Fabricar con Plancha ASTM A36 de 5 mm",
+      "dimensions": "ancho 800; alto 100; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
       "group": "barandas"
     },
     {
@@ -2571,14 +2582,14 @@
       "group": "barandas"
     },
     {
-      "code": "RODAPIE_LARGO_1700x100x5_P05_JUNTA_26",
+      "code": "RODAPIE_LARGO_1700x100x6_P05_JUNTA_26",
       "position": 207,
       "name": "Banda de borde de plataforma",
       "material": "ASTM A36",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 5 mm",
+      "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
-      "dimensions": "ancho 1700; alto 100; espesor 5 · Fabricar con Plancha ASTM A36 de 5 mm",
+      "dimensions": "ancho 1700; alto 100; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
       "group": "barandas"
     },
     {
@@ -3106,14 +3117,14 @@
   "verification": {
     "distinctParts": 248,
     "components": 748,
-    "updatedAnalyticalChecks": 458,
+    "updatedAnalyticalChecks": 473,
     "criticalFixedInterferences": 0,
     "physicalTestsPerformed": false,
     "technicalApprovalDocumented": false,
     "fullReleaseAllowed": false,
     "sourceHashes": {
-      "native_manifest.json": "443484685863e3d7e73935c38779978d8ca892a4ed1fe6c2fc4081974b461a8a",
-      "solidworks_model.bas": "a043198eb8add5d524162ddba52383cdcca225695421e4052ef7f1213dfd39c2"
+      "native_manifest.json": "be0c4def6a0de23de6d0d616e7cb189e7d96df45a97e8cdf1a43585ac0f408a1",
+      "solidworks_model.bas": "5586700b16aa4a0375bd9c18baa79fd52c8ca3029e1ef811c8d01ebc554f557a"
     },
     "analyticalSupplementSha256": "77ae02132aa071358c6291e36238ea0f075392bb4c42e9ab64b63d7421e571aa",
     "accreditationMatrixSha256": "3a2d119dd5248dedfad0fa45f962390e0007564e99da4b61a88638c67c693b54"
