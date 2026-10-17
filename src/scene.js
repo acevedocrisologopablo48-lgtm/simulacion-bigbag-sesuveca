@@ -1,15 +1,15 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=eb-solid-8a49622cec51';
-import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-8a49622cec51';
-import {buildProcessDetails} from './process-details.js?v=eb-solid-8a49622cec51';
+import {buildWorkshop} from './workshop.js?v=eb-solid-d33ce6ef6928';
+import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-d33ce6ef6928';
+import {buildProcessDetails} from './process-details.js?v=eb-solid-d33ce6ef6928';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
 const lerp = (a, b, t) => a + (b - a) * t;
 const UP = new THREE.Vector3(0, 0, 1);
 const groupNames = {
-  Cimentacion: 'Cimentación y anclajes', Porticos: 'Pórticos y arriostres', Monorriel: 'Monorriel y carro', Tolva: 'Tolva de 2,30 m³',
+  Cimentacion: 'Cimentación y anclajes', Porticos: 'Pórticos y arriostres', Monorriel: 'Monorriel y carro', Tolva: 'Tolva de carbón',
   'Soporte bolsa': 'Apoyo del bigbag', Cruceta: 'Cruceta de cuatro puntos', Plataforma: 'Plataforma lateral',
   Escalera: 'Escalera de acceso', Barandas: 'Barandas y guardas', Compuerta: 'Compuerta y ensacado',
   Complementos: 'Uniones y complementos', Accesorios: 'Accesorios', Bigbag: 'Bigbag de proceso · 1 t',
@@ -83,7 +83,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=eb-solid-8a49622cec51', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=eb-solid-d33ce6ef6928', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -252,16 +252,17 @@ class SceneEngine {
     this.coal = new THREE.Mesh(new THREE.BufferGeometry(), this.material('#242a2d', { roughness: 1, metalness: 0 })); this.group('Tolva').add(this.coal);
     const connection = this.group('Tolva');
     if (!this.data.exactCAD) {
-    const dustZ = H.mouth_z - .15;
+    const dustZ = H.dust_port_z ?? (H.outlet_z + H.cone_height + H.body_height / 2);
     const duct = this.cylinder(connection, .075, .24, H.center_x, -.925, dustZ, '#547b90', 'Tolva', { openEnded: true }); duct.rotation.x = 0;
     const flange = this.cylinder(connection, .105, .02, H.center_x, -1.05, dustZ, '#2d5266', 'Tolva', { openEnded: true }); flange.rotation.x = 0;
     const dustTube = this.tube(connection,[[H.center_x,-1.06,dustZ],[H.center_x,-1.38,dustZ],[H.center_x+.7,-1.52,1.65],[H.center_x+1.25,-1.52,1.65]],.075,'#76888d','Tolva');
     dustTube.userData.part='Conexión DN150 · 800 m³/h @ 1 500 Pa';
     }
     this.boot = this.cylinder(connection, .128, H.bag_support_z - H.mouth_z, H.center_x, 0, (H.bag_support_z+H.mouth_z)/2, '#47555e', 'Tolva', { roughness: 1, metalness: 0, openEnded: true });
+    const bootHeight = H.bag_support_z - H.mouth_z;
     for (let i = 0; i < 10; i++) {
       const ring = new THREE.Mesh(new THREE.TorusGeometry(.13,.006,6,32), this.material('#65757e'));
-      ring.position.set(H.center_x,0,H.mouth_z+.025+i*.03); connection.add(ring);
+      ring.position.set(H.center_x,0,H.mouth_z+bootHeight*(i+.5)/10); connection.add(ring);
     }
     this.closedGuard = new THREE.Group(); connection.add(this.closedGuard);
     const guardTop = this.data.config.guard_top_m || 3.43, guardBase=H.bag_support_z;
@@ -463,7 +464,7 @@ class SceneEngine {
   updateCoal(kg) {
     this.coal.visible=kg>.01;if(kg<=.01)return;
     if(this.coalKg!==undefined&&Math.abs(kg-this.coalKg)<.005)return;this.coalKg=kg;
-    const H=this.data.hopper,h=this.fillHeight(kg/550),w=H.outlet_width+(H.mouth_width-H.outlet_width)*Math.min(h,H.cone_height)/H.cone_height;
+    const H=this.data.hopper,h=this.fillHeight(kg/(this.data.densityKgM3 || 550)),w=H.outlet_width+(H.mouth_width-H.outlet_width)*Math.min(h,H.cone_height)/H.cone_height;
     const square=(z,a)=>[[H.center_x-a/2,-a/2,z],[H.center_x+a/2,-a/2,z],[H.center_x+a/2,a/2,z],[H.center_x-a/2,a/2,z]];
     const verts=[...square(H.outlet_z+.005,H.outlet_width-.015)];
     if(h>H.cone_height)verts.push(...square(H.outlet_z+H.cone_height,H.mouth_width-.015));

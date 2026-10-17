@@ -3,7 +3,7 @@
   "title": "Estación de izaje y descarga de bigbags",
   "company": "SESUVECA",
   "author": "Javier Acevedo",
-  "summary": "Estación de bigbags: cruceta nominal de 2 t, bolsas de proceso de 1 t y tolva útil de 1,84 m³.",
+  "summary": "Estación de bigbags: cruceta nominal de 2 t, bolsas de proceso de 1 t y tolva útil de 2,058 m³.",
   "dimensions": [
     {
       "label": "Bigbag de proceso",
@@ -15,7 +15,7 @@
     },
     {
       "label": "Reserva de masa de cruceta",
-      "value": "225 kg incluidos herrajes y soldadura"
+      "value": "235 kg incluidos herrajes y soldadura"
     },
     {
       "label": "Tecle y carro de referencia",
@@ -43,7 +43,7 @@
     },
     {
       "label": "Tolva total / útil",
-      "value": "2,30 / 1,84 m³ después del revestimiento"
+      "value": "2,572 m³ interiores · 2,058 m³ útiles"
     },
     {
       "label": "Boca / salida libres",
@@ -55,7 +55,7 @@
     },
     {
       "label": "Cono / cuerpo recto",
-      "value": "1.212,44 / 370,15 mm de altura"
+      "value": "1212,44 / 470,15 mm de altura"
     },
     {
       "label": "Cuchilla piramidal fija",
@@ -91,7 +91,11 @@
     },
     {
       "label": "Refuerzos de tolva",
-      "value": "3 anillos: SHS100×100×6 / RHS80×75×5 / RHS150×75×5"
+      "value": "3 anillos: SHS100x100x6 / RHS100x60x6.3 / RHS150x75x5"
+    },
+    {
+      "label": "Volumen de tolva",
+      "value": "2,058 m³ útiles · 2,572 m³ interiores"
     }
   ],
   "calculations": [
@@ -99,7 +103,8 @@
       "id": "carro_anclajes",
       "title": "Rodadura y anclajes",
       "count": 85,
-      "maxUtilization": 0.9496130000088021,
+      "supersededCount": 0,
+      "maxUtilization": 0.9504104785713148,
       "failedCount": 0,
       "status": "Conforme",
       "description": "M16 · empotramiento 275 mm · longitud 400 mm.",
@@ -108,8 +113,9 @@
     {
       "id": "traba_carro",
       "title": "Traba del carro Ø30",
-      "count": 30,
-      "maxUtilization": 0.8626359606838041,
+      "count": 26,
+      "supersededCount": 4,
+      "maxUtilization": 0.7982887500000001,
       "failedCount": 0,
       "status": "Conforme",
       "description": "24,525 kN · doble corte y fijaciones del soporte.",
@@ -118,8 +124,9 @@
     {
       "id": "correcciones_geometricas",
       "title": "Soportes y arriostres",
-      "count": 36,
-      "maxUtilization": 0.9001021548824479,
+      "count": 24,
+      "supersededCount": 12,
+      "maxUtilization": 0.853265625,
       "failedCount": 0,
       "status": "Conforme",
       "description": "Apoyo de bolsa, cortador y transferencia a columnas.",
@@ -129,6 +136,7 @@
       "id": "estructura_longitudinal",
       "title": "Estructura e impacto",
       "count": 16,
+      "supersededCount": 0,
       "maxUtilization": 0.9972489242109828,
       "failedCount": 0,
       "status": "Conforme",
@@ -139,6 +147,7 @@
       "id": "calculo_mecanismos",
       "title": "Corte, compuerta y captación",
       "count": 15,
+      "supersededCount": 0,
       "maxUtilization": 0.8928571428571429,
       "failedCount": 0,
       "status": "Conforme",
@@ -149,21 +158,12 @@
       "id": "juntas_finales",
       "title": "83 interfaces / 37 miembros",
       "count": 141,
+      "supersededCount": 0,
       "maxUtilization": 0.7727903845648465,
       "failedCount": 0,
       "status": "Conforme",
       "description": "Uniones y secciones resistentes · topes a 12 kN.",
       "scope": "Filetes y juntas preparadas identificados en el cuadro de uniones."
-    },
-    {
-      "id": "fatiga",
-      "title": "Cruceta 2 t / 125.000 izajes",
-      "count": 34,
-      "maxUtilization": 0.8935015887129562,
-      "failedCount": 0,
-      "status": "Conforme",
-      "description": "Categoría B · Clase de servicio 2.",
-      "scope": "Cruceta nominal 2 t; proceso de bolsas de 1 t."
     },
     {
       "id": "acreditacion_analitica_final",
@@ -172,30 +172,53 @@
       "maxUtilization": 0.8682579296133878,
       "failedCount": 0,
       "status": "Conforme",
-      "description": "Topes: FS mínimo 1,9285 para 10,75 kN y 1,7276 para la envolvente activa de 12 kN. Pernos propios M20, carga centrada: FS 17,4195.",
+      "description": "Topes: FS mínimo 1,9285 para 10,75 kN y 1,7276 para la envolvente activa de 12 kN. Pernos propios M20, carga centrada: FS 17,3482.",
       "scope": "4 M20: soporte fijo de traba; KITO: suspensión original; 10,75 kN: caso estático impuesto (curva del TS75-39 a 0,5 m/s pendiente de dato comercial; media energética mínima 10,755 kN); 12 kN: envolvente estructural activa; hipótesis de suspensión por receptor Y300: cuatro controles separados en Anexo D, dos franjas de placa no conformes, fuera del camino instalado.",
       "source": "engineering/acreditacion_analitica_final_p05.json",
       "matrixSource": "engineering/matriz_acreditacion_p05.json",
-      "analyticalReportSha256": "735d6594180d474e4b71a3d59ac54a72ffad3cb55be6c3222890f27abf385b76",
-      "matrixSha256": "c15fd5a4351ef3f98a16aaebaf4b71e1b7eb4b6c2bd5ac92785dfa7d8bbf96a5",
+      "analyticalReportSha256": "77ae02132aa071358c6291e36238ea0f075392bb4c42e9ab64b63d7421e571aa",
+      "matrixSha256": "3a2d119dd5248dedfad0fa45f962390e0007564e99da4b61a88638c67c693b54",
       "totalSupplementaryChecks": 28,
       "excludedHypotheticalChecks": 4,
       "excludedHypotheticalFailedCount": 2,
       "minimumStopFactorOfSafetyAt10750N": 1.9284806363896234,
       "minimumStopFactorOfSafetyAt12000N": 1.7275972367657042,
-      "centeredM20FactorOfSafety": 17.419545600652324,
+      "centeredM20FactorOfSafety": 17.348178106779272,
       "commercialAccreditation": false,
       "fullReleaseAllowed": false
     },
     {
       "id": "optimizacion_refuerzos_tolva",
       "title": "Tolva y tres anillos",
-      "count": 22,
+      "count": 14,
+      "supersededCount": 8,
       "maxUtilization": 0.9171820708691067,
       "failedCount": 0,
       "status": "Conforme",
       "description": "Cono 8 mm; cuerpo 6 mm. Uniones de anillos con penetración completa.",
       "scope": "Presión 25 kPa; cascarón de cuatro caras, flexibilidad de bordes y uniones según memoria."
+    },
+    {
+      "id": "ampliacion_tolva",
+      "title": "Mayor capacidad de tolva",
+      "count": 25,
+      "supersededCount": 0,
+      "maxUtilization": 0.9938798172663118,
+      "failedCount": 0,
+      "status": "Conforme",
+      "description": "Cuerpo de 470,15 mm; 2,058 m³ útiles.",
+      "scope": "Volumen, pared superior, refuerzos y cargas de la tolva ampliada."
+    },
+    {
+      "id": "seleccion_perfiles_comerciales",
+      "title": "Perfiles comerciales",
+      "count": 88,
+      "supersededCount": 0,
+      "maxUtilization": 0.9899995940608538,
+      "failedCount": 0,
+      "status": "Conforme",
+      "description": "Celsius S355NH: 150 × 150 × 12,5; 100 × 100 × 10; 100 × 60 × 6,3 mm.",
+      "scope": "Resistencia, fatiga y uniones de los perfiles sustituidos."
     }
   ],
   "groups": [
@@ -218,10 +241,10 @@
     {
       "id": "tolva",
       "label": "Tolva y bastidor",
-      "material": "ASTM A36 / ASTM A500 Gr.B / EPDM",
+      "material": "Material de cada pieza indicado en la lista.",
       "quantity": 66,
-      "massKg": 1377.9000991260991,
-      "description": "Cono de 8 mm, cuerpo de 6 mm y tres anillos perimetrales; revestimiento UHMWPE de 10 mm."
+      "massKg": 1428.658671467576,
+      "description": "Capacidad útil 2,058 m³. Cono de 8 mm y cuerpo de 6 mm; revestimiento de 10 mm y tres anillos. Cuerpo de 470,15 mm."
     },
     {
       "id": "soporte-bolsa",
@@ -258,9 +281,9 @@
     {
       "id": "cruceta",
       "label": "Cruceta de cuatro puntos",
-      "material": "ASTM A36",
+      "material": "ASTM A36 / S355NH / EN10210-1",
       "quantity": 23,
-      "massKg": 198.70007256742755,
+      "massKg": 198.62145269618415,
       "description": "H en SHS 150 × 150 × 12; carga útil nominal 2 t y 125.000 izajes. Reserva de masa de diseño con herrajes: 225 kg."
     },
     {
@@ -268,7 +291,7 @@
       "label": "Equipos y descarga",
       "material": "Material de cada pieza indicado en la lista.",
       "quantity": 281,
-      "massKg": 544.4145490194755,
+      "massKg": 548.8689859028914,
       "description": "Cortador AISI 304 de cuatro filos de 16 mm, UHMWPE disipativo de 10 mm, compuerta, tecle y equipos comerciales. La masa indica solo acero modelado; equipos y polímeros excluidos."
     },
     {
@@ -590,25 +613,25 @@
       "group": "barandas"
     },
     {
-      "code": "SHS150x150x12_L1000000_P05",
+      "code": "SHS150x150x12p5_L1000000_P05",
       "position": 29,
-      "name": "Tramo de perfil cuadrado soldado",
-      "material": "ASTM A36",
+      "name": "Tramo de tubo cuadrado",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 12 mm",
+      "purchase": "Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1",
       "quantity": 2,
-      "dimensions": "ancho 150; alto 150; largo 1000; pared 12 · Fabricar con Plancha ASTM A36 de 12 mm",
+      "dimensions": "ancho 150; alto 150; largo 1000; pared 12.5 · Fabricar con Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1. Radio exterior nominal de representación R18.75; fabricante admite hasta R25. Ajustar cortes al radio real de suministro.",
       "group": "cruceta"
     },
     {
-      "code": "SHS150x150x12_L850000_P05",
+      "code": "SHS150x150x12p5_L850000_P05",
       "position": 30,
-      "name": "Tramo de perfil cuadrado soldado",
-      "material": "ASTM A36",
+      "name": "Tramo de tubo cuadrado",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 12 mm",
+      "purchase": "Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "ancho 150; alto 150; largo 850; pared 12 · Fabricar con Plancha ASTM A36 de 12 mm",
+      "dimensions": "ancho 150; alto 150; largo 850; pared 12.5 · Fabricar con Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1. Radio exterior nominal de representación R18.75; fabricante admite hasta R25. Ajustar cortes al radio real de suministro. Comprobar el ajuste contra los tubos transversales suministrados antes de soldar.",
       "group": "cruceta"
     },
     {
@@ -652,7 +675,7 @@
       "supply": "Fabricar",
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 3,
-      "dimensions": "Corte envolvente 1682×370.15; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
+      "dimensions": "Corte envolvente 1682×470.15; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
       "group": "tolva"
     },
     {
@@ -663,7 +686,7 @@
       "supply": "Fabricar",
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
-      "dimensions": "Corte envolvente 1682×370.15; espesor 6; taladros Ø150 · Fabricar con Plancha ASTM A36 de 6 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
+      "dimensions": "Corte envolvente 1682×470.15; espesor 6; taladros Ø150 · Fabricar con Plancha ASTM A36 de 6 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
       "group": "tolva"
     },
     {
@@ -1169,7 +1192,7 @@
       "supply": "Fabricar",
       "purchase": "Plancha PE-UHMW1000 disipativo de 10 mm",
       "quantity": 3,
-      "dimensions": "Corte envolvente 1670×370.15; espesor 10 · Fabricar con Plancha PE-UHMW1000 disipativo de 10 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
+      "dimensions": "Corte envolvente 1670×470.15; espesor 10 · Fabricar con Plancha PE-UHMW1000 disipativo de 10 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
       "group": "complementos"
     },
     {
@@ -1180,7 +1203,7 @@
       "supply": "Fabricar",
       "purchase": "Plancha PE-UHMW1000 disipativo de 10 mm",
       "quantity": 1,
-      "dimensions": "Corte envolvente 1670×370.15; espesor 10; taladros Ø150 · Fabricar con Plancha PE-UHMW1000 disipativo de 10 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
+      "dimensions": "Corte envolvente 1670×470.15; espesor 10; taladros Ø150 · Fabricar con Plancha PE-UHMW1000 disipativo de 10 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
       "group": "complementos"
     },
     {
@@ -1737,22 +1760,22 @@
       "code": "TC03_BRAZO_SHS100x100x10_S355_L300_P05",
       "position": 133,
       "name": "Brazo de traba del carro",
-      "material": "S355J2 / EN10025-2",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha S355J2 / EN10025-2 de 10 mm",
+      "purchase": "Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "ancho 100; alto 100; largo 300; pared 10 · Fabricar con Plancha S355J2 / EN10025-2 de 10 mm",
+      "dimensions": "ancho 100; alto 100; largo 350; pared 10 · Fabricar con Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1. Radio exterior nominal de representación R15; fabricante admite hasta R20. Ajustar cortes al radio real de suministro.",
       "group": "complementos"
     },
     {
       "code": "TC04_POSTE_SHS100x100x10_S355_L200_P05",
       "position": 134,
       "name": "Poste de traba del carro",
-      "material": "S355J2 / EN10025-2",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha S355J2 / EN10025-2 de 10 mm",
+      "purchase": "Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "ancho 100; alto 100; largo 200; pared 10 · Fabricar con Plancha S355J2 / EN10025-2 de 10 mm",
+      "dimensions": "ancho 100; alto 100; largo 215; pared 10 · Fabricar con Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1. Radio exterior nominal de representación R15; fabricante admite hasta R20. Ajustar cortes al radio real de suministro.",
       "group": "complementos"
     },
     {
@@ -2056,11 +2079,11 @@
       "code": "BRT_OUTRIGGER_SHS100x100x10_S355_L468_P05",
       "position": 162,
       "name": "Brazo lateral de refuerzo",
-      "material": "S355J2 / EN10025-2",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha S355J2 / EN10025-2 de 10 mm",
+      "purchase": "Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1",
       "quantity": 4,
-      "dimensions": "ancho 100; alto 100; largo 468; pared 10 · Fabricar con Plancha S355J2 / EN10025-2 de 10 mm",
+      "dimensions": "ancho 100; alto 100; largo 468; pared 10 · Fabricar con Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1. Radio exterior nominal de representación R15; fabricante admite hasta R20. Ajustar cortes al radio real de suministro.",
       "group": "complementos"
     },
     {
@@ -2144,44 +2167,44 @@
       "code": "HR_2p3124_1_FINAL_P05",
       "position": 170,
       "name": "Tramo de marco intermedio de tolva",
-      "material": "ASTM A36",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 5 mm",
+      "purchase": "Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "ancho 75; alto 80; largo 1767; pared 5 · Fabricar con Plancha ASTM A36 de 5 mm",
+      "dimensions": "ancho 60; alto 100; largo 1752; pared 6.3 · Fabricar con Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1. Radio exterior nominal de representación R9.45; fabricante admite hasta R12.6. Ajustar cortes al radio real de suministro.",
       "group": "tolva"
     },
     {
       "code": "HR_2p3124_2_FINAL_P05",
       "position": 171,
       "name": "Tramo de marco intermedio de tolva",
-      "material": "ASTM A36",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 5 mm",
+      "purchase": "Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "ancho 75; alto 80; largo 1767; pared 5 · Fabricar con Plancha ASTM A36 de 5 mm",
+      "dimensions": "ancho 60; alto 100; largo 1752; pared 6.3 · Fabricar con Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1. Radio exterior nominal de representación R9.45; fabricante admite hasta R12.6. Ajustar cortes al radio real de suministro.",
       "group": "tolva"
     },
     {
       "code": "HR_2p3124_3_FINAL_P05",
       "position": 172,
       "name": "Tramo de marco intermedio de tolva",
-      "material": "ASTM A36",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 5 mm",
+      "purchase": "Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "ancho 75; alto 80; largo 1767; pared 5 · Fabricar con Plancha ASTM A36 de 5 mm",
+      "dimensions": "ancho 60; alto 100; largo 1752; pared 6.3 · Fabricar con Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1. Radio exterior nominal de representación R9.45; fabricante admite hasta R12.6. Ajustar cortes al radio real de suministro.",
       "group": "tolva"
     },
     {
       "code": "HR_2p3124_4_FINAL_P05",
       "position": 173,
       "name": "Tramo de marco intermedio de tolva",
-      "material": "ASTM A36",
+      "material": "S355NH / EN10210-1",
       "supply": "Fabricar",
-      "purchase": "Plancha ASTM A36 de 5 mm",
+      "purchase": "Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "ancho 75; alto 80; largo 1767; pared 5 · Fabricar con Plancha ASTM A36 de 5 mm",
+      "dimensions": "ancho 60; alto 100; largo 1752; pared 6.3 · Fabricar con Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1. Radio exterior nominal de representación R9.45; fabricante admite hasta R12.6. Ajustar cortes al radio real de suministro.",
       "group": "tolva"
     },
     {
@@ -3021,11 +3044,11 @@
     },
     {
       "label": "Volumen de 1.000 kg",
-      "value": "1,818 m³ · margen frente a 1,84 m³ útiles: 21,8 litros"
+      "value": "1,818 m³ · margen frente a 2,0578 m³ útiles: 239,6 litros"
     },
     {
       "label": "Reserva geométrica superior",
-      "value": "0,46 m³ entre el volumen útil y el volumen total de 2,30 m³"
+      "value": "0,5145 m³ entre el volumen útil y el volumen total de 2,57225 m³"
     },
     {
       "label": "Apertura de bolsa emitida",
@@ -3083,17 +3106,17 @@
   "verification": {
     "distinctParts": 248,
     "components": 748,
-    "updatedAnalyticalChecks": 360,
+    "updatedAnalyticalChecks": 458,
     "criticalFixedInterferences": 0,
     "physicalTestsPerformed": false,
     "technicalApprovalDocumented": false,
     "fullReleaseAllowed": false,
     "sourceHashes": {
-      "native_manifest.json": "0b37277b197ea12ba97afb704d042868408e182bbe7933717273e51f36c32bd1",
-      "solidworks_model.bas": "6a31b7d9f1e0bc691876e4e415c8e7f899e9ed03a0a94253a6228158ec9aa3e3"
+      "native_manifest.json": "443484685863e3d7e73935c38779978d8ca892a4ed1fe6c2fc4081974b461a8a",
+      "solidworks_model.bas": "a043198eb8add5d524162ddba52383cdcca225695421e4052ef7f1213dfd39c2"
     },
-    "analyticalSupplementSha256": "735d6594180d474e4b71a3d59ac54a72ffad3cb55be6c3222890f27abf385b76",
-    "accreditationMatrixSha256": "c15fd5a4351ef3f98a16aaebaf4b71e1b7eb4b6c2bd5ac92785dfa7d8bbf96a5"
+    "analyticalSupplementSha256": "77ae02132aa071358c6291e36238ea0f075392bb4c42e9ab64b63d7421e571aa",
+    "accreditationMatrixSha256": "3a2d119dd5248dedfad0fa45f962390e0007564e99da4b61a88638c67c693b54"
   },
   "anchorDesign": {
     "title": "Anclajes adoptados · M16 / hef 275 mm / L400 mm",
@@ -3101,6 +3124,6 @@
     "rodTotalLengthMm": 400,
     "adopted": true,
     "count": 85,
-    "maxUtilization": 0.9496130000088021
+    "maxUtilization": 0.9504104785713148
   }
 }
