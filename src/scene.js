@@ -1,8 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=eb-solid-18cdab1e06dc';
-import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-18cdab1e06dc';
-import {buildProcessDetails} from './process-details.js?v=eb-solid-18cdab1e06dc';
+import {buildWorkshop} from './workshop.js?v=eb-solid-644352a9f51d';
+import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-644352a9f51d';
+import {buildProcessDetails} from './process-details.js?v=eb-solid-644352a9f51d';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -13,7 +13,7 @@ const groupNames = {
   'Soporte bolsa': 'Apoyo del bigbag', Cruceta: 'Cruceta de cuatro puntos', Plataforma: 'Plataforma lateral',
   Escalera: 'Escalera de acceso', Barandas: 'Barandas y guardas', Compuerta: 'Compuerta y ensacado',
   Complementos: 'Uniones y complementos', Accesorios: 'Accesorios', Bigbag: 'Bigbag de proceso · 1 t',
-  Montacargas: 'Montacargas de abastecimiento', Operarios: 'Operación y amarre', Rodillos: 'Mesa elevadora y rodillos'
+  Montacargas: 'Montacargas de abastecimiento', Operarios: 'Operación y amarre', Rodillos: 'Mesa elevadora y rodillos',Colector:'Colector de polvo'
 };
 const groupIds = {Cimentacion:'cimentacion',Porticos:'porticos',Monorriel:'monorriel',Tolva:'tolva','Soporte bolsa':'soporte-bolsa',Cruceta:'cruceta',Plataforma:'plataforma',Escalera:'escalera',Barandas:'barandas',Complementos:'complementos',Accesorios:'complementos',Compuerta:'complementos',Rodillos:'complementos',Bigbag:'soporte-bolsa',Montacargas:'porticos',Operarios:'complementos'};
 const canonicalGroup = id => Object.keys(groupIds).find(k => groupIds[k] === id) || id;
@@ -83,7 +83,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=eb-solid-18cdab1e06dc', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=eb-solid-644352a9f51d', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -562,6 +562,7 @@ class SceneEngine {
     this.exploded=!!v;
     const offsets={Porticos:[-.45,0,0],Tolva:[.35,0,.25],Plataforma:[0,.55,.08],Escalera:[-.5,.55,0],Barandas:[0,.55,.55],Monorriel:[0,0,.55],'Soporte bolsa':[0,0,.6],Complementos:[0,0,.05]};
     this.groupRoots.forEach((g,id)=>g.position.set(...(this.exploded?(offsets[id]||[0,0,0]):[0,0,0])));
+    if(this.collectorDuct)this.collectorDuct.visible=!this.exploded;
     this.render();
   }
   highlight(id) {
@@ -578,10 +579,12 @@ class SceneEngine {
       locks:{target:[2.9,0,C.beam_bottom+.06],offset:[1.2,-1.9,.85],height:1.5},
       cutter:{target:[H.center_x,0,C.support_z+.14],offset:[.65,2.25,.8],height:1.7},
       gate:{target:[2.55,.18,H.outlet_z+.05],offset:[.25,-1.6,.4],height:1.4},
+      collector:{target:[4.65,-.8,.90],offset:[1.8,-2.9,1.25],height:2.1},
       anchors:{target:[0,-1,.06],offset:[-1.25,-1.2,.8],height:1.05}};
     focus.discharge.target[2]=this.data.config.support_z;
-    const view=focus[name];this.controls.target.set(...(view?.target||[1.15,-.02,this.data.config.beam_top/2]));
-    const t=this.controls.target,views={iso:[7,-9,5.8],front:[0,-14,.01],side:[14,0,.01],back:[0,14,.01],top:[0,-.001,15],left:[-14,0,.01]};
+    const overview=name==='iso'?[1.5,-.2,this.data.config.beam_top/2-.25]:[1.15,-.02,this.data.config.beam_top/2];
+    const view=focus[name];this.controls.target.set(...(view?.target||overview));
+    const t=this.controls.target,views={iso:[7.7,-9.9,6.38],front:[0,-14,.01],side:[14,0,.01],back:[0,14,.01],top:[0,-.001,15],left:[-14,0,.01]};
     const d=view?.offset||views[name]||views.iso;
     this.camera.up.copy(name==='top'?new THREE.Vector3(0,1,0):UP);
     this.camera.position.copy(t).add(new THREE.Vector3(...d));this.camera.zoom=this.camera.isOrthographicCamera&&view?2*this.camera.top/view.height:1;this.camera.updateProjectionMatrix();this.controls.update();this.applyDetailFocus(name);this.render();

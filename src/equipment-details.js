@@ -1,4 +1,5 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
+import {buildCollector} from './collector.js?v=eb-solid-644352a9f51d';
 
 // Presentation detail follows the existing equipment envelopes. Fabricated CAD remains intact.
 const Z = new THREE.Vector3(0, 0, 1);
@@ -169,32 +170,50 @@ export function buildEquipmentDetails(engine) {
     cylinder(rail, .012, .014, [end - dir * .046, y, zz], [1, 0, 0], bright, 'Monorriel', 'Tuerca de fijación del amortiguador', true);
   }
 
-  // The corrugated DN150 hose starts at the actual CAD dust-capture port.
-  const capture = engine.group('Tolva'), port = engine.data.static.find(m => m.tag === 'PUERTO_CAPTACION_REF');
+  engine.collector=buildCollector(engine);
+  const capture=new THREE.Group();capture.name='Conexión tolva-colector';
+  engine.group('Colector').add(capture);engine.collectorDuct=capture;
+  const port = engine.data.static.find(m => m.tag === 'PUERTO_CAPTACION_REF');
   if (port) {
     const bb = new THREE.Box3().setFromPoints(port.v.map(v => new THREE.Vector3(...v)));
     const x = (bb.min.x + bb.max.x) / 2, zc = (bb.min.z + bb.max.z) / 2, y = bb.min.y;
-    // Continue to the rear utility route; no open hose end in the operating aisle.
-    const points = [[x, y, zc], [x, y - .19, zc], [x + .34, y - .29, zc],
-      [3.86, y - .29, zc], [4.08, -1.15, zc], [4.08, .8, zc],
-      [4.08, 1.8, zc], [3.90, 2.55, zc + .25], [3.90, 2.70, 3.45], [3.90, 2.70, 8.50]];
+    const end=[2.98,-1.68,zc];
+    const points = [[x,y,zc],[x,-1.48,zc],[x+.20,-1.68,zc],end];
     const path = new THREE.CatmullRomCurve3(points.map(v => new THREE.Vector3(...v)));
-    add(capture, new THREE.TubeGeometry(path, 160, .073, 16, false), pipeMat, [0, 0, 0], 'Tolva', 'Ducto flexible de captación DN150');
+    add(capture, new THREE.TubeGeometry(path, 56, .073, 16, false), pipeMat, [0, 0, 0], 'Colector', 'Conexión flexible DN150 de la tolva');
     const n = Math.ceil(path.getLength() / .025), ribs = new THREE.InstancedMesh(new THREE.TorusGeometry(.075, .0028, 5, 20), ribMat, n);
     const dummy = new THREE.Object3D();
     for (let i = 0; i < n; i++) {
       const t = i / (n - 1); dummy.position.copy(path.getPointAt(t)); dummy.quaternion.setFromUnitVectors(Z, path.getTangentAt(t)); dummy.updateMatrix(); ribs.setMatrixAt(i, dummy.matrix);
     }
-    ribs.castShadow = true; ribs.userData = { group: 'Tolva', part: 'Espiral de refuerzo del ducto DN150', equipmentDetail: true }; capture.add(ribs); engine.parts.push(ribs);
+    ribs.castShadow = true; ribs.userData = { group: 'Colector', part: 'Espiral de refuerzo del ducto DN150', equipmentDetail: true }; capture.add(ribs); engine.parts.push(ribs);
     for (const shift of [.015, .045]) {
-      torus(capture, .076, .004, [x, y - shift, zc], [0, 1, 0], bright, 'Tolva', 'Abrazadera de conexión del ducto DN150');
-      box(capture, [.026, .020, .010], [x, y - shift, zc + .077], steel, 'Tolva', 'Tensor de la abrazadera del ducto');
+      torus(capture, .076, .004, [x, y - shift, zc], [0, 1, 0], bright, 'Colector', 'Abrazadera de conexión del ducto DN150');
+      box(capture, [.026, .020, .010], [x, y - shift, zc + .077], steel, 'Colector', 'Tensor de la abrazadera del ducto');
     }
-    for (const height of [3.6, 5.8]) {
-      let lo = 0, hi = 1;
-      for (let i = 0; i < 24; i++) { const mid = (lo + hi) / 2; if (path.getPoint(mid).z < height) lo = mid; else hi = mid; }
-      const t = (lo + hi) / 2;
-      torus(capture, .076, .004, path.getPoint(t).toArray(), path.getTangent(t).toArray(), bright, 'Tolva', 'Unión del ducto de captación');
+    const inlet=engine.collector.inlet;
+    const corners=[new THREE.Vector3(...end),new THREE.Vector3(inlet.x,-1.68,zc),new THREE.Vector3(inlet.x,-1.68,inlet.z),inlet];
+    const rigidPath=new THREE.CurvePath();let previous=corners[0];
+    for(let i=1;i<corners.length-1;i++){
+      const p=corners[i],before=corners[i-1],after=corners[i+1];
+      const cut=Math.min(.20,p.distanceTo(before)*.4,p.distanceTo(after)*.4);
+      const enter=p.clone().add(before.clone().sub(p).normalize().multiplyScalar(cut));
+      const leave=p.clone().add(after.clone().sub(p).normalize().multiplyScalar(cut));
+      rigidPath.add(new THREE.LineCurve3(previous,enter));
+      rigidPath.add(new THREE.QuadraticBezierCurve3(enter,p,leave));previous=leave;
+    }
+    rigidPath.add(new THREE.LineCurve3(previous,inlet));
+    const duct=add(capture,new THREE.TubeGeometry(rigidPath,96,.075,20,false),galvanized,[0,0,0],'Colector','Ducto rígido DN150 al colector');
+    duct.userData.endpoints=[end,inlet.toArray()];
+    engine.collector.connection={source:[x,y,zc],flexibleEnd:end,inlet:inlet.toArray(),flexibleLengthM:path.getLength(),rigidLengthM:rigidPath.getLength()};
+    for(const [point,axis]of[[end,[1,0,0]],[inlet.toArray(),[0,1,0]]])
+      torus(capture,.079,.005,point,axis,bright,'Colector','Abrazadera de unión DN150');
+    for(const xx of [3.20,4.25]){
+      const yy=-1.84,postTop=zc-.075;
+      box(capture,[.15,.15,.01],[xx,yy,-.025],blue,'Colector','Base de soporte del ducto');
+      box(capture,[.03,.03,postTop+.02],[xx,yy,(postTop-.02)/2],blue,'Colector','Soporte del ducto');
+      box(capture,[.04,.20,.025],[xx,-1.755,postTop-.0125],blue,'Colector','Apoyo inferior del ducto');
+      torus(capture,.079,.005,[xx,-1.68,zc],[1,0,0],bright,'Colector','Abrazadera de soporte del ducto');
     }
   }
 

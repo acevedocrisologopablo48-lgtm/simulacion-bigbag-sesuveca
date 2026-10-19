@@ -1,4 +1,4 @@
-import {BigbagScene} from './scene.js?v=eb-solid-18cdab1e06dc';
+import {BigbagScene} from './scene.js?v=eb-solid-644352a9f51d';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
@@ -7,7 +7,7 @@ const displayText=value=>String(value??'').replace(/revisi[oó]n\s+t[ée]cnica/g
 const escape=value=>displayText(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let progress=0,playing=false,lastTime=0,speed=1,ready=false,lastPhase=-1,project,model;
 const CYCLE_SECONDS=120;
-const viewNames={iso:'ISOMÉTRICA',front:'FRONTAL',side:'LATERAL',back:'POSTERIOR',top:'PLANTA',hoist:'TECLE Y CARRO',locks:'TRABA Y TOPES',cutter:'CORTE DE BOLSA',gate:'COMPUERTA',bagging:'BALANZA Y MESA',anchors:'BASES Y ANCLAJES',discharge:'DESCARGA',pickup:'RECEPCIÓN'};
+const viewNames={iso:'ISOMÉTRICA',front:'FRONTAL',side:'LATERAL',back:'POSTERIOR',top:'PLANTA',hoist:'TECLE Y CARRO',locks:'TRABA Y TOPES',cutter:'CORTE DE BOLSA',gate:'COMPUERTA',bagging:'BALANZA Y MESA',anchors:'BASES Y ANCLAJES',discharge:'DESCARGA',pickup:'RECEPCIÓN',collector:'COLECTOR DE POLVO'};
 const phaseNames={recepcion:'Recepción',enganche:'Enganche',izaje:'Izaje',traslado:'Traslado',apoyo:'Apoyo',descarga:'Descarga',llenado:'Llenado',amarre:'Amarre',salida:'Salida',retorno:'Retorno'};
 
 function setPlaying(value){
@@ -147,7 +147,7 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-18cdab1e06dc'),fetch('data/model.json?v=eb-solid-18cdab1e06dc')]);
+  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-644352a9f51d'),fetch('data/model.json?v=eb-solid-644352a9f51d')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();
