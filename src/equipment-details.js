@@ -1,5 +1,5 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
-import {buildCollector} from './collector.js?v=eb-solid-644352a9f51d';
+import {buildCollector} from './collector.js?v=eb-solid-b62043c4d486';
 
 // Presentation detail follows the existing equipment envelopes. Fabricated CAD remains intact.
 const Z = new THREE.Vector3(0, 0, 1);
@@ -72,29 +72,47 @@ export function buildEquipmentDetails(engine) {
   };
 
   // Commercial grating references become open bar grating within their original bounds.
-  for (const reference of engine.data.static.filter(m => /^(REJILLA_PLATAFORMA_REF|PELDANO_\d+_REF)$/.test(m.tag))) {
+  for (const reference of engine.data.static.filter(m => /^(REJILLA_PLATAFORMA_REF|REJILLA_APROXIMACION_.*|AC_REJILLA_PISO|AC_PELDANO_\d+|PELDANO_\d+_REF)$/.test(m.tag))) {
     const bbox = new THREE.Box3().setFromPoints(reference.v.map(v => new THREE.Vector3(...v)));
     const { min, max } = bbox, w = max.x - min.x, d = max.y - min.y, h = max.z - min.z;
     const parent = engine.group(reference.group), label = reference.group === 'Escalera' ? 'Peldaño de rejilla metálica antideslizante' : 'Piso de rejilla metálica galvanizada';
     for (const mesh of engine.parts) if (mesh.userData.part === reference.tag) mesh.visible = false;
+    const topTriangles=reference.f.filter(f=>f.length===3&&f.every(i=>Math.abs(reference.v[i][2]-max.z)<.00002));
+    const spansAt=(axis,value)=>{
+      const other=1-axis,intervals=[];
+      for(const f of topTriangles){
+        const points=f.map(i=>reference.v[i]),crossings=[];
+        for(let k=0;k<3;k++){
+          const a=points[k],b=points[(k+1)%3],delta=b[axis]-a[axis];
+          if(Math.abs(delta)<1e-10)continue;
+          const t=(value-a[axis])/delta;if(t>=-1e-8&&t<=1+1e-8)crossings.push(a[other]+t*(b[other]-a[other]));
+        }
+        if(crossings.length>=2)intervals.push([Math.min(...crossings),Math.max(...crossings)]);
+      }
+      intervals.sort((a,b)=>a[0]-b[0]);const merged=[];
+      for(const interval of intervals){const last=merged.at(-1);if(last&&interval[0]<=last[1]+.00002)last[1]=Math.max(last[1],interval[1]);else merged.push(interval);}
+      return merged.filter(([a,b])=>b-a>.008).map(([a,b])=>[a+.003,b-.003]);
+    };
     const positions = [], count = Math.max(2, Math.floor(w / .03) + 1);
-    for (let i = 0; i < count; i++) positions.push({
-      p: [min.x + .003 + (w - .006) * i / (count - 1), (min.y + max.y) / 2, (min.z + max.z) / 2],
-      s: [.004, d - .006, h]
-    });
+    for (let i = 0; i < count; i++) {
+      const xx=min.x+.003+(w-.006)*i/(count-1);
+      for(const [a,b]of spansAt(0,xx))positions.push({p:[xx,(a+b)/2,(min.z+max.z)/2],s:[.004,b-a,h]});
+    }
     const crossCount = Math.max(2, Math.floor(d / .10) + 1);
-    for (let i = 0; i < crossCount; i++) positions.push({
-      p: [(min.x + max.x) / 2, min.y + .004 + (d - .008) * i / (crossCount - 1), max.z - .004],
-      s: [w - .006, .005, .008]
-    });
+    for (let i = 0; i < crossCount; i++) {
+      const yy=min.y+.004+(d-.008)*i/(crossCount-1);
+      for(const [a,b]of spansAt(1,yy))positions.push({p:[(a+b)/2,yy,max.z-.004],s:[b-a,.005,.008]});
+    }
     const bars = new THREE.InstancedMesh(boxGeo, galvanized, positions.length), transform = new THREE.Object3D();
     positions.forEach(({ p, s }, i) => { transform.position.set(...p); transform.scale.set(...s); transform.updateMatrix(); bars.setMatrixAt(i, transform.matrix); });
     bars.castShadow = bars.receiveShadow = true;
     bars.userData = { group: reference.group, part: label, equipmentDetail: true };
     parent.add(bars); engine.parts.push(bars);
     const border = reference.group === 'Escalera' ? blue : galvanized;
-    for (const yy of [min.y + .0015, max.y - .0015]) box(parent, [w, .003, h], [(min.x + max.x) / 2, yy, (min.z + max.z) / 2], border, reference.group, label);
-    for (const xx of [min.x + .0015, max.x - .0015]) box(parent, [.003, d - .006, h], [xx, (min.y + max.y) / 2, (min.z + max.z) / 2], border, reference.group, label);
+    for (const yy of [min.y + .003, max.y - .003]) for(const [a,b]of spansAt(1,yy))
+      box(parent,[b-a,.003,h],[(a+b)/2,yy,(min.z+max.z)/2],border,reference.group,label);
+    for (const xx of [min.x + .003, max.x - .003]) for(const [a,b]of spansAt(0,xx))
+      box(parent,[.003,b-a,h],[xx,(a+b)/2,(min.z+max.z)/2],border,reference.group,label);
     if (reference.group === 'Escalera') {
       box(parent, [.023, d - .006, .006], [min.x + .013, (min.y + max.y) / 2, max.z - .003], dark, 'Escalera', 'Borde antideslizante del peldaño');
     }
@@ -176,10 +194,17 @@ export function buildEquipmentDetails(engine) {
   const port = engine.data.static.find(m => m.tag === 'PUERTO_CAPTACION_REF');
   if (port) {
     const bb = new THREE.Box3().setFromPoints(port.v.map(v => new THREE.Vector3(...v)));
-    const x = (bb.min.x + bb.max.x) / 2, zc = (bb.min.z + bb.max.z) / 2, y = bb.min.y;
-    const end=[2.98,-1.68,zc];
-    const points = [[x,y,zc],[x,-1.48,zc],[x+.20,-1.68,zc],end];
-    const path = new THREE.CatmullRomCurve3(points.map(v => new THREE.Vector3(...v)));
+    const source = new THREE.Vector3((bb.min.x+bb.max.x)/2,(bb.min.y+bb.max.y)/2,bb.max.z);
+    const zc=source.z+.25,end=[-.65,source.y-.15,zc];
+    const arc3=(center,u,v)=>{
+      const arc=new THREE.Curve();arc.getPoint=(t,target=new THREE.Vector3())=>target.copy(center)
+        .addScaledVector(u,Math.cos(t*Math.PI/2)).addScaledVector(v,Math.sin(t*Math.PI/2));return arc;
+    };
+    const path=new THREE.CurvePath();
+    path.add(new THREE.LineCurve3(source,source.clone().add(new THREE.Vector3(0,0,.10))));
+    path.add(arc3(new THREE.Vector3(source.x-.15,source.y,source.z+.10),new THREE.Vector3(.15,0,0),new THREE.Vector3(0,0,.15)));
+    path.add(new THREE.LineCurve3(new THREE.Vector3(source.x-.15,source.y,zc),new THREE.Vector3(-.50,source.y,zc)));
+    path.add(arc3(new THREE.Vector3(-.50,source.y-.15,zc),new THREE.Vector3(0,.15,0),new THREE.Vector3(-.15,0,0)));
     add(capture, new THREE.TubeGeometry(path, 56, .073, 16, false), pipeMat, [0, 0, 0], 'Colector', 'Conexión flexible DN150 de la tolva');
     const n = Math.ceil(path.getLength() / .025), ribs = new THREE.InstancedMesh(new THREE.TorusGeometry(.075, .0028, 5, 20), ribMat, n);
     const dummy = new THREE.Object3D();
@@ -187,12 +212,13 @@ export function buildEquipmentDetails(engine) {
       const t = i / (n - 1); dummy.position.copy(path.getPointAt(t)); dummy.quaternion.setFromUnitVectors(Z, path.getTangentAt(t)); dummy.updateMatrix(); ribs.setMatrixAt(i, dummy.matrix);
     }
     ribs.castShadow = true; ribs.userData = { group: 'Colector', part: 'Espiral de refuerzo del ducto DN150', equipmentDetail: true }; capture.add(ribs); engine.parts.push(ribs);
-    for (const shift of [.015, .045]) {
-      torus(capture, .076, .004, [x, y - shift, zc], [0, 1, 0], bright, 'Colector', 'Abrazadera de conexión del ducto DN150');
-      box(capture, [.026, .020, .010], [x, y - shift, zc + .077], steel, 'Colector', 'Tensor de la abrazadera del ducto');
+    for (const shift of [.010, .035]) {
+      const point=source.clone().add(new THREE.Vector3(0,0,-shift));
+      torus(capture, .076, .004, point.toArray(), [0,0,1], bright, 'Colector', 'Abrazadera de conexión del ducto DN150');
+      box(capture, [.026, .020, .010], [point.x,point.y-.077,point.z], steel, 'Colector', 'Tensor de la abrazadera del ducto');
     }
     const inlet=engine.collector.inlet;
-    const corners=[new THREE.Vector3(...end),new THREE.Vector3(inlet.x,-1.68,zc),new THREE.Vector3(inlet.x,-1.68,inlet.z),inlet];
+    const corners=[new THREE.Vector3(...end),new THREE.Vector3(-.65,-1.68,zc),new THREE.Vector3(inlet.x,-1.68,zc),new THREE.Vector3(inlet.x,-1.68,inlet.z),inlet];
     const rigidPath=new THREE.CurvePath();let previous=corners[0];
     for(let i=1;i<corners.length-1;i++){
       const p=corners[i],before=corners[i-1],after=corners[i+1];
@@ -203,25 +229,33 @@ export function buildEquipmentDetails(engine) {
       rigidPath.add(new THREE.QuadraticBezierCurve3(enter,p,leave));previous=leave;
     }
     rigidPath.add(new THREE.LineCurve3(previous,inlet));
-    const duct=add(capture,new THREE.TubeGeometry(rigidPath,96,.075,20,false),galvanized,[0,0,0],'Colector','Ducto rígido DN150 al colector');
+    const duct=add(capture,new THREE.TubeGeometry(rigidPath,128,.075,20,false),galvanized,[0,0,0],'Colector','Ducto rígido DN150 al colector');
     duct.userData.endpoints=[end,inlet.toArray()];
-    engine.collector.connection={source:[x,y,zc],flexibleEnd:end,inlet:inlet.toArray(),flexibleLengthM:path.getLength(),rigidLengthM:rigidPath.getLength()};
-    for(const [point,axis]of[[end,[1,0,0]],[inlet.toArray(),[0,1,0]]])
+    engine.collector.connection={source:source.toArray(),sourceAxis:[0,0,1],flexibleEnd:end,inlet:inlet.toArray(),flexibleLengthM:path.getLength(),rigidLengthM:rigidPath.getLength()};
+    for(const [point,axis]of[[end,[0,1,0]],[inlet.toArray(),[0,1,0]]])
       torus(capture,.079,.005,point,axis,bright,'Colector','Abrazadera de unión DN150');
-    for(const xx of [3.20,4.25]){
-      const yy=-1.84,postTop=zc-.075;
-      box(capture,[.15,.15,.01],[xx,yy,-.025],blue,'Colector','Base de soporte del ducto');
-      box(capture,[.03,.03,postTop+.02],[xx,yy,(postTop-.02)/2],blue,'Colector','Soporte del ducto');
-      box(capture,[.04,.20,.025],[xx,-1.755,postTop-.0125],blue,'Colector','Apoyo inferior del ducto');
-      torus(capture,.079,.005,[xx,-1.68,zc],[1,0,0],bright,'Colector','Abrazadera de soporte del ducto');
+    const xx=-.90,yy=-1.05,armZ=zc-.105,postTop=zc-.075;
+    box(capture,[.20,.20,.02],[xx,yy,-.02],blue,'Colector','Placa de soporte de ducto 200 × 200 × 20 mm');
+    for(const dx of [-.065,.065])for(const dy of [-.065,.065])
+      cylinder(capture,.008,.025,[xx+dx,yy+dy,0],[0,0,1],bright,'Colector','Fijación M16 del soporte del ducto');
+    box(capture,[.08,.08,postTop+.01],[xx,yy,(postTop-.01)/2],blue,'Colector','Poste tubular 80 × 80 × 4 mm');
+    box(capture,[.06,.63,.06],[xx,-1.365,armZ],blue,'Colector','Brazo tubular 60 × 60 × 4 mm');
+    for(const dx of [-.028,.028]){
+      const triangle=new THREE.Shape();triangle.moveTo(0,0);triangle.lineTo(-.15,0);triangle.lineTo(0,-.15);triangle.closePath();
+      const geo=new THREE.ExtrudeGeometry(triangle,{depth:.006,bevelEnabled:false});
+      // Local plane becomes Y/Z; two root plates brace the cantilever.
+      geo.applyMatrix4(new THREE.Matrix4().set(0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1));
+      add(capture,geo,blue,[xx+dx,yy,armZ-.03],'Colector','Cartela triangular 150 × 150 × 6 mm');
     }
+    torus(capture,.079,.005,[xx,-1.68,zc],[1,0,0],bright,'Colector','Abrazadera de soporte del ducto');
+
   }
 
-  // Existing engineering drive axis: X=2.65, Y=.4, Z=1.155 m, handwheel Ø250 mm.
+  // Gate drive follows the fabricated assembly on the left side of the hopper.
   const mechanism = engine.group('Complementos'), wheel = new THREE.Group();
-  mechanism.add(wheel); wheel.position.set(2.65, .4, 1.155);
-  roundedHousing(mechanism, .09, .12, .12, [2.595, .4, 1.155], blue, 'Compuerta', 'Reductor manual de la compuerta');
-  cylinder(mechanism, .0125, .12, [2.61, .4, 1.155], [1, 0, 0], steel, 'Compuerta', 'Eje del accionamiento de compuerta');
+  mechanism.add(wheel); wheel.position.set(H.center_x-.30, .4, 1.155); wheel.scale.x=-1;
+  roundedHousing(mechanism, .09, .12, .12, [H.center_x-.245, .4, 1.155], blue, 'Compuerta', 'Reductor manual de la compuerta');
+  cylinder(mechanism, .0125, .12, [H.center_x-.26, .4, 1.155], [-1, 0, 0], steel, 'Compuerta', 'Eje del accionamiento de compuerta');
   torus(wheel, .119, .009, [.025, 0, 0], [1, 0, 0], dark, 'Compuerta', 'Volante de compuerta Ø250 mm');
   cylinder(wheel, .025, .04, [.025, 0, 0], [1, 0, 0], steel, 'Compuerta', 'Cubo del volante de compuerta');
   for (let i = 0; i < 3; i++) {
@@ -237,14 +271,14 @@ export function buildEquipmentDetails(engine) {
     cylinder(rollers, .008, .023, [xx + sign * .01, yy, .315], [1, 0, 0], bright, 'Rodillos', 'Eje de rodillo', true);
   }
   for (const sign of [-1, 1]) box(rollers, [.018, 1.705, .075], [H.center_x + sign * .308, -1.1875, .284], blue, 'Rodillos', 'Larguero de transportador de rodillos');
-  const screen = plate(rollers, .174, .081, [2.67, .160, .80], () => {}, 'Compuerta', 'Indicador digital de la balanza · kg');
-  for (const [i, mat] of [[-1, black], [0, green], [1, black]]) cylinder(rollers, .008, .004, [2.67 + i * .041, .160, .748], [0, 1, 0], mat, 'Compuerta', ['Tara', 'Cero', 'Unidad'][i + 1]);
+  const screen = plate(rollers, .174, .081, [H.center_x-.32, .160, .80], () => {}, 'Compuerta', 'Indicador digital de la balanza · kg');
+  for (const [i, mat] of [[-1, black], [0, green], [1, black]]) cylinder(rollers, .008, .004, [H.center_x-.32 + i * .041, .160, .748], [0, 1, 0], mat, 'Compuerta', ['Tara', 'Cero', 'Unidad'][i + 1]);
   for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
     const xx = H.center_x + sx * .51, yy = sy * .51;
     cylinder(rollers, .028, .022, [xx, yy, .021], [0, 0, 1], black, 'Compuerta', 'Apoyo regulable de balanza');
     cylinder(rollers, .009, .024, [xx, yy, .042], [0, 0, 1], bright, 'Compuerta', 'Nivelación de la plataforma de pesaje', true);
   }
-  cable(rollers, [[2.67, .20, .72], [2.67, .21, .23], [2.62, .37, .10], [2.84, .46, .06]], .006, black, 'Compuerta', 'Cable de celdas de carga de la balanza');
+  cable(rollers, [[H.center_x-.32, .20, .72], [H.center_x-.32, .21, .23], [H.center_x-.27, .37, .10], [H.center_x-.49, .46, .06]], .006, black, 'Compuerta', 'Cable de celdas de carga de la balanza');
 
   if (engine.liftBellows) engine.liftBellows.visible = false;
   const bellows = new THREE.Group(); engine.liftRoot.add(bellows);

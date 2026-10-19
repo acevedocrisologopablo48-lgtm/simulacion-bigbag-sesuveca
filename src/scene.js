@@ -1,8 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=eb-solid-644352a9f51d';
-import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-644352a9f51d';
-import {buildProcessDetails} from './process-details.js?v=eb-solid-644352a9f51d';
+import {buildWorkshop} from './workshop.js?v=eb-solid-b62043c4d486';
+import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-b62043c4d486';
+import {buildProcessDetails} from './process-details.js?v=eb-solid-b62043c4d486';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -10,7 +10,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
 const UP = new THREE.Vector3(0, 0, 1);
 const groupNames = {
   Cimentacion: 'Cimentación y anclajes', Porticos: 'Pórticos y arriostres', Monorriel: 'Monorriel y carro', Tolva: 'Tolva de carbón',
-  'Soporte bolsa': 'Apoyo del bigbag', Cruceta: 'Cruceta de cuatro puntos', Plataforma: 'Plataforma lateral',
+  'Soporte bolsa': 'Apoyo del bigbag', Cruceta: 'Cruceta de cuatro puntos', Plataforma: 'Plataforma de acceso superior',
   Escalera: 'Escalera de acceso', Barandas: 'Barandas y guardas', Compuerta: 'Compuerta y ensacado',
   Complementos: 'Uniones y complementos', Accesorios: 'Accesorios', Bigbag: 'Bigbag de proceso · 1 t',
   Montacargas: 'Montacargas de abastecimiento', Operarios: 'Operación y amarre', Rodillos: 'Mesa elevadora y rodillos',Colector:'Colector de polvo'
@@ -73,7 +73,7 @@ export function processState(progress, payload = 1000, bagSize = 50, mode = 'clo
     cyclePhase, cycleProgress, bigbagKg, hopperKg, sackKg, finishedKg, completedSacks,
     totalSacks: count, sackNumber: count ? Math.min(count, completedSacks + 1) : 0,
     hopperM3: hopperKg / (data.densityKgM3 || 550), bagBottomM: z, hookM: z + (C.bag_height || 1) + C.headpack,
-    carriageM: x - C.pickup_x, x, z, transfer, gateOpening: clamp(gate),
+    carriageM: Math.abs(x - C.pickup_x), x, z, transfer, gateOpening: clamp(gate),
     mode, bagSize, payload, runningFlow: (index === 5 && q > 0 && q < 1) || gate > .01,
     carriageLocked, lockingPin, hoistEnabled, interlockState,
     massBalanceKg: bigbagKg + hopperKg + sackKg + finishedKg };
@@ -83,7 +83,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=eb-solid-644352a9f51d', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=eb-solid-b62043c4d486', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -97,6 +97,8 @@ export const BigbagScene = {
   highlight(id) { active?.highlight(id); },
   setMode(v) { active?.setMode(v); }, setBagSize(v) { active?.setBagSize(v); },
   setPayload(v) { active?.setPayload(v); }, getState() { return active?.getState(); },
+  setAccessOpen(v) { return active?.setAccessOpen(v); },
+  resetAccess() { return active?.resetAccess(); },
   resize() { active?.resize(); }, toggleFullscreen() { return active?.toggleFullscreen(); },
   dispose() { active?.dispose(); active = null; }
 };
@@ -108,6 +110,7 @@ class SceneEngine {
     this.progress = 0; this.payload = 1000; this.bagSize = 50; this.mode = 'closed';
     this.edgesOn = false; this.section = false; this.exploded = false; this.selected = null;this.renderStyle='realistic';this.currentView='iso';this.cameraMode='rotate';
     this.parts = []; this.groupRoots = new Map(); this.edgeLines = []; this.sectionMeshes = [];
+    this.accessGateMeshes = []; this.accessOpen = false; this.accessResetRequired = false;
     this.scene = new THREE.Scene(); this.scene.background = new THREE.Color('#edf2f4');
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -138,6 +141,7 @@ class SceneEngine {
       if (m.tag === 'pallet_referencia' || m.tag === 'balanza_envolvente' || /^BALANZA_|^MESA_/i.test(m.tag)) return;
       if (/^(?:BIGBAG_1t_REF|CADENA_REF|ASA_REF_\d+|SACO_50kg_REF)$/.test(m.tag)) return;
       const mesh = this.addDataMesh(m, this.group(m.group));
+      if (m.motion?.group==='access_gate') this.accessGateMeshes.push(mesh);
       if (/^TOL_PANEL|^TOL_TAPA_POLVO|^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
       if (/^CORTE_/.test(m.tag)) this.cutterMeshes.push(mesh);
       if (/^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
@@ -252,11 +256,10 @@ class SceneEngine {
     this.coal = new THREE.Mesh(new THREE.BufferGeometry(), this.material('#242a2d', { roughness: 1, metalness: 0 })); this.group('Tolva').add(this.coal);
     const connection = this.group('Tolva');
     if (!this.data.exactCAD) {
-    const dustZ = H.dust_port_z ?? (H.outlet_z + H.cone_height + H.body_height / 2);
-    const duct = this.cylinder(connection, .075, .24, H.center_x, -.925, dustZ, '#547b90', 'Tolva', { openEnded: true }); duct.rotation.x = 0;
-    const flange = this.cylinder(connection, .105, .02, H.center_x, -1.05, dustZ, '#2d5266', 'Tolva', { openEnded: true }); flange.rotation.x = 0;
-    const dustTube = this.tube(connection,[[H.center_x,-1.06,dustZ],[H.center_x,-1.38,dustZ],[H.center_x+.7,-1.52,1.65],[H.center_x+1.25,-1.52,1.65]],.075,'#76888d','Tolva');
-    dustTube.userData.part='Conexión DN150 · 800 m³/h @ 1 500 Pa';
+    const portX=H.center_x-H.mouth_width/2+.085,dustZ=H.mouth_z+.10;
+    const duct = this.cylinder(connection, .075, .20, portX, 0, dustZ, '#547b90', 'Tolva', { openEnded: true });
+    duct.userData.part='Conexión superior DN150';
+    this.cylinder(connection, .105, .02, portX, 0, H.mouth_z+.01, '#2d5266', 'Tolva', { openEnded: true });
     }
     this.spoutAssembly = new THREE.Group(); connection.add(this.spoutAssembly);
     this.spoutAssembly.name='Manguito de descarga';
@@ -366,9 +369,9 @@ class SceneEngine {
       const arm=this.box(this.liftRoot,.49,.035,.025,0,y,.10,'#dda921','Rodillos');
       arm.rotation.y=sign*.35;this.scissorArms.push([arm,sign]);
     }
-    this.box(g,.035,.04,.72,2.67,.20,.40,'#315b72','Compuerta');
-    this.box(g,.23,.065,.15,2.67,.20,.79,'#173e55','Compuerta');
-    this.box(g,.16,.005,.075,2.67,.163,.80,'#7ca6ad');
+    this.box(g,.035,.04,.72,x-.32,.20,.40,'#315b72','Compuerta');
+    this.box(g,.23,.065,.15,x-.32,.20,.79,'#173e55','Compuerta');
+    this.box(g,.16,.005,.075,x-.32,.163,.80,'#7ca6ad');
     this.sack=new THREE.Group();this.sack.name='Compuerta';this.model.add(this.sack);
     this.sackBody=new THREE.Mesh(this.roundedBagGeometry(.40,.70),this.clothMaterial());this.sack.add(this.sackBody);this.sackBody.castShadow=true;
     this.sackBody.userData={group:'Compuerta',part:'Saco de producto'};this.parts.push(this.sackBody);this.sectionMeshes.push(this.sackBody);
@@ -379,13 +382,13 @@ class SceneEngine {
       crossbar.userData.part='Travesaño inferior del transportador';
     }
     for(let i=0;i<10;i++){const roll=this.cylinder(g,.035,.58,x,-.65-i*.15,.315,'#9dadb4','Rodillos');roll.rotation.x=0;roll.rotation.z=Math.PI/2;}
-    for(const x of [2.12,2.58])for(const y of [-.5,-1.8]){
-      this.box(g,.04,.045,.28,x,y,.14,'#365e71','Rodillos');
-      this.tube(g,[[x,-.50,.16],[x,-1.77,.28]],.018,'#3e728b','Rodillos');
+    for(const legX of [x-.23,x+.23])for(const y of [-.5,-1.8]){
+      this.box(g,.04,.045,.28,legX,y,.14,'#365e71','Rodillos');
     }
+    for(const legX of [x-.23,x+.23])this.tube(g,[[legX,-.50,.16],[legX,-1.77,.28]],.018,'#3e728b','Rodillos');
     this.output=new THREE.Group();this.model.add(this.output);
     this.box(this.output,1.1,1.05,.12,0,0,.06,'#a1845b');
-    this.output.position.set(3.55,-1.8,0);
+    this.output.position.set(x-1.20,-1.8,0);
     this.finishedBags=[];
     for(let i=0;i<12;i++){
       const sack=new THREE.Mesh(this.roundedBagGeometry(.38,.48),this.clothMaterial());
@@ -430,8 +433,8 @@ class SceneEngine {
   }
   buildOperators() {
     const people=this.group('Operarios');
-    this.worker1=this.person(people,1.48,-.92,0);this.worker1.rotation.z=Math.PI/2;
-    this.worker2=this.person(people,3.30,-1.17,0);this.worker2.rotation.z=-Math.PI/2;
+    this.worker1=this.person(people,this.data.config.pickup_x-.83,-.92,0);this.worker1.rotation.z=-Math.PI/2;
+    this.worker2=this.person(people,this.data.hopper.center_x-.95,-1.17,0);this.worker2.rotation.z=Math.PI/2;
   }
   buildFlow() {
     this.flow=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.018,0),this.material('#252d31',{roughness:1,metalness:0}),160);
@@ -456,8 +459,9 @@ class SceneEngine {
     const mm=v=>`${Math.round(v*1000).toLocaleString('fr-FR')} mm`;
     line([-.85,-1.2,0],[-.85,-1.2,top],mm(top),[-.85,-1.2,top/2]);
     line([0,-1.30,top+.35],[3.2,-1.30,top+.35],'3 200 mm',[1.6,-1.30,top+.35]);
-    line([3.8,1.3,0],[3.8,1.3,2.1],'2 100 mm',[3.8,1.3,1.1]);
-    line([C.pickup_x,-.30,C.travel_bottom+1.1],[C.discharge_x,-.30,C.travel_bottom+1.1],mm(C.discharge_x-C.pickup_x),[1.5,-.3,C.travel_bottom+1.15]);
+    const floor=C.platform_floor_z_m;
+    line([-.6,1.3,0],[-.6,1.3,floor],'2 782,59 mm',[-.6,1.3,floor/2]);
+    line([C.pickup_x,-.30,C.travel_bottom+1.1],[C.discharge_x,-.30,C.travel_bottom+1.1],mm(Math.abs(C.discharge_x-C.pickup_x)),[1.7,-.3,C.travel_bottom+1.15]);
   }
   fillHeight(volume) {
     const H=this.data.hopper;let lo=0,hi=H.cone_height+H.body_height;
@@ -478,6 +482,7 @@ class SceneEngine {
     this.coal.geometry.dispose();this.coal.geometry=geo;
   }
   setProgress(v) {
+    if((this.accessOpen||this.accessResetRequired)&&this.state)return {...this.state};
     this.progress=clamp(Number(v)||0);const s=processState(this.progress,this.payload,this.bagSize,this.mode,this.data);this.state=s;
     const C=this.data.config;this.bagRoot.position.set(s.x,0,s.z);this.crucetaRoot.position.set(s.x,0,s.z+C.cruceta_center_above_bag_m);
     this.slingRoot.visible=s.phaseIndex>=1;
@@ -519,16 +524,30 @@ class SceneEngine {
       const bulk=s.phaseIndex===5,z0=bulk?this.data.hopper.mouth_z+.025:deckHeight+(this.bagSize===25?.49:.70),z1=bulk?C.support_z:.865,r=bulk?(this.mode==='closed'?.105:.075):.045;
       for(let i=0;i<160;i++){
         const angle=i*2.399963,rad=Math.sqrt((i*.618033)%1)*r,fall=(i*.071+this.progress*(bulk?70:260))%1;
-        this.dummy.position.set(2.35+Math.cos(angle)*rad,Math.sin(angle)*rad,lerp(z1,z0,fall));
+        this.dummy.position.set(this.data.hopper.center_x+Math.cos(angle)*rad,Math.sin(angle)*rad,lerp(z1,z0,fall));
         this.dummy.scale.setScalar(.45+(i%5)*.11);this.dummy.rotation.set(i,i*.3,i*.7);this.dummy.updateMatrix();this.flow.setMatrixAt(i,this.dummy.matrix);
       }this.flow.instanceMatrix.needsUpdate=true;
     }
     this.equipmentDetails?.update(s);this.processDetails?.update(s);
     this.render();return {...s};
   }
-  setMode(v) { this.mode=v==='closed'?'closed':'spout';this.setProgress(this.progress); }
-  setBagSize(v) { this.bagSize=Number(v)===25?25:50;this.setProgress(this.progress); }
-  setPayload(v) { this.payload=clamp(Number(v)||0,0,1000);this.setProgress(this.progress); }
+  setMode(v) { if(this.accessOpen)return;this.mode=v==='closed'?'closed':'spout';this.setProgress(this.progress); }
+  setBagSize(v) { if(this.accessOpen)return;this.bagSize=Number(v)===25?25:50;this.setProgress(this.progress); }
+  setPayload(v) { if(this.accessOpen)return;this.payload=clamp(Number(v)||0,0,1000);this.setProgress(this.progress); }
+  setAccessOpen(value) {
+    const open=!!value,s=this.state;
+    if(open&&(!s||s.phaseIndex<5||s.phaseIndex>=9||!s.lockingPin||Math.abs(s.z-this.data.config.support_z)>.001))return false;
+    this.accessOpen=open;
+    if(open)this.accessResetRequired=true;
+    this.accessGateMeshes.forEach(mesh=>mesh.position.x=open?this.data.config.access_gate_travel_m:0);
+    if(open){this.flow.visible=false;this.render();}
+    else this.setProgress(this.progress);
+    return this.accessOpen;
+  }
+  resetAccess() {
+    if(this.accessOpen)return false;
+    this.accessResetRequired=false;this.setProgress(this.progress);return true;
+  }
   setEdges(v) { this.edgesOn=!!v;this.edgeLines.forEach(e=>e.visible=this.edgesOn);this.render(); }
   setSection(v) {
     this.section=!!v;
@@ -576,21 +595,22 @@ class SceneEngine {
     const C=this.data.config,H=this.data.hopper;this.currentView=name;
     const focus={discharge:{target:[H.center_x,0,C.support_z],offset:[2.8,-4,2.1],height:3.2},bagging:{target:[H.center_x,-.25,.55],offset:[0,-2.4,1.0],height:2.1},pickup:{target:[C.pickup_x,-.9,1.15],offset:[3.9,-5.1,2.8],height:4.2},
       hoist:{target:[this.state?.x??C.pickup_x,0,C.beam_bottom-.23],offset:[1.2,-1.65,.72],height:1.3},
-      locks:{target:[2.9,0,C.beam_bottom+.06],offset:[1.2,-1.9,.85],height:1.5},
+      locks:{target:[C.discharge_x-.55,0,C.beam_bottom+.06],offset:[-1.2,-1.9,.85],height:1.5},
       cutter:{target:[H.center_x,0,C.support_z+.14],offset:[.65,2.25,.8],height:1.7},
-      gate:{target:[2.55,.18,H.outlet_z+.05],offset:[.25,-1.6,.4],height:1.4},
-      collector:{target:[4.65,-.8,.90],offset:[1.8,-2.9,1.25],height:2.1},
+      gate:{target:[H.center_x-.20,.18,H.outlet_z+.05],offset:[-.25,-1.6,.4],height:1.4},
+      access:{target:[H.center_x,1.30,C.platform_floor_z_m+.45],offset:[-2.5,4,1.9],height:3.2},
+      collector:{target:[this.collector.position[0],this.collector.position[1],.90],offset:[-1.8,-2.9,1.25],height:2.1},
       anchors:{target:[0,-1,.06],offset:[-1.25,-1.2,.8],height:1.05}};
     focus.discharge.target[2]=this.data.config.support_z;
-    const overview=name==='iso'?[1.5,-.2,this.data.config.beam_top/2-.25]:[1.15,-.02,this.data.config.beam_top/2];
+    const overview=name==='iso'?[1.50,.25,this.data.config.beam_top/2-.25]:[1.6,.35,this.data.config.beam_top/2];
     const view=focus[name];this.controls.target.set(...(view?.target||overview));
-    const t=this.controls.target,views={iso:[7.7,-9.9,6.38],front:[0,-14,.01],side:[14,0,.01],back:[0,14,.01],top:[0,-.001,15],left:[-14,0,.01]};
+    const t=this.controls.target,views={iso:[8.8,-12,8.4],front:[0,-16,.01],side:[16,0,.01],back:[0,16,.01],top:[0,-.001,17],left:[-16,0,.01]};
     const d=view?.offset||views[name]||views.iso;
     this.camera.up.copy(name==='top'?new THREE.Vector3(0,1,0):UP);
     this.camera.position.copy(t).add(new THREE.Vector3(...d));this.camera.zoom=this.camera.isOrthographicCamera&&view?2*this.camera.top/view.height:1;this.camera.updateProjectionMatrix();this.controls.update();this.applyDetailFocus(name);this.render();
   }
   resetCamera() { this.setView('iso'); }
-  getState() { const info=this.renderer.info;return {...this.state,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:this.data.revision,nativeParts:this.data.nativeParts,nativeComponents:this.data.nativeComponents,view:this.currentView,renderStyle:this.renderStyle,cameraMode:this.cameraMode,cameraPosition:this.camera.position.toArray(),cameraTarget:this.controls.target.toArray(),cameraZoom:this.camera.zoom,renderStats:{calls:info.render.calls,triangles:info.render.triangles,geometries:info.memory.geometries,textures:info.memory.textures}}; }
+  getState() { const info=this.renderer.info;return {...this.state,accessOpen:this.accessOpen,accessResetRequired:this.accessResetRequired,accessAvailable:this.state.phaseIndex>=5&&this.state.phaseIndex<9&&this.state.lockingPin,hoistEnabled:(this.accessOpen||this.accessResetRequired)?false:this.state.hoistEnabled,interlockState:this.accessOpen?'Acceso superior abierto · izaje y traslación bloqueados':this.accessResetRequired?'Puerta cerrada · rearme manual requerido':this.state.interlockState,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:this.data.revision,nativeParts:this.data.nativeParts,nativeComponents:this.data.nativeComponents,view:this.currentView,renderStyle:this.renderStyle,cameraMode:this.cameraMode,cameraPosition:this.camera.position.toArray(),cameraTarget:this.controls.target.toArray(),cameraZoom:this.camera.zoom,renderStats:{calls:info.render.calls,triangles:info.render.triangles,geometries:info.memory.geometries,textures:info.memory.textures}}; }
   resize() {
     const w=Math.max(1,this.container.clientWidth),h=Math.max(1,this.container.clientHeight);
     this.renderer.setSize(w,h,false);const half=Math.max(4.05,(this.data.config.beam_top+.9)*.65),ratio=w/h;

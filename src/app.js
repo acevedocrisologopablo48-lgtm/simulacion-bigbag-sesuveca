@@ -1,4 +1,4 @@
-import {BigbagScene} from './scene.js?v=eb-solid-644352a9f51d';
+import {BigbagScene} from './scene.js?v=eb-solid-b62043c4d486';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
@@ -7,11 +7,11 @@ const displayText=value=>String(value??'').replace(/revisi[oó]n\s+t[ée]cnica/g
 const escape=value=>displayText(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let progress=0,playing=false,lastTime=0,speed=1,ready=false,lastPhase=-1,project,model;
 const CYCLE_SECONDS=120;
-const viewNames={iso:'ISOMÉTRICA',front:'FRONTAL',side:'LATERAL',back:'POSTERIOR',top:'PLANTA',hoist:'TECLE Y CARRO',locks:'TRABA Y TOPES',cutter:'CORTE DE BOLSA',gate:'COMPUERTA',bagging:'BALANZA Y MESA',anchors:'BASES Y ANCLAJES',discharge:'DESCARGA',pickup:'RECEPCIÓN',collector:'COLECTOR DE POLVO'};
+const viewNames={iso:'ISOMÉTRICA',front:'FRONTAL',side:'LATERAL',back:'POSTERIOR',top:'PLANTA',hoist:'TECLE Y CARRO',locks:'TRABA Y TOPES',cutter:'CORTE DE BOLSA',gate:'COMPUERTA',bagging:'BALANZA Y MESA',anchors:'BASES Y ANCLAJES',discharge:'DESCARGA',pickup:'RECEPCIÓN',collector:'COLECTOR DE POLVO',access:'ACCESO SUPERIOR'};
 const phaseNames={recepcion:'Recepción',enganche:'Enganche',izaje:'Izaje',traslado:'Traslado',apoyo:'Apoyo',descarga:'Descarga',llenado:'Llenado',amarre:'Amarre',salida:'Salida',retorno:'Retorno'};
 
 function setPlaying(value){
-  playing=ready&&Boolean(value);lastTime=0;
+  playing=ready&&Boolean(value)&&!BigbagScene.getState()?.accessOpen&&!BigbagScene.getState()?.accessResetRequired;lastTime=0;
   if(playing&&BigbagScene.getState().exploded){BigbagScene.setExploded(false);$('explodedBtn').setAttribute('aria-pressed','false');$('explodedBtn').textContent='Ver conjunto separado';}
   $('playText').textContent=playing?'Pausar ciclo':'Reproducir ciclo';
   $('playIcon').textContent=playing?'Ⅱ':'▶';
@@ -21,6 +21,11 @@ function setPlaying(value){
 function renderReadings(){
   if(!ready)return;
   const s=BigbagScene.getState();
+  $('accessBtn').disabled=!s.accessAvailable&&!s.accessOpen;
+  $('accessBtn').textContent=s.accessOpen?'Cerrar acceso superior':s.accessResetRequired?'Rearmar controles':'Abrir acceso superior';
+  $('accessBtn').setAttribute('aria-pressed',String(s.accessOpen));
+  $('accessHint').textContent=s.accessOpen?'Puerta abierta: ciclo detenido.':s.accessResetRequired?'Puerta cerrada: rearma para continuar.':'Habilitado con bolsa apoyada y carro trabado.';
+  for(const id of ['playBtn','resetBtn','timeline','bagMode','sackSize','payload'])$(id).disabled=s.accessOpen||s.accessResetRequired;
   $('timeline').value=String(Math.round(progress*1000));
   $('progressValue').innerHTML=`${number(progress*100)}<small>%</small>`;
   $('hookValue').innerHTML=`${number(s.hookM,2)}<small>m</small>`;
@@ -47,7 +52,7 @@ function setProgress(value,{pause=true}={}){
   if(!ready)return;
   if(pause)setPlaying(false);
   progress=Math.max(0,Math.min(1,Number(value)||0));
-  BigbagScene.setProgress(progress);renderReadings();
+  const accepted=BigbagScene.setProgress(progress);progress=accepted?.progress??progress;renderReadings();
   if(progress>=1)setPlaying(false);
 }
 function selectPart(part){
@@ -125,6 +130,7 @@ all('.view-btn').forEach(button=>button.addEventListener('click',()=>{$('extraVi
 $('extraView').addEventListener('change',e=>{if(e.target.value)setView(e.target.value);});
 $('playBtn').addEventListener('click',()=>{if(progress>=1)setProgress(0);setPlaying(!playing);});
 $('pauseBtn').addEventListener('click',()=>setPlaying(false));
+$('accessBtn').addEventListener('click',()=>{setPlaying(false);const s=BigbagScene.getState();if(s.accessResetRequired&&!s.accessOpen)BigbagScene.resetAccess();else BigbagScene.setAccessOpen(!s.accessOpen);setView('access');renderReadings();});
 $('resetBtn').addEventListener('click',()=>setProgress(0));
 $('timeline').addEventListener('input',e=>setProgress(Number(e.target.value)/1000));
 $('speed').addEventListener('change',e=>speed=Number(e.target.value));
@@ -147,7 +153,7 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-644352a9f51d'),fetch('data/model.json?v=eb-solid-644352a9f51d')]);
+  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-b62043c4d486'),fetch('data/model.json?v=eb-solid-b62043c4d486')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();

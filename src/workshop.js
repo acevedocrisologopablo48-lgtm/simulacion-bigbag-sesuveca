@@ -57,7 +57,7 @@ export function buildWorkshop(engine) {
   const mc=markingCanvas.getContext('2d');mc.font='600 64px Arial';mc.textAlign='center';mc.textBaseline='middle';mc.fillStyle='#d4bc72';mc.fillText('ZONA DE IZAJE',512,64);
   const markingMap=new THREE.CanvasTexture(markingCanvas);markingMap.colorSpace=THREE.SRGBColorSpace;
   const marking=new THREE.Mesh(new THREE.PlaneGeometry(1.8,.225),new THREE.MeshBasicMaterial({map:markingMap,transparent:true,depthWrite:false,opacity:.72}));
-  marking.position.set(.65,-2.38,-.027);floorDetails.add(marking);
+  marking.position.set(engine.data.config.pickup_x,-2.38,-.027);floorDetails.add(marking);
   const grid=new THREE.GridHelper(22,44,0x8da3ae,0xc0cbd0);grid.rotation.x=Math.PI/2;grid.position.z=-.024;grid.visible=false;grid.material.transparent=true;grid.material.opacity=.3;scene.add(grid);
 
   const materialFor=(color,kind)=> {

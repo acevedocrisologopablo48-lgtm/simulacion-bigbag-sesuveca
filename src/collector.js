@@ -3,7 +3,7 @@ import * as THREE from '../assets/vendor/three.module.min.js';
 // Commercial reference for the viewer; component detail is a visual model.
 export const collectorSpec={
   model:'Depureco DF22 DEX 1/3D',code:'A1750',powerKW:2.2,binL:65,
-  footprintM:[.66,.80],heightM:1.63,position:[4.65,-.8,-.03],
+  footprintM:[.66,.80],heightM:1.63,position:[-1.45,-.8,-.03],
   inletLocal:[0,-.36,1.03],inletDiameterM:.15,
   manufacturerURL:'https://www.depureco.com/es/aspiradores-industriales/df075-22-dex-13d-desempolvador-industrial-certificado-atex/'
 };
