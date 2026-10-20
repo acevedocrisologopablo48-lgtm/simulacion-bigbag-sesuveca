@@ -141,25 +141,26 @@ export function buildProcessDetails(engine) {
 
   const addPerson = (person, seated = false) => {
     person.children.forEach(child => { child.visible = false; });
-    const torso = ball(person, [.175, .115, .265], [0, 0, 1.155], orange);
-    ball(person, [.145, .10, .115], [0, 0, .88], navy);
-    ball(person, [.087, .084, .112], [0, -.006, 1.495], skin);
-    segment(person, [0, 0, 1.36], [0, 0, 1.43], .045, skin);
-    const hat = draw(person, new THREE.SphereGeometry(.122, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2), helmetMaterial, [0, 0, 1.558]); hat.rotation.x = Math.PI / 2;
-    const brim = draw(person, new THREE.CylinderGeometry(.132, .132, .012, 20), helmetMaterial, [0, -.006, 1.557]); brim.rotation.x = Math.PI / 2;
-    ball(person, [.025, .022, .027], [0, -.09, 1.49], skin);
-    for (const side of [-1, 1]) ball(person, [.013, .022, .024], [side * .086, -.005, 1.49], skin);
+    const dz = seated ? .28 : 0, at = p => [p[0],p[1],p[2]+dz];
+    const torso = ball(person, [.175, .115, .265], at([0, 0, 1.155]), orange);
+    ball(person, [.145, .10, .115], at([0, 0, .88]), navy);
+    ball(person, [.087, .084, .112], at([0, -.006, 1.495]), skin);
+    segment(person, at([0, 0, 1.36]), at([0, 0, 1.43]), .045, skin);
+    const hat = draw(person, new THREE.SphereGeometry(.122, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2), helmetMaterial, at([0, 0, 1.558])); hat.rotation.x = Math.PI / 2;
+    const brim = draw(person, new THREE.CylinderGeometry(.132, .132, .012, 20), helmetMaterial, at([0, -.006, 1.557])); brim.rotation.x = Math.PI / 2;
+    ball(person, [.025, .022, .027], at([0, -.09, 1.49]), skin);
+    for (const side of [-1, 1]) ball(person, [.013, .022, .024], at([side * .086, -.005, 1.49]), skin);
     for (const dx of [-.09, .09]) {
-      const knee = seated ? [dx, -.21, .57] : [dx, .005, .46], ankle = seated ? [dx, -.27, .20] : [dx, -.012, .11];
-      segment(person, [dx, 0, .90], knee, .064, navy); segment(person, knee, ankle, .054, navy);
+      const knee = seated ? [dx, -.28, 1.04] : [dx, .005, .46], ankle = seated ? [dx, -.40, .82] : [dx, -.012, .11];
+      segment(person, at([dx, 0, .90]), knee, .064, navy); segment(person, knee, ankle, .054, navy);
       ball(person, [.066, .067, .06], knee, navy); box(person, [.125, .22, .08], [ankle[0], ankle[1] - .04, ankle[2] - .055], rubber);
-      box(person, [.034, .012, .40], [dx, -.105, 1.17], reflector);
+      box(person, [.034, .012, .40], at([dx, -.105, 1.17]), reflector);
     }
-    box(person, [.30, .012, .034], [0, -.113, 1.09], reflector);
+    box(person, [.30, .012, .034], at([0, -.113, 1.09]), reflector);
     const arms = [];
     for (const side of [-1, 1]) {
-      const a = new THREE.Group(); a.position.set(side * .16, 0, 1.33); person.add(a);
-      const elbow = [side * .085, -.025, -.18], hand = seated ? [side * .08, -.27, -.15] : [side * .065, -.17, -.31];
+      const a = new THREE.Group(); a.position.set(side * .16, 0, 1.33+dz); person.add(a);
+      const elbow = [side * .085, -.025, -.18], hand = seated ? [side * .08, -.27, -.28] : [side * .065, -.17, -.31];
       segment(a, [0, 0, 0], elbow, .052, orange); ball(a, [.050, .050, .050], elbow, orange); segment(a, elbow, hand, .042, orange); ball(a, [.047, .032, .065], hand, glove); arms.push(a);
     }
     return { arms, torso };
@@ -174,9 +175,9 @@ export function buildProcessDetails(engine) {
   for (let i = 0; i < 8; i++) box(grill, [.68, .012, .012], [0, -1.447, .45 + i * .03], darkSteel);
   for (const x of [-.27, .27]) segment(f, [x, .006, .52], [x, .006, 1.92], .018, steel);
   box(f, [.055, .055, .10], [0, -.60, .95], darkSteel);
-  const steering = draw(f, new THREE.TorusGeometry(.14, .012, 6, 20), darkSteel, [0, -.34, 1.02]); steering.rotation.x = .5;
-  const treadGeometry = new THREE.BoxGeometry(.035, .032, .165), treads = new THREE.InstancedMesh(treadGeometry, rubber, 88); f.add(treads);
-  const wheelLocations = []; for (const x of [-.54, .54]) for (const y of [-.34, -1.16]) wheelLocations.push([x, y, .25]);
+  const steering = draw(f, new THREE.TorusGeometry(.14, .012, 6, 20), darkSteel, [0, -.47, 1.32]); steering.rotation.x = .5;
+  const treadGeometry = new THREE.BoxGeometry(.165, .035, .026), treads = new THREE.InstancedMesh(treadGeometry, rubber, 88); f.add(treads);
+  const wheelLocations = []; for (const x of [-.54, .54]) for (const y of [-.34, -1.16]) wheelLocations.push([x, y, .243]);
   const wheelRims = new THREE.InstancedMesh(new THREE.CylinderGeometry(.032, .032, .008, 10), steel, 20); f.add(wheelRims);
   let rim = 0;
   for (const [x, y, z] of wheelLocations) for (let i = 0; i < 5; i++) {
@@ -250,9 +251,9 @@ export function buildProcessDetails(engine) {
       sackGrains.instanceMatrix.needsUpdate = true;
       people[1].arms.forEach((a, i) => { const move = tied && state.cyclePhase === 'amarre' ? Math.sin(state.cycleProgress * Math.PI * 4) : 0; a.rotation.x = tied ? -.18 + move * .07 : -.035; a.rotation.z = (i ? -1 : 1) * (tied ? .21 : .04); });
       people[0].arms.forEach((a, i) => { a.rotation.x = state.phaseIndex === 1 ? -.27 : -.035; a.rotation.z = (i ? -1 : 1) * .035; });
-      const wheelRotation = state.phaseIndex === 0 ? mix(-1.8, 0, state.phaseProgress) / .23 : state.phaseIndex === 1 ? -state.phaseProgress * 3 / .23 : 0;
+      const wheelRotation = -(E.forklift.position.x-E.data.config.pickup_x-.64) / .23;
       if (wheelRotation !== lastWheelRotation) {
-        let k = 0; for (const [x, y, z] of wheelLocations) for (let i = 0; i < 22; i++) { const a = i * Math.PI * 2 / 22 + wheelRotation; dummy.position.set(x, y + Math.sin(a) * .229, z + Math.cos(a) * .229); dummy.rotation.set(a, 0, Math.PI / 2); dummy.scale.set(1, 1, 1); dummy.updateMatrix(); treads.setMatrixAt(k++, dummy.matrix); }
+        let k = 0; for (const [x, y, z] of wheelLocations) for (let i = 0; i < 22; i++) { const a = i * Math.PI * 2 / 22 + wheelRotation; dummy.position.set(x, y + Math.sin(a) * .229, z + Math.cos(a) * .229); dummy.rotation.set(-a, 0, 0); dummy.scale.set(1, 1, 1); dummy.updateMatrix(); treads.setMatrixAt(k++, dummy.matrix); }
         treads.instanceMatrix.needsUpdate = true; lastWheelRotation = wheelRotation;
       }
     }

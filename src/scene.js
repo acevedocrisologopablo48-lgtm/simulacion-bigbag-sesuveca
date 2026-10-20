@@ -1,8 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=eb-solid-b62043c4d486';
-import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-b62043c4d486';
-import {buildProcessDetails} from './process-details.js?v=eb-solid-b62043c4d486';
+import {buildWorkshop} from './workshop.js?v=eb-solid-9810d2b2312f';
+import {buildEquipmentDetails} from './equipment-details.js?v=eb-solid-9810d2b2312f';
+import {buildProcessDetails} from './process-details.js?v=eb-solid-9810d2b2312f';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -17,6 +17,26 @@ const groupNames = {
 };
 const groupIds = {Cimentacion:'cimentacion',Porticos:'porticos',Monorriel:'monorriel',Tolva:'tolva','Soporte bolsa':'soporte-bolsa',Cruceta:'cruceta',Plataforma:'plataforma',Escalera:'escalera',Barandas:'barandas',Complementos:'complementos',Accesorios:'complementos',Compuerta:'complementos',Rodillos:'complementos',Bigbag:'soporte-bolsa',Montacargas:'porticos',Operarios:'complementos'};
 const canonicalGroup = id => Object.keys(groupIds).find(k => groupIds[k] === id) || id;
+
+export function receptionPose(state, config) {
+  const q = state.phaseProgress, receiving = state.phaseIndex === 0, withdrawing = state.phaseIndex === 1;
+  const approach = receiving ? 2.6 * (1 - smooth(q / .82)) : 0;
+  const lift = receiving ? .06 * (1 - smooth((q - .82) / .18)) : 0;
+  const retreat = withdrawing ? 2.6 * smooth((q - .25) / .75) : 0;
+  const workerApproach = withdrawing ? smooth((q - .72) / .28) : state.phaseIndex >= 2 ? 1 : 0;
+  const workerX = lerp(config.pickup_x + 1.25, config.pickup_x, Math.min(1, workerApproach * 2));
+  const workerY = lerp(-1.45, -.95, Math.max(0, workerApproach * 2 - 1));
+  const withdrawFromLoad = state.phaseIndex === 2 ? smooth(q / .2) : state.phaseIndex > 2 ? 1 : 0;
+  return {
+    forkliftVisible: state.phaseIndex < 2,
+    forkliftPosition: [config.pickup_x + .64 + approach + retreat, 0, 0],
+    forkliftRotation: Math.PI / 2,
+    forkLift: lift - (withdrawing ? .015 * smooth(q / .2) : 0),
+    palletPosition: [config.pickup_x + approach, 0, lift],
+    bagPosition: receiving ? [config.pickup_x + approach, 0, config.pickup_bottom + lift] : [state.x, 0, state.z],
+    receivingWorker: [workerX, lerp(workerY, -1.45, withdrawFromLoad), -.015]
+  };
+}
 
 // The progress bar is a process diagram. Mass transfer is conservative; it is not a flow solver.
 export function processState(progress, payload = 1000, bagSize = 50, mode = 'closed', data) {
@@ -83,7 +103,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=eb-solid-b62043c4d486', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=eb-solid-9810d2b2312f', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -320,7 +340,7 @@ class SceneEngine {
     this.slingRoot=new THREE.Group();this.bagRoot.add(this.slingRoot);
     for(const x of [-.425,.425])for(const y of [-.5,.5]) this.tube(this.slingRoot,[[x,y,1.04],[x,y,1.075],[x,y,1.11]],.011,'#e9b834','Cruceta');
     this.pallet = new THREE.Group(); this.pallet.name='pallet'; this.model.add(this.pallet);
-    for(const y of [-.43,0,.43])this.box(this.pallet,1.1,.13,.10,0,y,.05,'#91764e');
+    for(const x of [-.43,0,.43])for(const y of [-.43,0,.43])this.box(this.pallet,.14,.14,.076,x,y,.062,'#91764e');
     for(let i=0;i<7;i++)this.box(this.pallet,.13,1.1,.05,-.48+i*.16,0,.125,'#b09165');
     this.pallet.position.x=this.data.config.pickup_x;
   }
@@ -400,21 +420,27 @@ class SceneEngine {
     this.forklift=new THREE.Group();this.model.add(this.forklift);const f=this.forklift;
     this.box(f,1.04,1.40,.53,0,-.8,.46,'#dba829','Montacargas');
     this.box(f,.90,.44,.65,0,-1.22,.66,'#dba829','Montacargas');
-    this.box(f,.60,.65,.13,0,-.55,.78,'#253b45','Montacargas');
-    this.box(f,.6,.12,.46,0,-.85,1.03,'#263b45','Montacargas');
+    this.box(f,.60,.48,.13,0,-.70,.98,'#253b45','Montacargas');
+    this.box(f,.6,.12,.46,0,-.95,1.21,'#263b45','Montacargas');
     for(const x of [-.54,.54])for(const y of [-.34,-1.16]){
-      const w=this.cylinder(f,.23,.16,x,y,.25,'#26333b','Montacargas');w.rotation.z=Math.PI/2;w.rotation.x=0;w.rotation.z=Math.PI/2;
-      const hub=this.cylinder(f,.105,.17,x,y,.25,'#8f9da3','Montacargas');hub.rotation.x=0;hub.rotation.z=Math.PI/2;
+      const w=this.cylinder(f,.23,.16,x,y,.243,'#26333b','Montacargas');w.rotation.x=0;w.rotation.z=Math.PI/2;
+      const hub=this.cylinder(f,.105,.17,x,y,.243,'#8f9da3','Montacargas');hub.rotation.x=0;hub.rotation.z=Math.PI/2;
     }
     for(const x of [-.43,.43]){
       this.box(f,.05,.06,1.35,x,-1.30,1.25,'#263d4a','Montacargas');
       this.box(f,.05,.06,1.1,x,-.20,1.48,'#263d4a','Montacargas');
       this.box(f,.075,.07,2.45,x,.04,1.36,'#294758','Montacargas');
-      this.box(f,.10,1.03,.055,x,.52,.125,'#687880','Montacargas');
     }
+    this.forkCarriage=new THREE.Group();f.add(this.forkCarriage);
+    for(const x of [-.255,.255]){
+      this.box(this.forkCarriage,.10,1.03,.045,x,.52,.0775,'#687880','Montacargas');
+      this.box(this.forkCarriage,.10,.055,.62,x,.025,.36,'#687880','Montacargas');
+    }
+    for(const z of [.15,.75])this.box(this.forkCarriage,.88,.055,.045,0,.012,z,'#294758','Montacargas');
+    for(const x of [-.42,0,.42])this.box(this.forkCarriage,.035,.055,.60,x,.012,.45,'#294758','Montacargas');
     this.box(f,.94,1.25,.06,0,-.75,2.0,'#294453','Montacargas');
     this.box(f,.94,.07,.08,0,.04,1.40,'#294453','Montacargas');
-    this.driver=this.person(f,0,-.8,.55,'#df973b');this.driver.scale.setScalar(.72);
+    this.driver=this.person(f,0,-.74,0,'#df973b');this.driver.rotation.z=Math.PI;
   }
   person(parent,x,y,z,color='#dc873e') {
     const p=new THREE.Group();p.position.set(x,y,z);parent.add(p);
@@ -433,8 +459,8 @@ class SceneEngine {
   }
   buildOperators() {
     const people=this.group('Operarios');
-    this.worker1=this.person(people,this.data.config.pickup_x-.83,-.92,0);this.worker1.rotation.z=-Math.PI/2;
-    this.worker2=this.person(people,this.data.hopper.center_x-.95,-1.17,0);this.worker2.rotation.z=Math.PI/2;
+    this.worker1=this.person(people,this.data.config.pickup_x+1.25,-1.45,-.015);this.worker1.rotation.z=Math.PI;
+    this.worker2=this.person(people,this.data.hopper.center_x+.65,-1.17,-.015);this.worker2.rotation.z=-Math.PI/2;
   }
   buildFlow() {
     this.flow=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.018,0),this.material('#252d31',{roughness:1,metalness:0}),160);
@@ -498,11 +524,13 @@ class SceneEngine {
     this.cutterMeshes.forEach(mesh=>mesh.visible=this.mode==='closed');
     this.lockPin.position.y=this.data.exactCAD?(s.lockingPin?0:.08):(s.lockingPin?.02:.24);
     this.updateCoal(s.hopperKg);
-    const receiptY=lerp(-1.8,0,smooth(s.phaseProgress));
-    this.forklift.visible=s.phaseIndex<2;
-    this.forklift.position.set(C.pickup_x,s.phaseIndex===0?receiptY:-smooth(s.phaseProgress)*3,0);
-    this.pallet.position.y=s.phaseIndex===0?receiptY:0;
-    this.bagRoot.position.y=s.phaseIndex===0?receiptY:0;
+    const reception=this.reception=receptionPose(s,C);
+    this.forklift.visible=reception.forkliftVisible;
+    this.forklift.position.set(...reception.forkliftPosition);this.forklift.rotation.z=reception.forkliftRotation;
+    this.forkCarriage.position.z=reception.forkLift;
+    this.pallet.position.set(...reception.palletPosition);
+    this.bagRoot.position.set(...reception.bagPosition);
+    this.worker1.position.set(...reception.receivingWorker);
     this.sack.visible=s.phaseIndex>=6&&s.phaseIndex<=8&&s.sackKg>=0;
     const workingHeight=this.bagSize===25?.36:.15;
     const deckHeight=lerp(workingHeight,.35,smooth(s.transfer/.22)),liftHeight=deckHeight-.15;
