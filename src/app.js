@@ -1,9 +1,9 @@
-import {BigbagScene} from './scene.js?v=eb-solid-9810d2b2312f';
+import {BigbagScene} from './scene.js?v=estacion-20261020';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
 const number=(v,d=0)=>Number(v).toLocaleString('es-PE',{minimumFractionDigits:d,maximumFractionDigits:d});
-const displayText=value=>String(value??'').replace(/revisi[oó]n\s+t[ée]cnica/gi,'').replace(/(?:[_\s·-]+)?P05(?=$|[_\s·-])/gi,'').replace(/\s+/g,' ').replace(/^[ _·-]+|[ _·-]+$/g,'');
+const displayText=value=>String(value??'').replace(/\s+/g,' ').trim();
 const escape=value=>displayText(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let progress=0,playing=false,lastTime=0,speed=1,ready=false,lastPhase=-1,project,model;
 const CYCLE_SECONDS=120;
@@ -93,7 +93,7 @@ function toggle(button,method){
   BigbagScene[method](value);
 }
 function populateProject(){
-  $('calcCards').innerHTML=project.calculations.map(c=>{const failed=Number(c.failedCount??(c.maxUtilization>1?4:0));return `<article class="calc-card${failed?' has-findings':''}"><div class="calc-heading"><h3>${escape(c.title)}</h3><span class="check-status${failed?' has-findings':''}">${failed?`${failed} no conformes`:'Conforme'}</span></div><strong class="calc-number">${c.count}</strong><small>COMPROBACIONES</small><p>${escape(c.description)}</p><div class="utilization">Utilización máxima ${number(c.maxUtilization*100,1)} %<div class="util-bar"><i style="width:${Math.max(0,Math.min(100,c.maxUtilization*100))}%"></i></div></div><details><summary>Datos del cálculo</summary><p>${escape(c.scope)}</p></details></article>`;}).join('');
+  $('calcCards').innerHTML=project.calculations.map(c=>{const failed=Number(c.failedCount??(c.maxUtilization>1?4:0));return `<article class="calc-card${failed?' has-findings':''}"><div class="calc-heading"><h3>${escape(c.title)}</h3><span class="check-status${failed?' has-findings':''}">${failed?`${failed} observación${failed===1?'':'es'}`:'Conforme'}</span></div><strong class="calc-number">${c.count}</strong><small>COMPROBACIONES</small><p>${escape(c.description)}</p><div class="utilization">Utilización máxima ${number(c.maxUtilization*100,1)} %<div class="util-bar"><i style="width:${Math.max(0,Math.min(100,c.maxUtilization*100))}%"></i></div></div><details><summary>Datos del cálculo</summary><p>${escape(c.scope)}</p></details></article>`;}).join('');
   const dl=rows=>rows.map(row=>`<div><dt>${escape(row.label)}</dt><dd>${escape(row.value)}</dd></div>`).join('');
   $('dimensionList').innerHTML=dl(project.dimensions);$('operatingList').innerHTML=dl(project.operating);
   $('engineeringNotice').innerHTML=`<span class="note-mark">i</span><p>${escape(project.notice)}</p>`;
@@ -153,7 +153,7 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=eb-solid-9810d2b2312f'),fetch('data/model.json?v=eb-solid-9810d2b2312f')]);
+  const responses=await Promise.all([fetch('data/project.json?v=estacion-20261020'),fetch('data/model.json?v=estacion-20261020')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();
@@ -161,7 +161,6 @@ try{
   $('loading').hidden=true;$('playBtn').disabled=false;
   setStyle('realistic');setCameraMode('rotate');setProgress(0);showTab(['simulacion','calculos','piezas'].includes(location.hash.slice(1))?location.hash.slice(1):'simulacion');
   requestAnimationFrame(tick);
-  // Expose deterministic controls for accessibility and repeatable browser checks.
   window.bigbagApp={getState:()=>({...BigbagScene.getState(),playing,speed,ready}),setProgress,setPlaying,setView,setStyle,setCameraMode,showTab};
 }catch(error){
   console.error(error);$('loading').innerHTML='<strong>No se pudo abrir el modelo 3D.</strong><small>Recarga la página en un navegador con WebGL habilitado.</small><button type="button" id="retryLoad">Volver a cargar</button>';

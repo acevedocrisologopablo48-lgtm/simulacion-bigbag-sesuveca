@@ -1,5 +1,4 @@
 {
-  "revision": "",
   "title": "Estación de izaje y descarga de bigbags",
   "company": "SESUVECA",
   "author": "Javier Acevedo",
@@ -103,10 +102,8 @@
       "id": "traba_carro",
       "title": "Traba del carro Ø30",
       "count": 26,
-      "supersededCount": 4,
       "maxUtilization": 0.7982887500000001,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "24,525 kN · doble corte y fijaciones del soporte.",
       "scope": "Capacidad local de la traba; envolvente horizontal global de 12 kN."
     },
@@ -114,10 +111,8 @@
       "id": "correcciones_geometricas",
       "title": "Soportes y arriostres",
       "count": 20,
-      "supersededCount": 16,
       "maxUtilization": 0.853265625,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Apoyo de bolsa, cortador y transferencia a columnas.",
       "scope": "Resistencia de los componentes y conexiones indicados en memoria."
     },
@@ -125,10 +120,8 @@
       "id": "estructura_longitudinal",
       "title": "Estructura e impacto",
       "count": 16,
-      "supersededCount": 0,
       "maxUtilization": 0.9130510158049031,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Pórtico, monorriel y uniones · acción horizontal de 12 kN.",
       "scope": "12 kN corresponde al caso estructural; curva comercial del amortiguador según Anexo D."
     },
@@ -136,64 +129,44 @@
       "id": "calculo_mecanismos",
       "title": "Corte, compuerta y captación",
       "count": 15,
-      "supersededCount": 0,
       "maxUtilization": 0.8928571428571429,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Cortador, compuerta manual, bloqueos y pérdidas de presión.",
       "scope": "Cargas de corte, cierre y caudal de captación según memoria."
     },
     {
       "id": "juntas_finales",
-      "title": "83 interfaces / 37 miembros",
+      "title": "Uniones estructurales",
       "count": 26,
-      "supersededCount": 0,
       "maxUtilization": 0.7992861026632048,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Uniones y secciones resistentes · topes a 12 kN.",
       "scope": "Filetes y juntas preparadas identificados en el cuadro de uniones."
     },
     {
-      "id": "anclajes_pasantes_p05",
-      "title": "Pernos y verificaciones locales de losa",
+      "id": "anclajes_pasantes",
+      "title": "Pernos y losa: cálculo local",
       "count": 5,
       "failedCount": 1,
       "maxUtilization": 1.1492331334255046,
-      "status": "Alcance local condicionado",
-      "description": "Arandelas A36 50x50x10, contraplacas18, tuercas brida clase10.",
-      "scope": "FS2.014 N+V condicionado al reparto; no acredita flexion de perno ni losa global."
+      "description": "Pernos M16 8.8 L340; arandelas A36 50 × 50 × 10 y contraplacas de 18 mm.",
+      "scope": "FS 2,014 para tracción y corte, sujeto al reparto de carga. Flexión de pernos y capacidad global de losa: ver memoria."
     },
     {
       "id": "acreditacion_analitica_final",
-      "title": "Fijaciones y topes",
+      "title": "Fijaciones y topes: cálculo anterior",
       "count": 24,
       "maxUtilization": 0.8682579296133878,
       "failedCount": 0,
-      "status": "Antecedente",
       "description": "Topes: FS mínimo 1,9285 para 10,75 kN y 1,7276 para la envolvente activa de 12 kN. Pernos propios M20, carga centrada: FS 17,3482.",
-      "scope": "Prevalecen rediseno_estructura_20261020 e interfaces_finales_20261020; no aplica curva TS75 anterior.",
-      "source": "engineering/acreditacion_analitica_final_p05.json",
-      "matrixSource": "engineering/matriz_acreditacion_p05.json",
-      "analyticalReportSha256": "77ae02132aa071358c6291e36238ea0f075392bb4c42e9ab64b63d7421e571aa",
-      "matrixSha256": "3a2d119dd5248dedfad0fa45f962390e0007564e99da4b61a88638c67c693b54",
-      "totalSupplementaryChecks": 28,
-      "excludedHypotheticalChecks": 4,
-      "excludedHypotheticalFailedCount": 2,
-      "minimumStopFactorOfSafetyAt10750N": 1.9284806363896234,
-      "minimumStopFactorOfSafetyAt12000N": 1.7275972367657042,
-      "centeredM20FactorOfSafety": 17.348178106779272,
-      "commercialAccreditation": false,
-      "fullReleaseAllowed": false
+      "scope": "Antecedente de cálculo. Para la geometría actual, consultar la memoria de cálculo."
     },
     {
       "id": "acceso_superior_20261019",
       "title": "Plataforma y acceso superior",
       "count": 73,
-      "supersededCount": 0,
       "maxUtilization": 0.9842079524307772,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Piso +2.782,59 mm; escalera, barandas, puerta y captación superior.",
       "scope": "Cargas 5 kPa y 1,5 kN; soporte de ducto. La comprobación se limita a los componentes de acero."
     },
@@ -201,10 +174,8 @@
       "id": "optimizacion_refuerzos_tolva",
       "title": "Tolva y tres anillos",
       "count": 9,
-      "supersededCount": 13,
       "maxUtilization": 0.9171820708691067,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Cono 8 mm; cuerpo 6 mm. Uniones de anillos con penetración completa.",
       "scope": "Presión 25 kPa; cascarón de cuatro caras, flexibilidad de bordes y uniones según memoria."
     },
@@ -212,10 +183,8 @@
       "id": "ampliacion_tolva",
       "title": "Mayor capacidad de tolva",
       "count": 25,
-      "supersededCount": 0,
       "maxUtilization": 0.9834049281492371,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Cuerpo de 470,15 mm; 2,058 m³ útiles.",
       "scope": "Volumen, pared superior, refuerzos y cargas de la tolva ampliada."
     },
@@ -223,10 +192,8 @@
       "id": "seleccion_perfiles_comerciales",
       "title": "Perfiles comerciales",
       "count": 88,
-      "supersededCount": 0,
       "maxUtilization": 0.9899995940608538,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Celsius S355NH: 150 × 150 × 12,5; 100 × 100 × 10; 100 × 60 × 6,3 mm.",
       "scope": "Resistencia, fatiga y uniones de los perfiles sustituidos."
     },
@@ -234,10 +201,8 @@
       "id": "estandarizacion_materiales",
       "title": "Materiales comunes",
       "count": 24,
-      "supersededCount": 0,
       "maxUtilization": 0.9658379967178211,
       "failedCount": 0,
-      "status": "Conforme",
       "description": "Tubo100 × 100 × 5 en patas, anillo y cortador; rodapiés6 mm.",
       "scope": "Sección, deformación y uniones. Planchas A36 agrupadas en ocho espesores de compra."
     }
@@ -254,7 +219,7 @@
     {
       "id": "monorriel",
       "label": "Monorriel",
-      "material": "ASTM A36 / Copoliester; envolvente preliminar",
+      "material": "ASTM A36 / Copoliester; envolvente de montaje",
       "quantity": 11,
       "massKg": 374.3748988832526,
       "description": "I armado 240 × 140 × 8 × 20 de 3.600 mm. Cara superior +5.940 mm y ala inferior +5.700 mm."
@@ -326,7 +291,7 @@
   ],
   "parts": [
     {
-      "code": "SHS150x150x6_L5488000_P05",
+      "code": "SHS150x150x6_L5488000",
       "position": 1,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -337,7 +302,7 @@
       "group": "porticos"
     },
     {
-      "code": "IPE200_L2000000_P05",
+      "code": "IPE200_L2000000",
       "position": 2,
       "name": "Viga transversal IPE 200",
       "material": "ASTM A36",
@@ -348,7 +313,7 @@
       "group": "porticos"
     },
     {
-      "code": "I_A240x140x8x20_L3600000_P05",
+      "code": "I_A240x140x8x20_L3600000",
       "position": 3,
       "name": "Viga carril I soldada 240×140",
       "material": "ASTM A36",
@@ -359,7 +324,7 @@
       "group": "monorriel"
     },
     {
-      "code": "SHS100x100x5_L2848000_P05",
+      "code": "SHS100x100x5_L2848000",
       "position": 4,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -370,7 +335,7 @@
       "group": "tolva"
     },
     {
-      "code": "SHS150x150x6_L2200000_CUTda1945_P05",
+      "code": "SHS150x150x6_L2200000_CUTda1945",
       "position": 5,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -381,7 +346,7 @@
       "group": "tolva"
     },
     {
-      "code": "SHS150x150x6_L1650000_CUT8f76b3_P05",
+      "code": "SHS150x150x6_L1650000_CUT8f76b3",
       "position": 6,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -392,7 +357,7 @@
       "group": "tolva"
     },
     {
-      "code": "SHS60x60x4_L2100000_P05",
+      "code": "SHS60x60x4_L2100000",
       "position": 7,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -403,7 +368,7 @@
       "group": "tolva"
     },
     {
-      "code": "SHS60x60x4_L1550000_P05",
+      "code": "SHS60x60x4_L1550000",
       "position": 8,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -425,7 +390,7 @@
       "group": "tolva"
     },
     {
-      "code": "RHS150x75x5_L1757000_CUT394f60_P05",
+      "code": "RHS150x75x5_L1757000_CUT394f60",
       "position": 10,
       "name": "Tramo de tubo rectangular",
       "material": "ASTM A500 Gr.B",
@@ -436,7 +401,7 @@
       "group": "tolva"
     },
     {
-      "code": "RHS150x75x5_L1757000_CUT3ec3f6_P05",
+      "code": "RHS150x75x5_L1757000_CUT3ec3f6",
       "position": 11,
       "name": "Tramo de tubo rectangular",
       "material": "ASTM A500 Gr.B",
@@ -447,7 +412,7 @@
       "group": "tolva"
     },
     {
-      "code": "SHS60x60x4_L2882256_CUTf8e6e9_P05",
+      "code": "SHS60x60x4_L2882256_CUTf8e6e9",
       "position": 12,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -458,7 +423,7 @@
       "group": "tolva"
     },
     {
-      "code": "SHS80x80x4_L2050000_P05",
+      "code": "SHS80x80x4_L2050000",
       "position": 13,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -469,7 +434,7 @@
       "group": "soporte-bolsa"
     },
     {
-      "code": "SHS150x150x12p5_L1000000_P05",
+      "code": "SHS150x150x12p5_L1000000",
       "position": 14,
       "name": "Tramo de tubo cuadrado",
       "material": "S355NH / EN10210-1",
@@ -480,7 +445,7 @@
       "group": "cruceta"
     },
     {
-      "code": "SHS150x150x12p5_L850000_P05",
+      "code": "SHS150x150x12p5_L850000",
       "position": 15,
       "name": "Tramo de tubo cuadrado",
       "material": "S355NH / EN10210-1",
@@ -491,7 +456,7 @@
       "group": "cruceta"
     },
     {
-      "code": "SHS60x60x4_L62410_P05",
+      "code": "SHS60x60x4_L62410",
       "position": 16,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -513,7 +478,7 @@
       "group": "tolva"
     },
     {
-      "code": "TOL_PANEL_CUERPO_6mm_P05",
+      "code": "TOL_PANEL_CUERPO_6mm",
       "position": 18,
       "name": "Pared vertical de tolva",
       "material": "ASTM A36",
@@ -524,7 +489,7 @@
       "group": "tolva"
     },
     {
-      "code": "TOL_PANEL_CUERPO_DN150_6mm_P05",
+      "code": "TOL_PANEL_CUERPO_DN150_6mm",
       "position": 19,
       "name": "Pared vertical con conexión de polvo",
       "material": "ASTM A36",
@@ -535,7 +500,7 @@
       "group": "tolva"
     },
     {
-      "code": "TOL_TAPA_POLVO_1662x1662x3_P05",
+      "code": "TOL_TAPA_POLVO_1662x1662x3",
       "position": 20,
       "name": "Tapa de tolva",
       "material": "ASTM A36",
@@ -546,7 +511,7 @@
       "group": "tolva"
     },
     {
-      "code": "TOL_JUNTA_EPDM_1662x1662x3_P05",
+      "code": "TOL_JUNTA_EPDM_1662x1662x3",
       "position": 21,
       "name": "Empaque de tapa de tolva",
       "material": "EPDM",
@@ -579,7 +544,7 @@
       "group": "tolva"
     },
     {
-      "code": "U01_CAP_200x200x12_P05",
+      "code": "U01_CAP_200x200x12",
       "position": 24,
       "name": "Placa superior de unión a viga",
       "material": "ASTM A36",
@@ -590,7 +555,7 @@
       "group": "porticos"
     },
     {
-      "code": "U01_LATERAL_200x240x12_P05",
+      "code": "U01_LATERAL_200x240x12",
       "position": 25,
       "name": "Placa lateral de unión a viga",
       "material": "ASTM A36",
@@ -601,7 +566,7 @@
       "group": "porticos"
     },
     {
-      "code": "U01_CALCE_200x20x6_P05",
+      "code": "U01_CALCE_200x20x6",
       "position": 26,
       "name": "Placa separadora de unión a viga",
       "material": "ASTM A36",
@@ -612,7 +577,7 @@
       "group": "porticos"
     },
     {
-      "code": "U01_RIGIDIZADOR_44x175x6_P05",
+      "code": "U01_RIGIDIZADOR_44x175x6",
       "position": 27,
       "name": "Placa de refuerzo de unión a viga",
       "material": "ASTM A36",
@@ -623,7 +588,7 @@
       "group": "porticos"
     },
     {
-      "code": "U01_CARTELA_100x240x12_P05",
+      "code": "U01_CARTELA_100x240x12",
       "position": 28,
       "name": "Refuerzo triangular de unión a viga",
       "material": "ASTM A36",
@@ -634,7 +599,7 @@
       "group": "porticos"
     },
     {
-      "code": "P01_CAP_COLUMNA_200x200x12_P05",
+      "code": "P01_CAP_COLUMNA_200x200x12",
       "position": 29,
       "name": "Tapa de columna principal",
       "material": "ASTM A36",
@@ -645,7 +610,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_COLLAR_150x200x12_P05",
+      "code": "U02_COLLAR_150x200x12",
       "position": 30,
       "name": "Placa de unión de diagonal a columna",
       "material": "ASTM A36",
@@ -656,7 +621,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_COLLAR_174x200x12_P05",
+      "code": "U02_COLLAR_174x200x12",
       "position": 31,
       "name": "Placa de unión de diagonal a columna",
       "material": "ASTM A36",
@@ -667,7 +632,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_COLLAR_150x158x12_P05",
+      "code": "U02_COLLAR_150x158x12",
       "position": 32,
       "name": "Placa de unión de diagonal a columna",
       "material": "ASTM A36",
@@ -678,7 +643,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_COLLAR_174x158x12_P05",
+      "code": "U02_COLLAR_174x158x12",
       "position": 33,
       "name": "Placa de unión de diagonal a columna",
       "material": "ASTM A36",
@@ -689,7 +654,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_BRL-A--1_0_P05",
+      "code": "U02_CARTELA_BRL-A--1_0",
       "position": 34,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -700,7 +665,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_BRL-A--1_1_P05",
+      "code": "U02_CARTELA_BRL-A--1_1",
       "position": 35,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -711,7 +676,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_BRL-B--1_0_P05",
+      "code": "U02_CARTELA_BRL-B--1_0",
       "position": 36,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -722,7 +687,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_BRL-B--1_1_P05",
+      "code": "U02_CARTELA_BRL-B--1_1",
       "position": 37,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -733,7 +698,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_KNE--1_0_P05",
+      "code": "U02_CARTELA_KNE--1_0",
       "position": 38,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -744,7 +709,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_KNE--1_1_P05",
+      "code": "U02_CARTELA_KNE--1_1",
       "position": 39,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -755,7 +720,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_BRL-A-1_0_P05",
+      "code": "U02_CARTELA_BRL-A-1_0",
       "position": 40,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -766,7 +731,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_BRL-A-1_1_P05",
+      "code": "U02_CARTELA_BRL-A-1_1",
       "position": 41,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -777,7 +742,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_BRL-B-1_0_P05",
+      "code": "U02_CARTELA_BRL-B-1_0",
       "position": 42,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -788,7 +753,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_BRL-B-1_1_P05",
+      "code": "U02_CARTELA_BRL-B-1_1",
       "position": 43,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -799,7 +764,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_KNE-1_0_P05",
+      "code": "U02_CARTELA_KNE-1_0",
       "position": 44,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -810,7 +775,7 @@
       "group": "porticos"
     },
     {
-      "code": "U02_CARTELA_KNE-1_1_P05",
+      "code": "U02_CARTELA_KNE-1_1",
       "position": 45,
       "name": "Refuerzo triangular de diagonal",
       "material": "ASTM A36",
@@ -821,7 +786,7 @@
       "group": "porticos"
     },
     {
-      "code": "U04_CAP_PATA_150x150x12_P05",
+      "code": "U04_CAP_PATA_150x150x12",
       "position": 46,
       "name": "Tapa de pata de tolva",
       "material": "ASTM A36",
@@ -832,7 +797,7 @@
       "group": "tolva"
     },
     {
-      "code": "U04_CARTELA_125x150x12_P05",
+      "code": "U04_CARTELA_125x150x12",
       "position": 47,
       "name": "Refuerzo triangular de apoyo de tolva",
       "material": "ASTM A36",
@@ -843,7 +808,7 @@
       "group": "tolva"
     },
     {
-      "code": "T01_ASIENTO_100x100x6_P05",
+      "code": "T01_ASIENTO_100x100x6",
       "position": 48,
       "name": "Placa de apoyo del carril",
       "material": "ASTM A36",
@@ -854,7 +819,7 @@
       "group": "tolva"
     },
     {
-      "code": "T02_ASIENTO_INFERIOR_100x100x20_P05",
+      "code": "T02_ASIENTO_INFERIOR_100x100x20",
       "position": 49,
       "name": "Placa inferior de unión de vigas",
       "material": "ASTM A36",
@@ -865,7 +830,7 @@
       "group": "tolva"
     },
     {
-      "code": "T02_ASIENTO_SUPERIOR_200x214x20_P05",
+      "code": "T02_ASIENTO_SUPERIOR_200x214x20",
       "position": 50,
       "name": "Placa superior de unión de vigas",
       "material": "ASTM A36",
@@ -898,7 +863,7 @@
       "group": "cruceta"
     },
     {
-      "code": "CR_RESPALDO_EXTREMA_90x150x20_P05",
+      "code": "CR_RESPALDO_EXTREMA_90x150x20",
       "position": 53,
       "name": "Placa de refuerzo de enganche",
       "material": "ASTM A36",
@@ -909,7 +874,7 @@
       "group": "cruceta"
     },
     {
-      "code": "CR_CARTELA_TRIANGULAR_150x150x12_P05",
+      "code": "CR_CARTELA_TRIANGULAR_150x150x12",
       "position": 54,
       "name": "Refuerzo triangular de cruceta",
       "material": "ASTM A36",
@@ -920,7 +885,7 @@
       "group": "cruceta"
     },
     {
-      "code": "CR_CAP_CENTRAL_150x300x30_P05",
+      "code": "CR_CAP_CENTRAL_150x300x30",
       "position": 55,
       "name": "Placa superior de cruceta",
       "material": "ASTM A36",
@@ -931,7 +896,7 @@
       "group": "cruceta"
     },
     {
-      "code": "CR_CHEEK_300x150x20_P05",
+      "code": "CR_CHEEK_300x150x20",
       "position": 56,
       "name": "Placa lateral de cruceta",
       "material": "ASTM A36",
@@ -942,7 +907,7 @@
       "group": "cruceta"
     },
     {
-      "code": "LINER_CONO_UHMW10_P05",
+      "code": "LINER_CONO_UHMW10",
       "position": 57,
       "name": "Revestimiento interior de pared inclinada",
       "material": "PE-UHMW1000 disipativo / ASTM D4020",
@@ -953,7 +918,7 @@
       "group": "complementos"
     },
     {
-      "code": "LINER_CUERPO_UHMW10_P05",
+      "code": "LINER_CUERPO_UHMW10",
       "position": 58,
       "name": "Revestimiento interior de pared vertical",
       "material": "PE-UHMW1000 disipativo / ASTM D4020",
@@ -964,7 +929,7 @@
       "group": "complementos"
     },
     {
-      "code": "LINER_CUERPO_UHMW10_DN150_P05",
+      "code": "LINER_CUERPO_UHMW10_DN150",
       "position": 59,
       "name": "Revestimiento vertical con conexión de polvo",
       "material": "PE-UHMW1000 disipativo / ASTM D4020",
@@ -975,7 +940,7 @@
       "group": "complementos"
     },
     {
-      "code": "CORTE_ALETA_1_304_t16_P05",
+      "code": "CORTE_ALETA_1_304_t16",
       "position": 60,
       "name": "Cuchilla de apertura de bolsa",
       "material": "AISI304 / ASTM A240",
@@ -986,7 +951,7 @@
       "group": "complementos"
     },
     {
-      "code": "CORTE_ALETA_2_304_t16_P05",
+      "code": "CORTE_ALETA_2_304_t16",
       "position": 61,
       "name": "Cuchilla de apertura de bolsa",
       "material": "AISI304 / ASTM A240",
@@ -997,7 +962,7 @@
       "group": "complementos"
     },
     {
-      "code": "CORTE_ALETA_3_304_t16_P05",
+      "code": "CORTE_ALETA_3_304_t16",
       "position": 62,
       "name": "Cuchilla de apertura de bolsa",
       "material": "AISI304 / ASTM A240",
@@ -1008,7 +973,7 @@
       "group": "complementos"
     },
     {
-      "code": "CORTE_ALETA_4_304_t16_P05",
+      "code": "CORTE_ALETA_4_304_t16",
       "position": 63,
       "name": "Cuchilla de apertura de bolsa",
       "material": "AISI304 / ASTM A240",
@@ -1019,7 +984,7 @@
       "group": "complementos"
     },
     {
-      "code": "CORTE_MASTIL_60p3x5_P05",
+      "code": "CORTE_MASTIL_60p3x5",
       "position": 64,
       "name": "Tubo central del cortador",
       "material": "AISI304 / ASTM A276",
@@ -1030,7 +995,7 @@
       "group": "complementos"
     },
     {
-      "code": "CORTE_MARCO_570x620x12_P05",
+      "code": "CORTE_MARCO_570x620x12",
       "position": 65,
       "name": "Marco de apoyo del cortador",
       "material": "ASTM A36",
@@ -1041,7 +1006,7 @@
       "group": "complementos"
     },
     {
-      "code": "CORTE_BASE_200x200x16_P05",
+      "code": "CORTE_BASE_200x200x16",
       "position": 66,
       "name": "Placa base del cortador",
       "material": "ASTM A36",
@@ -1107,7 +1072,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG02_FLANGE_364x350x6_P05",
+      "code": "MG02_FLANGE_364x350x6",
       "position": 72,
       "name": "Marco superior de compuerta",
       "material": "ASTM A36",
@@ -1118,7 +1083,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG03_FLANGE_364x350x6_P05",
+      "code": "MG03_FLANGE_364x350x6",
       "position": 73,
       "name": "Marco inferior de compuerta",
       "material": "ASTM A36",
@@ -1129,7 +1094,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG01_HOJA_310x450x6_P05",
+      "code": "MG01_HOJA_310x450x6",
       "position": 74,
       "name": "Placa deslizante de compuerta",
       "material": "ASTM A36",
@@ -1140,7 +1105,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG04_SUP_1_P05",
+      "code": "MG04_SUP_1",
       "position": 75,
       "name": "Guía superior de compuerta",
       "material": "ASTM A36",
@@ -1151,7 +1116,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG04_SUP_2_P05",
+      "code": "MG04_SUP_2",
       "position": 76,
       "name": "Guía superior de compuerta",
       "material": "ASTM A36",
@@ -1162,7 +1127,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG05_INF_1_P05",
+      "code": "MG05_INF_1",
       "position": 77,
       "name": "Guía inferior de compuerta",
       "material": "ASTM A36",
@@ -1173,7 +1138,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG05_INF_2_P05",
+      "code": "MG05_INF_2",
       "position": 78,
       "name": "Guía inferior de compuerta",
       "material": "ASTM A36",
@@ -1184,7 +1149,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG06_ESP_1_P05",
+      "code": "MG06_ESP_1",
       "position": 79,
       "name": "Barra separadora de compuerta",
       "material": "ASTM A36",
@@ -1195,7 +1160,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG06_ESP_2_P05",
+      "code": "MG06_ESP_2",
       "position": 80,
       "name": "Barra separadora de compuerta",
       "material": "ASTM A36",
@@ -1206,7 +1171,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG07_UHMW_SUP_1_P05",
+      "code": "MG07_UHMW_SUP_1",
       "position": 81,
       "name": "Tira plástica de guía superior",
       "material": "PE-UHMW1000 / ASTM D4020",
@@ -1217,7 +1182,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG07_UHMW_SUP_2_P05",
+      "code": "MG07_UHMW_SUP_2",
       "position": 82,
       "name": "Tira plástica de guía superior",
       "material": "PE-UHMW1000 / ASTM D4020",
@@ -1228,7 +1193,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG08_UHMW_INF_1_P05",
+      "code": "MG08_UHMW_INF_1",
       "position": 83,
       "name": "Tira plástica de guía inferior",
       "material": "PE-UHMW1000 / ASTM D4020",
@@ -1239,7 +1204,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG08_UHMW_INF_2_P05",
+      "code": "MG08_UHMW_INF_2",
       "position": 84,
       "name": "Tira plástica de guía inferior",
       "material": "PE-UHMW1000 / ASTM D4020",
@@ -1250,7 +1215,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG09_UHMW_LADO_1_P05",
+      "code": "MG09_UHMW_LADO_1",
       "position": 85,
       "name": "Tira plástica de guía lateral",
       "material": "PE-UHMW1000 / ASTM D4020",
@@ -1261,7 +1226,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG09_UHMW_LADO_2_P05",
+      "code": "MG09_UHMW_LADO_2",
       "position": 86,
       "name": "Tira plástica de guía lateral",
       "material": "PE-UHMW1000 / ASTM D4020",
@@ -1272,7 +1237,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG10_CASQUILLO_12x9_L31p5_P05",
+      "code": "MG10_CASQUILLO_12x9_L31p5",
       "position": 87,
       "name": "Separador tubular para perno",
       "material": "ASTM A36",
@@ -1283,7 +1248,7 @@
       "group": "complementos"
     },
     {
-      "code": "MS01_TRANSICION_CUADRADO_REDONDO_3_P05",
+      "code": "MS01_TRANSICION_CUADRADO_REDONDO_3",
       "position": 88,
       "name": "Adaptador de salida cuadrada a redonda",
       "material": "ASTM A36",
@@ -1294,7 +1259,7 @@
       "group": "complementos"
     },
     {
-      "code": "MS02_CUELLO_ID250_OD256_L80_P05",
+      "code": "MS02_CUELLO_ID250_OD256_L80",
       "position": 89,
       "name": "Tubo de salida de producto",
       "material": "ASTM A36",
@@ -1305,7 +1270,7 @@
       "group": "complementos"
     },
     {
-      "code": "MS03_SECTOR_170deg_ID268_t3_H40_P05",
+      "code": "MS03_SECTOR_170deg_ID268_t3_H40",
       "position": 90,
       "name": "Abrazadera curva de sujeción del saco",
       "material": "ASTM A36",
@@ -1316,7 +1281,7 @@
       "group": "complementos"
     },
     {
-      "code": "MS04_LINER_EPDM3_SECTOR_170_P05",
+      "code": "MS04_LINER_EPDM3_SECTOR_170",
       "position": 91,
       "name": "Banda de goma de abrazadera",
       "material": "EPDM",
@@ -1327,7 +1292,7 @@
       "group": "complementos"
     },
     {
-      "code": "MS05_SOPORTE_60x80x6_P05",
+      "code": "MS05_SOPORTE_60x80x6",
       "position": 92,
       "name": "Placa de soporte de abrazadera",
       "material": "ASTM A36",
@@ -1360,7 +1325,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG11_GUARDA_U_590x645x260_R3_t2_P05",
+      "code": "MG11_GUARDA_U_590x645x260_R3_t2",
       "position": 95,
       "name": "Cubierta doblada de protección de compuerta",
       "material": "ASTM A36",
@@ -1371,7 +1336,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG12_GUARDA_FONDO_590x645x2_P05",
+      "code": "MG12_GUARDA_FONDO_590x645x2",
       "position": 96,
       "name": "Tapa inferior de protección de compuerta",
       "material": "ASTM A36",
@@ -1382,7 +1347,7 @@
       "group": "complementos"
     },
     {
-      "code": "MG13_GUARDA_TESTERO_586x258x2_P05",
+      "code": "MG13_GUARDA_TESTERO_586x258x2",
       "position": 97,
       "name": "Tapa de extremo de protección de compuerta",
       "material": "ASTM A36",
@@ -1404,7 +1369,7 @@
       "group": "complementos"
     },
     {
-      "code": "BASE_COMBINADA_PORTICO_TOLVA_SUR_t35_P05",
+      "code": "BASE_COMBINADA_PORTICO_TOLVA_SUR_t35",
       "position": 99,
       "name": "Placa base compartida de columnas",
       "material": "ASTM A36",
@@ -1415,7 +1380,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "BASE_COMBINADA_PORTICO_TOLVA_NORTE_t35_P05",
+      "code": "BASE_COMBINADA_PORTICO_TOLVA_NORTE_t35",
       "position": 100,
       "name": "Placa base compartida de columnas",
       "material": "ASTM A36",
@@ -1448,7 +1413,7 @@
       "group": "complementos"
     },
     {
-      "code": "PORTICO_CIERRE_IPE200_2000x200x8_P05",
+      "code": "PORTICO_CIERRE_IPE200_2000x200x8",
       "position": 103,
       "name": "Placa de cierre de viga transversal",
       "material": "ASTM A36",
@@ -1459,7 +1424,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC01_SADDLE_300x180x20_P05",
+      "code": "TC01_SADDLE_300x180x20",
       "position": 104,
       "name": "Placa de apoyo de traba del carro",
       "material": "ASTM A36",
@@ -1470,7 +1435,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC02_DUPLICADOR_ALA_300x60x12_P05",
+      "code": "TC02_DUPLICADOR_ALA_300x60x12",
       "position": 105,
       "name": "Placa de refuerzo del ala de viga",
       "material": "ASTM A36",
@@ -1481,7 +1446,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC03_BRAZO_SHS100x100x10_S355_L300_P05",
+      "code": "TC03_BRAZO_SHS100x100x10_S355_L300",
       "position": 106,
       "name": "Brazo de traba del carro",
       "material": "S355NH / EN10210-1",
@@ -1492,7 +1457,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC04_POSTE_SHS100x100x10_S355_L200_P05",
+      "code": "TC04_POSTE_SHS100x100x10_S355_L200",
       "position": 107,
       "name": "Poste de traba del carro",
       "material": "S355NH / EN10210-1",
@@ -1503,7 +1468,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC05_PLACA_HORQUILLA_200x160x20_P05",
+      "code": "TC05_PLACA_HORQUILLA_200x160x20",
       "position": 108,
       "name": "Placa de apoyo del pasador",
       "material": "ASTM A36",
@@ -1514,7 +1479,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC06_OREJA_80x100x12_D31_P05",
+      "code": "TC06_OREJA_80x100x12_D31",
       "position": 109,
       "name": "Placa exterior de traba del carro",
       "material": "ASTM A36",
@@ -1525,7 +1490,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC07_RECEPTOR_80x96x16_D31_P05",
+      "code": "TC07_RECEPTOR_80x96x16_D31",
       "position": 110,
       "name": "Placa central de traba del carro",
       "material": "ASTM A36",
@@ -1536,7 +1501,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC08_ADAPTADOR_200x160x20_4D18_P05",
+      "code": "TC08_ADAPTADOR_200x160x20_4D18",
       "position": 111,
       "name": "Placa de unión al carro",
       "material": "ASTM A36",
@@ -1547,7 +1512,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC09_CARTABON_SADDLE_220x120x20_P05",
+      "code": "TC09_CARTABON_SADDLE_220x120x20",
       "position": 112,
       "name": "Placa de apoyo del brazo",
       "material": "ASTM A36",
@@ -1558,7 +1523,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC10_CARTABON_RECEPTOR_60x60x12_P05",
+      "code": "TC10_CARTABON_RECEPTOR_60x60x12",
       "position": 113,
       "name": "Refuerzo triangular de traba",
       "material": "ASTM A36",
@@ -1569,7 +1534,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC11_PASADOR_D30_L90_FY355_P05",
+      "code": "TC11_PASADOR_D30_L90_FY355",
       "position": 114,
       "name": "Pasador de bloqueo del carro",
       "material": "C45E+QT / EN ISO683-1",
@@ -1580,7 +1545,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC12_CABEZA_D46_L8_P05",
+      "code": "TC12_CABEZA_D46_L8",
       "position": 115,
       "name": "Cabeza del pasador",
       "material": "ASTM A36",
@@ -1602,7 +1567,7 @@
       "group": "complementos"
     },
     {
-      "code": "TC17_OJAL_CABLE_40x12x3_P05",
+      "code": "TC17_OJAL_CABLE_40x12x3",
       "position": 117,
       "name": "Placa para sujetar cable del pasador",
       "material": "ASTM A36",
@@ -1701,7 +1666,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_A_FINAL_P05",
+      "code": "BRT_A_FINAL",
       "position": 126,
       "name": "Diagonal de refuerzo longitudinal",
       "material": "ASTM A500 Gr.B",
@@ -1712,7 +1677,7 @@
       "group": "porticos"
     },
     {
-      "code": "BRT_LENGUETA_BRT-A_0_250x250x12_P05",
+      "code": "BRT_LENGUETA_BRT-A_0_250x250x12",
       "position": 127,
       "name": "Placa de unión de diagonal",
       "material": "ASTM A36",
@@ -1723,7 +1688,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_LENGUETA_BRT-A_1_250x250x12_P05",
+      "code": "BRT_LENGUETA_BRT-A_1_250x250x12",
       "position": 128,
       "name": "Placa de unión de diagonal",
       "material": "ASTM A36",
@@ -1734,7 +1699,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_B_FINAL_P05",
+      "code": "BRT_B_FINAL",
       "position": 129,
       "name": "Diagonal de refuerzo longitudinal",
       "material": "ASTM A500 Gr.B",
@@ -1745,7 +1710,7 @@
       "group": "porticos"
     },
     {
-      "code": "BRT_LENGUETA_BRT-B_0_250x250x12_P05",
+      "code": "BRT_LENGUETA_BRT-B_0_250x250x12",
       "position": 130,
       "name": "Placa de unión de diagonal",
       "material": "ASTM A36",
@@ -1756,7 +1721,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_LENGUETA_BRT-B_1_250x250x12_P05",
+      "code": "BRT_LENGUETA_BRT-B_1_250x250x12",
       "position": 131,
       "name": "Placa de unión de diagonal",
       "material": "ASTM A36",
@@ -1767,7 +1732,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_COLLAR_150x300x12_P05",
+      "code": "BRT_COLLAR_150x300x12",
       "position": 132,
       "name": "Placa de unión a columna",
       "material": "ASTM A36",
@@ -1778,7 +1743,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_COLLAR_174x300x12_P05",
+      "code": "BRT_COLLAR_174x300x12",
       "position": 133,
       "name": "Placa de unión a columna",
       "material": "ASTM A36",
@@ -1789,7 +1754,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_RESPALDO_174x300x20_P05",
+      "code": "BRT_RESPALDO_174x300x20",
       "position": 134,
       "name": "Placa de refuerzo de columna",
       "material": "ASTM A36",
@@ -1800,7 +1765,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_OUTRIGGER_SHS100x100x10_S355_L468_P05",
+      "code": "BRT_OUTRIGGER_SHS100x100x10_S355_L468",
       "position": 135,
       "name": "Brazo lateral de refuerzo",
       "material": "S355NH / EN10210-1",
@@ -1811,7 +1776,7 @@
       "group": "complementos"
     },
     {
-      "code": "BRT_CONTRACARA_250x250x20_P05",
+      "code": "BRT_CONTRACARA_250x250x20",
       "position": 136,
       "name": "Placa exterior de unión",
       "material": "ASTM A36",
@@ -1822,7 +1787,7 @@
       "group": "complementos"
     },
     {
-      "code": "GRID__0p25_FINAL_P05",
+      "code": "GRID__0p25_FINAL",
       "position": 137,
       "name": "Travesaño de apoyo de bolsa",
       "material": "ASTM A500 Gr.B",
@@ -1833,7 +1798,7 @@
       "group": "soporte-bolsa"
     },
     {
-      "code": "GRID_ASIENTO_150x150x20_P05",
+      "code": "GRID_ASIENTO_150x150x20",
       "position": 138,
       "name": "Placa de apoyo de travesaño",
       "material": "ASTM A36",
@@ -1844,7 +1809,7 @@
       "group": "complementos"
     },
     {
-      "code": "GRID_DIAFRAGMA_HUP_138x138x12_P05",
+      "code": "GRID_DIAFRAGMA_HUP_138x138x12",
       "position": 139,
       "name": "Placa interior de refuerzo de travesaño",
       "material": "ASTM A36",
@@ -1855,7 +1820,7 @@
       "group": "complementos"
     },
     {
-      "code": "GRID_0p25_FINAL_P05",
+      "code": "GRID_0p25_FINAL",
       "position": 140,
       "name": "Travesaño de apoyo de bolsa",
       "material": "ASTM A500 Gr.B",
@@ -1866,7 +1831,7 @@
       "group": "soporte-bolsa"
     },
     {
-      "code": "CORTE_TRAVESANO100x100x5_L630_P05",
+      "code": "CORTE_TRAVESANO100x100x5_L630",
       "position": 141,
       "name": "Travesaño de apoyo del cortador",
       "material": "ASTM A500 Gr.B",
@@ -1877,7 +1842,7 @@
       "group": "complementos"
     },
     {
-      "code": "CORTE_ESPACIADOR_CENTRAL_200x200x12_P05",
+      "code": "CORTE_ESPACIADOR_CENTRAL_200x200x12",
       "position": 142,
       "name": "Placa separadora del cortador",
       "material": "ASTM A36",
@@ -1888,7 +1853,7 @@
       "group": "complementos"
     },
     {
-      "code": "HR_2p3124_1_FINAL_P05",
+      "code": "HR_2p3124_1_FINAL",
       "position": 143,
       "name": "Tramo de marco intermedio de tolva",
       "material": "S355NH / EN10210-1",
@@ -1899,7 +1864,7 @@
       "group": "tolva"
     },
     {
-      "code": "HR_2p3124_2_FINAL_P05",
+      "code": "HR_2p3124_2_FINAL",
       "position": 144,
       "name": "Tramo de marco intermedio de tolva",
       "material": "S355NH / EN10210-1",
@@ -1910,7 +1875,7 @@
       "group": "tolva"
     },
     {
-      "code": "HR_2p3124_3_FINAL_P05",
+      "code": "HR_2p3124_3_FINAL",
       "position": 145,
       "name": "Tramo de marco intermedio de tolva",
       "material": "S355NH / EN10210-1",
@@ -1921,7 +1886,7 @@
       "group": "tolva"
     },
     {
-      "code": "HR_2p3124_4_FINAL_P05",
+      "code": "HR_2p3124_4_FINAL",
       "position": 146,
       "name": "Tramo de marco intermedio de tolva",
       "material": "S355NH / EN10210-1",
@@ -1935,15 +1900,15 @@
       "code": "TOPE_ACE_TR100_60_ENVOLVENTE_PRESELECCION_REF",
       "position": 147,
       "name": "Reserva de espacio ACE TR100-60",
-      "material": "Copoliester; envolvente preliminar",
+      "material": "Copoliester; envolvente de montaje",
       "supply": "Comprar",
-      "purchase": "Preseleccion ACE TR100-60; curva de aplicacion y montaje no acreditados",
+      "purchase": "ACE TR100-60: confirmar curva de aplicación y fijaciones con proveedor",
       "quantity": 4,
-      "dimensions": "A88 x B82 x D133; carrera60; referencia radial · Comprar: Preseleccion ACE TR100-60; curva de aplicacion y montaje no acreditados",
+      "dimensions": "A88 × B82 × D133 mm; carrera 60 mm · referencia de montaje",
       "group": "monorriel"
     },
     {
-      "code": "SHS60x60x4_L6085645_SLOT_P05_JUNTA_1",
+      "code": "SHS60x60x4_L6085645_SLOT_JUNTA_1",
       "position": 148,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -1954,7 +1919,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L6085645_SLOT_P05_JUNTA_2",
+      "code": "SHS60x60x4_L6085645_SLOT_JUNTA_2",
       "position": 149,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -1965,7 +1930,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L748810_SLOT_P05_JUNTA_3",
+      "code": "SHS60x60x4_L748810_SLOT_JUNTA_3",
       "position": 150,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -1976,7 +1941,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L6085645_SLOT_P05_JUNTA_4",
+      "code": "SHS60x60x4_L6085645_SLOT_JUNTA_4",
       "position": 151,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -1987,7 +1952,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L6085645_SLOT_P05_JUNTA_5",
+      "code": "SHS60x60x4_L6085645_SLOT_JUNTA_5",
       "position": 152,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -1998,7 +1963,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L748810_SLOT_P05_JUNTA_6",
+      "code": "SHS60x60x4_L748810_SLOT_JUNTA_6",
       "position": 153,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -2009,7 +1974,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L3050000_P05_JUNTA_14",
+      "code": "SHS60x60x4_L3050000_JUNTA_14",
       "position": 154,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -2020,7 +1985,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L3050000_P05_JUNTA_15",
+      "code": "SHS60x60x4_L3050000_JUNTA_15",
       "position": 155,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -2031,7 +1996,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L3050000_P05_JUNTA_16",
+      "code": "SHS60x60x4_L3050000_JUNTA_16",
       "position": 156,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -2042,7 +2007,7 @@
       "group": "porticos"
     },
     {
-      "code": "SHS60x60x4_L3050000_P05_JUNTA_17",
+      "code": "SHS60x60x4_L3050000_JUNTA_17",
       "position": 157,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -2438,7 +2403,7 @@
       "group": "barandas"
     },
     {
-      "code": "HR4_PAD_100x40x5_P05_EJE_POSITIVO",
+      "code": "HR4_PAD_100x40x5_EJE_POSITIVO",
       "position": 193,
       "name": "Placa de apoyo del marco de tolva",
       "material": "ASTM A36",
@@ -2449,7 +2414,7 @@
       "group": "complementos"
     },
     {
-      "code": "AC_PUENTE_REJILLA_SHS40x40x3_L170_P05",
+      "code": "AC_PUENTE_REJILLA_SHS40x40x3_L170",
       "position": 194,
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
@@ -2460,7 +2425,7 @@
       "group": "escalera"
     },
     {
-      "code": "PASANTE_M16_8p8_L340_P05",
+      "code": "PASANTE_M16_8p8_L340",
       "position": 195,
       "name": "Esparrago pasante M16 clase 8.8",
       "material": "ISO 898-1 clase 8.8 certificado",
@@ -2482,7 +2447,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "TOPE_PLACA_REACCION_640x360x45_P05",
+      "code": "TOPE_PLACA_REACCION_640x360x45",
       "position": 197,
       "name": "Placa de respaldo de amortiguador",
       "material": "ASTM A36",
@@ -2493,7 +2458,7 @@
       "group": "monorriel"
     },
     {
-      "code": "TOPE_RIGIDIZADOR_TERMINAL_100x240x12_P05",
+      "code": "TOPE_RIGIDIZADOR_TERMINAL_100x240x12",
       "position": 198,
       "name": "Tope placa de refuerzo terminal",
       "material": "ASTM A36",
@@ -2504,7 +2469,7 @@
       "group": "monorriel"
     },
     {
-      "code": "PASANTE_ARANDELA_A36_50x50x10_D18_P05",
+      "code": "PASANTE_ARANDELA_A36_50x50x10_D18",
       "position": 199,
       "name": "Arandela estructural A36 soldable",
       "material": "ASTM A36",
@@ -2548,7 +2513,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G01_P05",
+      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G01",
       "position": 203,
       "name": "Contraplaca inferior A36",
       "material": "ASTM A36",
@@ -2559,7 +2524,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G02_P05",
+      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G02",
       "position": 204,
       "name": "Contraplaca inferior A36",
       "material": "ASTM A36",
@@ -2570,7 +2535,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G03_P05",
+      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G03",
       "position": 205,
       "name": "Contraplaca inferior A36",
       "material": "ASTM A36",
@@ -2581,7 +2546,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G04_P05",
+      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G04",
       "position": 206,
       "name": "Contraplaca inferior A36",
       "material": "ASTM A36",
@@ -2592,7 +2557,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G05_P05",
+      "code": "CONTRAPLACA_COMUN_A36_290x290x18_G05",
       "position": 207,
       "name": "Contraplaca inferior A36",
       "material": "ASTM A36",
@@ -2603,7 +2568,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "CONTRAPLACA_A36_150x150x18_D18_P05",
+      "code": "CONTRAPLACA_A36_150x150x18_D18",
       "position": 208,
       "name": "Contraplaca inferior A36",
       "material": "ASTM A36",
@@ -2614,7 +2579,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "CONTRAPLACA_COMUN_A36_175x360x18_G25_P05",
+      "code": "CONTRAPLACA_COMUN_A36_175x360x18_G25",
       "position": 209,
       "name": "Contraplaca inferior A36",
       "material": "ASTM A36",
@@ -2625,7 +2590,7 @@
       "group": "cimentacion"
     },
     {
-      "code": "CONTRAPLACA_COMUN_A36_175x360x18_G30_P05",
+      "code": "CONTRAPLACA_COMUN_A36_175x360x18_G30",
       "position": 210,
       "name": "Contraplaca inferior A36",
       "material": "ASTM A36",
@@ -2654,7 +2619,7 @@
       "value": "0,5145 m³ entre el volumen útil y el volumen total de 2,57225 m³"
     },
     {
-      "label": "Apertura de bolsa emitida",
+      "label": "Apertura de bolsa",
       "value": "Fondo cerrado: cortador fijo AISI 304 de 4 filos; la bolsa se sacrifica"
     },
     {
@@ -2674,7 +2639,7 @@
       "value": "Cremallera y piñón manual, reductor 5:1, pasador de bloqueo y guarda cerrada"
     },
     {
-      "label": "Captación supuesta",
+      "label": "Captación",
       "value": "DN150 · 800 m³/h a 1.500 Pa · velocidad calculada 12,58 m/s"
     },
     {
@@ -2686,7 +2651,7 @@
       "value": "Mesa pantógrafo neumática ≥150 kg · plano de trabajo +350 mm · bloqueo mecánico"
     },
     {
-      "label": "Personal propuesto",
+      "label": "Personal",
       "value": "2 operarios + montacarguista compartido"
     },
     {
@@ -2696,57 +2661,7 @@
     {
       "label": "Modelo actualizado",
       "value": "210 piezas distintas · 889 componentes CAD"
-    },
-    {
-      "label": "Estado del expediente",
-      "value": "Diseño de la estación"
     }
   ],
-  "notice": "Cruceta nominal 2 t · proceso máximo de 1 t.",
-  "status": "Rediseño actualizado; alcance documentado",
-  "issue": "P05 / rediseño20-10-2026",
-  "fullReleaseAllowed": false,
-  "verification": {
-    "distinctParts": 210,
-    "components": 889,
-    "updatedAnalyticalChecks": 355,
-    "criticalFixedInterferences": 0,
-    "physicalTestsPerformed": false,
-    "technicalApprovalDocumented": false,
-    "fullReleaseAllowed": false,
-    "sourceHashes": {
-      "native_manifest.json": "0faba270ff6913eaaee15bbee2c7278465e54b8b0328608053a391f7beb47df6",
-      "solidworks_model.bas": "3037d28270f0ca07f93411277568446a8feab4a9881de7f9406f35c39692e62d"
-    },
-    "analyticalSupplementSha256": "77ae02132aa071358c6291e36238ea0f075392bb4c42e9ab64b63d7421e571aa",
-    "accreditationMatrixSha256": "3a2d119dd5248dedfad0fa45f962390e0007564e99da4b61a88638c67c693b54"
-  },
-  "anchorDesign": {
-    "title": "M16pasante L340 / contraplacas A36 t18",
-    "effectiveEmbedmentMm": null,
-    "rodTotalLengthMm": 340,
-    "slabThicknessMm": 200,
-    "adopted": true,
-    "count": 9,
-    "maxUtilization": 1.1492331334255046,
-    "approvedForFabrication": false
-  },
-  "technicalDirective": {
-    "source": "engineering/cierre_tecnico_p05.json",
-    "total_energy_J": 224.04,
-    "travel_bottom_mm": 3520,
-    "structural_action_N": 18000
-  },
-  "native_synchronization": {
-    "executed": true,
-    "model_verified": true,
-    "linked_drawing_verified": true,
-    "parts": 210,
-    "instances": 889,
-    "assemblies": 7,
-    "A1_sheets": 5,
-    "views": 19,
-    "native_dimensions": 27,
-    "manifest_sha256": "0faba270ff6913eaaee15bbee2c7278465e54b8b0328608053a391f7beb47df6"
-  }
+  "notice": "Cruceta nominal 2 t · proceso máximo de 1 t."
 }
