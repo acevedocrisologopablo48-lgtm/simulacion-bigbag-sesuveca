@@ -1,4 +1,4 @@
-import {BigbagScene} from './scene.js?v=estacion-20261020';
+import {BigbagScene} from './scene.js?v=enganches18-20261020';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];

@@ -103,7 +103,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=estacion-20261020', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=enganches18-20261020', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -331,14 +331,13 @@ class SceneEngine {
     this.bag.userData={group:'Bigbag',part:'Bigbag 1 × 1 × 1 m'};this.parts.push(this.bag);this.sectionMeshes.push(this.bag);
     const seamColor = '#acb8bb';
     for(const x of [-.425,.425])for(const y of [-.50,.50]) {
-      this.tube(this.bagRoot,[[x,y,.95],[x*1.02,y,.99],[x,y*.99,1.063],[x,y*.86,1.07],[x,y*.84,1.0]],.016,'#d1d8d5','Bigbag');
+      this.tube(this.bagRoot,[[x,y,.95],[x+.01,y,1.04],[x+.01,y,1.15],[x+.035,y,1.14],[x+.035,y,1.0]],.016,'#d1d8d5','Bigbag');
       this.tube(this.bagRoot,[[x,y,.04],[x*1.02,y*.98,.45],[x,y,.96]],.005,seamColor);
     }
     const stripe=this.box(this.bagRoot,.35,.004,.13,0,-.492,.54,'#235d80','Bigbag');stripe.material.roughness=1;
     this.crucetaRoot=new THREE.Group();this.crucetaRoot.name='Cruceta';this.model.add(this.crucetaRoot);
     this.data.cruceta.forEach(m=>this.addDataMesh({...m,group:'Cruceta'},this.crucetaRoot));
     this.slingRoot=new THREE.Group();this.bagRoot.add(this.slingRoot);
-    for(const x of [-.425,.425])for(const y of [-.5,.5]) this.tube(this.slingRoot,[[x,y,1.04],[x,y,1.075],[x,y,1.11]],.011,'#e9b834','Cruceta');
     this.pallet = new THREE.Group(); this.pallet.name='pallet'; this.model.add(this.pallet);
     for(const x of [-.43,0,.43])for(const y of [-.43,0,.43])this.box(this.pallet,.14,.14,.076,x,y,.062,'#91764e');
     for(let i=0;i<7;i++)this.box(this.pallet,.13,1.1,.05,-.48+i*.16,0,.125,'#b09165');

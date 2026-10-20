@@ -244,9 +244,9 @@
       "id": "cruceta",
       "label": "Cruceta de cuatro puntos",
       "material": "ASTM A36 / S355NH / EN10210-1",
-      "quantity": 23,
+      "quantity": 31,
       "massKg": 198.62145269618415,
-      "description": "H en SHS 150 × 150 × 12; carga útil nominal 2 t y 125.000 izajes. Reserva de masa de diseño con herrajes: 225 kg."
+      "description": "H en SHS 150 × 150 × 12,5; carga útil nominal de 2 t. Enganches comerciales y sus detalles en los planos. Ajustar la conexión al ancho y tejido de las asas del FIBC real."
     },
     {
       "id": "complementos",
@@ -1024,7 +1024,7 @@
       "supply": "Comprar",
       "purchase": "Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto",
       "quantity": 1,
-      "dimensions": "Conjunto KITO SHER2M020IS-IS, capacidad 2 t · Comprar: Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto",
+      "dimensions": "KITO seleccionado: altura cerrada 475 mm. Oreja central en traslado +5247,074 mm; gancho máximo +5225 mm: diferencia 22,074 mm. El recorrido completo no cabe con estas asas de referencia. Para 20 mm de holgura se requiere altura cerrada ≤432,926 mm; selección e interfaz reales a comprobar.",
       "group": "complementos"
     },
     {
@@ -2599,6 +2599,28 @@
       "quantity": 1,
       "dimensions": "ancho 175; alto 360; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
       "group": "cimentacion"
+    },
+    {
+      "code": "GRILLETE_G2130_3p4_1019515",
+      "position": 211,
+      "name": "Grillete G-2130 3/4 con perno, tuerca y chaveta",
+      "material": "Acero forjado galvanizado / Crosby1019515",
+      "supply": "Comprar",
+      "purchase": "Herraje comercial certificado",
+      "quantity": 4,
+      "dimensions": "WLL4,75 t; pasador Ø22,606; abertura31,75 mm; separadores de centrado",
+      "group": "cruceta"
+    },
+    {
+      "code": "GANCHO_L320AN_G_1022402",
+      "position": 212,
+      "name": "Gancho L-320AN G con pestillo S-4320",
+      "material": "Acero aleado forjado / Crosby1022402 +1096421",
+      "supply": "Comprar",
+      "purchase": "Herraje comercial certificado",
+      "quantity": 4,
+      "dimensions": "WLL2,5 t; ojo Ø25,4; garganta25,4 mm; compatibilidad con asa real a comprobar",
+      "group": "cruceta"
     }
   ],
   "operating": [
@@ -2620,7 +2642,7 @@
     },
     {
       "label": "Apertura de bolsa",
-      "value": "Fondo cerrado: cortador fijo AISI 304 de 4 filos; la bolsa se sacrifica"
+      "value": "Fondo cerrado: cortador fijo AISI 304 de 4 filos; la bolsa se sacrifica. Ajustar la punta y comprobar apertura y flujo con la bolsa y el producto de trabajo."
     },
     {
       "label": "Alternativa de manga",
@@ -2659,8 +2681,8 @@
       "value": "25 bigbags / jornada de 8 h · 430 min productivos y 50 min de reserva"
     },
     {
-      "label": "Modelo actualizado",
-      "value": "210 piezas distintas · 889 componentes CAD"
+      "label": "Planos",
+      "value": "18 hojas por conjuntos y detalles"
     }
   ],
   "notice": "Cruceta nominal 2 t · proceso máximo de 1 t."
