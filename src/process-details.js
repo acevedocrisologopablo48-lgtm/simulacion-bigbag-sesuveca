@@ -83,7 +83,7 @@ export function buildProcessDetails(engine) {
   lc.strokeStyle = '#818c86'; lc.lineWidth = 3; lc.strokeRect(10, 10, 492, 300); lc.fillStyle = '#234c70';
   lc.font = 'bold 45px Arial'; lc.fillText('SESUVECA', 35, 74); lc.fillRect(35, 91, 442, 4);
   lc.font = '25px Arial'; lc.fillText('CARBÓN', 35, 141); lc.fillText('CARGA MÁXIMA', 35, 188);
-  lc.font = 'bold 44px Arial'; lc.fillText('1 000 kg', 35, 244); lc.font = '18px Arial'; lc.fillText('Mantener seco · Izar por las cuatro asas', 35, 282);
+  lc.font = 'bold 44px Arial'; lc.fillText(E.data.config.compact_format?'596 kg aprox.':'1 000 kg', 35, 244); lc.font = '18px Arial'; lc.fillText('Mantener seco · Izar por las cuatro asas', 35, 282);
   const labelTexture = new THREE.CanvasTexture(labelCanvas); labelTexture.colorSpace = THREE.SRGBColorSpace;
   const labelMat = new THREE.MeshStandardMaterial({ map: labelTexture, roughness: 1, metalness: 0, side: THREE.DoubleSide });
   const label = draw(E.bag, new THREE.PlaneGeometry(.31, .194), labelMat, [0, -bagWidth*.504, bagHeight*.56]); label.rotation.x = Math.PI / 2;

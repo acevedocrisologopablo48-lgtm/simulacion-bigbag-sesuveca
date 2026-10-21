@@ -6,7 +6,7 @@
   "dimensions": [
     {
       "label": "Bigbag de proceso",
-      "value": "950 × 950 × 1.200 mm · fondo cerrado · hasta1.000 kg"
+      "value": "1050 × 1050 × 1650 mm · carbón550kg/m³ · máximo1000kg"
     },
     {
       "label": "Asas del bigbag",
@@ -18,7 +18,7 @@
     },
     {
       "label": "Reserva de masa de cruceta",
-      "value": "235 kg incluidos herrajes y soldadura; comprobar masa final frente a la reserva"
+      "value": "260kg incluidos herrajes y soldadura; comprobar masa final"
     },
     {
       "label": "Tecle y carro de referencia",
@@ -34,7 +34,7 @@
     },
     {
       "label": "Cota superior del monorriel",
-      "value": "6270 mm · cara inferior +6030 mm"
+      "value": "6720 mm · cara inferior6480mm"
     },
     {
       "label": "Recorrido de traslado",
@@ -74,7 +74,7 @@
     },
     {
       "label": "Balanza y mesa neumática",
-      "value": "1.200 × 1.200 mm / 2 t · mesa pantógrafo ≥150 kg"
+      "value": "Pesaje neto0–100kg /4celdas; mesa>=150kg bloqueada; balanza2t independiente"
     },
     {
       "label": "Traba del carro",
@@ -86,7 +86,7 @@
     },
     {
       "label": "Guarda de compuerta",
-      "value": "590 × 645 × 262 mm"
+      "value": "Original590×645×262mm; prolongación neumática590×800×262mm"
     },
     {
       "label": "Refuerzos de tolva",
@@ -98,27 +98,27 @@
     },
     {
       "label": "Interfaz de rodadura",
-      "value": "Patín 140 x 20 mm; superficie de rodadura +6050 mm"
+      "value": "Patín140×20mm; rodadura6500mm"
     },
     {
       "label": "Columnas del pórtico",
-      "value": "4 SHS150 x 150 x 6 continuas de 5818 mm; KL5830; uso LX11 0,477546"
+      "value": "4 SHS150×150×6 continuas6268mm; KL6280; utilización0,610308"
     },
     {
       "label": "Rodillas del pórtico",
-      "value": "2 SHS60 x 60 x 4; longitud entre ejes997,729 mm"
+      "value": "2 SHS60×60×4; eje1392,588mm"
     },
     {
       "label": "Cruceta: puntos de izaje",
-      "value": "Asientos950 x 950 mm; pasadores930 x 950 mm; travesaños1100; ejes950; tramo central800 mm"
+      "value": "Dos patrones1050×1050/950×950; ocho orejas y cuatro juegos grillete/gancho transferibles"
     },
     {
       "label": "Reserva vertical de izaje",
-      "value": "7.926 mm; gancho requerido +5547.074 mm; máximo +5555.000 mm"
+      "value": "7,926mm; gancho requerido5997,074mm; máximo6005mm"
     },
     {
       "label": "Enganches con bolsa en apoyo",
-      "value": "Fondo+3010; asientos de asas+4460; centro de cruceta+4782,074; oreja central+5037,074 mm"
+      "value": "Fondo3010; asientos4910; centrocruceta5232,074; oreja5487,074mm"
     }
   ],
   "calculations": [
@@ -146,7 +146,7 @@
       "count": 16,
       "maxUtilization": 0.9130510158049031,
       "failedCount": 0,
-      "description": "Acción horizontal18 kN; monorriel +6030/+6270 mm; columna continua5818 mm y LX11 actualizado a0,477546.",
+      "description": "Acción horizontal18kN; riel6480/6720mm; columnas continuas6268mm; utilización LX11=0,610308.",
       "scope": "16 comprobaciones LX bajo el modelo indicado en memoria. La curva comercial del amortiguador requiere selección por aplicación.",
       "source": "engineering/calculo_estructura_altura_actual.json"
     },
@@ -175,8 +175,8 @@
       "title": "Pernos y losa: cálculo local actual",
       "count": 38,
       "failedCount": 0,
-      "maxUtilization": 0.8694587171652122,
-      "description": "52 M16 grado10.9 L340, tuercas actuales con brida lisa clase10; contraplacas A36 t18 y arandelas A36 estructurales conservadas.",
+      "maxUtilization": 0.997189,
+      "description": "52M16 grado10.9 L340; contraplacas A36 t18; fuerza por perno51,209kN; FS acero2,381.",
       "scope": "FS acero N+V2,626; contraplaca uso0,869459. Condicionado al contacto y reparto. Excluye capacidad global de losa y verificación de grupos.",
       "source": "engineering/calculo_cimentacion_altura_actual.json"
     },
@@ -232,8 +232,8 @@
       "label": "Pórticos",
       "material": "ASTM A36 / ASTM A500 Gr.B",
       "quantity": 106,
-      "massKg": 1307.0798045120825,
-      "description": "Columnas SHS150 x150 x6 continuas de5818 mm; rodillas SHS60 x60 x4 a eje997,729 mm; nodo longitudinal superior +5430 mm conservado."
+      "massKg": 1361.370269151474,
+      "description": "Columnas6268 y rodillas1392,588mm; monorriel6480/6720mm."
     },
     {
       "id": "monorriel",
@@ -241,14 +241,14 @@
       "material": "ASTM A36 / Copoliester; envolvente de montaje",
       "quantity": 11,
       "massKg": 374.3748988832551,
-      "description": "I armado240 ×140 ×8 ×20 de3600 mm. Cara superior +6270 mm y cara inferior +6030 mm."
+      "description": "I armado240 ×140 ×8 ×20 de3600 mm. Cara superior +6720 mm y cara inferior +6480 mm."
     },
     {
       "id": "tolva",
       "label": "Tolva y bastidor",
       "material": "Material de cada pieza indicado en la lista.",
       "quantity": 66,
-      "massKg": 1412.884747343975,
+      "massKg": 1412.8847473440046,
       "description": "Capacidad útil 2,058 m³. Cono de 8 mm y cuerpo de 6 mm; revestimiento de 10 mm y tres anillos. Cuerpo de 470,15 mm."
     },
     {
@@ -263,16 +263,16 @@
       "id": "cruceta",
       "label": "Cruceta de cuatro puntos",
       "material": "ASTM A36 / S355NH / EN10210-1",
-      "quantity": 31,
-      "massKg": 206.40089646879818,
-      "description": "H en SHS150 x150 x12,5; nominal2 t; travesaños1100 mm, ejes950 mm y tramo central800 mm. Pasadores930 x950 mm y asientos950 x950 mm, 10 mm hacia fuera por gancho. Los ganchos izquierdos se orientan180° respecto al lado opuesto. Ajustar a las asas reales."
+      "quantity": 35,
+      "massKg": 225.42718341633415,
+      "description": "Ocho orejas; dos patrones950/1050mm; cuatro herrajes transferibles."
     },
     {
       "id": "complementos",
       "label": "Equipos y descarga",
       "material": "Material de cada pieza indicado en la lista.",
-      "quantity": 221,
-      "massKg": 544.4689080131556,
+      "quantity": 252,
+      "massKg": 673.7514295467367,
       "description": "Cortador304: cuatro hojas6, cuatro respaldos16, mástil60,3 x5 y cono central macizo60°. UHMWPE disipativo10, compuerta y equipos. Masa de acero modelado; equipos y polímeros excluidos."
     },
     {
@@ -288,7 +288,7 @@
       "label": "Plataforma",
       "material": "ASTM A36 / ASTM A36 galvanizado / ASTM A500 Gr.B",
       "quantity": 45,
-      "massKg": 289.5137098465587,
+      "massKg": 289.51370984655955,
       "description": "Acceso posterior al borde superior de tolva, +2.782,59 mm; paso libre de 800 mm y aproximación sobre bastidor independiente."
     },
     {
@@ -304,7 +304,7 @@
       "label": "Barandas",
       "material": "Material de cada pieza indicado en la lista.",
       "quantity": 49,
-      "massKg": 308.9623442056796,
+      "massKg": 308.9623442056795,
       "description": "Baranda de 1.100 mm, protección intermedia, rodapié de 150 mm y puerta corredera con bloqueo; protección inferior fija."
     }
   ],
@@ -315,12 +315,12 @@
       "name": "Columna continua del pórtico",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
-      "purchase": "Tubo 150×150×6 mm, barra 6 m",
+      "purchase": "Tubo150×150×6mm en barra12m; columna continua6268mm",
       "quantity": 4,
-      "dimensions": "SHS150 x150 x6; largo continuo5818 mm; sin empalme; adquirir barra de6 m y ajustar extremos según plano",
+      "dimensions": "SHS150×150×6 L6268",
       "group": "porticos",
-      "volumeM3": 0.08042803200000173,
-      "modeledMassKg": 631.3600512000136
+      "volumeM3": 0.08664883200000174,
+      "modeledMassKg": 680.1933312000136
     },
     {
       "code": "IPE200_L2000000",
@@ -462,8 +462,8 @@
       "quantity": 2,
       "dimensions": "ancho 60; alto 60; largo 2882.26; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
       "group": "tolva",
-      "volumeM3": 0.005165002860951897,
-      "modeledMassKg": 40.54527245847239
+      "volumeM3": 0.005165002860951867,
+      "modeledMassKg": 40.545272458472155
     },
     {
       "code": "SHS80x80x4_L2050000",
@@ -486,10 +486,10 @@
       "supply": "Fabricar",
       "purchase": "Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1",
       "quantity": 2,
-      "dimensions": "SHS150 x150 x12,5; largo1100 mm; dos travesaños a ejes950 mm; S355NH certificado3.1; ajustar cortes al radio real",
+      "dimensions": "SHS150×150×12,5 L1200",
       "group": "cruceta",
-      "volumeM3": 0.014534844949343045,
-      "modeledMassKg": 114.0985328523429
+      "volumeM3": 0.015856194490192415,
+      "modeledMassKg": 124.47112674801046
     },
     {
       "code": "SHS150x150x12p5_L850000",
@@ -499,10 +499,10 @@
       "supply": "Fabricar",
       "purchase": "Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "SHS150 x150 x12,5; tramo central de corte800 mm; S355NH certificado3.1; ajustar contra los travesaños reales antes de soldar",
+      "dimensions": "SHS150×150×12,5 nominal850",
       "group": "cruceta",
-      "volumeM3": 0.005324551725990846,
-      "modeledMassKg": 41.79773104902814
+      "volumeM3": 0.0056548891101685815,
+      "modeledMassKg": 44.39087951482337
     },
     {
       "code": "SHS60x60x4_L62410",
@@ -527,8 +527,8 @@
       "quantity": 4,
       "dimensions": "Corte envolvente 1691.57×1404.62; espesor 8 · Fabricar con Plancha ASTM A36 de 8 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
       "group": "tolva",
-      "volumeM3": 0.04400845635519679,
-      "modeledMassKg": 345.4663823882948
+      "volumeM3": 0.044008456355200586,
+      "modeledMassKg": 345.4663823883246
     },
     {
       "code": "TOL_PANEL_CUERPO_6mm",
@@ -657,8 +657,8 @@
       "quantity": 24,
       "dimensions": "ancho 44; alto 175; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
       "group": "porticos",
-      "volumeM3": 0.001108799999999995,
-      "modeledMassKg": 8.704079999999962
+      "volumeM3": 0.0011087999999999953,
+      "modeledMassKg": 8.704079999999964
     },
     {
       "code": "U01_CARTELA_100x240x12",
@@ -800,8 +800,8 @@
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
       "group": "porticos",
-      "volumeM3": 0.0005285779624063569,
-      "modeledMassKg": 4.149337004889902
+      "volumeM3": 0.000544499342206608,
+      "modeledMassKg": 4.274319836321873
     },
     {
       "code": "U02_CARTELA_KNE--1_1",
@@ -813,8 +813,8 @@
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
       "group": "porticos",
-      "volumeM3": 0.000497834223436557,
-      "modeledMassKg": 3.907998653976972
+      "volumeM3": 0.0004873841062983477,
+      "modeledMassKg": 3.8259652344420294
     },
     {
       "code": "U02_CARTELA_BRL-A-1_0",
@@ -878,8 +878,8 @@
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
       "group": "porticos",
-      "volumeM3": 0.0005285779624063569,
-      "modeledMassKg": 4.149337004889902
+      "volumeM3": 0.000544499342206608,
+      "modeledMassKg": 4.274319836321873
     },
     {
       "code": "U02_CARTELA_KNE-1_1",
@@ -891,8 +891,8 @@
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
       "group": "porticos",
-      "volumeM3": 0.000497834223436557,
-      "modeledMassKg": 3.907998653976972
+      "volumeM3": 0.0004873841062983477,
+      "modeledMassKg": 3.8259652344420294
     },
     {
       "code": "U04_CAP_PATA_150x150x12",
@@ -979,11 +979,11 @@
       "material": "ASTM A36",
       "supply": "Fabricar",
       "purchase": "Plancha ASTM A36 de 12 mm",
-      "quantity": 4,
-      "dimensions": "ancho 90; alto 120; espesor 12; taladros Ø28 · Fabricar con Plancha ASTM A36 de 12 mm",
+      "quantity": 8,
+      "dimensions": "Base90; cuello50 sobre45; H120; t12; D28 centro(0,75); ocho unidades en dos patrones",
       "group": "cruceta",
-      "volumeM3": 0.0004888438963150273,
-      "modeledMassKg": 3.8374245860729643
+      "volumeM3": 0.0006608877926300546,
+      "modeledMassKg": 5.1879691721459285
     },
     {
       "code": "CR_RESPALDO_EXTREMA_90x150x20",
@@ -993,10 +993,10 @@
       "supply": "Fabricar",
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 4,
-      "dimensions": "ancho 90; alto 150; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
+      "dimensions": "140×150×20mm; cuatro unidades centradas X±490/Y±500 respecto a cruceta",
       "group": "cruceta",
-      "volumeM3": 0.0010799999999999749,
-      "modeledMassKg": 8.477999999999803
+      "volumeM3": 0.00168,
+      "modeledMassKg": 13.188
     },
     {
       "code": "CR_CARTELA_TRIANGULAR_150x150x12",
@@ -1047,8 +1047,8 @@
       "quantity": 4,
       "dimensions": "Corte envolvente 1673.09×1405.77; espesor 10 · Fabricar con Plancha PE-UHMW1000 disipativo de 10 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
       "group": "complementos",
-      "volumeM3": 0.053846632301416224,
-      "modeledMassKg": 50.61583436333125
+      "volumeM3": 0.05384663230142263,
+      "modeledMassKg": 50.61583436333727
     },
     {
       "code": "LINER_CUERPO_UHMW10",
@@ -1212,11 +1212,11 @@
       "name": "Bolsa bigbag de 1 t",
       "material": "Polipropileno tejido",
       "supply": "Comprar",
-      "purchase": "Bigbag de1 t,950×950×1200 mm, fondo cerrado y cuatro asas integrales de300 mm libres",
+      "purchase": "Bigbag1050×1050×1650mm; carga máxima1000kg; fondo ciego; cuatro asas integrales",
       "quantity": 1,
-      "dimensions": "950 × 950 × 1200; asas libres300; proyección de trabajo250 · Comprar bolsa completa",
+      "dimensions": "1050×1050×1650mm; asas300libres/250tensadas. Alternativa compacta950×950×1200mm:595,65kg a550kg/m³",
       "group": "complementos",
-      "volumeM3": 1.083,
+      "volumeM3": 1.819125,
       "modeledMassKg": 0
     },
     {
@@ -1225,7 +1225,7 @@
       "name": "Asa de bolsa bigbag",
       "material": "Polipropileno tejido",
       "supply": "Comprar",
-      "purchase": "Asas integrales de la bolsa950×950×1200, longitud libre300 mm",
+      "purchase": "Cuatro asas integrales de la bolsa;300mm libres/250mm tensadas; paso1050 o950 según formato",
       "quantity": 4,
       "dimensions": "4 asas; libre300; proyección tensada250; suministradas con la bolsa",
       "group": "complementos",
@@ -1515,7 +1515,7 @@
       "quantity": 1,
       "dimensions": "ancho 380; alto 220; largo 766.5 · Comprar: Saco para 25–50 kg",
       "group": "complementos",
-      "volumeM3": 0.06407940000000001,
+      "volumeM3": 0.10929999999999997,
       "modeledMassKg": 0
     },
     {
@@ -1840,7 +1840,7 @@
       "quantity": 1,
       "dimensions": "Cable Ø3; largo total mínimo 350; una sola pieza · Fabricar con Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo. Los tres segmentos del modelo representan un solo cable; no comprar tres cables.",
       "group": "complementos",
-      "volumeM3": 8.378582556685474e-07,
+      "volumeM3": 8.37858255668544e-07,
       "modeledMassKg": 0
     },
     {
@@ -1853,7 +1853,7 @@
       "quantity": 1,
       "dimensions": "Cable Ø3; largo total mínimo 350; una sola pieza · Fabricar con Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo. Los tres segmentos del modelo representan un solo cable; no comprar tres cables.",
       "group": "complementos",
-      "volumeM3": 1.2125247903144184e-06,
+      "volumeM3": 1.2125247903144137e-06,
       "modeledMassKg": 0
     },
     {
@@ -1866,7 +1866,7 @@
       "quantity": 1,
       "dimensions": "Cable Ø3; largo total mínimo 350; una sola pieza · Fabricar con Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo. Los tres segmentos del modelo representan un solo cable; no comprar tres cables.",
       "group": "complementos",
-      "volumeM3": 1.0436638380378727e-07,
+      "volumeM3": 1.0436638380377786e-07,
       "modeledMassKg": 0
     },
     {
@@ -1944,8 +1944,8 @@
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 5499.97; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
       "group": "porticos",
-      "volumeM3": 0.004884890672728024,
-      "modeledMassKg": 38.346391780914985
+      "volumeM3": 0.004884890672728023,
+      "modeledMassKg": 38.34639178091498
     },
     {
       "code": "BRT_LENGUETA_BRT-A_0_250x250x12",
@@ -2226,12 +2226,12 @@
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
-      "purchase": "Tubo 60×60×4 mm, barra 6 m",
+      "purchase": "Tubo 60×60×4 mm, barra 12 m",
       "quantity": 1,
-      "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
+      "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 12 m",
       "group": "porticos",
-      "volumeM3": 0.0053654816970845395,
-      "modeledMassKg": 42.119031322113635
+      "volumeM3": 0.005365481697084508,
+      "modeledMassKg": 42.119031322113386
     },
     {
       "code": "SHS60x60x4_L6085645_SLOT_JUNTA_2",
@@ -2239,12 +2239,12 @@
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
-      "purchase": "Tubo 60×60×4 mm, barra 6 m",
+      "purchase": "Tubo 60×60×4 mm, barra 12 m",
       "quantity": 1,
-      "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
+      "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 12 m",
       "group": "porticos",
-      "volumeM3": 0.00536548169709186,
-      "modeledMassKg": 42.119031322171104
+      "volumeM3": 0.005365481697091971,
+      "modeledMassKg": 42.11903132217197
     },
     {
       "code": "SHS60x60x4_L748810_SLOT_JUNTA_3",
@@ -2254,10 +2254,10 @@
       "supply": "Fabricar",
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
-      "dimensions": "SHS60 x60 x4; longitud entre ejes997,729 mm; recortes de extremos según plano",
+      "dimensions": "SHS60×60×4 eje1392,588; recortes y ranuras según plano",
       "group": "porticos",
-      "volumeM3": 0.0008214176391639847,
-      "modeledMassKg": 6.44812846743728
+      "volumeM3": 0.0011635377548070644,
+      "modeledMassKg": 9.133771375235455
     },
     {
       "code": "SHS60x60x4_L6085645_SLOT_JUNTA_4",
@@ -2265,12 +2265,12 @@
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
-      "purchase": "Tubo 60×60×4 mm, barra 6 m",
+      "purchase": "Tubo 60×60×4 mm, barra 12 m",
       "quantity": 1,
-      "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
+      "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 12 m",
       "group": "porticos",
-      "volumeM3": 0.005365481697084539,
-      "modeledMassKg": 42.11903132211363
+      "volumeM3": 0.005365481697084507,
+      "modeledMassKg": 42.119031322113386
     },
     {
       "code": "SHS60x60x4_L6085645_SLOT_JUNTA_5",
@@ -2278,12 +2278,12 @@
       "name": "Tramo de tubo cuadrado",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
-      "purchase": "Tubo 60×60×4 mm, barra 6 m",
+      "purchase": "Tubo 60×60×4 mm, barra 12 m",
       "quantity": 1,
-      "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
+      "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 12 m",
       "group": "porticos",
-      "volumeM3": 0.005365481697091861,
-      "modeledMassKg": 42.11903132217111
+      "volumeM3": 0.005365481697091971,
+      "modeledMassKg": 42.11903132217197
     },
     {
       "code": "SHS60x60x4_L748810_SLOT_JUNTA_6",
@@ -2293,10 +2293,10 @@
       "supply": "Fabricar",
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
-      "dimensions": "SHS60 x60 x4; longitud entre ejes997,729 mm; recortes de extremos según plano",
+      "dimensions": "SHS60×60×4 eje1392,588; recortes y ranuras según plano",
       "group": "porticos",
-      "volumeM3": 0.0008214176391639847,
-      "modeledMassKg": 6.44812846743728
+      "volumeM3": 0.0011635377548070644,
+      "modeledMassKg": 9.133771375235455
     },
     {
       "code": "SHS60x60x4_L3050000_JUNTA_14",
@@ -2477,8 +2477,8 @@
       "quantity": 2,
       "dimensions": "ancho 60; alto 60; largo 2914.33; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
       "group": "plataforma",
-      "volumeM3": 0.005222486589160696,
-      "modeledMassKg": 40.996519724911465
+      "volumeM3": 0.005222486589160805,
+      "modeledMassKg": 40.996519724912325
     },
     {
       "code": "PLATAFORMA_REJILLA_1700x1190x30_REF",
@@ -2789,8 +2789,8 @@
       "quantity": 4,
       "dimensions": "largo 1095.8; pared 3.91; Ø exterior 60.3; Ø interior 52.48 · Fabricar con Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
       "group": "barandas",
-      "volumeM3": 0.0030361270885701,
-      "modeledMassKg": 23.833597645275287
+      "volumeM3": 0.0030361270885700953,
+      "modeledMassKg": 23.833597645275248
     },
     {
       "code": "AC_CHS48p3x3p68_L4568118",
@@ -3077,6 +3077,234 @@
       "group": "complementos",
       "volumeM3": 0.0004803198450713286,
       "modeledMassKg": 3.794526776063496
+    },
+    {
+      "code": "PN_ACTUADOR_3POS_RESORTE_REF",
+      "position": 214,
+      "name": "Actuador neumatico 3pos D125; carrera280; retorno muelle>=3kN; suministro",
+      "material": "Conjunto comercial / aluminio-acero",
+      "supply": "Comprar",
+      "purchase": "Conjunto comercial / aluminio-acero",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 0
+    },
+    {
+      "code": "PN_SOPORTE_CILINDRO_t12",
+      "position": 215,
+      "name": "Soporte actuador t12; 190x210; centro130; 4D14 patron150; adaptar a OEM",
+      "material": "ASTM A36",
+      "supply": "Fabricar",
+      "purchase": "ASTM A36",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 2.4502379783527717
+    },
+    {
+      "code": "PN_BIELA_HOJA_12",
+      "position": 216,
+      "name": "Horquilla de arrastre hoja; dos orejas t12 con D18 y pasador18",
+      "material": "ASTM A36",
+      "supply": "Fabricar",
+      "purchase": "ASTM A36",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 1.73243803946916
+    },
+    {
+      "code": "PN_TRAVESANO_60x60x4_L2200",
+      "position": 217,
+      "name": "Travesano soporte actuador SHS60x60x4 L2260; 2f4 extremos",
+      "material": "ASTM A500 Gr.B",
+      "supply": "Fabricar",
+      "purchase": "ASTM A500 Gr.B",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 15.895936000000004
+    },
+    {
+      "code": "PN_BRAZO_60x60x4_L500",
+      "position": 218,
+      "name": "Brazo posterior soporte actuador SHS60x60x4 L333; 2f4",
+      "material": "ASTM A500 Gr.B",
+      "supply": "Fabricar",
+      "purchase": "ASTM A500 Gr.B",
+      "quantity": 2,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 4.6843775999999995
+    },
+    {
+      "code": "PN_BRAZO_CENTRAL_60x60x4_L470",
+      "position": 219,
+      "name": "Brazo asiento actuador SHS60x60x4 L470; 2f4; dos unidades",
+      "material": "ASTM A500 Gr.B",
+      "supply": "Fabricar",
+      "purchase": "ASTM A500 Gr.B",
+      "quantity": 2,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 6.611584000000003
+    },
+    {
+      "code": "PN_MORDAZA_160x180x12",
+      "position": 220,
+      "name": "Mordaza soporte 160x180x12; cuatro D18 patron130x130; cuatro M16 8.8 por par",
+      "material": "ASTM A36",
+      "supply": "Fabricar",
+      "purchase": "ASTM A36",
+      "quantity": 4,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 10.468304315753265
+    },
+    {
+      "code": "PN_GUARDA_ACTUADOR_t2",
+      "position": 221,
+      "name": "Guarda prolongacion actuador; caja 590x800x262 t2; fijacion M6 cada200",
+      "material": "ASTM A36",
+      "supply": "Fabricar",
+      "purchase": "ASTM A36",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 21.30175999999997
+    },
+    {
+      "code": "PN_VALVULAS_ESCAPE_SENSORES_REF",
+      "position": 222,
+      "name": "Isla valvulas24V; escape rapido y sensores cerrado/fino/abierto; suministro",
+      "material": "Conjunto comercial",
+      "supply": "Comprar",
+      "purchase": "Conjunto comercial",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 0
+    },
+    {
+      "code": "P100_MESA_ELEVADORA_REF",
+      "position": 223,
+      "name": "Mesa elevadora>=150kg con bloqueo mecanico; 4apoyos fuera de balanza2t",
+      "material": "Conjunto comercial certificado",
+      "supply": "Comprar",
+      "purchase": "Conjunto comercial certificado",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 0
+    },
+    {
+      "code": "P100_CELDA_75KG_REF",
+      "position": 224,
+      "name": "Modulo celda75kg x4; bruto total300kg; neto100kg; interfaz OEM; indicador dedicado",
+      "material": "Conjunto comercial metrologico",
+      "supply": "Comprar",
+      "purchase": "Conjunto comercial metrologico",
+      "quantity": 4,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 0
+    },
+    {
+      "code": "P100_MARCO_VIVO_304",
+      "position": 225,
+      "name": "Marco vivo plegado304 t3 H114; 800x900; nervio central; 4apoyos75kg",
+      "material": "AISI 304",
+      "supply": "Fabricar",
+      "purchase": "AISI 304",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 25.976811599999973
+    },
+    {
+      "code": "P100_PLATAFORMA_800x900x6",
+      "position": 226,
+      "name": "Plataforma800x900x6; redondear cantosR3; carga neta100kg",
+      "material": "AISI 304",
+      "supply": "Fabricar",
+      "purchase": "AISI 304",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 34.128
+    },
+    {
+      "code": "P100_POSTE_40x40x3_L600",
+      "position": 227,
+      "name": "Poste marco vivo SHS40x40x3 L600; 2f3 a marco y brazo",
+      "material": "AISI 304",
+      "supply": "Fabricar",
+      "purchase": "AISI 304",
+      "quantity": 2,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 4.20912
+    },
+    {
+      "code": "P100_BRAZO_40x40x3_L260",
+      "position": 228,
+      "name": "Brazo cuello SHS40x40x3 L260; 2f3",
+      "material": "AISI 304",
+      "supply": "Fabricar",
+      "purchase": "AISI 304",
+      "quantity": 2,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 1.8239519999999994
+    },
+    {
+      "code": "P100_MANGA_FLEXIBLE_D250_L50_REF",
+      "position": 229,
+      "name": "Manga flexible disipativa D250 L50; sin tension axial; no derivar peso",
+      "material": "Elastomero disipativo comercial",
+      "supply": "Comprar",
+      "purchase": "Elastomero disipativo comercial",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 0
+    },
+    {
+      "code": "P100_COMPENSADOR_NEUMATICO_REF",
+      "position": 230,
+      "name": "Compensador cuello D25 carrera10; reaccion interna a marco vivo; suministro",
+      "material": "Conjunto comercial",
+      "supply": "Comprar",
+      "purchase": "Conjunto comercial",
+      "quantity": 2,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 0
+    },
+    {
+      "code": "P100_CIERRE_NEUMATICO_REF",
+      "position": 231,
+      "name": "Cierre sujetasaco D32 carrera20; dos sectores; montaje marco vivo",
+      "material": "Conjunto comercial",
+      "supply": "Comprar",
+      "purchase": "Conjunto comercial",
+      "quantity": 2,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 0
+    },
+    {
+      "code": "P100_INDICADOR_REF",
+      "position": 232,
+      "name": "Indicador gravimetrico neto100kg; grueso90%/fino/corte anticipado; registro SAT",
+      "material": "Conjunto comercial",
+      "supply": "Comprar",
+      "purchase": "Conjunto comercial",
+      "quantity": 1,
+      "dimensions": "Segun CAD y plano de conjunto",
+      "group": "complementos",
+      "modeledMassKg": 0
     }
   ],
   "operating": [
@@ -3114,7 +3342,7 @@
     },
     {
       "label": "Compuerta",
-      "value": "Cremallera y piñón manual, reductor 5:1, pasador de bloqueo y guarda cerrada"
+      "value": "Tajadera neumática3pos: cerrado0/fino52,5/abierto280mm; retorno por muelle"
     },
     {
       "label": "Captación",
@@ -3122,11 +3350,11 @@
     },
     {
       "label": "Balanza",
-      "value": "Plataforma 1.200 × 1.200 mm · 2 t · metrología a verificar para sacos de 25/50 kg"
+      "value": "Módulo dedicado neto100kg con4celdas75kg y marco vivo; objetivo±20g sujeto a SAT"
     },
     {
       "label": "Transferencia de sacos",
-      "value": "Mesa pantógrafo neumática ≥150 kg · plano de trabajo +350 mm · bloqueo mecánico"
+      "value": "Mesa>=150kg; plataforma350mm; bloqueo mecánico durante llenado"
     },
     {
       "label": "Personal",
@@ -3138,13 +3366,21 @@
     },
     {
       "label": "Planos",
-      "value": "18 hojas por conjuntos y detalles"
+      "value": "19 hojas por conjuntos y detalles"
+    },
+    {
+      "label": "Lote compacto",
+      "value": "950×950×1200mm; 1,083m³; 595,65kg teóricos:23sacos25kg+20,65kg remanente"
+    },
+    {
+      "label": "SAT / puesta en servicio",
+      "value": "SAT sobre equipo fabricado: plegado de pétalos, corte dinámico, flujo de carbón húmedo según Jenike y Johanson (fricción de pared y cohesión), cierre efectivo<0,15s y pesaje±20g. Criterios de aceptación de campo."
     }
   ],
   "notice": "Cruceta nominal2 t; proceso máximo1 t. Ajuste y prueba de apertura con bolsa y producto reales; capacidad global de losa y selección final de equipos según memoria.",
   "nativeSTEPSource": {
     "stepFile": "ESTACION_BIGBAG.step",
-    "stepSha256": "da6cf344dfad9362b5d48cefa3a8116da5cac46d19419d102fbce3d4feae09a2",
+    "stepSha256": "3051f69b87648622b0997dffb24a656ef299207aec0150cc808fe2bca6966842",
     "exporter": "SolidWorks / SwSTEP",
     "units": "m",
     "meshedFrom": "STEP BRep solids",
@@ -3155,9 +3391,9 @@
         0.0
       ],
       "cruceta": [
-        0.8499999999999999,
+        0.8500000000000001,
         0.0,
-        4.782074
+        5.232073999999999
       ],
       "gate_blade": [
         0.0,
@@ -3177,5 +3413,7 @@
     },
     "noParametricRegeneration": true,
     "finalCutterPresent": true
-  }
+  },
+  "approval": "REVISIÓN P05 - PROYECTO DE INGENIERÍA Y DOSIFICACIÓN APROBADO PARA FABRICACIÓN",
+  "approvalBasis": "Estado documental por directiva del cliente; requisitos de compra y SAT según memoria."
 }

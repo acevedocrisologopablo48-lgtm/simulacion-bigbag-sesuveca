@@ -1,8 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=actual20261021-ce89291614b4';
-import {buildEquipmentDetails} from './equipment-details.js?v=actual20261021-932064cd5943';
-import {buildProcessDetails} from './process-details.js?v=actual20261021-f494b5c9a45d';
+import {buildWorkshop} from './workshop.js?v=auto20261021-ce89291614b4';
+import {buildEquipmentDetails} from './equipment-details.js?v=auto20261021-d82d4bca61e7';
+import {buildProcessDetails} from './process-details.js?v=auto20261021-e32aec20d181';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -54,8 +54,10 @@ export function processState(progress, payload = 1000, bagSize = 50, mode = 'clo
   if (index === 4) z = q < .08 ? C.travel_bottom : lerp(C.travel_bottom, C.support_z, smooth((q-.08)/.92));
   if (index === 5) { bigbagKg = payload * (1 - q); hopperKg = payload * q; }
   if (index >= 6) { bigbagKg = 0; hopperKg = payload; }
+  const dose=q=>{const u=clamp(q);return u<.6?1.5*u:.9+.1*clamp((u-.6)/.4);};
+  const gateAt=f=>f>=1?0:f<.9?1:52.5/280;
   const first = Math.min(payload, bagSize);
-  if (index === 6) { sackKg = first * smooth(q); hopperKg -= sackKg; gate = q < .88 ? 1 : (1 - q) / .12; }
+  if (index === 6) { sackKg = first * dose(q); hopperKg -= sackKg; gate = gateAt(sackKg/first); }
   if (index === 7) { sackKg = first; hopperKg -= sackKg; }
   if (index === 8 && count) {
     if (q < .055) {
@@ -68,7 +70,7 @@ export function processState(progress, payload = 1000, bagSize = 50, mode = 'clo
       const j = Math.min(cycles - 1, Math.floor(v)), u = p >= .94 ? 1 : v - j;
       completedSacks = 1 + j; finishedKg = Math.min(payload, completedSacks * bagSize);
       const currentTarget = Math.min(bagSize, payload - finishedKg);
-      if (u < .62) { cyclePhase = 'llenado'; cycleProgress = u / .62; sackKg = currentTarget * smooth(cycleProgress); gate = cycleProgress < .90 ? 1 : (1 - cycleProgress) / .1; }
+      if (u < .62) { cyclePhase = 'llenado'; cycleProgress = u / .62; sackKg = currentTarget * dose(cycleProgress); gate = gateAt(sackKg/currentTarget); }
       else if (u < .78) { cyclePhase = 'amarre'; cycleProgress = (u - .62) / .16; sackKg = currentTarget; }
       else { cyclePhase = 'salida'; cycleProgress = (u - .78) / .22; sackKg = currentTarget; transfer = smooth(cycleProgress); }
       hopperKg = Math.max(0, payload - finishedKg - sackKg);
@@ -91,7 +93,7 @@ export function processState(progress, payload = 1000, bagSize = 50, mode = 'clo
   return { progress: p, phaseIndex: index, phase: stage.name, phaseId: stage.id, phaseProgress: q,
     detail: index === 5 ? (mode === 'spout' ? 'Alternativa de manga: cortador retirado del módulo antes del ciclo.' : 'Corte por descenso sobre cuatro filos fijos AISI 304 dentro del recinto.') : stage.detail,
     cyclePhase, cycleProgress, bigbagKg, hopperKg, sackKg, finishedKg, completedSacks,
-    totalSacks: count, sackNumber: count ? Math.min(count, completedSacks + 1) : 0,
+    fullSacks:Math.floor((payload+1e-9)/bagSize),remainderKg:Math.max(0,payload-Math.floor((payload+1e-9)/bagSize)*bagSize),dosingStage:gate===0?'Cerrado':gate===1?'Grueso':'Fino', totalSacks: count, sackNumber: count ? Math.min(count, completedSacks + 1) : 0,
     hopperM3: hopperKg / (data.densityKgM3 || 550), bagBottomM: z, hookM: z + (C.bag_height || 1) + C.headpack,
     carriageM: Math.abs(x - C.pickup_x), x, z, transfer, gateOpening: clamp(gate),
     mode, bagSize, payload, runningFlow: (index === 5 && q > 0 && q < 1) || gate > .01,
@@ -103,7 +105,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=actual20261021-3a6e509f97bc', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=auto20261021-41ff7f75cac0', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -116,7 +118,21 @@ export const BigbagScene = {
   setCameraMode(v) { active?.setCameraMode(v); },
   highlight(id) { active?.highlight(id); },
   setMode(v) { active?.setMode(v); }, setBagSize(v) { active?.setBagSize(v); },
-  setPayload(v) { active?.setPayload(v); }, getState() { return active?.getState(); },
+  setPayload(v) {
+    if(!active)return;
+    const compact=Math.abs(Number(v)-595.65)<.01;
+    if(Boolean(active.data.config.compact_format)!==compact){
+      const old=active,data=structuredClone(active.data),container=active.container,select=active.onSelect,progress=active.progress,size=active.bagSize;
+      const C=data.config,delta=compact?-.05:.05;
+      C.compact_format=compact;C.bag_width=compact?.95:1.05;C.bag_height=compact?1.2:1.65;
+      C.bag_attachment_spacing_m=compact?.95:1.05;C.cruceta_center_above_bag_m=compact?1.772074:2.222074;
+      for(const m of data.cruceta)if(/GANCHO_L320AN|GRILLETE_G2130/.test(m.piece)){
+        const x=m.v.reduce((n,p)=>n+p[0],0)/m.v.length,y=m.v.reduce((n,p)=>n+p[1],0)/m.v.length;
+        for(const p of m.v){p[0]+=Math.sign(x)*delta;p[1]+=Math.sign(y)*delta;}
+      }
+      old.dispose();active=new SceneEngine(container,data,select);active.setBagSize(size);active.setPayload(v);active.setProgress(progress);
+    }else active.setPayload(v);
+  }, getState() { return active?.getState(); },
   setAccessOpen(v) { return active?.setAccessOpen(v); },
   resetAccess() { return active?.resetAccess(); },
   resize() { active?.resize(); }, toggleFullscreen() { return active?.toggleFullscreen(); },

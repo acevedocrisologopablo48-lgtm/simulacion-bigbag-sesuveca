@@ -1,4 +1,4 @@
-import {BigbagScene} from './scene.js?v=actual20261021-cde6b1ae76fb';
+import {BigbagScene} from './scene.js?v=auto20261021-32979fb9a85d';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
@@ -33,7 +33,7 @@ function renderReadings(){
   $('hopperValue').innerHTML=`${number(s.hopperKg)}<small>kg</small>`;
   $('sackValue').innerHTML=`${number(s.sackKg)}<small>kg</small>`;
   $('finishedValue').innerHTML=`${number(s.finishedKg)}<small>kg</small>`;
-  $('sackCount').textContent=`${s.completedSacks} / ${s.totalSacks} sacos`;
+  $('sackCount').textContent=`${s.completedSacks} / ${s.totalSacks} envases${s.remainderKg>0?' · último parcial':''}`;
   $('phasePill').textContent=phaseNames[s.cyclePhase]||phaseNames[s.phaseId]||s.phase;
   if(s.phaseIndex!==lastPhase){
     lastPhase=s.phaseIndex;
@@ -153,7 +153,7 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=actual20261021-6a80c9fd6f80'),fetch('data/model.json?v=actual20261021-3a6e509f97bc')]);
+  const responses=await Promise.all([fetch('data/project.json?v=auto20261021-621cc5bc31bf'),fetch('data/model.json?v=auto20261021-41ff7f75cac0')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();

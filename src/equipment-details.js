@@ -1,5 +1,5 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
-import {buildCollector} from './collector.js?v=actual20261021-1fadb5c4d4e2';
+import {buildCollector} from './collector.js?v=auto20261021-1fadb5c4d4e2';
 
 // Presentation detail follows the existing equipment envelopes. Fabricated CAD remains intact.
 const Z = new THREE.Vector3(0, 0, 1);
@@ -251,19 +251,6 @@ export function buildEquipmentDetails(engine) {
 
   }
 
-  // Gate drive follows the fabricated assembly on the left side of the hopper.
-  const mechanism = engine.group('Complementos'), wheel = new THREE.Group();
-  mechanism.add(wheel); wheel.position.set(H.center_x-.30, .4, 1.155); wheel.scale.x=-1;
-  roundedHousing(mechanism, .09, .12, .12, [H.center_x-.245, .4, 1.155], blue, 'Compuerta', 'Reductor manual de la compuerta');
-  cylinder(mechanism, .0125, .12, [H.center_x-.26, .4, 1.155], [-1, 0, 0], steel, 'Compuerta', 'Eje del accionamiento de compuerta');
-  torus(wheel, .119, .009, [.025, 0, 0], [1, 0, 0], dark, 'Compuerta', 'Volante de compuerta Ø250 mm');
-  cylinder(wheel, .025, .04, [.025, 0, 0], [1, 0, 0], steel, 'Compuerta', 'Cubo del volante de compuerta');
-  for (let i = 0; i < 3; i++) {
-    const a = i * Math.PI * 2 / 3;
-    cable(wheel, [[.025, 0, 0], [.025, Math.cos(a) * .065, Math.sin(a) * .065], [.025, Math.cos(a) * .115, Math.sin(a) * .115]], .006, dark, 'Compuerta', 'Radios del volante de compuerta', 8);
-  }
-  cylinder(wheel, .012, .056, [.058, .112, 0], [1, 0, 0], black, 'Compuerta', 'Empuñadura giratoria del volante');
-
   const rollers = engine.group('Rodillos');
   for (let i = 0; i < 10; i++) for (const sign of [-1, 1]) {
     const xx = H.center_x + sign * .301, yy = -.65 - i * .15;
@@ -302,7 +289,6 @@ export function buildEquipmentDetails(engine) {
         ctx.fillText(kg.toFixed(1), w * .76, h * .54); ctx.font = `${h * .26}px Arial`; ctx.fillText('kg', w * .96, h * .66);
         texture.needsUpdate = true;
       }
-      wheel.rotation.x = -clamp(state.gateOpening || 0) * Math.PI * 2 * 8.913;
       bellows.scale.z = 1 + Math.max(0, engine.liftDeck.position.z - .14) / .11;
     }
   };
