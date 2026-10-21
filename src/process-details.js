@@ -111,7 +111,7 @@ export function buildProcessDetails(engine) {
   ball(hook, [.007, .013, .007], [.008, 0, .003], darkSteel);
   const hookCollar = draw(hook, new THREE.TorusGeometry(.022, .005, 6, 18), steel, [0, 0, .08]); hookCollar.rotation.x = Math.PI / 2;
 
-  E.sackBody.geometry.dispose(); E.sackBody.geometry = clothGeometry(.40, .70, false); E.sackBody.material = cloth;
+  E.sackBody.geometry.dispose(); E.sackBody.geometry = clothGeometry(.50, .5465, false); E.sackBody.material = cloth;
   E.tie.visible = false;
   const sackClosure = new THREE.Group(); E.sack.add(sackClosure);
   const gathered = draw(sackClosure, new THREE.ConeGeometry(.036, .07, 14, 1, true), cloth, [0, 0, -.012]); gathered.rotation.x = Math.PI / 2;
@@ -121,8 +121,8 @@ export function buildProcessDetails(engine) {
   const sackLabelCanvas = document.createElement('canvas'); sackLabelCanvas.width = 384; sackLabelCanvas.height = 240;
   const sackLabelTexture = new THREE.CanvasTexture(sackLabelCanvas); sackLabelTexture.colorSpace = THREE.SRGBColorSpace;
   const sackLabelMaterial = new THREE.MeshStandardMaterial({ map: sackLabelTexture, roughness: 1, side: THREE.DoubleSide });
-  const sackLabel = draw(E.sackBody, new THREE.PlaneGeometry(.17, .106), sackLabelMaterial, [0, -.202, .36]); sackLabel.rotation.x = Math.PI / 2;
-  const sackCoal = ball(E.sackBody, [.155, .15, .025], [0, 0, .53], new THREE.MeshStandardMaterial({ color: '#202528', roughness: .98, metalness: .04 }));
+  const sackLabel = draw(E.sackBody, new THREE.PlaneGeometry(.17, .106), sackLabelMaterial, [0, -.202, .29]); sackLabel.rotation.x = Math.PI / 2;
+  const sackCoal = ball(E.sackBody, [.205, .15, .025], [0, 0, .48], new THREE.MeshStandardMaterial({ color: '#202528', roughness: .98, metalness: .04 }));
   const sackGrains = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.014, 0), sackCoal.material, 22); E.sackBody.add(sackGrains); sackGrains.castShadow = true;
   E.finishedBags.forEach(b => { b.material = cloth; draw(b, new THREE.TorusGeometry(.023, .003, 5, 16), stitching, [0, 0, .477]); });
 
@@ -224,12 +224,12 @@ export function buildProcessDetails(engine) {
       E.chainLine.visible = E.chainLine2.visible = E.hook.visible = false;
       const tied = state.cyclePhase === 'amarre' || state.cyclePhase === 'salida' || state.phaseIndex === 7;
       sackClosure.visible = tied; E.tie.visible = false;
-      const h = E.bagSize === 25 ? .49 : .70; sackClosure.position.z = h - .025;
+      const sackHeight=.5465; sackClosure.position.z=sackHeight-.025;
       if (lastSackSize !== E.bagSize) {
         const c = sackLabelCanvas.getContext('2d'); c.fillStyle = '#eeeddd'; c.fillRect(0, 0, 384, 240); c.fillStyle = '#244e69'; c.font = 'bold 32px Arial'; c.fillText('SESUVECA', 24, 53); c.font = '27px Arial'; c.fillText('CARBÓN', 24, 111); c.font = 'bold 51px Arial'; c.fillText(`${E.bagSize} kg`, 24, 187); sackLabelTexture.needsUpdate = true; lastSackSize = E.bagSize;
       }
-      const fill = clamp(E.bagSize ? state.sackKg / E.bagSize : 0);
-      E.sackBody.scale.z = h / .70 * mix(.79, 1, fill);
+      const fill=clamp(state.sackKg/50);
+      E.sackBody.scale.z=1;
       const sackShape = `${tied}:${fill.toFixed(3)}`;
       if (lastSackShape !== sackShape) {
         const a = E.sackBody.geometry.attributes.position;
@@ -239,14 +239,14 @@ export function buildProcessDetails(engine) {
           const body = (.78 + fullness * .22) * (1 + .028 * Math.sin(angle * 11 + h * 3) + .017 * Math.sin(angle * 19 - h * 13));
           const folds = (1 - fill * .65) * .010 * Math.sin(angle * 14 + h * 8) * Math.sin(Math.PI * h);
           const pinch = mix(1, tied ? .17 : .69, clamp((h - .72) / .28));
-          const x = .20 * Math.sign(cos) * Math.abs(cos) ** .69 * body + folds * cos;
+          const x = .25 * Math.sign(cos) * Math.abs(cos) ** .69 * body + folds * cos;
           const y = .20 * Math.sign(sin) * Math.abs(sin) ** .69 * body + folds * sin;
-          a.setXYZ(j * (N + 1) + i, x * pinch, y * pinch, h * .70 - .011 * Math.sin(h * Math.PI) * (1 - fill));
+          a.setXYZ(j * (N + 1) + i, x * pinch, y * pinch, h * sackHeight - .011 * Math.sin(h * Math.PI) * (1 - fill));
         }
         a.needsUpdate = true; E.sackBody.geometry.computeVertexNormals(); lastSackShape = sackShape;
       }
       sackCoal.visible = sackGrains.visible = fill > .025 && !tied;
-      sackCoal.position.z = .065 + fill * .49;
+      sackCoal.position.z=.04+fill*.445;
       for (let i = 0; i < 22; i++) {
         const theta = i * 2.399963, rad = .13 * Math.sqrt((i + .5) / 22);
         dummy.position.set(Math.cos(theta) * rad, Math.sin(theta) * rad, sackCoal.position.z + .016 + .004 * Math.sin(i * 2));

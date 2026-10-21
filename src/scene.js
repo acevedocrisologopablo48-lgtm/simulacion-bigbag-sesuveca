@@ -1,8 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
 import {buildWorkshop} from './workshop.js?v=auto20261021-ce89291614b4';
-import {buildEquipmentDetails} from './equipment-details.js?v=auto20261021-d82d4bca61e7';
-import {buildProcessDetails} from './process-details.js?v=auto20261021-e32aec20d181';
+import {buildEquipmentDetails} from './equipment-details.js?v=auto20261021-a567b17c9252';
+import {buildProcessDetails} from './process-details.js?v=auto20261021-03c45b3d935a';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -105,7 +105,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=auto20261021-41ff7f75cac0', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=auto20261021-0e439254675d', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -251,8 +251,10 @@ class SceneEngine {
   }
   addDataMesh(m, parent) {
     const tag=m.tag||'';
-    const kind=/LINER/.test(tag)?'polymer':/AMORT|BUFFER/.test(tag)?'rubber':/CORTE_.*(?:FILO|CUCHILLA)|MG.*(?:EJE|PIÑON|PINON)|RODILLO/.test(tag)?'stainless':/PERNO|ARANDELA|TUERCA|ANCLA_HAS|TC11|PASADOR/.test(tag)?'zinc':'paint';
-    const color=Array.isArray(m.c)?new THREE.Color(...m.c.map(v=>v/255)).convertSRGBToLinear():m.c;
+    const code=m.piece||tag;
+    const kind=/LINER/.test(tag)?'polymer':/AMORT|BUFFER|P100_MANGA_FLEXIBLE/.test(code)?'rubber':/P100_(?:MARCO|PLATAFORMA|POSTE|BRAZO|SOPORTE)|CORTE_.*(?:FILO|CUCHILLA)|MG.*(?:EJE|PIÑON|PINON)|RODILLO/.test(code)?'stainless':/PERNO|ARANDELA|TUERCA|ANCLA_HAS|TC11|PASADOR|P100_CELDA|PN_ACTUADOR|P100_(?:CIERRE|COMPENSADOR)_NEUMATICO/.test(code)?'zinc':'paint';
+    const sourceColor=/P100_INDICADOR|PN_VALVULAS/.test(code)?'#283940':/^PN_|P100_MESA|CUNA_BOTONERA/.test(code)?[56,92,117]:(m.c??m.color??[56,92,117]);
+    const color=Array.isArray(sourceColor)?new THREE.Color(...sourceColor.map(v=>v/255)).convertSRGBToLinear():sourceColor;
     const mesh = new THREE.Mesh(this.geometry(m), this.workshop.materialFor(color,kind)); parent.add(mesh);
     mesh.castShadow = true; mesh.receiveShadow = true;
     mesh.userData = { group: m.group || parent.name, part: m.tag || parent.name, label:m.label };
@@ -396,20 +398,7 @@ class SceneEngine {
   }
   buildScaleAndRollers() {
     const g=this.group('Rodillos'), x=this.data.hopper.center_x;
-    this.box(g,1.20,1.20,.12,x,0,.075,'#2d657f','Compuerta');
-    this.scaleDeck=this.box(g,1.20,1.20,.025,x,0,.15,'#a0afb5','Compuerta');
-    this.scaleDeck.userData.part='Balanza 1 200 × 1 200 mm · capacidad 2 t';
-    this.liftRoot=new THREE.Group();g.add(this.liftRoot);this.liftRoot.position.set(x,0,.01);
-    this.liftBellows=this.box(this.liftRoot,.40,.44,.07,0,0,.07,'#3d5a6a','Rodillos');
-    this.liftDeck=this.box(this.liftRoot,.62,.62,.025,0,0,.14,'#738b97','Rodillos');
-    this.scissorArms=[];
-    for(const y of [-.22,.22])for(const sign of [-1,1]) {
-      const arm=this.box(this.liftRoot,.49,.035,.025,0,y,.10,'#dda921','Rodillos');
-      arm.rotation.y=sign*.35;this.scissorArms.push([arm,sign]);
-    }
-    this.box(g,.035,.04,.72,x-.32,.20,.40,'#315b72','Compuerta');
-    this.box(g,.23,.065,.15,x-.32,.20,.79,'#173e55','Compuerta');
-    this.box(g,.16,.005,.075,x-.32,.163,.80,'#7ca6ad');
+    // The native P100 module supplies the only weighing platform and indicator.
     this.sack=new THREE.Group();this.sack.name='Compuerta';this.model.add(this.sack);
     this.sackBody=new THREE.Mesh(this.roundedBagGeometry(.40,.70),this.clothMaterial());this.sack.add(this.sackBody);this.sackBody.castShadow=true;
     this.sackBody.userData={group:'Compuerta',part:'Saco de producto'};this.parts.push(this.sackBody);this.sectionMeshes.push(this.sackBody);
@@ -550,15 +539,11 @@ class SceneEngine {
     this.bagRoot.position.set(...reception.bagPosition);
     this.worker1.position.set(...reception.receivingWorker);
     this.sack.visible=s.phaseIndex>=6&&s.phaseIndex<=8&&s.sackKg>=0;
-    const workingHeight=this.bagSize===25?.36:.15;
-    const deckHeight=lerp(workingHeight,.35,smooth(s.transfer/.22)),liftHeight=deckHeight-.15;
+    const deckHeight=this.data.config.scale_deck_z_m||.35;
     this.sack.position.set(this.data.hopper.center_x,-s.transfer*1.82,deckHeight);
-    this.liftDeck.position.z=.14+liftHeight;
-    this.liftBellows.scale.z=1+liftHeight/.07;this.liftBellows.position.z=.07+liftHeight/2;
-    this.scissorArms.forEach(([arm,sign])=>{arm.position.z=.08+liftHeight/2;arm.rotation.y=sign*Math.asin(clamp((.13+liftHeight)/.49,0,.95));});
     const fill=this.bagSize?s.sackKg/this.bagSize:0;
-    const sackHeight=this.bagSize===25?.49:.70;
-    this.sackBody.scale.set(lerp(.75,1,fill),lerp(.6,1,fill),sackHeight/.70);
+    const sackHeight=.5465;
+    this.sackBody.scale.set(lerp(.75,1,fill),lerp(.6,1,fill),1);
     const tieOn=s.cyclePhase==='amarre'||s.cyclePhase==='salida'||s.phaseIndex===7;
     this.tie.visible=tieOn;this.tie.position.z=sackHeight-.025;
     this.finishedBags.forEach((b,i)=>{b.visible=i<Math.min(12,s.completedSacks);});
@@ -567,7 +552,7 @@ class SceneEngine {
     this.worker2.userData.arms?.forEach((a,i)=>a.rotation.z=tying?Math.sin(s.cycleProgress*Math.PI*4)*(i?-.13:.13):0);
     this.flow.visible=s.runningFlow;
     if(this.flow.visible){
-      const bulk=s.phaseIndex===5,z0=bulk?this.data.hopper.mouth_z+.025:deckHeight+(this.bagSize===25?.49:.70),z1=bulk?C.support_z:.865,r=bulk?(this.mode==='closed'?.105:.075):.045;
+      const bulk=s.phaseIndex===5,z0=bulk?this.data.hopper.mouth_z+.025:deckHeight+.04+.445*clamp(s.sackKg/50),z1=bulk?C.support_z:.865,r=bulk?(this.mode==='closed'?.105:.075):.045;
       for(let i=0;i<160;i++){
         const angle=i*2.399963,rad=Math.sqrt((i*.618033)%1)*r,fall=(i*.071+this.progress*(bulk?70:260))%1;
         this.dummy.position.set(this.data.hopper.center_x+Math.cos(angle)*rad,Math.sin(angle)*rad,lerp(z1,z0,fall));

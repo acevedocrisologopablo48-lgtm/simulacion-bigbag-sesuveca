@@ -159,24 +159,27 @@ export function buildEquipmentDetails(engine) {
     }
   }
 
-  // Pendant carries a real coiled cable, direction buttons and a mushroom stop.
+  // A column-mounted cradle keeps the pendant outside the suspended load path.
   if (engine.controlCable) engine.controlCable.visible = false;
   for (const mesh of hoist.children) {
     if (mesh.geometry?.type === 'BoxGeometry' && Math.abs(mesh.position.x - .19) < .001 && Math.abs(mesh.position.z - 1.10) < .001) mesh.visible = false;
   }
-  const pendant = new THREE.Group(); pendant.position.set(.19, -.06, 1.10); hoist.add(pendant);
-  roundedHousing(pendant, .073, .045, .224, [0, 0, 0], yellow, 'Monorriel', 'Botonera colgante del tecle', .014);
+  const controls=engine.group('Complementos');
+  const pendant = new THREE.Group(); pendant.position.set(0,-1.12,1.25); controls.add(pendant);
+  roundedHousing(pendant,.073,.045,.224,[0,0,0],yellow,'Monorriel','Botonera del tecle fijada a columna',.014);
   cylinder(pendant, .018, .016, [0, -.031, .070], [0, 1, 0], red, 'Monorriel', 'Parada de emergencia de la botonera');
   cylinder(pendant, .012, .009, [0, -.027, .014], [0, 1, 0], green, 'Monorriel', 'Mando de elevación');
   cylinder(pendant, .012, .009, [0, -.027, -.027], [0, 1, 0], black, 'Monorriel', 'Mando de descenso');
   cylinder(pendant, .010, .009, [0, -.027, -.070], [0, 1, 0], black, 'Monorriel', 'Mando de traslación');
-  const coil = [];
-  for (let i = 0; i <= 420; i++) {
-    const t = i / 420, a = t * Math.PI * 2 * 42;
-    coil.push([.19 + Math.cos(a) * .012, -.06 + Math.sin(a) * .012, 1.228 + (z - .45 - 1.228) * t]);
+  const nativeCradle=engine.data.static.some(m=>/BOTONERA/.test(m.piece||'')&&/SOPORTE|CUNA|ABRAZ/.test(m.piece||''));
+  if(!nativeCradle){
+    box(controls,[.09,.003,.26],[0,-1.0765,1.25],blue,'Complementos','Respaldo de cuna de botonera t3');
+    box(controls,[.09,.062,.003],[0,-1.106,1.1215],blue,'Complementos','Asiento de cuna de botonera t3');
   }
-  cable(hoist, coil, .0037, black, 'Monorriel', 'Cable espiral de la botonera', 420);
-  cable(hoist, [[.19, -.06, z - .45], [.19, -.05, z - .38], [.13, -.02, z - .11]], .005, black, 'Monorriel', 'Entrada de cable y prensaestopa');
+  const cableTop=z-.10;
+  cable(controls,[[0,-1.12,1.37],[0,-1.12,1.47],[0,-1.12,cableTop]],.0045,black,'Monorriel','Cable de mando guiado por cara exterior de columna',64);
+  const festoon=cable(controls,[[0,-1.12,cableTop],[.4,-1.12,cableTop-.12],[.8,-1.12,cableTop]],.0045,black,'Monorriel','Feston de mando exterior al volumen de carga',64);
+  let lastCarriageX=NaN;
 
   // Commercial bumpers retain their model locations and nominal stroke envelopes.
   const rail = engine.group('Monorriel');
@@ -258,25 +261,8 @@ export function buildEquipmentDetails(engine) {
     cylinder(rollers, .008, .023, [xx + sign * .01, yy, .315], [1, 0, 0], bright, 'Rodillos', 'Eje de rodillo', true);
   }
   for (const sign of [-1, 1]) box(rollers, [.018, 1.705, .075], [H.center_x + sign * .308, -1.1875, .284], blue, 'Rodillos', 'Larguero de transportador de rodillos');
-  const screen = plate(rollers, .174, .081, [H.center_x-.32, .160, .80], () => {}, 'Compuerta', 'Indicador digital de la balanza · kg');
-  for (const [i, mat] of [[-1, black], [0, green], [1, black]]) cylinder(rollers, .008, .004, [H.center_x-.32 + i * .041, .160, .748], [0, 1, 0], mat, 'Compuerta', ['Tara', 'Cero', 'Unidad'][i + 1]);
-  for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
-    const xx = H.center_x + sx * .51, yy = sy * .51;
-    cylinder(rollers, .028, .022, [xx, yy, .021], [0, 0, 1], black, 'Compuerta', 'Apoyo regulable de balanza');
-    cylinder(rollers, .009, .024, [xx, yy, .042], [0, 0, 1], bright, 'Compuerta', 'Nivelación de la plataforma de pesaje', true);
-  }
-  cable(rollers, [[H.center_x-.32, .20, .72], [H.center_x-.32, .21, .23], [H.center_x-.27, .37, .10], [H.center_x-.49, .46, .06]], .006, black, 'Compuerta', 'Cable de celdas de carga de la balanza');
-
-  if (engine.liftBellows) engine.liftBellows.visible = false;
-  const bellows = new THREE.Group(); engine.liftRoot.add(bellows);
-  for (let i = 0; i < 5; i++) {
-    const ring = torus(bellows, .194, .015, [0, 0, .039 + i * .019], [0, 0, 1], black, 'Rodillos', 'Fuelle neumático de la mesa elevadora');
-    ring.scale.x = .9;
-  }
-  cylinder(bellows, .18, .065, [0, 0, .076], [0, 0, 1], black, 'Rodillos', 'Fuelle neumático de la mesa elevadora');
-  cable(engine.liftRoot, [[.18, .04, .075], [.28, .04, .06], [.36, .16, .055], [.38, .27, .08]], .008, black, 'Rodillos', 'Manguera de aire de la mesa elevadora');
-  cylinder(engine.liftRoot, .015, .036, [.20, .04, .075], [1, 0, 0], bright, 'Rodillos', 'Racor de alimentación neumática');
-  box(engine.liftRoot, [.085, .055, .065], [.36, .25, .087], dark, 'Rodillos', 'Válvula de mando de la mesa neumática');
+  const screen=plate(rollers,.15,.07,[1.28,-.456,.965],()=>{},'Compuerta','Indicador del modulo gravimetrico100kg · kg');
+  for(const [i,mat] of [[-1,black],[0,green],[1,black]])cylinder(rollers,.006,.004,[1.28+i*.04,-.456,.918],[0,1,0],mat,'Compuerta',['Tara','Cero','Unidad'][i+1]);
 
   let lastWeight = NaN;
   return {
@@ -289,7 +275,11 @@ export function buildEquipmentDetails(engine) {
         ctx.fillText(kg.toFixed(1), w * .76, h * .54); ctx.font = `${h * .26}px Arial`; ctx.fillText('kg', w * .96, h * .66);
         texture.needsUpdate = true;
       }
-      bellows.scale.z = 1 + Math.max(0, engine.liftDeck.position.z - .14) / .11;
+      if(Math.abs(state.x-lastCarriageX)>.002||!Number.isFinite(lastCarriageX)){
+        lastCarriageX=state.x;
+        const points=[[0,-1.12,cableTop],[state.x*.5,-1.12,cableTop-.12],[state.x,-1.12,cableTop],[state.x+.13,-.18,z-.11]];
+        festoon.geometry.dispose();festoon.geometry=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p))),64,.0045,6,false);
+      }
     }
   };
 }
