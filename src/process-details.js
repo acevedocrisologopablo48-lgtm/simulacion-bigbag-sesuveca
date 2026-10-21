@@ -6,6 +6,9 @@ const mix = (a, b, t) => a + (b - a) * t;
 // Visual details share the existing process coordinates and conserved masses.
 export function buildProcessDetails(engine) {
   const E = engine, dummy = new THREE.Object3D();
+  const bagWidth=E.data.config.bag_width || 1, bagHeight=E.data.config.bag_height || 1;
+  const anchorHalf=(E.data.config.bag_attachment_spacing_m || bagWidth)/2;
+  const loadedLoop=E.data.config.bag_loop_loaded_m || .25, freeLoop=E.data.config.bag_loop_free_m || .30;
   const steel = new THREE.MeshStandardMaterial({ color: '#8e999d', metalness: .83, roughness: .29 });
   const darkSteel = new THREE.MeshStandardMaterial({ color: '#303b41', metalness: .74, roughness: .43 });
   const rubber = new THREE.MeshStandardMaterial({ color: '#24282b', metalness: .03, roughness: .93 });
@@ -50,7 +53,7 @@ export function buildProcessDetails(engine) {
   E.slingRoot.children.forEach(child => { child.visible = false; });
 
   const N = 64, R = 25;
-  const clothPoint = (angle, h, empty, width = .98, height = 1) => {
+  const clothPoint = (angle, h, empty, width = bagWidth, height = bagHeight) => {
     const c = Math.cos(angle), s = Math.sin(angle), profile = .9 + .10 * Math.sin(Math.PI * h);
     const pleats = (Math.sin(angle * 12 + h * 4) * .013 + Math.sin(angle * 23 - h * 8) * .005) * (.3 + empty);
     const crumple = empty * .035 * Math.sin(h * 23 + angle * 4) * Math.sin(Math.PI * h);
@@ -65,7 +68,7 @@ export function buildProcessDetails(engine) {
     for (let i = 1; i < N - 1; i++) { ids.push(0, i + 1, i); const k = (R - 1) * (N + 1); if (capTop) ids.push(k, k + i, k + i + 1); }
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(a, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(ids); g.computeVertexNormals(); return g;
   };
-  E.bag.geometry.dispose(); E.bag.geometry = clothGeometry(.98, 1); E.bag.material = cloth;
+  E.bag.geometry.dispose(); E.bag.geometry = clothGeometry(bagWidth, bagHeight); E.bag.material = cloth;
   const seamGeometries = [];
   for (const angle of [Math.PI / 4, Math.PI * 3 / 4, Math.PI * 5 / 4, Math.PI * 7 / 4]) {
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(R * 3), 3));
@@ -83,17 +86,17 @@ export function buildProcessDetails(engine) {
   lc.font = 'bold 44px Arial'; lc.fillText('1 000 kg', 35, 244); lc.font = '18px Arial'; lc.fillText('Mantener seco · Izar por las cuatro asas', 35, 282);
   const labelTexture = new THREE.CanvasTexture(labelCanvas); labelTexture.colorSpace = THREE.SRGBColorSpace;
   const labelMat = new THREE.MeshStandardMaterial({ map: labelTexture, roughness: 1, metalness: 0, side: THREE.DoubleSide });
-  const label = draw(E.bag, new THREE.PlaneGeometry(.31, .194), labelMat, [0, -.494, .56]); label.rotation.x = Math.PI / 2;
+  const label = draw(E.bag, new THREE.PlaneGeometry(.31, .194), labelMat, [0, -bagWidth*.504, bagHeight*.56]); label.rotation.x = Math.PI / 2;
   const straps = [];
-  for (const x of [-.425, .425]) for (const y of [-.5, .5]) {
-    const pts = [[x, y * .94, .80], [x, y, 1.04], [x, y, 1.11], [x, y * .97, 1.07], [x * .97, y * .91, .81]];
+  for (const x of [-anchorHalf, anchorHalf]) for (const y of [-anchorHalf, anchorHalf]) {
+    const pts = [[x, y * .94, bagHeight*.80], [x, y, bagHeight+.04], [x, y, bagHeight+loadedLoop], [x, y * .97, bagHeight+loadedLoop-.04], [x * .97, y * .91, bagHeight*.81]];
     const path = new THREE.CatmullRomCurve3(pts.map(v => new THREE.Vector3(...v)));
     const positions = [], uv = [], ids = [], count = 28;
     for (let i = 0; i <= count; i++) { const p = path.getPoint(i / count); for (const edge of [-1, 1]) { positions.push(p.x + edge * .024, p.y, p.z); uv.push((edge + 1) / 2, i / count); } }
     for (let i = 0; i < count; i++) { const k = i * 2; ids.push(k, k + 1, k + 2, k + 1, k + 3, k + 2); }
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(ids); g.computeVertexNormals();
     const mesh=draw(E.bagRoot, g, webbing);
-    mesh.name='Asa de bigbag';mesh.userData.attachmentAnchor=[x,y,1.11];
+    mesh.name='Asa de bigbag';mesh.userData.attachmentAnchor=[x,y,bagHeight+loadedLoop];
     straps.push({mesh,x,y,count});
   }
 
@@ -195,13 +198,14 @@ export function buildProcessDetails(engine) {
         seamGeometries.forEach(({ g, angle }) => { for (let j = 0; j < R; j++) { const p = clothPoint(angle, j / (R - 1), empty); g.attributes.position.setXYZ(j, p[0] * 1.003, p[1] * 1.003, p[2]); } g.attributes.position.needsUpdate = true; });
         lastEmpty = empty;
       }
-      label.position.y = -.494 + empty * .014;
+      label.position.y = -bagWidth*.504 + empty * .014;
       straps.forEach(({mesh,x,y,count}) => {
+        const loop=state.phaseIndex===0 ? freeLoop : loadedLoop;
         const angle=Math.atan2(Math.sign(y),Math.sign(x));
         const sewn=(a,h)=>{const p=clothPoint(a,h,empty);return[p[0]*E.bag.scale.x,p[1]*E.bag.scale.y,p[2]];};
         const path=new THREE.CatmullRomCurve3([
-          sewn(angle-.025,.80),[x,y,1.04],[x,y,1.11],
-          [x,y*.97,1.07],sewn(angle+.025,.81)
+          sewn(angle-.025,.80),[x,y,bagHeight+.04],[x,y,bagHeight+loop],
+          [x,y*.97,bagHeight+loop-.04],sewn(angle+.025,.81)
         ].map(v=>new THREE.Vector3(...v)));
         const positions=mesh.geometry.attributes.position;
         for(let j=0;j<=count;j++){

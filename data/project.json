@@ -6,7 +6,11 @@
   "dimensions": [
     {
       "label": "Bigbag de proceso",
-      "value": "Hasta 1.000 kg"
+      "value": "950 × 950 × 1.200 mm · fondo cerrado · hasta1.000 kg"
+    },
+    {
+      "label": "Asas del bigbag",
+      "value": "4 asas integrales · longitud libre300 mm · proyección tensada250 mm"
     },
     {
       "label": "Cruceta nominal",
@@ -14,7 +18,7 @@
     },
     {
       "label": "Reserva de masa de cruceta",
-      "value": "235 kg incluidos herrajes y soldadura"
+      "value": "235 kg incluidos herrajes y soldadura; comprobar masa final frente a la reserva"
     },
     {
       "label": "Tecle y carro de referencia",
@@ -30,15 +34,15 @@
     },
     {
       "label": "Cota superior del monorriel",
-      "value": "5.940 mm · cara inferior +5.700 mm"
+      "value": "6270 mm · cara inferior +6030 mm"
     },
     {
       "label": "Recorrido de traslado",
-      "value": "1.700 mm · fondo de bolsa +3.520 mm"
+      "value": "1.700 mm · fondo de bolsa +3520 mm"
     },
     {
       "label": "Apoyo / punta de corte / guarda",
-      "value": "+3.010 / +3.230 / +3.430 mm"
+      "value": "+3010 / +3260 / +3430 mm"
     },
     {
       "label": "Tolva total / útil",
@@ -58,7 +62,7 @@
     },
     {
       "label": "Cuchilla piramidal fija",
-      "value": "4 filos AISI 304 · espesor 16 mm · altura 220 mm"
+      "value": "4 hojas AISI304 t6; altura250; punta60° incluidos; bisel15° por cara; 4 respaldos t16 y núcleo central macizo"
     },
     {
       "label": "Plataforma y escalera",
@@ -78,7 +82,7 @@
     },
     {
       "label": "Anclajes adoptados",
-      "value": "52 M16 8.8 L340; 33 contraplacas A36 t18; arandelas A36 y tuercas con brida"
+      "value": "52 M16 grado 10.9 L340; tuercas actuales con brida lisa clase 10; 33 contraplacas A36 t18 y arandelas A36 estructurales conservadas"
     },
     {
       "label": "Guarda de compuerta",
@@ -94,7 +98,27 @@
     },
     {
       "label": "Interfaz de rodadura",
-      "value": "Patín 140 × 20 mm · superficie de rodadura +5.720 mm"
+      "value": "Patín 140 x 20 mm; superficie de rodadura +6050 mm"
+    },
+    {
+      "label": "Columnas del pórtico",
+      "value": "4 SHS150 x 150 x 6 continuas de 5818 mm; KL5830; uso LX11 0,477546"
+    },
+    {
+      "label": "Rodillas del pórtico",
+      "value": "2 SHS60 x 60 x 4; longitud entre ejes997,729 mm"
+    },
+    {
+      "label": "Cruceta: puntos de izaje",
+      "value": "Asientos950 x 950 mm; pasadores930 x 950 mm; travesaños1100; ejes950; tramo central800 mm"
+    },
+    {
+      "label": "Reserva vertical de izaje",
+      "value": "7.926 mm; gancho requerido +5547.074 mm; máximo +5555.000 mm"
+    },
+    {
+      "label": "Enganches con bolsa en apoyo",
+      "value": "Fondo+3010; asientos de asas+4460; centro de cruceta+4782,074; oreja central+5037,074 mm"
     }
   ],
   "calculations": [
@@ -105,7 +129,7 @@
       "maxUtilization": 0.7982887500000001,
       "failedCount": 0,
       "description": "24,525 kN · doble corte y fijaciones del soporte.",
-      "scope": "Capacidad local de la traba; envolvente horizontal global de 12 kN."
+      "scope": "Capacidad local del pasador y soporte; fijación al chasis comercial según fabricante. Acción global18 kN en la memoria actual."
     },
     {
       "id": "correcciones_geometricas",
@@ -118,21 +142,23 @@
     },
     {
       "id": "estructura_longitudinal",
-      "title": "Estructura e impacto",
+      "title": "Estructura e impacto a altura actual",
       "count": 16,
       "maxUtilization": 0.9130510158049031,
       "failedCount": 0,
-      "description": "Pórtico, monorriel y uniones · acción horizontal de 12 kN.",
-      "scope": "12 kN corresponde al caso estructural; curva comercial del amortiguador según Anexo D."
+      "description": "Acción horizontal18 kN; monorriel +6030/+6270 mm; columna continua5818 mm y LX11 actualizado a0,477546.",
+      "scope": "16 comprobaciones LX bajo el modelo indicado en memoria. La curva comercial del amortiguador requiere selección por aplicación.",
+      "source": "engineering/calculo_estructura_altura_actual.json"
     },
     {
       "id": "calculo_mecanismos",
-      "title": "Corte, compuerta y captación",
-      "count": 15,
-      "maxUtilization": 0.8928571428571429,
+      "title": "Cortador reforzado: alcance condicionado",
+      "count": 3,
+      "maxUtilization": 0.9415968863893827,
       "failedCount": 0,
-      "description": "Cortador, compuerta manual, bloqueos y pérdidas de presión.",
-      "scope": "Cargas de corte, cierre y caudal de captación según memoria."
+      "description": "Hojas304 t6, cuatro respaldos304 t16 con dos filetes f6 por raíz; núcleo cónico macizo60° sobre mástil60,3 x5.",
+      "scope": "La hoja6 aislada no cumple. El detalle con respaldos verifica los modos tabulados; contacto inicial, corte real y todos los modos de fallo de la punta no están acreditados.",
+      "source": "engineering/calculo_cortador_actual.json"
     },
     {
       "id": "juntas_finales",
@@ -140,26 +166,19 @@
       "count": 26,
       "maxUtilization": 0.7992861026632048,
       "failedCount": 0,
-      "description": "Uniones y secciones resistentes · topes a 12 kN.",
-      "scope": "Filetes y juntas preparadas identificados en el cuadro de uniones."
+      "description": "26 comprobaciones de interfaces estructurales para la acción longitudinal18 kN.",
+      "scope": "Aplicar el detalle, consumible, WPS y control de cada unión. El acceso conserva sus comprobaciones separadas.",
+      "source": "engineering/juntas_finales_p05.json"
     },
     {
       "id": "anclajes_pasantes",
-      "title": "Pernos y losa: cálculo local",
-      "count": 5,
-      "failedCount": 1,
-      "maxUtilization": 1.1492331334255046,
-      "description": "Pernos M16 8.8 L340; arandelas A36 50 × 50 × 10 y contraplacas de 18 mm.",
-      "scope": "FS 2,014 para tracción y corte, sujeto al reparto de carga. Flexión de pernos y capacidad global de losa: ver memoria."
-    },
-    {
-      "id": "acreditacion_analitica_final",
-      "title": "Fijaciones y topes: cálculo anterior",
-      "count": 24,
-      "maxUtilization": 0.8682579296133878,
+      "title": "Pernos y losa: cálculo local actual",
+      "count": 38,
       "failedCount": 0,
-      "description": "Topes: FS mínimo 1,9285 para 10,75 kN y 1,7276 para la envolvente activa de 12 kN. Pernos propios M20, carga centrada: FS 17,3482.",
-      "scope": "Antecedente de cálculo. Para la geometría actual, consultar la memoria de cálculo."
+      "maxUtilization": 0.8694587171652122,
+      "description": "52 M16 grado10.9 L340, tuercas actuales con brida lisa clase10; contraplacas A36 t18 y arandelas A36 estructurales conservadas.",
+      "scope": "FS acero N+V2,626; contraplaca uso0,869459. Condicionado al contacto y reparto. Excluye capacidad global de losa y verificación de grupos.",
+      "source": "engineering/calculo_cimentacion_altura_actual.json"
     },
     {
       "id": "acceso_superior_20261019",
@@ -203,7 +222,7 @@
       "count": 24,
       "maxUtilization": 0.9658379967178211,
       "failedCount": 0,
-      "description": "Tubo100 × 100 × 5 en patas, anillo y cortador; rodapiés6 mm.",
+      "description": "Tubo100 x100 x5 en patas y anillo; mástil de corte inoxidable60,3 x5; rodapiés6 mm.",
       "scope": "Sección, deformación y uniones. Planchas A36 agrupadas en ocho espesores de compra."
     }
   ],
@@ -213,23 +232,23 @@
       "label": "Pórticos",
       "material": "ASTM A36 / ASTM A500 Gr.B",
       "quantity": 106,
-      "massKg": 1267.4010353970343,
-      "description": "Pórticos con arriostres exteriores y soportes reforzados; encuentros preparados con holguras documentadas."
+      "massKg": 1307.0798045120825,
+      "description": "Columnas SHS150 x150 x6 continuas de5818 mm; rodillas SHS60 x60 x4 a eje997,729 mm; nodo longitudinal superior +5430 mm conservado."
     },
     {
       "id": "monorriel",
       "label": "Monorriel",
       "material": "ASTM A36 / Copoliester; envolvente de montaje",
       "quantity": 11,
-      "massKg": 374.3748988832526,
-      "description": "I armado 240 × 140 × 8 × 20 de 3.600 mm. Cara superior +5.940 mm y ala inferior +5.700 mm."
+      "massKg": 374.3748988832551,
+      "description": "I armado240 ×140 ×8 ×20 de3600 mm. Cara superior +6270 mm y cara inferior +6030 mm."
     },
     {
       "id": "tolva",
       "label": "Tolva y bastidor",
       "material": "Material de cada pieza indicado en la lista.",
       "quantity": 66,
-      "massKg": 1412.3150117320681,
+      "massKg": 1412.884747343975,
       "description": "Capacidad útil 2,058 m³. Cono de 8 mm y cuerpo de 6 mm; revestimiento de 10 mm y tres anillos. Cuerpo de 470,15 mm."
     },
     {
@@ -237,7 +256,7 @@
       "label": "Apoyo de la bolsa",
       "material": "ASTM A500 Gr.B",
       "quantity": 4,
-      "massKg": 154.48800000000006,
+      "massKg": 154.48800000000034,
       "description": "Apoyo +3.010 mm con travesaños SHS120 y soporte del cortador; guarda superior +3.430 mm."
     },
     {
@@ -245,31 +264,31 @@
       "label": "Cruceta de cuatro puntos",
       "material": "ASTM A36 / S355NH / EN10210-1",
       "quantity": 31,
-      "massKg": 198.62145269618415,
-      "description": "H en SHS 150 × 150 × 12,5; carga útil nominal de 2 t. Enganches comerciales y sus detalles en los planos. Ajustar la conexión al ancho y tejido de las asas del FIBC real."
+      "massKg": 206.40089646879818,
+      "description": "H en SHS150 x150 x12,5; nominal2 t; travesaños1100 mm, ejes950 mm y tramo central800 mm. Pasadores930 x950 mm y asientos950 x950 mm, 10 mm hacia fuera por gancho. Los ganchos izquierdos se orientan180° respecto al lado opuesto. Ajustar a las asas reales."
     },
     {
       "id": "complementos",
       "label": "Equipos y descarga",
       "material": "Material de cada pieza indicado en la lista.",
-      "quantity": 217,
-      "massKg": 547.0419722041513,
-      "description": "Cortador AISI 304 de cuatro filos de 16 mm, UHMWPE disipativo de 10 mm, compuerta, tecle y equipos comerciales. La masa indica solo acero modelado; equipos y polímeros excluidos."
+      "quantity": 221,
+      "massKg": 544.4689080131556,
+      "description": "Cortador304: cuatro hojas6, cuatro respaldos16, mástil60,3 x5 y cono central macizo60°. UHMWPE disipativo10, compuerta y equipos. Masa de acero modelado; equipos y polímeros excluidos."
     },
     {
       "id": "cimentacion",
       "label": "Cimentación y anclajes",
-      "material": "ASTM A36 / ISO 898-1 clase 8.8 certificado / ISO898-2 clase10",
-      "description": "Bases y anclajes del modelo actualizado.",
+      "material": "ASTM A36 / ISO898-1 grado10.9 certificado / ISO898-2 clase10",
+      "description": "52 pasantes M16 grado10.9 L340; 33 contraplacas A36 t18. Se conservan las arandelas A36 estructurales y las tuercas con brida lisa clase10 actuales.",
       "quantity": 302,
-      "massKg": 398.04253787000977
+      "massKg": 398.0425378700084
     },
     {
       "id": "plataforma",
       "label": "Plataforma",
       "material": "ASTM A36 / ASTM A36 galvanizado / ASTM A500 Gr.B",
       "quantity": 45,
-      "massKg": 289.51370984655887,
+      "massKg": 289.5137098465587,
       "description": "Acceso posterior al borde superior de tolva, +2.782,59 mm; paso libre de 800 mm y aproximación sobre bastidor independiente."
     },
     {
@@ -277,7 +296,7 @@
       "label": "Escalera",
       "material": "ASTM A36 / ASTM A36 galvanizado / ASTM A500 Gr.B",
       "quantity": 66,
-      "massKg": 264.6348790167522,
+      "massKg": 264.6348790168012,
       "description": "16 contrahuellas de 173,91 mm; 15 huellas de 250 mm; desarrollo horizontal de 3.750 mm."
     },
     {
@@ -285,7 +304,7 @@
       "label": "Barandas",
       "material": "Material de cada pieza indicado en la lista.",
       "quantity": 49,
-      "massKg": 308.96236840599914,
+      "massKg": 308.9623442056796,
       "description": "Baranda de 1.100 mm, protección intermedia, rodapié de 150 mm y puerta corredera con bloqueo; protección inferior fija."
     }
   ],
@@ -293,13 +312,15 @@
     {
       "code": "SHS150x150x6_L5488000",
       "position": 1,
-      "name": "Tramo de tubo cuadrado",
+      "name": "Columna continua del pórtico",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
       "purchase": "Tubo 150×150×6 mm, barra 6 m",
       "quantity": 4,
-      "dimensions": "ancho 150; alto 150; largo 5488; pared 6 · Fabricar con Tubo 150×150×6 mm, barra 6 m",
-      "group": "porticos"
+      "dimensions": "SHS150 x150 x6; largo continuo5818 mm; sin empalme; adquirir barra de6 m y ajustar extremos según plano",
+      "group": "porticos",
+      "volumeM3": 0.08042803200000173,
+      "modeledMassKg": 631.3600512000136
     },
     {
       "code": "IPE200_L2000000",
@@ -310,7 +331,9 @@
       "purchase": "Viga IPE200 ASTM A36, barra comercial",
       "quantity": 2,
       "dimensions": "ancho 100; alto 200; largo 2000; pared 5.6; espesor ala 8.5 · Fabricar con Viga IPE200 ASTM A36, barra comercial",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.010899199999999956,
+      "modeledMassKg": 85.55871999999965
     },
     {
       "code": "I_A240x140x8x20_L3600000",
@@ -321,7 +344,9 @@
       "purchase": "Planchas ASTM A36 de 8 y 20 mm",
       "quantity": 1,
       "dimensions": "ancho 140; alto 240; largo 3600; pared 8; espesor ala 20; taladros Ø18, Ø22 · Fabricar con Planchas ASTM A36 de 8 y 20 mm",
-      "group": "monorriel"
+      "group": "monorriel",
+      "volumeM3": 0.025848874342323174,
+      "modeledMassKg": 202.91366358723693
     },
     {
       "code": "SHS100x100x5_L2848000",
@@ -332,7 +357,9 @@
       "purchase": "Tubo 100×100×5 mm, barra 6 m",
       "quantity": 4,
       "dimensions": "ancho 100; alto 100; largo 2848; pared 5 · Fabricar con Tubo 100×100×5 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.021644800000000256,
+      "modeledMassKg": 169.911680000002
     },
     {
       "code": "SHS150x150x6_L2200000_CUTda1945",
@@ -343,7 +370,9 @@
       "purchase": "Tubo 150×150×6 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 150; alto 150; largo 2200; pared 6 · Fabricar con Tubo 150×150×6 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.015206400000000278,
+      "modeledMassKg": 119.37024000000218
     },
     {
       "code": "SHS150x150x6_L1650000_CUT8f76b3",
@@ -354,7 +383,9 @@
       "purchase": "Tubo 150×150×6 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 150; alto 150; largo 1650; pared 6 · Fabricar con Tubo 150×150×6 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.011404800000000145,
+      "modeledMassKg": 89.52768000000114
     },
     {
       "code": "SHS60x60x4_L2100000",
@@ -365,7 +396,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 60; alto 60; largo 2100; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.003763200000000008,
+      "modeledMassKg": 29.541120000000063
     },
     {
       "code": "SHS60x60x4_L1550000",
@@ -376,7 +409,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 60; alto 60; largo 1550; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.0027776000000000064,
+      "modeledMassKg": 21.80416000000005
     },
     {
       "code": "SHS100x100x5_L1499304_TOLVA",
@@ -387,7 +422,9 @@
       "purchase": "Tubo 100×100×5 mm, barra 6 m",
       "quantity": 4,
       "dimensions": "ancho 100; alto 100; largo 1499.3; pared 5 · Fabricar con Tubo 100×100×5 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.011394712271826056,
+      "modeledMassKg": 90.01822694742584
     },
     {
       "code": "RHS150x75x5_L1757000_CUT394f60",
@@ -398,7 +435,9 @@
       "purchase": "Tubo 150×75×5 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 75; alto 150; largo 1757; pared 5 · Fabricar con Tubo 150×75×5 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.007555100000000199,
+      "modeledMassKg": 59.307535000001565
     },
     {
       "code": "RHS150x75x5_L1757000_CUT3ec3f6",
@@ -409,7 +448,9 @@
       "purchase": "Tubo 150×75×5 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 75; alto 150; largo 1757; pared 5 · Fabricar con Tubo 150×75×5 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.007555100000000265,
+      "modeledMassKg": 59.307535000002076
     },
     {
       "code": "SHS60x60x4_L2882256_CUTf8e6e9",
@@ -420,7 +461,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 60; alto 60; largo 2882.26; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.005165002860951897,
+      "modeledMassKg": 40.54527245847239
     },
     {
       "code": "SHS80x80x4_L2050000",
@@ -431,7 +474,9 @@
       "purchase": "Tubo 80×80×4 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 80; alto 80; largo 2050; pared 4 · Fabricar con Tubo 80×80×4 mm, barra 6 m",
-      "group": "soporte-bolsa"
+      "group": "soporte-bolsa",
+      "volumeM3": 0.004985600000000011,
+      "modeledMassKg": 39.13696000000009
     },
     {
       "code": "SHS150x150x12p5_L1000000",
@@ -441,8 +486,10 @@
       "supply": "Fabricar",
       "purchase": "Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1",
       "quantity": 2,
-      "dimensions": "ancho 150; alto 150; largo 1000; pared 12.5 · Fabricar con Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1. Radio exterior nominal de representación R18.75; fabricante admite hasta R25. Ajustar cortes al radio real de suministro.",
-      "group": "cruceta"
+      "dimensions": "SHS150 x150 x12,5; largo1100 mm; dos travesaños a ejes950 mm; S355NH certificado3.1; ajustar cortes al radio real",
+      "group": "cruceta",
+      "volumeM3": 0.014534844949343045,
+      "modeledMassKg": 114.0985328523429
     },
     {
       "code": "SHS150x150x12p5_L850000",
@@ -452,8 +499,10 @@
       "supply": "Fabricar",
       "purchase": "Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1",
       "quantity": 1,
-      "dimensions": "ancho 150; alto 150; largo 850; pared 12.5 · Fabricar con Tubo comercial Celsius 150×150×12.5 mm, S355NH, certificado3.1. Radio exterior nominal de representación R18.75; fabricante admite hasta R25. Ajustar cortes al radio real de suministro. Comprobar el ajuste contra los tubos transversales suministrados antes de soldar.",
-      "group": "cruceta"
+      "dimensions": "SHS150 x150 x12,5; tramo central de corte800 mm; S355NH certificado3.1; ajustar contra los travesaños reales antes de soldar",
+      "group": "cruceta",
+      "volumeM3": 0.005324551725990846,
+      "modeledMassKg": 41.79773104902814
     },
     {
       "code": "SHS60x60x4_L62410",
@@ -464,7 +513,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 4,
       "dimensions": "ancho 60; alto 60; largo 62.41; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.00022367702999040123,
+      "modeledMassKg": 1.7558646854246496
     },
     {
       "code": "TOL_PANEL_CONO_8mm",
@@ -475,7 +526,9 @@
       "purchase": "Plancha ASTM A36 de 8 mm",
       "quantity": 4,
       "dimensions": "Corte envolvente 1691.57×1404.62; espesor 8 · Fabricar con Plancha ASTM A36 de 8 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.04400845635519679,
+      "modeledMassKg": 345.4663823882948
     },
     {
       "code": "TOL_PANEL_CUERPO_6mm",
@@ -486,7 +539,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 3,
       "dimensions": "Corte envolvente 1682×470.15; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.014183622437930865,
+      "modeledMassKg": 111.34143613775728
     },
     {
       "code": "TOL_PANEL_CUERPO_DN150_6mm",
@@ -497,7 +552,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "Corte envolvente 1682×470.15; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.004727874145976939,
+      "modeledMassKg": 37.11381204591897
     },
     {
       "code": "TOL_TAPA_POLVO_1662x1662x3",
@@ -508,7 +565,9 @@
       "purchase": "Plancha ASTM A36 de 3 mm",
       "quantity": 1,
       "dimensions": "ancho 1682; alto 1682; espesor 3; taladros Ø150, Ø260 · Fabricar con Plancha ASTM A36 de 3 mm",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.008275078876433983,
+      "modeledMassKg": 64.95936918000676
     },
     {
       "code": "TOL_JUNTA_EPDM_1662x1662x3",
@@ -519,7 +578,9 @@
       "purchase": "Lámina de goma EPDM de 3 mm",
       "quantity": 1,
       "dimensions": "ancho 1682; alto 1682; espesor 3 · Fabricar con Lámina de goma EPDM de 3 mm",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.00022057200000000885,
+      "modeledMassKg": 0
     },
     {
       "code": "BASE_PORTICO_360x360x35",
@@ -530,7 +591,9 @@
       "purchase": "Plancha ASTM A36 de 38 mm",
       "quantity": 2,
       "dimensions": "ancho 360; alto 360; espesor 35; taladros Ø18 · Fabricar con Plancha ASTM A36 de 38 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.00900074867861659,
+      "modeledMassKg": 70.65587712714023
     },
     {
       "code": "BASE_TOLVA_250x250x25",
@@ -541,7 +604,9 @@
       "purchase": "Plancha ASTM A36 de 32 mm",
       "quantity": 2,
       "dimensions": "ancho 250; alto 250; espesor 25; taladros Ø18 · Fabricar con Plancha ASTM A36 de 32 mm",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.0030741061990118457,
+      "modeledMassKg": 24.13173366224299
     },
     {
       "code": "U01_CAP_200x200x12",
@@ -552,7 +617,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 2,
       "dimensions": "ancho 200; alto 200; espesor 12; taladros Ø18 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0009355709755256527,
+      "modeledMassKg": 7.344232157876374
     },
     {
       "code": "U01_LATERAL_200x240x12",
@@ -563,7 +630,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 200; alto 240; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0023040000000000035,
+      "modeledMassKg": 18.086400000000026
     },
     {
       "code": "U01_CALCE_200x20x6",
@@ -574,7 +643,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 8,
       "dimensions": "ancho 200; alto 20; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.00019199999999999624,
+      "modeledMassKg": 1.5071999999999706
     },
     {
       "code": "U01_RIGIDIZADOR_44x175x6",
@@ -585,7 +656,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 24,
       "dimensions": "ancho 44; alto 175; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.001108799999999995,
+      "modeledMassKg": 8.704079999999962
     },
     {
       "code": "U01_CARTELA_100x240x12",
@@ -596,7 +669,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 8,
       "dimensions": "ancho 100; alto 240; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0011520000000006128,
+      "modeledMassKg": 9.043200000004811
     },
     {
       "code": "P01_CAP_COLUMNA_200x200x12",
@@ -607,7 +682,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 200; alto 200; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.001919999999999934,
+      "modeledMassKg": 15.07199999999948
     },
     {
       "code": "U02_COLLAR_150x200x12",
@@ -618,7 +695,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 8,
       "dimensions": "ancho 150; alto 200; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.002879999999999999,
+      "modeledMassKg": 22.60799999999999
     },
     {
       "code": "U02_COLLAR_174x200x12",
@@ -629,7 +708,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 8,
       "dimensions": "ancho 174; alto 200; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0033407999999999897,
+      "modeledMassKg": 26.22527999999992
     },
     {
       "code": "U02_COLLAR_150x158x12",
@@ -640,7 +721,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 150; alto 158; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0011375999999999997,
+      "modeledMassKg": 8.930159999999997
     },
     {
       "code": "U02_COLLAR_174x158x12",
@@ -651,7 +734,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 174; alto 158; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0013196159999999968,
+      "modeledMassKg": 10.358985599999974
     },
     {
       "code": "U02_CARTELA_BRL-A--1_0",
@@ -662,7 +747,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0005365002535677698,
+      "modeledMassKg": 4.211526990506993
     },
     {
       "code": "U02_CARTELA_BRL-A--1_1",
@@ -673,7 +760,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0004960992535672064,
+      "modeledMassKg": 3.89437914050257
     },
     {
       "code": "U02_CARTELA_BRL-B--1_0",
@@ -684,7 +773,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0004960992535677694,
+      "modeledMassKg": 3.89437914050699
     },
     {
       "code": "U02_CARTELA_BRL-B--1_1",
@@ -695,7 +786,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0005365002535672058,
+      "modeledMassKg": 4.211526990502565
     },
     {
       "code": "U02_CARTELA_KNE--1_0",
@@ -706,7 +799,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0005285779624063569,
+      "modeledMassKg": 4.149337004889902
     },
     {
       "code": "U02_CARTELA_KNE--1_1",
@@ -717,7 +812,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.000497834223436557,
+      "modeledMassKg": 3.907998653976972
     },
     {
       "code": "U02_CARTELA_BRL-A-1_0",
@@ -728,7 +825,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0005365002535677698,
+      "modeledMassKg": 4.211526990506993
     },
     {
       "code": "U02_CARTELA_BRL-A-1_1",
@@ -739,7 +838,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0004960992535672064,
+      "modeledMassKg": 3.89437914050257
     },
     {
       "code": "U02_CARTELA_BRL-B-1_0",
@@ -750,7 +851,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0004960992535677694,
+      "modeledMassKg": 3.89437914050699
     },
     {
       "code": "U02_CARTELA_BRL-B-1_1",
@@ -761,7 +864,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0005365002535672058,
+      "modeledMassKg": 4.211526990502565
     },
     {
       "code": "U02_CARTELA_KNE-1_0",
@@ -772,7 +877,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0005285779624063569,
+      "modeledMassKg": 4.149337004889902
     },
     {
       "code": "U02_CARTELA_KNE-1_1",
@@ -783,7 +890,9 @@
       "purchase": "Plancha ASTM A36 de 18 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 18 · Fabricar con Plancha ASTM A36 de 18 mm",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.000497834223436557,
+      "modeledMassKg": 3.907998653976972
     },
     {
       "code": "U04_CAP_PATA_150x150x12",
@@ -794,7 +903,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 150; alto 150; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.0010799999999999998,
+      "modeledMassKg": 8.477999999999998
     },
     {
       "code": "U04_CARTELA_125x150x12",
@@ -805,7 +916,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 8,
       "dimensions": "ancho 125; alto 150; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.0008712000000000817,
+      "modeledMassKg": 6.838920000000641
     },
     {
       "code": "T01_ASIENTO_100x100x6",
@@ -816,7 +929,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 4,
       "dimensions": "ancho 100; alto 100; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.00023999999999999174,
+      "modeledMassKg": 1.883999999999935
     },
     {
       "code": "T02_ASIENTO_INFERIOR_100x100x20",
@@ -827,7 +942,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 4,
       "dimensions": "ancho 100; alto 100; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.0008000000000000021,
+      "modeledMassKg": 6.280000000000016
     },
     {
       "code": "T02_ASIENTO_SUPERIOR_200x214x20",
@@ -838,7 +955,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 4,
       "dimensions": "ancho 200; alto 214; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.003424000000000005,
+      "modeledMassKg": 26.878400000000042
     },
     {
       "code": "OREJA_CENTRAL_150x220x20",
@@ -849,7 +968,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 1,
       "dimensions": "ancho 150; alto 220; espesor 20; taladros Ø40 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "cruceta"
+      "group": "cruceta",
+      "volumeM3": 0.0006348672587712806,
+      "modeledMassKg": 4.983707981354552
     },
     {
       "code": "OREJA_EXTREMA_90x120x12",
@@ -860,7 +981,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 90; alto 120; espesor 12; taladros Ø28 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "cruceta"
+      "group": "cruceta",
+      "volumeM3": 0.0004888438963150273,
+      "modeledMassKg": 3.8374245860729643
     },
     {
       "code": "CR_RESPALDO_EXTREMA_90x150x20",
@@ -871,7 +994,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 4,
       "dimensions": "ancho 90; alto 150; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "cruceta"
+      "group": "cruceta",
+      "volumeM3": 0.0010799999999999749,
+      "modeledMassKg": 8.477999999999803
     },
     {
       "code": "CR_CARTELA_TRIANGULAR_150x150x12",
@@ -882,7 +1007,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 8,
       "dimensions": "ancho 150; alto 150; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "cruceta"
+      "group": "cruceta",
+      "volumeM3": 0.0010799999999999614,
+      "modeledMassKg": 8.477999999999698
     },
     {
       "code": "CR_CAP_CENTRAL_150x300x30",
@@ -893,7 +1020,9 @@
       "purchase": "Plancha ASTM A36 de 32 mm",
       "quantity": 1,
       "dimensions": "ancho 150; alto 300; espesor 30 · Fabricar con Plancha ASTM A36 de 32 mm",
-      "group": "cruceta"
+      "group": "cruceta",
+      "volumeM3": 0.0013500000000000103,
+      "modeledMassKg": 10.59750000000008
     },
     {
       "code": "CR_CHEEK_300x150x20",
@@ -904,7 +1033,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 2,
       "dimensions": "ancho 300; alto 150; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "cruceta"
+      "group": "cruceta",
+      "volumeM3": 0.0018000000000000056,
+      "modeledMassKg": 14.130000000000043
     },
     {
       "code": "LINER_CONO_UHMW10",
@@ -915,7 +1046,9 @@
       "purchase": "Plancha PE-UHMW1000 disipativo de 10 mm",
       "quantity": 4,
       "dimensions": "Corte envolvente 1673.09×1405.77; espesor 10 · Fabricar con Plancha PE-UHMW1000 disipativo de 10 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.053846632301416224,
+      "modeledMassKg": 50.61583436333125
     },
     {
       "code": "LINER_CUERPO_UHMW10",
@@ -926,7 +1059,9 @@
       "purchase": "Plancha PE-UHMW1000 disipativo de 10 mm",
       "quantity": 3,
       "dimensions": "Corte envolvente 1670×470.15; espesor 10 · Fabricar con Plancha PE-UHMW1000 disipativo de 10 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.023413470000000006,
+      "modeledMassKg": 22.008661800000006
     },
     {
       "code": "LINER_CUERPO_UHMW10_DN150",
@@ -937,7 +1072,9 @@
       "purchase": "Plancha PE-UHMW1000 disipativo de 10 mm",
       "quantity": 1,
       "dimensions": "Corte envolvente 1670×470.15; espesor 10 · Fabricar con Plancha PE-UHMW1000 disipativo de 10 mm. Medidas de corte de la pieza plana. Las medidas interiores de servicio se indican aparte en el detalle de tolva.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.007804490000000002,
+      "modeledMassKg": 7.336220600000002
     },
     {
       "code": "CORTE_ALETA_1_304_t16",
@@ -945,10 +1082,12 @@
       "name": "Cuchilla de apertura de bolsa",
       "material": "AISI304 / ASTM A240",
       "supply": "Fabricar",
-      "purchase": "Plancha inoxidable 304 de 16 mm",
+      "purchase": "Plancha AISI304 / ASTM A240 de6 mm; bisel15° por cara",
       "quantity": 1,
-      "dimensions": "ancho 149; alto 204; espesor 16 · Fabricar con Plancha inoxidable 304 de 16 mm",
-      "group": "complementos"
+      "dimensions": "Hoja304 t6; cortador H250; punta60° incluidos; bisel15° por cara; raíz truncada a radio29,65; respaldo separado t16 a12 mm del filo; contorno según plano",
+      "group": "complementos",
+      "volumeM3": 5.098531764365421e-05,
+      "modeledMassKg": 0.40278400938486825
     },
     {
       "code": "CORTE_ALETA_2_304_t16",
@@ -956,10 +1095,12 @@
       "name": "Cuchilla de apertura de bolsa",
       "material": "AISI304 / ASTM A240",
       "supply": "Fabricar",
-      "purchase": "Plancha inoxidable 304 de 16 mm",
+      "purchase": "Plancha AISI304 / ASTM A240 de6 mm; bisel15° por cara",
       "quantity": 1,
-      "dimensions": "ancho 149; alto 204; espesor 16 · Fabricar con Plancha inoxidable 304 de 16 mm",
-      "group": "complementos"
+      "dimensions": "Hoja304 t6; cortador H250; punta60° incluidos; bisel15° por cara; raíz truncada a radio29,65; respaldo separado t16 a12 mm del filo; contorno según plano",
+      "group": "complementos",
+      "volumeM3": 5.098531764365421e-05,
+      "modeledMassKg": 0.40278400938486825
     },
     {
       "code": "CORTE_ALETA_3_304_t16",
@@ -967,10 +1108,12 @@
       "name": "Cuchilla de apertura de bolsa",
       "material": "AISI304 / ASTM A240",
       "supply": "Fabricar",
-      "purchase": "Plancha inoxidable 304 de 16 mm",
+      "purchase": "Plancha AISI304 / ASTM A240 de6 mm; bisel15° por cara",
       "quantity": 1,
-      "dimensions": "ancho 174; alto 204; espesor 16 · Fabricar con Plancha inoxidable 304 de 16 mm",
-      "group": "complementos"
+      "dimensions": "Hoja304 t6; cortador H250; punta60° incluidos; bisel15° por cara; raíz truncada a radio29,65; respaldo separado t16 a12 mm del filo; contorno según plano",
+      "group": "complementos",
+      "volumeM3": 5.098531764365421e-05,
+      "modeledMassKg": 0.40278400938486825
     },
     {
       "code": "CORTE_ALETA_4_304_t16",
@@ -978,21 +1121,25 @@
       "name": "Cuchilla de apertura de bolsa",
       "material": "AISI304 / ASTM A240",
       "supply": "Fabricar",
-      "purchase": "Plancha inoxidable 304 de 16 mm",
+      "purchase": "Plancha AISI304 / ASTM A240 de6 mm; bisel15° por cara",
       "quantity": 1,
-      "dimensions": "ancho 174; alto 204; espesor 16 · Fabricar con Plancha inoxidable 304 de 16 mm",
-      "group": "complementos"
+      "dimensions": "Hoja304 t6; cortador H250; punta60° incluidos; bisel15° por cara; raíz truncada a radio29,65; respaldo separado t16 a12 mm del filo; contorno según plano",
+      "group": "complementos",
+      "volumeM3": 5.098531764365421e-05,
+      "modeledMassKg": 0.40278400938486825
     },
     {
       "code": "CORTE_MASTIL_60p3x5",
       "position": 64,
-      "name": "Tubo central del cortador",
+      "name": "Conjunto del núcleo tubular y punzón cónico",
       "material": "AISI304 / ASTM A276",
       "supply": "Fabricar",
-      "purchase": "Barra inoxidable 304 Ø65 para tornear Ø60.3 y Ø50.3 mm",
+      "purchase": "Tubo AISI304 Ø60,3 x5 y barra maciza304 para mecanizar conoØ60,3 de60°; unión según plano y WPS",
       "quantity": 1,
-      "dimensions": "largo 204; pared 5; Ø exterior 60.3; Ø interior 50.3 · Fabricar con Barra inoxidable 304 Ø65 para tornear Ø60.3 y Ø50.3 mm",
-      "group": "complementos"
+      "dimensions": "Una pieza CAD compuesta: tuboØ60,3 x5 L197,779 deZ3010 a3207,779; cono central macizo304 H52,221 hasta puntaZ3260; conservar referencia de pieza del mástil",
+      "group": "complementos",
+      "volumeM3": 0.00022151136365665438,
+      "modeledMassKg": 1.7499397728875696
     },
     {
       "code": "CORTE_MARCO_570x620x12",
@@ -1003,7 +1150,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 570; alto 620; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0015408000000000028,
+      "modeledMassKg": 12.095280000000022
     },
     {
       "code": "CORTE_BASE_200x200x16",
@@ -1014,7 +1163,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 1,
       "dimensions": "ancho 200; alto 200; espesor 16; taladros Ø13 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0006315051334646936,
+      "modeledMassKg": 4.9573152976978445
     },
     {
       "code": "TECLE_2t_REFERENCIA",
@@ -1025,7 +1176,9 @@
       "purchase": "Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto",
       "quantity": 1,
       "dimensions": "KITO seleccionado: altura cerrada 475 mm. Oreja central en traslado +5247,074 mm; gancho máximo +5225 mm: diferencia 22,074 mm. El recorrido completo no cabe con estas asas de referencia. Para 20 mm de holgura se requiere altura cerrada ≤432,926 mm; selección e interfaz reales a comprobar.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.07360000000000005,
+      "modeledMassKg": 0
     },
     {
       "code": "CARRO_MOTORIZADO_REFERENCIA",
@@ -1036,7 +1189,9 @@
       "purchase": "Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto",
       "quantity": 1,
       "dimensions": "Conjunto KITO SHER2M020IS-IS, capacidad 2 t · Comprar: Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.012671999999999982,
+      "modeledMassKg": 0
     },
     {
       "code": "CADENA_ENVELOPE",
@@ -1047,7 +1202,9 @@
       "purchase": "Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto",
       "quantity": 1,
       "dimensions": "Repuesto original del conjunto KITO SHER2M020IS-IS de 2 t · Comprar: Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto. La envolvente Ø24 del modelo no es el diámetro del eslabón; comprar cadena original del tecle.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00024561393595817646,
+      "modeledMassKg": 0
     },
     {
       "code": "BIGBAG_1000x1000x1000_REF",
@@ -1055,10 +1212,12 @@
       "name": "Bolsa bigbag de 1 t",
       "material": "Polipropileno tejido",
       "supply": "Comprar",
-      "purchase": "Bolsa bigbag 1 t con asas integrales; dimensiones de bolsa 1000×1000×1000 mm",
+      "purchase": "Bigbag de1 t,950×950×1200 mm, fondo cerrado y cuatro asas integrales de300 mm libres",
       "quantity": 1,
-      "dimensions": "ancho 1000; alto 1000; largo 1000 · Comprar: Bolsa bigbag 1 t con asas integrales; dimensiones de bolsa 1000×1000×1000 mm",
-      "group": "complementos"
+      "dimensions": "950 × 950 × 1200; asas libres300; proyección de trabajo250 · Comprar bolsa completa",
+      "group": "complementos",
+      "volumeM3": 1.083,
+      "modeledMassKg": 0
     },
     {
       "code": "ASA_BIGBAG_REF",
@@ -1066,10 +1225,12 @@
       "name": "Asa de bolsa bigbag",
       "material": "Polipropileno tejido",
       "supply": "Comprar",
-      "purchase": "Bolsa bigbag 1 t con asas integrales; dimensiones de bolsa 1000×1000×1000 mm",
+      "purchase": "Asas integrales de la bolsa950×950×1200, longitud libre300 mm",
       "quantity": 4,
-      "dimensions": "Asas integrales de la bolsa bigbag de 1 t · Comprar: Bolsa bigbag 1 t con asas integrales; dimensiones de bolsa 1000×1000×1000 mm",
-      "group": "complementos"
+      "dimensions": "4 asas; libre300; proyección tensada250; suministradas con la bolsa",
+      "group": "complementos",
+      "volumeM3": 0.0008100000000000005,
+      "modeledMassKg": 0
     },
     {
       "code": "MG02_FLANGE_364x350x6",
@@ -1080,7 +1241,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 364; alto 350; espesor 6; taladros Ø9 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.000387873185970356,
+      "modeledMassKg": 3.0448045098672947
     },
     {
       "code": "MG03_FLANGE_364x350x6",
@@ -1091,7 +1254,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 364; alto 350; espesor 6; taladros Ø9 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.000387873185970356,
+      "modeledMassKg": 3.0448045098672947
     },
     {
       "code": "MG01_HOJA_310x450x6",
@@ -1102,7 +1267,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 310; alto 450; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0008370000000000008,
+      "modeledMassKg": 6.570450000000006
     },
     {
       "code": "MG04_SUP_1",
@@ -1113,7 +1280,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 44; alto 455; espesor 6; taladros Ø9 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00011935659298517789,
+      "modeledMassKg": 0.9369492549336464
     },
     {
       "code": "MG04_SUP_2",
@@ -1124,7 +1293,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 44; alto 455; espesor 6; taladros Ø9 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00011935659298517789,
+      "modeledMassKg": 0.9369492549336464
     },
     {
       "code": "MG05_INF_1",
@@ -1135,7 +1306,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 44; alto 455; espesor 6; taladros Ø9 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00011935659298517789,
+      "modeledMassKg": 0.9369492549336464
     },
     {
       "code": "MG05_INF_2",
@@ -1146,7 +1319,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 44; alto 455; espesor 6; taladros Ø9 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00011935659298517789,
+      "modeledMassKg": 0.9369492549336464
     },
     {
       "code": "MG06_ESP_1",
@@ -1157,7 +1332,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 31.5; alto 800; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00015120000000000053,
+      "modeledMassKg": 1.1869200000000042
     },
     {
       "code": "MG06_ESP_2",
@@ -1168,7 +1345,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 31.5; alto 800; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00015119999999999495,
+      "modeledMassKg": 1.1869199999999602
     },
     {
       "code": "MG07_UHMW_SUP_1",
@@ -1179,7 +1358,9 @@
       "purchase": "Plancha PE-UHMW1000 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 20; alto 740; espesor 12 · Fabricar con Plancha PE-UHMW1000 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00017760000000000033,
+      "modeledMassKg": 0
     },
     {
       "code": "MG07_UHMW_SUP_2",
@@ -1190,7 +1371,9 @@
       "purchase": "Plancha PE-UHMW1000 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 20; alto 740; espesor 12 · Fabricar con Plancha PE-UHMW1000 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00017760000000000033,
+      "modeledMassKg": 0
     },
     {
       "code": "MG08_UHMW_INF_1",
@@ -1201,7 +1384,9 @@
       "purchase": "Plancha PE-UHMW1000 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 20; alto 740; espesor 12 · Fabricar con Plancha PE-UHMW1000 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00017760000000000033,
+      "modeledMassKg": 0
     },
     {
       "code": "MG08_UHMW_INF_2",
@@ -1212,7 +1397,9 @@
       "purchase": "Plancha PE-UHMW1000 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 20; alto 740; espesor 12 · Fabricar con Plancha PE-UHMW1000 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00017760000000000033,
+      "modeledMassKg": 0
     },
     {
       "code": "MG09_UHMW_LADO_1",
@@ -1223,7 +1410,9 @@
       "purchase": "Plancha PE-UHMW1000 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 20; alto 740; espesor 7.5; taladros Ø13 · Fabricar con Plancha PE-UHMW1000 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00010900901565578847,
+      "modeledMassKg": 0
     },
     {
       "code": "MG09_UHMW_LADO_2",
@@ -1234,7 +1423,9 @@
       "purchase": "Plancha PE-UHMW1000 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 20; alto 740; espesor 7.5; taladros Ø13 · Fabricar con Plancha PE-UHMW1000 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00010900901565578847,
+      "modeledMassKg": 0
     },
     {
       "code": "MG10_CASQUILLO_12x9_L31p5",
@@ -1245,7 +1436,9 @@
       "purchase": "Barra redonda ASTM A36 para tornear Ø12 / Ø9",
       "quantity": 8,
       "dimensions": "largo 31.5; pared 1.5; Ø exterior 12; Ø interior 9 · Fabricar con Barra redonda ASTM A36 para tornear Ø12 / Ø9",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 1.246898124209792e-05,
+      "modeledMassKg": 0.09788150275046867
     },
     {
       "code": "MS01_TRANSICION_CUADRADO_REDONDO_3",
@@ -1256,7 +1449,9 @@
       "purchase": "Plancha ASTM A36 de 3 mm",
       "quantity": 1,
       "dimensions": "alto 80; espesor 3; Ø interior 250; boca cuadrada 250 · Fabricar con Plancha ASTM A36 de 3 mm. La reserva rectangular 1000×100 del modelo no es el desarrollo de corte.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00021743544426437708,
+      "modeledMassKg": 1.70686823747536
     },
     {
       "code": "MS02_CUELLO_ID250_OD256_L80",
@@ -1267,7 +1462,9 @@
       "purchase": "Plancha ASTM A36 de 3 mm",
       "quantity": 1,
       "dimensions": "largo 80; pared 3; Ø exterior 256; Ø interior 250 · Fabricar con Plancha ASTM A36 de 3 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00019075750592597202,
+      "modeledMassKg": 1.4974464215188803
     },
     {
       "code": "MS03_SECTOR_170deg_ID268_t3_H40",
@@ -1278,7 +1475,9 @@
       "purchase": "Plancha ASTM A36 de 3 mm",
       "quantity": 2,
       "dimensions": "ancho 402.3; alto 40; espesor 3; Ø exterior 274; Ø interior 268; R interior 134; R exterior 137; arco 170° · Fabricar con Plancha ASTM A36 de 3 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 9.648878236727788e-05,
+      "modeledMassKg": 0.7574369415831314
     },
     {
       "code": "MS04_LINER_EPDM3_SECTOR_170",
@@ -1289,7 +1488,9 @@
       "purchase": "Lámina de goma EPDM de 3 mm",
       "quantity": 2,
       "dimensions": "ancho 268; alto 40; espesor 3; Ø exterior 268; Ø interior 262; R interior 131; R exterior 134; arco 170° · Fabricar con Lámina de goma EPDM de 3 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 9.435249936282565e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "MS05_SOPORTE_60x80x6",
@@ -1300,7 +1501,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 2,
       "dimensions": "ancho 60; alto 80; espesor 6; taladros Ø9 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 5.607318597035551e-05,
+      "modeledMassKg": 0.4401745098672908
     },
     {
       "code": "SACO_25_50kg_REF",
@@ -1311,7 +1514,9 @@
       "purchase": "Saco para 25–50 kg",
       "quantity": 1,
       "dimensions": "ancho 380; alto 220; largo 766.5 · Comprar: Saco para 25–50 kg",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.06407940000000001,
+      "modeledMassKg": 0
     },
     {
       "code": "BALANZA_2t_1200_REF",
@@ -1322,7 +1527,9 @@
       "purchase": "Balanza 1200×1200 mm, capacidad 2000 kg",
       "quantity": 1,
       "dimensions": "ancho 1200; alto 1200; largo 150 · Comprar: Balanza 1200×1200 mm, capacidad 2000 kg",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.216,
+      "modeledMassKg": 0
     },
     {
       "code": "MG11_GUARDA_U_590x645x260_R3_t2",
@@ -1333,7 +1540,9 @@
       "purchase": "Plancha ASTM A36 de 2 mm",
       "quantity": 1,
       "dimensions": "ancho 590; alto 262; largo 645; espesor 2; R interior 3 · Fabricar con Plancha ASTM A36 de 2 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0013297346180925296,
+      "modeledMassKg": 10.438416752026358
     },
     {
       "code": "MG12_GUARDA_FONDO_590x645x2",
@@ -1344,7 +1553,9 @@
       "purchase": "Plancha ASTM A36 de 2 mm",
       "quantity": 1,
       "dimensions": "ancho 590; alto 645; espesor 2 · Fabricar con Plancha ASTM A36 de 2 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0007611000000000008,
+      "modeledMassKg": 5.974635000000006
     },
     {
       "code": "MG13_GUARDA_TESTERO_586x258x2",
@@ -1355,7 +1566,9 @@
       "purchase": "Plancha ASTM A36 de 2 mm",
       "quantity": 1,
       "dimensions": "ancho 586; alto 258; espesor 2; R esquinas 3 · Fabricar con Plancha ASTM A36 de 2 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00030236827433388256,
+      "modeledMassKg": 2.3735909535209783
     },
     {
       "code": "MG14_JUNTA_SOLAPE_RECORTET2_REF",
@@ -1366,7 +1579,9 @@
       "purchase": "Lámina de goma EPDM disipativo de 2 mm",
       "quantity": 1,
       "dimensions": "ancho 556; alto 103; espesor 2 · Fabricar con Lámina de goma EPDM disipativo de 2 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 3.023999999999997e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "BASE_COMBINADA_PORTICO_TOLVA_SUR_t35",
@@ -1377,7 +1592,9 @@
       "purchase": "Plancha ASTM A36 de 38 mm",
       "quantity": 1,
       "dimensions": "ancho 555; alto 480; espesor 35; taladros Ø18 · Fabricar con Plancha ASTM A36 de 38 mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.007827373678617106,
+      "modeledMassKg": 61.44488337714428
     },
     {
       "code": "BASE_COMBINADA_PORTICO_TOLVA_NORTE_t35",
@@ -1388,7 +1605,9 @@
       "purchase": "Plancha ASTM A36 de 38 mm",
       "quantity": 1,
       "dimensions": "ancho 555; alto 690; espesor 35; taladros Ø18 · Fabricar con Plancha ASTM A36 de 38 mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.011189998678618645,
+      "modeledMassKg": 87.84148962715636
     },
     {
       "code": "ANCLA_ARANDELA_D30_D18_t3_REF",
@@ -1399,7 +1618,9 @@
       "purchase": "Arandela plana M16",
       "quantity": 28,
       "dimensions": "largo 3; pared 6; Ø exterior 30; Ø interior 18 · Comprar: Arandela plana M16",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 3.8000704737823574e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "ANCLA_TUERCA_M16_AF24_H13_REF",
@@ -1410,7 +1631,9 @@
       "purchase": "Tuerca hexagonal M16 / ISO4032",
       "quantity": 28,
       "dimensions": "Rosca M16; clase 8 · Comprar: Tuerca hexagonal M16 / ISO4032",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 9.895360514245366e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "PORTICO_CIERRE_IPE200_2000x200x8",
@@ -1421,7 +1644,9 @@
       "purchase": "Plancha ASTM A36 de 8 mm",
       "quantity": 4,
       "dimensions": "ancho 2000; alto 200; espesor 8 · Fabricar con Plancha ASTM A36 de 8 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.012799999999999966,
+      "modeledMassKg": 100.47999999999973
     },
     {
       "code": "TC01_SADDLE_300x180x20",
@@ -1432,7 +1657,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 1,
       "dimensions": "ancho 300; alto 180; espesor 20; taladros Ø22 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0010495893831132285,
+      "modeledMassKg": 8.239276657438843
     },
     {
       "code": "TC02_DUPLICADOR_ALA_300x60x12",
@@ -1443,7 +1670,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 2,
       "dimensions": "ancho 300; alto 60; espesor 12; taladros Ø22 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0004137536298679357,
+      "modeledMassKg": 3.247965994463295
     },
     {
       "code": "TC03_BRAZO_SHS100x100x10_S355_L300",
@@ -1454,7 +1683,9 @@
       "purchase": "Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1",
       "quantity": 1,
       "dimensions": "ancho 100; alto 100; largo 350; pared 10 · Fabricar con Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1. Radio exterior nominal de representación R15; fabricante admite hasta R20. Ajustar cortes al radio real de suministro.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0011999114857512846,
+      "modeledMassKg": 9.419305163147584
     },
     {
       "code": "TC04_POSTE_SHS100x100x10_S355_L200",
@@ -1465,7 +1696,9 @@
       "purchase": "Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1",
       "quantity": 1,
       "dimensions": "ancho 100; alto 100; largo 215; pared 10 · Fabricar con Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1. Radio exterior nominal de representación R15; fabricante admite hasta R20. Ajustar cortes al radio real de suministro.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0006938121242679081,
+      "modeledMassKg": 5.446425175503078
     },
     {
       "code": "TC05_PLACA_HORQUILLA_200x160x20",
@@ -1476,7 +1709,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 1,
       "dimensions": "ancho 200; alto 160; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0006399999999999863,
+      "modeledMassKg": 5.0239999999998926
     },
     {
       "code": "TC06_OREJA_80x100x12_D31",
@@ -1487,7 +1722,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 2,
       "dimensions": "ancho 80; alto 100; espesor 12; taladros Ø31 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0001738855767594009,
+      "modeledMassKg": 1.365001777561297
     },
     {
       "code": "TC07_RECEPTOR_80x96x16_D31",
@@ -1498,7 +1735,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 1,
       "dimensions": "ancho 80; alto 96; espesor 16; taladros Ø31 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00011080371783960116,
+      "modeledMassKg": 0.8698091850408691
     },
     {
       "code": "TC08_ADAPTADOR_200x160x20_4D18",
@@ -1509,7 +1748,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 1,
       "dimensions": "ancho 200; alto 160; espesor 20; taladros Ø18 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0006196424796047248,
+      "modeledMassKg": 4.864193464897089
     },
     {
       "code": "TC09_CARTABON_SADDLE_220x120x20",
@@ -1520,7 +1761,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 2,
       "dimensions": "ancho 220; alto 120; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.000656000000000002,
+      "modeledMassKg": 5.1496000000000155
     },
     {
       "code": "TC10_CARTABON_RECEPTOR_60x60x12",
@@ -1531,7 +1774,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 2,
       "dimensions": "ancho 60; alto 60; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 4.319999999999991e-05,
+      "modeledMassKg": 0.3391199999999993
     },
     {
       "code": "TC11_PASADOR_D30_L90_FY355",
@@ -1542,7 +1787,9 @@
       "purchase": "Barra redonda C45E templada y revenida, Ø32 mm",
       "quantity": 1,
       "dimensions": "largo 90; Ø exterior 30; taladros Ø4.5 · Fabricar con Barra redonda C45E templada y revenida, Ø32 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 6.314146782651387e-05,
+      "modeledMassKg": 0.49566052243813385
     },
     {
       "code": "TC12_CABEZA_D46_L8",
@@ -1553,7 +1800,9 @@
       "purchase": "Barra redonda ASTM A36 de Ø46 mm",
       "quantity": 1,
       "dimensions": "largo 8; Ø exterior 46 · Fabricar con Barra redonda ASTM A36 de Ø46 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 1.3295220109992016e-05,
+      "modeledMassKg": 0.10436747786343732
     },
     {
       "code": "TC13_CLIP_R_D3_L38_REF",
@@ -1564,7 +1813,9 @@
       "purchase": "Seguro de retención tipo R, alambre Ø3 mm, largo 38 mm",
       "quantity": 1,
       "dimensions": "largo 38; Ø exterior 3 · Comprar: Seguro de retención tipo R, alambre Ø3 mm, largo 38 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 2.6860617188192917e-07,
+      "modeledMassKg": 0
     },
     {
       "code": "TC17_OJAL_CABLE_40x12x3",
@@ -1575,7 +1826,9 @@
       "purchase": "Plancha ASTM A36 de 3 mm",
       "quantity": 1,
       "dimensions": "ancho 40; alto 12; espesor 3; taladros Ø4 · Fabricar con Plancha ASTM A36 de 3 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 1.402300888156978e-06,
+      "modeledMassKg": 0.011008061972032277
     },
     {
       "code": "TC18_CABLE_CAUTIVO_D3_SEG1_REF",
@@ -1586,7 +1839,9 @@
       "purchase": "Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo",
       "quantity": 1,
       "dimensions": "Cable Ø3; largo total mínimo 350; una sola pieza · Fabricar con Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo. Los tres segmentos del modelo representan un solo cable; no comprar tres cables.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 8.378582556685474e-07,
+      "modeledMassKg": 0
     },
     {
       "code": "TC18_CABLE_CAUTIVO_D3_SEG2_REF",
@@ -1597,7 +1852,9 @@
       "purchase": "Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo",
       "quantity": 1,
       "dimensions": "Cable Ø3; largo total mínimo 350; una sola pieza · Fabricar con Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo. Los tres segmentos del modelo representan un solo cable; no comprar tres cables.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 1.2125247903144184e-06,
+      "modeledMassKg": 0
     },
     {
       "code": "TC18_CABLE_CAUTIVO_D3_SEG3_REF",
@@ -1608,7 +1865,9 @@
       "purchase": "Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo",
       "quantity": 1,
       "dimensions": "Cable Ø3; largo total mínimo 350; una sola pieza · Fabricar con Cable inoxidable flexible Ø3 mm, una pieza de 350 mm mínimo. Los tres segmentos del modelo representan un solo cable; no comprar tres cables.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 1.0436638380378727e-07,
+      "modeledMassKg": 0
     },
     {
       "code": "TC14_PERNO_M20_L90_8p8_REF",
@@ -1619,7 +1878,9 @@
       "purchase": "Perno hexagonal M20×90 / ISO4014",
       "quantity": 4,
       "dimensions": "M20 × 90; clase 8.8 · Comprar: Perno hexagonal M20×90 / ISO4014",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00011309733552923239,
+      "modeledMassKg": 0
     },
     {
       "code": "TC15_ARANDELA_D37_D22_t3_REF",
@@ -1630,7 +1891,9 @@
       "purchase": "Arandela plana M20",
       "quantity": 8,
       "dimensions": "largo 3; pared 7.5; Ø exterior 37; Ø interior 22 · Comprar: Arandela plana M20",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 1.668185699056244e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "TC16_TUERCA_M20_D36_ID21_H16_REF",
@@ -1641,7 +1904,9 @@
       "purchase": "Tuerca hexagonal M20 / ISO4032",
       "quantity": 8,
       "dimensions": "Rosca M20; clase 8 · Comprar: Tuerca hexagonal M20 / ISO4032",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 8.595397500221682e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "TC19_ESPARRAGO_M16_L70_8p8_REF",
@@ -1652,7 +1917,9 @@
       "purchase": "Espárrago M16×70, clase 8.8",
       "quantity": 4,
       "dimensions": "M16 × 70; clase 8.8 · Comprar: Espárrago M16×70, clase 8.8",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 5.629734035232932e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "KITO_RUEDA_D110_PASO118_REF",
@@ -1663,7 +1930,9 @@
       "purchase": "Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto",
       "quantity": 4,
       "dimensions": "Repuesto original del conjunto KITO SHER2M020IS-IS de 2 t · Comprar: Conjunto KITO SHER2M020IS-IS de 2 t; repuestos originales del mismo conjunto. El diámetro 110 del modelo es una envolvente, no una cota para fabricar o pedir un repuesto.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0009883450488193488,
+      "modeledMassKg": 0
     },
     {
       "code": "BRT_A_FINAL",
@@ -1674,7 +1943,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 5499.97; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.004884890672728024,
+      "modeledMassKg": 38.346391780914985
     },
     {
       "code": "BRT_LENGUETA_BRT-A_0_250x250x12",
@@ -1685,7 +1956,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00036598780852819943,
+      "modeledMassKg": 2.8730042969463656
     },
     {
       "code": "BRT_LENGUETA_BRT-A_1_250x250x12",
@@ -1696,7 +1969,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00036598780852825554,
+      "modeledMassKg": 2.873004296946806
     },
     {
       "code": "BRT_B_FINAL",
@@ -1707,7 +1982,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 5499.97; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.004884890672728024,
+      "modeledMassKg": 38.346391780914985
     },
     {
       "code": "BRT_LENGUETA_BRT-B_0_250x250x12",
@@ -1718,7 +1995,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00036598780852819943,
+      "modeledMassKg": 2.8730042969463656
     },
     {
       "code": "BRT_LENGUETA_BRT-B_1_250x250x12",
@@ -1729,7 +2008,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 250; alto 250; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00036598780852825554,
+      "modeledMassKg": 2.873004296946806
     },
     {
       "code": "BRT_COLLAR_150x300x12",
@@ -1740,7 +2021,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 8,
       "dimensions": "ancho 150; alto 300; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.004320000000000013,
+      "modeledMassKg": 33.912000000000106
     },
     {
       "code": "BRT_COLLAR_174x300x12",
@@ -1751,7 +2034,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 8,
       "dimensions": "ancho 174; alto 300; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.005011200000000007,
+      "modeledMassKg": 39.33792000000006
     },
     {
       "code": "BRT_RESPALDO_174x300x20",
@@ -1762,7 +2047,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 4,
       "dimensions": "ancho 174; alto 300; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.004176000000000009,
+      "modeledMassKg": 32.78160000000007
     },
     {
       "code": "BRT_OUTRIGGER_SHS100x100x10_S355_L468",
@@ -1773,7 +2060,9 @@
       "purchase": "Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1",
       "quantity": 4,
       "dimensions": "ancho 100; alto 100; largo 468; pared 10 · Fabricar con Tubo comercial Celsius 100×100×10 mm, S355NH, certificado3.1. Radio exterior nominal de representación R15; fabricante admite hasta R20. Ajustar cortes al radio real de suministro.",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0064178122895040155,
+      "modeledMassKg": 50.379826472606524
     },
     {
       "code": "BRT_CONTRACARA_250x250x20",
@@ -1784,7 +2073,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 4,
       "dimensions": "ancho 250; alto 250; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0050000000000000044,
+      "modeledMassKg": 39.250000000000036
     },
     {
       "code": "GRID__0p25_FINAL",
@@ -1795,7 +2086,9 @@
       "purchase": "Tubo 120×120×8 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 120; alto 120; largo 2050; pared 8 · Fabricar con Tubo 120×120×8 mm, barra 6 m",
-      "group": "soporte-bolsa"
+      "group": "soporte-bolsa",
+      "volumeM3": 0.0073472000000000155,
+      "modeledMassKg": 57.67552000000012
     },
     {
       "code": "GRID_ASIENTO_150x150x20",
@@ -1806,7 +2099,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 4,
       "dimensions": "ancho 150; alto 150; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.001800000000000001,
+      "modeledMassKg": 14.130000000000008
     },
     {
       "code": "GRID_DIAFRAGMA_HUP_138x138x12",
@@ -1817,7 +2112,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 138; alto 138; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0009141119999999993,
+      "modeledMassKg": 7.175779199999994
     },
     {
       "code": "GRID_0p25_FINAL",
@@ -1828,7 +2125,9 @@
       "purchase": "Tubo 120×120×8 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 120; alto 120; largo 2050; pared 8 · Fabricar con Tubo 120×120×8 mm, barra 6 m",
-      "group": "soporte-bolsa"
+      "group": "soporte-bolsa",
+      "volumeM3": 0.0073472000000000155,
+      "modeledMassKg": 57.67552000000012
     },
     {
       "code": "CORTE_TRAVESANO100x100x5_L630",
@@ -1839,7 +2138,9 @@
       "purchase": "Tubo 100×100×5 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 100; alto 100; largo 630; pared 5 · Fabricar con Tubo 100×100×5 mm, barra 6 m",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0023939999999999712,
+      "modeledMassKg": 18.792899999999776
     },
     {
       "code": "CORTE_ESPACIADOR_CENTRAL_200x200x12",
@@ -1850,7 +2151,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 1,
       "dimensions": "ancho 200; alto 200; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.0004800000000000003,
+      "modeledMassKg": 3.768000000000002
     },
     {
       "code": "HR_2p3124_1_FINAL",
@@ -1861,7 +2164,9 @@
       "purchase": "Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1",
       "quantity": 1,
       "dimensions": "ancho 60; alto 100; largo 1752; pared 6.3 · Fabricar con Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1. Radio exterior nominal de representación R9.45; fabricante admite hasta R12.6. Ajustar cortes al radio real de suministro.",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.0031345025426248938,
+      "modeledMassKg": 24.605844959605417
     },
     {
       "code": "HR_2p3124_2_FINAL",
@@ -1872,7 +2177,9 @@
       "purchase": "Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1",
       "quantity": 1,
       "dimensions": "ancho 60; alto 100; largo 1752; pared 6.3 · Fabricar con Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1. Radio exterior nominal de representación R9.45; fabricante admite hasta R12.6. Ajustar cortes al radio real de suministro.",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.0031345025426248872,
+      "modeledMassKg": 24.605844959605363
     },
     {
       "code": "HR_2p3124_3_FINAL",
@@ -1883,7 +2190,9 @@
       "purchase": "Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1",
       "quantity": 1,
       "dimensions": "ancho 60; alto 100; largo 1752; pared 6.3 · Fabricar con Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1. Radio exterior nominal de representación R9.45; fabricante admite hasta R12.6. Ajustar cortes al radio real de suministro.",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.0031345025426248938,
+      "modeledMassKg": 24.605844959605417
     },
     {
       "code": "HR_2p3124_4_FINAL",
@@ -1894,7 +2203,9 @@
       "purchase": "Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1",
       "quantity": 1,
       "dimensions": "ancho 60; alto 100; largo 1752; pared 6.3 · Fabricar con Tubo comercial Celsius 100×60×6.3 mm, S355NH, certificado3.1. Radio exterior nominal de representación R9.45; fabricante admite hasta R12.6. Ajustar cortes al radio real de suministro.",
-      "group": "tolva"
+      "group": "tolva",
+      "volumeM3": 0.003134502542624888,
+      "modeledMassKg": 24.60584495960537
     },
     {
       "code": "TOPE_ACE_TR100_60_ENVOLVENTE_PRESELECCION_REF",
@@ -1905,7 +2216,9 @@
       "purchase": "ACE TR100-60: confirmar curva de aplicación y fijaciones con proveedor",
       "quantity": 4,
       "dimensions": "A88 × B82 × D133 mm; carrera 60 mm · referencia de montaje",
-      "group": "monorriel"
+      "group": "monorriel",
+      "volumeM3": 0.0038389119999999795,
+      "modeledMassKg": 0
     },
     {
       "code": "SHS60x60x4_L6085645_SLOT_JUNTA_1",
@@ -1916,7 +2229,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0053654816970845395,
+      "modeledMassKg": 42.119031322113635
     },
     {
       "code": "SHS60x60x4_L6085645_SLOT_JUNTA_2",
@@ -1927,18 +2242,22 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.00536548169709186,
+      "modeledMassKg": 42.119031322171104
     },
     {
       "code": "SHS60x60x4_L748810_SLOT_JUNTA_3",
       "position": 150,
-      "name": "Tramo de tubo cuadrado",
+      "name": "Rodilla del pórtico",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
-      "dimensions": "ancho 60; alto 60; largo 748.81; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "dimensions": "SHS60 x60 x4; longitud entre ejes997,729 mm; recortes de extremos según plano",
+      "group": "porticos",
+      "volumeM3": 0.0008214176391639847,
+      "modeledMassKg": 6.44812846743728
     },
     {
       "code": "SHS60x60x4_L6085645_SLOT_JUNTA_4",
@@ -1949,7 +2268,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.005365481697084539,
+      "modeledMassKg": 42.11903132211363
     },
     {
       "code": "SHS60x60x4_L6085645_SLOT_JUNTA_5",
@@ -1960,18 +2281,22 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 6085.65; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.005365481697091861,
+      "modeledMassKg": 42.11903132217111
     },
     {
       "code": "SHS60x60x4_L748810_SLOT_JUNTA_6",
       "position": 153,
-      "name": "Tramo de tubo cuadrado",
+      "name": "Rodilla del pórtico",
       "material": "ASTM A500 Gr.B",
       "supply": "Fabricar",
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
-      "dimensions": "ancho 60; alto 60; largo 748.81; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "dimensions": "SHS60 x60 x4; longitud entre ejes997,729 mm; recortes de extremos según plano",
+      "group": "porticos",
+      "volumeM3": 0.0008214176391639847,
+      "modeledMassKg": 6.44812846743728
     },
     {
       "code": "SHS60x60x4_L3050000_JUNTA_14",
@@ -1982,7 +2307,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 3050; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0027077120000000036,
+      "modeledMassKg": 21.25553920000003
     },
     {
       "code": "SHS60x60x4_L3050000_JUNTA_15",
@@ -1993,7 +2320,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 3050; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0027077120000001563,
+      "modeledMassKg": 21.255539200001227
     },
     {
       "code": "SHS60x60x4_L3050000_JUNTA_16",
@@ -2004,7 +2333,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 3050; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0027077120000000036,
+      "modeledMassKg": 21.25553920000003
     },
     {
       "code": "SHS60x60x4_L3050000_JUNTA_17",
@@ -2015,7 +2346,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 60; alto 60; largo 3050; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "porticos"
+      "group": "porticos",
+      "volumeM3": 0.0027077120000001563,
+      "modeledMassKg": 21.255539200001227
     },
     {
       "code": "CUELLO_CAPTACION_SUP_DN150_AISI304_L200",
@@ -2026,7 +2359,9 @@
       "purchase": "Plancha AISI304 de 2 mm",
       "quantity": 1,
       "dimensions": "Ø interior150; Ø exterior154; espesor2; largo200 · Fabricar con Plancha AISI304 de 2 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 0.00019100883333825902,
+      "modeledMassKg": 1.5280706667060722
     },
     {
       "code": "AC_CAP_120x120x12",
@@ -2037,7 +2372,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 120; alto 120; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.0006912000000000018,
+      "modeledMassKg": 5.425920000000015
     },
     {
       "code": "AC_CARTELA_150x150x6",
@@ -2048,7 +2385,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 18,
       "dimensions": "ancho 150; alto 150; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.0012150000000000444,
+      "modeledMassKg": 9.537750000000349
     },
     {
       "code": "AC_SHS80x80x4_L2578590",
@@ -2059,7 +2398,9 @@
       "purchase": "Tubo 80×80×4 mm, barra 6 m",
       "quantity": 3,
       "dimensions": "ancho 80; alto 80; largo 2578.59; pared 4 · Fabricar con Tubo 80×80×4 mm, barra 6 m",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.009406696737404184,
+      "modeledMassKg": 73.84256938862285
     },
     {
       "code": "AC_SHS80x80x4_L2570590",
@@ -2070,7 +2411,9 @@
       "purchase": "Tubo 80×80×4 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 80; alto 80; largo 2570.59; pared 4 · Fabricar con Tubo 80×80×4 mm, barra 6 m",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.0031258375791347217,
+      "modeledMassKg": 24.537824996207565
     },
     {
       "code": "AC_RHS150x75x5_L1780000",
@@ -2081,7 +2424,9 @@
       "purchase": "Tubo 150×75×5 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 75; alto 150; largo 1780; pared 5 · Fabricar con Tubo 150×75×5 mm, barra 6 m",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.007654000000000054,
+      "modeledMassKg": 60.083900000000426
     },
     {
       "code": "AC_RHS150x75x5_L1620000",
@@ -2092,7 +2437,9 @@
       "purchase": "Tubo 150×75×5 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 75; alto 150; largo 1620; pared 5 · Fabricar con Tubo 150×75×5 mm, barra 6 m",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.0034830000000001275,
+      "modeledMassKg": 27.341550000001
     },
     {
       "code": "AC_SHS60x60x4_L725000",
@@ -2103,7 +2450,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 5,
       "dimensions": "ancho 60; alto 60; largo 725; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.0032479999999999957,
+      "modeledMassKg": 25.496799999999965
     },
     {
       "code": "AC_RHS150x75x5_L105000",
@@ -2114,7 +2463,9 @@
       "purchase": "Tubo 150×75×5 mm, barra 6 m",
       "quantity": 5,
       "dimensions": "ancho 75; alto 150; largo 105; pared 5 · Fabricar con Tubo 150×75×5 mm, barra 6 m",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.0011287500000000065,
+      "modeledMassKg": 8.860687500000052
     },
     {
       "code": "AC_SHS60x60x4_L2914334",
@@ -2125,7 +2476,9 @@
       "purchase": "Tubo 60×60×4 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 60; alto 60; largo 2914.33; pared 4 · Fabricar con Tubo 60×60×4 mm, barra 6 m",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.005222486589160696,
+      "modeledMassKg": 40.996519724911465
     },
     {
       "code": "PLATAFORMA_REJILLA_1700x1190x30_REF",
@@ -2136,7 +2489,9 @@
       "purchase": "Rejilla electroforjada galvanizada serrated; barras portantes30×3 mm cada30 mm, raiz minima28 mm; cortada a medida y con fijaciones",
       "quantity": 1,
       "dimensions": "ancho 1700; alto 1190; espesor 30 · Comprar: Rejilla electroforjada galvanizada serrated; barras portantes30×3 mm cada30 mm, raiz minima28 mm; cortada a medida y con fijaciones. Carga repartida5 kPa (>=500 kg/m²) y puntual1.5 kN sobre100×100 mm: piso luz<=425 mm, peldaños luz<=400 mm con puente central SHS40×40×3 L170 mm. Entregar ficha del panel completo y fijaciones del proveedor.",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.059164127831342145,
+      "modeledMassKg": 0
     },
     {
       "code": "PELDANO_REJILLA_800x250x30_REF",
@@ -2147,7 +2502,9 @@
       "purchase": "Rejilla electroforjada galvanizada serrated; barras portantes30×3 mm cada30 mm, raiz minima28 mm; cortada a medida y con fijaciones",
       "quantity": 15,
       "dimensions": "ancho 250; alto 800; espesor 30 · Comprar: Rejilla electroforjada galvanizada serrated; barras portantes30×3 mm cada30 mm, raiz minima28 mm; cortada a medida y con fijaciones. Carga repartida5 kPa (>=500 kg/m²) y puntual1.5 kN sobre100×100 mm: piso luz<=425 mm, peldaños luz<=400 mm con puente central SHS40×40×3 L170 mm. Entregar ficha del panel completo y fijaciones del proveedor.",
-      "group": "escalera"
+      "group": "escalera",
+      "volumeM3": 0.011869200000000113,
+      "modeledMassKg": 0
     },
     {
       "code": "AC_RHS150x75x5_L4568118_17c97d",
@@ -2158,7 +2515,9 @@
       "purchase": "Tubo 150×75×5 mm, barra 6 m",
       "quantity": 2,
       "dimensions": "ancho 75; alto 150; largo 4568.12; pared 5 · Fabricar con Tubo 150×75×5 mm, barra 6 m",
-      "group": "escalera"
+      "group": "escalera",
+      "volumeM3": 0.02003082088055739,
+      "modeledMassKg": 157.2419439123755
     },
     {
       "code": "AC_UNION_ZANCA_200x160x12",
@@ -2169,7 +2528,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 2,
       "dimensions": "ancho 200; alto 160; espesor 12; taladros Ø13 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "escalera"
+      "group": "escalera",
+      "volumeM3": 0.0007552577001970418,
+      "modeledMassKg": 5.928772946546778
     },
     {
       "code": "AC_SHS40x40x3_L800000",
@@ -2180,7 +2541,9 @@
       "purchase": "Tubo 40×40×3 mm, barra 6 m",
       "quantity": 30,
       "dimensions": "ancho 40; alto 40; largo 800; pared 3 · Fabricar con Tubo 40×40×3 mm, barra 6 m",
-      "group": "escalera"
+      "group": "escalera",
+      "volumeM3": 0.010656000000000247,
+      "modeledMassKg": 83.64960000000195
     },
     {
       "code": "AC_BASE_BARANDA_110x110x20",
@@ -2191,7 +2554,9 @@
       "purchase": "Plancha ASTM A36 de 20 mm",
       "quantity": 6,
       "dimensions": "ancho 110; alto 110; espesor 20 · Fabricar con Plancha ASTM A36 de 20 mm",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.001451999999999992,
+      "modeledMassKg": 11.398199999999937
     },
     {
       "code": "AC_CHS60p3x3p91_L1085850",
@@ -2202,7 +2567,9 @@
       "purchase": "Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B",
       "quantity": 6,
       "dimensions": "largo 1085.85; pared 3.91; Ø exterior 60.3; Ø interior 52.48 · Fabricar con Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.004512838696943841,
+      "modeledMassKg": 35.42578377100916
     },
     {
       "code": "AC_CHS48p3x3p68_L1520000",
@@ -2213,7 +2580,9 @@
       "purchase": "Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B",
       "quantity": 2,
       "dimensions": "largo 1520; pared 3.68; Ø exterior 48.3; Ø interior 40.94 · Fabricar con Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0015681978024137781,
+      "modeledMassKg": 12.310352748948159
     },
     {
       "code": "AC_CHS48p3x3p68_L1005000",
@@ -2224,7 +2593,9 @@
       "purchase": "Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B",
       "quantity": 2,
       "dimensions": "largo 1005; pared 3.68; Ø exterior 48.3; Ø interior 40.94 · Fabricar con Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0010368676259380574,
+      "modeledMassKg": 8.139410863613751
     },
     {
       "code": "AC_CHS48p3x3p68_L620000",
@@ -2235,7 +2606,9 @@
       "purchase": "Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B",
       "quantity": 2,
       "dimensions": "largo 620; pared 3.68; Ø exterior 48.3; Ø interior 40.94 · Fabricar con Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.000639659629931936,
+      "modeledMassKg": 5.021328094965698
     },
     {
       "code": "AC_PROTECCION_INFERIOR_1700x500x3",
@@ -2246,7 +2619,9 @@
       "purchase": "Plancha ASTM A36 de 3 mm",
       "quantity": 1,
       "dimensions": "ancho 1700; alto 500; espesor 3 · Fabricar con Plancha ASTM A36 de 3 mm",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.002549999999999908,
+      "modeledMassKg": 20.017499999999277
     },
     {
       "code": "AC_RODAPIE_1700x150x6",
@@ -2257,7 +2632,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 1700; alto 150; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0015299999999999483,
+      "modeledMassKg": 12.010499999999594
     },
     {
       "code": "AC_RODAPIE_1190x150x6",
@@ -2268,7 +2645,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 1,
       "dimensions": "ancho 1190; alto 150; espesor 6 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.001071000000000003,
+      "modeledMassKg": 8.407350000000022
     },
     {
       "code": "AC_CHS48p3x3p68_L800000",
@@ -2279,7 +2658,9 @@
       "purchase": "Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B",
       "quantity": 2,
       "dimensions": "largo 800; pared 3.68; Ø exterior 48.3; Ø interior 40.94 · Fabricar con Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0008253672644283039,
+      "modeledMassKg": 6.479133025762186
     },
     {
       "code": "AC_CHS48p3x3p68_L503400",
@@ -2290,7 +2671,9 @@
       "purchase": "Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B",
       "quantity": 2,
       "dimensions": "largo 503.4; pared 3.68; Ø exterior 48.3; Ø interior 40.94 · Fabricar con Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0005193623511415106,
+      "modeledMassKg": 4.0769944564608585
     },
     {
       "code": "AC_PUERTA_PANEL_720x520x3",
@@ -2301,7 +2684,9 @@
       "purchase": "Plancha ASTM A36 de 3 mm",
       "quantity": 1,
       "dimensions": "ancho 720; alto 520; espesor 3 · Fabricar con Plancha ASTM A36 de 3 mm",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0011231999999999605,
+      "modeledMassKg": 8.81711999999969
     },
     {
       "code": "AC_SHS40x40x3_L1725000",
@@ -2312,7 +2697,9 @@
       "purchase": "Tubo 40×40×3 mm, barra 6 m",
       "quantity": 1,
       "dimensions": "ancho 40; alto 40; largo 1725; pared 3 · Fabricar con Tubo 40×40×3 mm, barra 6 m",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0007659000000000271,
+      "modeledMassKg": 6.012315000000213
     },
     {
       "code": "AC_RODILLO_GUIA_D40_L20_REF",
@@ -2323,7 +2710,9 @@
       "purchase": "Rodillo Ø40 mm, ancho20 mm, para guía de puerta corredera",
       "quantity": 2,
       "dimensions": "Ø40; ancho20; conjunto con eje y rodamiento · Comprar: Rodillo Ø40 mm, ancho20 mm, para guía de puerta corredera",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 2.563539605329273e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "AC_PUERTA_COLGADOR_30x100x6",
@@ -2334,7 +2723,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 2,
       "dimensions": "ancho 30; alto 100; espesor 6; taladros Ø12 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 3.464283197364888e-05,
+      "modeledMassKg": 0.2719462309931437
     },
     {
       "code": "AC_CIERRE_AUTOMATICO_REF",
@@ -2345,7 +2736,9 @@
       "purchase": "Cierre por resorte para puerta corredera de800 mm de abertura y850 mm de recorrido",
       "quantity": 1,
       "dimensions": "Conjunto de cierre automático para puerta corredera · Comprar: Cierre por resorte para puerta corredera de800 mm de abertura y850 mm de recorrido",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.00023999999999999936,
+      "modeledMassKg": 0
     },
     {
       "code": "AC_SENSOR_BLOQUEO_PUERTA_REF",
@@ -2356,7 +2749,9 @@
       "purchase": "Interruptor de seguridad con bloqueo por resorte, liberación24 VDC y contactos supervisados",
       "quantity": 1,
       "dimensions": "24 VDC; bloqueo supervisado de puerta · Comprar: Interruptor de seguridad con bloqueo por resorte, liberación24 VDC y contactos supervisados",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 9.600000000000026e-05,
+      "modeledMassKg": 0
     },
     {
       "code": "AC_CHS60p3x3p91_L1095800_637020",
@@ -2367,7 +2762,9 @@
       "purchase": "Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B",
       "quantity": 4,
       "dimensions": "largo 1095.8; pared 3.91; Ø exterior 60.3; Ø interior 52.48 · Fabricar con Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.003036127088570096,
+      "modeledMassKg": 23.833597645275255
     },
     {
       "code": "AC_CHS60p3x3p91_L1095800_df7763",
@@ -2378,7 +2775,9 @@
       "purchase": "Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B",
       "quantity": 2,
       "dimensions": "largo 1095.8; pared 3.91; Ø exterior 60.3; Ø interior 52.48 · Fabricar con Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0015180635442850468,
+      "modeledMassKg": 11.916798822637617
     },
     {
       "code": "AC_CHS60p3x3p91_L1095800_0965d8",
@@ -2389,7 +2788,9 @@
       "purchase": "Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B",
       "quantity": 4,
       "dimensions": "largo 1095.8; pared 3.91; Ø exterior 60.3; Ø interior 52.48 · Fabricar con Tubo circular NPS 2 Sch 40 Ø60.3×3.91 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.0030361270885701,
+      "modeledMassKg": 23.833597645275287
     },
     {
       "code": "AC_CHS48p3x3p68_L4568118",
@@ -2400,7 +2801,9 @@
       "purchase": "Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B",
       "quantity": 6,
       "dimensions": "largo 4568.12; pared 3.68; Ø exterior 48.3; Ø interior 40.94 · Fabricar con Tubo circular NPS 1 1/2 Sch 40 Ø48.3×3.68 mm, ASTM A53 Gr B. Fy mínimo240MPa; espesor mínimo de cálculo87,5% del nominal; no sustituir por tubo liviano ornamental.",
-      "group": "barandas"
+      "group": "barandas",
+      "volumeM3": 0.014138906484170669,
+      "modeledMassKg": 110.99041590073973
     },
     {
       "code": "HR4_PAD_100x40x5_EJE_POSITIVO",
@@ -2411,7 +2814,9 @@
       "purchase": "Plancha ASTM A36 de 6 mm",
       "quantity": 4,
       "dimensions": "ancho 100; alto 40; espesor 5 · Fabricar con Plancha ASTM A36 de 6 mm",
-      "group": "complementos"
+      "group": "complementos",
+      "volumeM3": 8.000000000000199e-05,
+      "modeledMassKg": 0.6280000000000155
     },
     {
       "code": "AC_PUENTE_REJILLA_SHS40x40x3_L170",
@@ -2422,18 +2827,22 @@
       "purchase": "Tubo 40×40×3 mm, barra 6 m",
       "quantity": 15,
       "dimensions": "ancho 40; alto 40; largo 170; pared 3 · Fabricar con Tubo 40×40×3 mm, barra 6 m",
-      "group": "escalera"
+      "group": "escalera",
+      "volumeM3": 0.0011322000000000402,
+      "modeledMassKg": 8.887770000000316
     },
     {
       "code": "PASANTE_M16_8p8_L340",
       "position": 195,
-      "name": "Esparrago pasante M16 clase 8.8",
-      "material": "ISO 898-1 clase 8.8 certificado",
+      "name": "Perno pasante M16 grado10.9",
+      "material": "ISO898-1 grado10.9 certificado",
       "supply": "Comprar",
-      "purchase": "Esparrago roscado M16 paso 2, longitud 340 mm, clase 8.8; tuercas clase 8 compatibles",
+      "purchase": "Perno o espárrago M16 x2 L340 grado10.9 certificado, con tuercas clase10 compatibles",
       "quantity": 52,
-      "dimensions": "M16 x 340; paso 2; clase 8.8; rosca no representada · Comprar: Esparrago roscado M16 paso 2, longitud 340 mm, clase 8.8; tuercas clase 8 compatibles. Fy minimo 640 MPa, Fu minimo 800 MPa y As 157 mm2; certificado del esparrago y de tuercas.",
-      "group": "cimentacion"
+      "dimensions": "52 unidades; M16 x2; longitud nominal340; Fy mínimo900 MPa, Fu mínimo1000 MPa y As157 mm². Confirmar suministro y proyección de rosca con el paquete real de arandelas; no soldar",
+      "group": "cimentacion",
+      "volumeM3": 0.003554774919389923,
+      "modeledMassKg": 0
     },
     {
       "code": "CALCE_PASANTE_BASE_TOLVA_250x250x25_t10",
@@ -2444,7 +2853,9 @@
       "purchase": "Plancha ASTM A36 de 10 mm",
       "quantity": 2,
       "dimensions": "ancho 250; alto 250; espesor 10; taladros Ø18 · Fabricar con Plancha ASTM A36 de 10 mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0012296424796047383,
+      "modeledMassKg": 9.652693464897196
     },
     {
       "code": "TOPE_PLACA_REACCION_640x360x45",
@@ -2455,7 +2866,9 @@
       "purchase": "Plancha ASTM A36 de 45 mm",
       "quantity": 2,
       "dimensions": "ancho 640; alto 360; espesor 45; taladros Ø18 · Fabricar con Plancha ASTM A36 de 45 mm",
-      "group": "monorriel"
+      "group": "monorriel",
+      "volumeM3": 0.020690195579110598,
+      "modeledMassKg": 162.4180352960182
     },
     {
       "code": "TOPE_RIGIDIZADOR_TERMINAL_100x240x12",
@@ -2466,7 +2879,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 4,
       "dimensions": "ancho 100; alto 240; espesor 12 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "monorriel"
+      "group": "monorriel",
+      "volumeM3": 0.0011520000000000018,
+      "modeledMassKg": 9.043200000000013
     },
     {
       "code": "PASANTE_ARANDELA_A36_50x50x10_D18",
@@ -2477,7 +2892,9 @@
       "purchase": "Plancha A36 de10mm con certificado",
       "quantity": 104,
       "dimensions": "50x50x10; D18 · Fabricar con Plancha A36 de10mm con certificado",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0023353522348615336,
+      "modeledMassKg": 18.332515043663037
     },
     {
       "code": "PASANTE_TUERCA_BRIDA_M16_CL10_D34p5_H16_REF",
@@ -2488,7 +2905,9 @@
       "purchase": "Tuerca ISO4161/EN1661 M16x2 clase10, brida lisa dw>=31.9mm",
       "quantity": 104,
       "dimensions": "M16x2; dc<=34.5; dw>=31.9; m<=16 · Comprar: Tuerca ISO4161/EN1661 M16x2 clase10, brida lisa dw>=31.9mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0011778459176838862,
+      "modeledMassKg": 0
     },
     {
       "code": "AC_BASE_220x220x12",
@@ -2499,7 +2918,9 @@
       "purchase": "Plancha ASTM A36 de 12 mm",
       "quantity": 5,
       "dimensions": "ancho 220; alto 220; espesor 12; taladros Ø18 · Fabricar con Plancha ASTM A36 de 12 mm",
-      "group": "plataforma"
+      "group": "plataforma",
+      "volumeM3": 0.002842927438814231,
+      "modeledMassKg": 22.31698039469171
     },
     {
       "code": "CALCE_PASANTE_AC_BASE_220x220x12_t35",
@@ -2510,7 +2931,9 @@
       "purchase": "Plancha ASTM A36 de 38 mm",
       "quantity": 5,
       "dimensions": "ancho 220; alto 220; espesor 35; taladros Ø18 · Fabricar con Plancha ASTM A36 de 38 mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.008291871696541506,
+      "modeledMassKg": 65.09119281785082
     },
     {
       "code": "CONTRAPLACA_COMUN_A36_290x290x18_G01",
@@ -2521,7 +2944,9 @@
       "purchase": "Plancha A36 de18mm",
       "quantity": 1,
       "dimensions": "ancho 290; alto 290; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0014954782316442643,
+      "modeledMassKg": 11.739504118407474
     },
     {
       "code": "CONTRAPLACA_COMUN_A36_290x290x18_G02",
@@ -2532,7 +2957,9 @@
       "purchase": "Plancha A36 de18mm",
       "quantity": 1,
       "dimensions": "ancho 290; alto 290; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0014954782316442643,
+      "modeledMassKg": 11.739504118407474
     },
     {
       "code": "CONTRAPLACA_COMUN_A36_290x290x18_G03",
@@ -2543,7 +2970,9 @@
       "purchase": "Plancha A36 de18mm",
       "quantity": 1,
       "dimensions": "ancho 290; alto 290; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.001495478231644264,
+      "modeledMassKg": 11.739504118407472
     },
     {
       "code": "CONTRAPLACA_COMUN_A36_290x290x18_G04",
@@ -2554,7 +2983,9 @@
       "purchase": "Plancha A36 de18mm",
       "quantity": 1,
       "dimensions": "ancho 290; alto 290; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0014954782316442593,
+      "modeledMassKg": 11.739504118407435
     },
     {
       "code": "CONTRAPLACA_COMUN_A36_290x290x18_G05",
@@ -2565,7 +2996,9 @@
       "purchase": "Plancha A36 de18mm",
       "quantity": 1,
       "dimensions": "ancho 290; alto 290; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0014954782316442593,
+      "modeledMassKg": 11.739504118407435
     },
     {
       "code": "CONTRAPLACA_A36_150x150x18_D18",
@@ -2576,7 +3009,9 @@
       "purchase": "Plancha A36 de18mm",
       "quantity": 26,
       "dimensions": "ancho 150; alto 150; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.010410908505687667,
+      "modeledMassKg": 81.72563176964819
     },
     {
       "code": "CONTRAPLACA_COMUN_A36_175x360x18_G25",
@@ -2587,7 +3022,9 @@
       "purchase": "Plancha A36 de18mm",
       "quantity": 1,
       "dimensions": "ancho 175; alto 360; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0009717586737331975,
+      "modeledMassKg": 7.6283055888056
     },
     {
       "code": "CONTRAPLACA_COMUN_A36_175x360x18_G30",
@@ -2598,7 +3035,9 @@
       "purchase": "Plancha A36 de18mm",
       "quantity": 1,
       "dimensions": "ancho 175; alto 360; espesor 18; taladros Ø18 · Fabricar con Plancha A36 de18mm",
-      "group": "cimentacion"
+      "group": "cimentacion",
+      "volumeM3": 0.0009717586737331975,
+      "modeledMassKg": 7.6283055888056
     },
     {
       "code": "GRILLETE_G2130_3p4_1019515",
@@ -2609,7 +3048,9 @@
       "purchase": "Herraje comercial certificado",
       "quantity": 4,
       "dimensions": "WLL4,75 t; pasador Ø22,606; abertura31,75 mm; separadores de centrado",
-      "group": "cruceta"
+      "group": "cruceta",
+      "volumeM3": 0.0005711091706194595,
+      "modeledMassKg": 0
     },
     {
       "code": "GANCHO_L320AN_G_1022402",
@@ -2620,7 +3061,22 @@
       "purchase": "Herraje comercial certificado",
       "quantity": 4,
       "dimensions": "WLL2,5 t; ojo Ø25,4; garganta25,4 mm; compatibilidad con asa real a comprobar",
-      "group": "cruceta"
+      "group": "cruceta",
+      "volumeM3": 0.00013307252353682484,
+      "modeledMassKg": 0
+    },
+    {
+      "code": "CORTE_RESPALDO_304_t16",
+      "position": 213,
+      "name": "Respaldo de hoja del cortador",
+      "material": "AISI304 / ASTM A240",
+      "supply": "Fabricar",
+      "purchase": "Plancha AISI304 / ASTM A240 de16 mm",
+      "quantity": 4,
+      "dimensions": "4 unidades AISI304 t16; separación normal12 mm del filo; alojamientoR30,65 con holgura radial0,5; raíz efectiva calculada a radio31, longitud156,306 mm; dos filetes f6 por raíz, garganta4,243; WPS compatible con pared5/hoja6",
+      "group": "complementos",
+      "volumeM3": 0.0004803198450713286,
+      "modeledMassKg": 3.794526776063496
     }
   ],
   "operating": [
@@ -2642,7 +3098,7 @@
     },
     {
       "label": "Apertura de bolsa",
-      "value": "Fondo cerrado: cortador fijo AISI 304 de 4 filos; la bolsa se sacrifica. Ajustar la punta y comprobar apertura y flujo con la bolsa y el producto de trabajo."
+      "value": "Fondo cerrado: cuatro hojas304 de6 mm, altura250 mm, punta60° incluidos y bisel15° por cara, respaldos16 y núcleo cónico macizo. Descender centrado y de forma controlada con las cuatro asas enganchadas; mantenerlas durante vaciado y retirada. Validar apertura y flujo con el FIBC y producto reales."
     },
     {
       "label": "Alternativa de manga",
@@ -2650,7 +3106,7 @@
     },
     {
       "label": "Condiciones de corte",
-      "value": "Carro inmovilizado, pasador insertado, recinto cerrado, tolva vacía y captación activa"
+      "value": "Carro detenido e inmovilizado con pasador; bolsa centrada; cuatro asas enganchadas; recinto cerrado, tolva disponible y captación activa. Personal fuera de la trayectoria y sin acceso al cortador durante el ciclo."
     },
     {
       "label": "Retorno de bolsa vacía",
@@ -2685,5 +3141,41 @@
       "value": "18 hojas por conjuntos y detalles"
     }
   ],
-  "notice": "Cruceta nominal 2 t · proceso máximo de 1 t."
+  "notice": "Cruceta nominal2 t; proceso máximo1 t. Ajuste y prueba de apertura con bolsa y producto reales; capacidad global de losa y selección final de equipos según memoria.",
+  "nativeSTEPSource": {
+    "stepFile": "ESTACION_BIGBAG.step",
+    "stepSha256": "da6cf344dfad9362b5d48cefa3a8116da5cac46d19419d102fbce3d4feae09a2",
+    "exporter": "SolidWorks / SwSTEP",
+    "units": "m",
+    "meshedFrom": "STEP BRep solids",
+    "animationFramesGlobalM": {
+      "static": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cruceta": [
+        0.8499999999999999,
+        0.0,
+        4.782074
+      ],
+      "gate_blade": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hoistMeshes": [
+        0.85,
+        0.0,
+        0.0
+      ],
+      "lockPinMeshes": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "noParametricRegeneration": true,
+    "finalCutterPresent": true
+  }
 }

@@ -1,8 +1,8 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=estacion-20261020';
-import {buildEquipmentDetails} from './equipment-details.js?v=estacion-20261020';
-import {buildProcessDetails} from './process-details.js?v=estacion-20261020';
+import {buildWorkshop} from './workshop.js?v=actual20261021-ce89291614b4';
+import {buildEquipmentDetails} from './equipment-details.js?v=actual20261021-932064cd5943';
+import {buildProcessDetails} from './process-details.js?v=actual20261021-f494b5c9a45d';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -103,7 +103,7 @@ let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=enganches18-20261020', import.meta.url));
+    const response = await fetch(new URL('../data/model.json?v=actual20261021-3a6e509f97bc', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar la geometría.');
     active = new SceneEngine(container, await response.json(), onSelect);
     return BigbagScene;
@@ -326,15 +326,18 @@ class SceneEngine {
     const uv=[];for(let j=0;j<rings;j++)for(let i=0;i<n;i++)uv.push(i/n,j/(rings-1));geo.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));return geo;
   }
   buildBag() {
+    const C=this.data.config, width=C.bag_width || 1, height=C.bag_height || 1;
     this.bagRoot = new THREE.Group(); this.bagRoot.name = 'Bigbag'; this.model.add(this.bagRoot);
-    this.bag = new THREE.Mesh(this.roundedBagGeometry(),this.clothMaterial());this.bagRoot.add(this.bag);this.bag.castShadow=true;
-    this.bag.userData={group:'Bigbag',part:'Bigbag 1 × 1 × 1 m'};this.parts.push(this.bag);this.sectionMeshes.push(this.bag);
+    this.bag = new THREE.Mesh(this.roundedBagGeometry(width,height),this.clothMaterial());this.bagRoot.add(this.bag);this.bag.castShadow=true;
+    this.bag.userData={group:'Bigbag',part:`Bigbag ${Math.round(width*1000)} × ${Math.round(width*1000)} × ${Math.round(height*1000)} mm`};this.parts.push(this.bag);this.sectionMeshes.push(this.bag);
     const seamColor = '#acb8bb';
-    for(const x of [-.425,.425])for(const y of [-.50,.50]) {
-      this.tube(this.bagRoot,[[x,y,.95],[x+.01,y,1.04],[x+.01,y,1.15],[x+.035,y,1.14],[x+.035,y,1.0]],.016,'#d1d8d5','Bigbag');
-      this.tube(this.bagRoot,[[x,y,.04],[x*1.02,y*.98,.45],[x,y,.96]],.005,seamColor);
+    const anchorHalf=(C.bag_attachment_spacing_m || width)/2;
+    for(const x of [-anchorHalf,anchorHalf])for(const y of [-anchorHalf,anchorHalf]) {
+      const loop=C.bag_loop_loaded_m || .25;
+      this.tube(this.bagRoot,[[x,y,height*.95],[x+.01,y,height+.04],[x+.01,y,height+loop],[x+.035,y,height+loop-.01],[x+.035,y,height]],.016,'#d1d8d5','Bigbag');
+      this.tube(this.bagRoot,[[x,y,height*.04],[x*1.02,y*.98,height*.45],[x,y,height*.96]],.005,seamColor);
     }
-    const stripe=this.box(this.bagRoot,.35,.004,.13,0,-.492,.54,'#235d80','Bigbag');stripe.material.roughness=1;
+    const stripe=this.box(this.bagRoot,.35,.004,.13,0,-width*.502,height*.54,'#235d80','Bigbag');stripe.material.roughness=1;
     this.crucetaRoot=new THREE.Group();this.crucetaRoot.name='Cruceta';this.model.add(this.crucetaRoot);
     this.data.cruceta.forEach(m=>this.addDataMesh({...m,group:'Cruceta'},this.crucetaRoot));
     this.slingRoot=new THREE.Group();this.bagRoot.add(this.slingRoot);

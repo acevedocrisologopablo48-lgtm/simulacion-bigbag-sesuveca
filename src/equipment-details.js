@@ -1,5 +1,5 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
-import {buildCollector} from './collector.js?v=estacion-20261020';
+import {buildCollector} from './collector.js?v=actual20261021-1fadb5c4d4e2';
 
 // Presentation detail follows the existing equipment envelopes. Fabricated CAD remains intact.
 const Z = new THREE.Vector3(0, 0, 1);
