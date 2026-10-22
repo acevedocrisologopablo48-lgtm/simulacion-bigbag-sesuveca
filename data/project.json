@@ -4215,8 +4215,6 @@
     "noParametricRegeneration": true,
     "finalCutterPresent": true
   },
-  "approval": "REVISIÓN P05 - PROYECTO DE INGENIERÍA Y DOSIFICACIÓN APROBADO PARA FABRICACIÓN",
-  "approvalBasis": "Estado documental por directiva del cliente; requisitos de compra y SAT según memoria.",
   "structuralUniformity": {
     "columnUtilization": 0.8041906656248192,
     "kneeQuantity": 4,

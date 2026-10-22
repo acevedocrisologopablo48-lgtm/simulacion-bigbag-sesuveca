@@ -153,7 +153,7 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=auto20261021-d4e788dbbbc7'),fetch('data/model.json?v=auto20261021-4c671559eb2f')]);
+  const responses=await Promise.all([fetch('data/project.json?v=auto20261021-6d89e0a0b52f'),fetch('data/model.json?v=auto20261021-4c671559eb2f')]);
   if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
   [project,model]=await Promise.all(responses.map(r=>r.json()));
   populateProject();populateStages();
