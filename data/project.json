@@ -313,7 +313,7 @@
       "label": "Equipos y descarga",
       "material": "Material de cada pieza indicado en la lista.",
       "quantity": 394,
-      "massKg": 472.0291386890511,
+      "massKg": 472.04475851751096,
       "description": "Cortador inoxidable reforzado, compuerta neumática y un módulo gravimétrico100kg. Una mesa900×1000mm; indicador apoyado en el marco vivo."
     },
     {
@@ -2849,15 +2849,15 @@
     {
       "code": "PN_BIELA_HOJA_12",
       "position": 216,
-      "name": "Horquilla t12, luz66; dos D20.5 coaxiales a73.75mm de base; base sobre hoja, f4x90 ambos lados; unión articulada con pasador20.",
+      "name": "Horquilla de arrastre; dos orejas de 12 mm y agujeros coaxiales Ø20,5",
       "material": "ASTM A36",
       "supply": "Fabricar",
       "purchase": "ASTM A36",
       "quantity": 1,
-      "dimensions": "Segun CAD y plano de conjunto",
+      "dimensions": "90 × 70 × 102 mm; luz 66 mm; eje de agujeros a 73,75 mm de la base",
       "group": "complementos",
-      "modeledMassKg": 1.7025761934133312,
-      "volumeM3": 0.00021688868705902308
+      "modeledMassKg": 1.7181960218731882,
+      "volumeM3": 0.00021887847412397303
     },
     {
       "code": "PN_TRAVESANO_60x60x4_L2200",
@@ -4181,7 +4181,7 @@
   "notice": "Cruceta nominal2 t; proceso máximo1 t. Ajuste y prueba de apertura con bolsa y producto reales; capacidad global de losa y selección final de equipos según memoria.",
   "nativeSTEPSource": {
     "stepFile": "ESTACION_BIGBAG.step",
-    "stepSha256": "15f8bf13f115f46eed1f9d60e28128e97e2f850b7b65d2102e7f22ac49634025",
+    "stepSha256": "ed74637ef7d8a10817d94b397236d665d06f01518d7ac01595effce0d1135e24",
     "exporter": "SolidWorks / SwSTEP",
     "units": "m",
     "meshedFrom": "STEP BRep solids",
