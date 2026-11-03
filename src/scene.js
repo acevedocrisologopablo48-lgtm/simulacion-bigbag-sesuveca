@@ -1,682 +1,166 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
-import {loadModel} from './model-data.js?v=p0520261102_8918d9c5';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=p0520261102_8918d9c5';
-import {buildEquipmentDetails} from './equipment-details.js?v=p0520261102_8918d9c5';
-import {buildProcessDetails} from './process-details.js?v=p0520261102_8918d9c5';
-import {processState, functionalPose, motionOffset, validateMotionGroups, springVertexWeights, deformSpringPositions, deformBellowsPositions} from './functional-poses.js?v=p0520261102_8918d9c5';
-export {processState} from './functional-poses.js?v=p0520261102_8918d9c5';
+import { loadModel } from './model-data.js?v=p05simple20261103';
 
-const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
-const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
-const lerp = (a, b, t) => a + (b - a) * t;
-const UP = new THREE.Vector3(0, 0, 1);
-const groupNames = {
-  Cimentacion: 'Cimentación y anclajes', Porticos: 'Pórticos y arriostres', Monorriel: 'Monorriel y carro', Tolva: 'Tolva de carbón',
-  'Soporte bolsa': 'Apoyo del bigbag', Cruceta: 'Cruceta de cuatro puntos', Plataforma: 'Plataforma de acceso superior',
-  Escalera: 'Escalera de acceso', Barandas: 'Barandas y guardas', Compuerta: 'Compuerta y ensacado',
-  Complementos: 'Uniones y complementos', Accesorios: 'Accesorios', Bigbag: 'Bigbag de proceso · 1 t',
-  Montacargas: 'Montacargas de abastecimiento', Operarios: 'Operación y amarre', Rodillos: 'Mesa elevadora y rodillos',Colector:'Colector de polvo'
-};
-const groupIds = {Cimentacion:'cimentacion',Porticos:'porticos',Monorriel:'monorriel',Tolva:'tolva','Soporte bolsa':'soporte-bolsa',Cruceta:'cruceta',Plataforma:'plataforma',Escalera:'escalera',Barandas:'barandas',Complementos:'complementos',Accesorios:'complementos',Compuerta:'complementos',Rodillos:'complementos',Bigbag:'soporte-bolsa',Montacargas:'porticos',Operarios:'complementos'};
-const canonicalGroup = id => Object.keys(groupIds).find(k => groupIds[k] === id) || id;
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const smooth=t=>{t=clamp(t);return t*t*(3-2*t);};
+export const STAGES=[
+  {start:0,end:.10,title:'Recepción del bigbag',short:'Recibir',detail:'El montacargas entrega la bolsa en la zona de enganche.'},
+  {start:.10,end:.18,title:'Enganche de las cuatro asas',short:'Enganchar',detail:'Se conectan las cuatro asas a la cruceta y el montacargas se retira.'},
+  {start:.18,end:.32,title:'Izaje con tecle eléctrico',short:'Izar',detail:'El operario eleva la bolsa con la botonera hasta la altura de traslado.'},
+  {start:.32,end:.42,title:'Traslado sobre la tolva',short:'Trasladar',detail:'El carro recorre el monorriel y centra la bolsa sobre el apoyo.'},
+  {start:.42,end:.52,title:'Apoyo y apertura manual',short:'Apoyar y abrir',detail:'La bolsa queda apoyada. Desde la plataforma se libera el amarre de la boca inferior.'},
+  {start:.52,end:.62,title:'Descarga a la tolva',short:'Vaciar',detail:'El carbón cae por gravedad. La compuerta inferior permanece cerrada.'},
+  {start:.62,end:.74,title:'Retorno del bigbag vacío',short:'Retornar',detail:'Se recoge la boca de descarga, se devuelve la bolsa vacía al punto de recepción y se desenganchan las asas.'},
+  {start:.74,end:1,title:'Ensacado manual',short:'Pesar y retirar',detail:'El operario regula la compuerta, comprueba 25 o 50 kg y retira el saco. Se repite hasta vaciar la tolva.'}
+];
 
-export function receptionPose(state, config) {
-  const q = state.phaseProgress, receiving = state.phaseIndex === 0, withdrawing = state.phaseIndex === 1;
-  const approach = receiving ? 2.6 * (1 - smooth(q / .82)) : 0;
-  const lift = receiving ? .06 * (1 - smooth((q - .82) / .18)) : 0;
-  const retreat = withdrawing ? 2.6 * smooth((q - .25) / .75) : 0;
-  const workerApproach = withdrawing ? smooth((q - .72) / .28) : state.phaseIndex >= 2 ? 1 : 0;
-  const workerX = lerp(config.pickup_x + 1.25, config.pickup_x, Math.min(1, workerApproach * 2));
-  const workerY = lerp(-1.45, -.95, Math.max(0, workerApproach * 2 - 1));
-  const withdrawFromLoad = state.phaseIndex === 2 ? smooth(q / .2) : state.phaseIndex > 2 ? 1 : 0;
-  return {
-    forkliftVisible: state.phaseIndex < 2,
-    forkliftPosition: [config.pickup_x + .64 + approach + retreat, 0, 0],
-    forkliftRotation: Math.PI / 2,
-    forkLift: lift - (withdrawing ? .015 * smooth(q / .2) : 0),
-    palletPosition: [config.pickup_x + approach, 0, lift],
-    bagPosition: receiving ? [config.pickup_x + approach, 0, config.pickup_bottom + lift] : [state.x, 0, state.z],
-    receivingWorker: [workerX, lerp(workerY, -1.45, withdrawFromLoad), -.015]
-  };
+export function processState(progress,config,sackSize=50){
+ const p=clamp(progress),found=STAGES.findIndex(s=>p<s.end),index=found<0?7:found;
+ const stage=STAGES[index],q=clamp((p-stage.start)/(stage.end-stage.start));
+ const C=config,x0=C.pickup_x,x1=C.discharge_x,z0=C.pickup_bottom,zt=C.travel_bottom,zs=C.support_z;
+ let x=x0,z=z0,bagFill=1,hopperFill=0,gate=0,sackFill=0,removal=0,finished=0;
+ if(index===0)x=x0+2.4*(1-smooth(q));
+ if(index===2)z=lerp(z0,zt,smooth(q));
+ if(index===3){x=lerp(x0,x1,smooth(q));z=zt;}
+ if(index===4||index===5){x=x1;z=index===4?lerp(zt,zs,smooth(q/.45)):zs;}
+ if(index===5){bagFill=1-smooth(q);hopperFill=1-bagFill;}
+ if(index===6){
+  bagFill=0;hopperFill=1;
+  if(q<.15){x=x1;z=zs;}
+  else if(q<.4){x=x1;z=lerp(zs,zt,smooth((q-.15)/.25));}
+  else if(q<.7){x=lerp(x1,x0,smooth((q-.4)/.3));z=zt;}
+  else{x=x0;z=lerp(zt,z0,smooth((q-.7)/.3));}
+ }
+ if(index===7){
+  bagFill=0;const totalSacks=1000/sackSize,cycles=Math.min(totalSacks-1e-8,q*totalSacks),n=Math.floor(cycles),t=cycles-n;
+  sackFill=clamp((t-.12)/.48);gate=t>=.12&&t<.60?(t>.48?.2:1):0;
+  removal=smooth((t-.76)/.24);finished=n;hopperFill=1-(n+sackFill)/totalSacks;
+  if(p===1){finished=totalSacks;hopperFill=0;gate=0;}
+ }
+ return {progress:p,phaseIndex:index,phaseProgress:q,stage,x,z,bagFill,hopperFill,gate,sackFill,removal,finished,
+  sackSize,hookM:(index===0?z0:z)+C.bag_height+C.headpack,spoutOpen:index===5,
+  spoutDeployed:index===6?1-smooth(q/.15):index===5?1:index===4?smooth((q-.45)/.3):0};
 }
 
-let active = null;
-export const BigbagScene = {
-  async init(container, onSelect) {
-    if (active) active.dispose();
-    active = new SceneEngine(container, await loadModel(), onSelect);
-    return BigbagScene;
-  },
-  setProgress(v) { return active?.setProgress(v); },
-  setView(name) { active?.setView(name); }, resetCamera() { active?.resetCamera(); },
-  setEdges(v) { active?.setEdges(v); }, setSection(v) { active?.setSection(v); },
-  setDimensions(v) { active?.setDimensions(v); }, setExploded(v) { active?.setExploded(v); },
-  setStyle(v) { active?.setStyle(v); },
-  setCameraMode(v) { active?.setCameraMode(v); },
-  highlight(id) { active?.highlight(id); },
-  setMode(v) { active?.setMode(v); }, setBagSize(v) { active?.setBagSize(v); },
-  setPayload(v) {
-    // Payload is a mass setting. A partly filled1050x1050x1650 FIBC keeps
-    // its supplied geometry and attachment pattern; never infer another bag
-    // from595.65kg or500kg. Other formats require an explicit separate study.
-    active?.setPayload(v);
-  }, getState() { return active?.getState(); },
-  setAccessOpen(v) { return active?.setAccessOpen(v); },
-  resetAccess() { return active?.resetAccess(); },
-  resize() { active?.resize(); }, toggleFullscreen() { return active?.toggleFullscreen(); },
-  dispose() { active?.dispose(); active = null; }
+let active;
+export const BigbagScene={
+ async init(container){active?.dispose();active=new SceneEngine(container,await loadModel());return this;},
+ setProgress(p){return active?.setProgress(p);},setView(name){active?.setView(name);},
+ resetCamera(){active?.setView('iso');},setBagSize(v){active.sackSize=Number(v)===25?25:50;return active.setProgress(active.progress);},
+ getState(){return active?.getState();},dispose(){active?.dispose();active=null;}
 };
-window.BigbagScene = BigbagScene;
+window.BigbagScene=BigbagScene;
 
-class SceneEngine {
-  constructor(container, data, onSelect) {
-    this.container = container; this.data = data; this.onSelect = onSelect;
-    this.progress = 0; this.payload = 1000; this.bagSize = 50; this.mode = 'closed';
-    this.edgesOn = false; this.section = false; this.exploded = false; this.selected = null;this.renderStyle='realistic';this.currentView='iso';this.cameraMode='rotate';
-    this.parts = []; this.groupRoots = new Map(); this.edgeLines = []; this.sectionMeshes = [];
-    this.accessGateMeshes = []; this.accessOpen = false; this.accessResetRequired = false;
-    this.functionalMotionMeshes = [];
-    this.motionGroupCounts=data.functional3D?validateMotionGroups(data):{};
-    this.scene = new THREE.Scene(); this.scene.background = new THREE.Color('#edf2f4');
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1.25;
-    this.renderer.shadowMap.enabled = true; this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    this.renderer.localClippingEnabled = true;
-    this.renderer.domElement.setAttribute('aria-label', 'Estación de bigbags. Elige Girar o Desplazar y arrastra. Rueda para acercar; dos dedos para mover y acercar.');
-    this.renderer.domElement.setAttribute('role', 'img'); this.renderer.domElement.tabIndex = 0;
-    this.renderer.domElement.style.cssText = 'display:block;width:100%;height:100%;touch-action:none;outline-offset:-4px;';
-    container.appendChild(this.renderer.domElement);
-    this.perspectiveCamera=new THREE.PerspectiveCamera(37,1,.025,150);
-    this.technicalCamera=new THREE.OrthographicCamera(-5,5,4,-4,.025,150);
-    this.camera = this.perspectiveCamera;
-    this.camera.up.copy(UP); this.camera.position.set(9, -12, 8);
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.target.set(1.15, -.05, 2.45); this.controls.enableDamping = false;
-    this.controls.minZoom = .45; this.controls.maxZoom = 5;
-    this.controls.maxPolarAngle = Math.PI * .49;
-    this.controls.minDistance=.45;this.controls.maxDistance=38;
-    this.controls.enablePan=true;this.controls.screenSpacePanning=true;
-    this.setCameraMode('rotate');
-    this.controls.addEventListener('change', () => this.render());
-    this.workshop=buildWorkshop(this);
-    this.model = new THREE.Group(); this.scene.add(this.model);
-    this.cutterMeshes = []; this.spoutMeshes = [];
-    data.static.forEach(m => {
-      if (m.tag === 'pallet_referencia' || m.tag === 'balanza_envolvente' || (!data.functional3D && /^BALANZA_|^MESA_/i.test(m.tag))) return;
-      if (/^(?:BIGBAG_1t_REF|CADENA_REF|ASA_REF_\d+|SACO_50kg_REF)$/.test(m.tag)) return;
-      const mesh = this.addDataMesh(m, this.group(m.group));
-      if ((m.motion?.group && m.motion.group !== 'access_gate') || m.motion?.rotation) {
-        const spring=m.motion.kind==='pitch_change'?{base:new Float32Array(mesh.geometry.getAttribute('position').array),
-          weights:springVertexWeights(mesh.geometry.getAttribute('position').array,m.motion),metadata:m.motion}:null;
-        const rc=data.functional3D?.completionContracts?.retentions;
-        const bellows=m.motion.kind==='bellows_extension'?{base:new Float32Array(mesh.geometry.getAttribute('position').array),
-          contract:rc?.collar_sequential_completion?.flexible_connector||rc?.sequential_collar?.flexible_connector}:null;
-        this.functionalMotionMeshes.push({mesh, group:m.motion.group || 'static',
-          travel:m.motion.travel || data.functional3D?.motion_groups?.[m.motion.group]?.displacement_m || [0,0,0],
-          base:mesh.position.clone(),baseQuaternion:mesh.quaternion.clone(),rotation:m.motion.rotation,spring,bellows});
-      }
-      if (m.motion?.group==='access_gate') this.accessGateMeshes.push(mesh);
-      if (/^TOL_PANEL|^TOL_TAPA_POLVO|^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
-      if (/^CORTE_/.test(m.tag)) this.cutterMeshes.push(mesh);
-      if (/^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
-    });
-    this.buildHopper(); this.buildBag(); this.buildHoist(); this.buildScaleAndRollers();
-    this.buildForklift(); this.buildOperators(); this.buildFlow(); this.buildDimensions();
-    this.equipmentDetails=buildEquipmentDetails(this);this.processDetails=buildProcessDetails(this);
-    // Functional CAD is the physical source. Earlier decorative hoist, bumper,
-    // roller and duct overlays must not become a second conflicting machine.
-    if (data.functional3D) {
-      this.parts.filter(m=>m.userData.equipmentDetail && (m.userData.group==='Monorriel' ||
-        /Cojinete sellado de rodillo|Eje de rodillo|Larguero de transportador/.test(m.userData.part||'')))
-        .forEach(mesh=>{mesh.visible=false;mesh.userData.functionalSuperseded=true;});
-      this.parts.filter(m=>!m.userData.equipmentDetail && /^(TECLE_ELECTRICO_2t_REF|CARRO_2t_REF)$/.test(m.userData.part||''))
-        .forEach(mesh=>mesh.visible=true);
-      if(this.collectorDuct)this.collectorDuct.visible=false;
-      // The external collector remains a labelled commercial reference. Shift
-      // it horizontally only, retaining its floor datum; the short flexible
-      // adapter is a viewer interface, not an OEM duct or fabricated CAD part.
-      if(this.collector?.root){
-        const endpoint=new THREE.Vector3(-1.5,-.6,.85);
-        const delta=new THREE.Vector3(endpoint.x-this.collector.inlet.x,endpoint.y-this.collector.inlet.y,0);
-        this.collector.root.position.add(delta);this.collector.inlet.add(delta);
-        this.collector.position=this.collector.root.position.toArray();
-        const inlet=this.collector.inlet;
-        const adapter=this.tube(this.group('Colector'),[endpoint.toArray(),[endpoint.x,endpoint.y-.16,.89],
-          [inlet.x,inlet.y-.16,inlet.z],inlet.toArray()],.073,'#68757b','Colector');
-        adapter.userData.part='Adaptador flexible al colector externo · interfaz visual de referencia';
-        adapter.userData.label=adapter.userData.part;
-        this.collector.connection={source:endpoint.toArray(),inlet:inlet.toArray(),
-          status:'Interfaz visual de referencia; no es tramoOEM ni validación de captación.'};
-      }
-    }
-    this.raycaster = new THREE.Raycaster(); this.pointer = new THREE.Vector2();
-    this.pointerDown = e => { this.clickOrigin = [e.clientX, e.clientY]; };
-    this.pointerUp = e => {
-      if (e.button!==0 || !this.clickOrigin || Math.hypot(e.clientX - this.clickOrigin[0], e.clientY - this.clickOrigin[1]) > 5) return;
-      const rect = this.renderer.domElement.getBoundingClientRect();
-      this.pointer.set((e.clientX - rect.left) / rect.width * 2 - 1, -(e.clientY - rect.top) / rect.height * 2 + 1);
-      this.raycaster.setFromCamera(this.pointer, this.camera);
-      const hit = this.raycaster.intersectObjects(this.parts, false).find(h => h.object.visible && this.parentsVisible(h.object));
-      if (hit) { const d = hit.object.userData; this.highlight(d.group); this.onSelect?.({ id: groupIds[d.group] || d.group, groupId: groupIds[d.group] || d.group, label: d.label||(d.equipmentDetail?d.part:(groupNames[d.group] || d.group)), name: groupNames[d.group] || d.group, part: d.part }); }
-      else { this.highlight(null); this.onSelect?.(null); }
-    };
-    this.keydown = e => {
-      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home'].includes(e.key)) return;
-      e.preventDefault(); if (e.key === 'Home') return this.resetCamera();
-      if(this.cameraMode==='pan'||e.shiftKey){
-        const distance=this.camera.position.distanceTo(this.controls.target);
-        const step=(this.camera.isOrthographicCamera?(this.camera.top-this.camera.bottom)/this.camera.zoom:2*distance*Math.tan(THREE.MathUtils.degToRad(this.camera.fov/2)))*.06;
-        this.camera.updateMatrixWorld();
-        const horizontal=e.key==='ArrowLeft'||e.key==='ArrowRight';
-        const direction=new THREE.Vector3().setFromMatrixColumn(this.camera.matrixWorld,horizontal?0:1);
-        direction.multiplyScalar(step*(['ArrowLeft','ArrowDown'].includes(e.key)?-1:1));
-        this.camera.position.add(direction);this.controls.target.add(direction);this.controls.update();this.render();return;
-      }
-      const v = this.camera.position.clone().sub(this.controls.target);
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') v.applyAxisAngle(UP, e.key === 'ArrowLeft' ? -.1 : .1);
-      else v.z = clamp(v.z + (e.key === 'ArrowUp' ? .5 : -.5), .1, 18);
-      this.camera.position.copy(this.controls.target).add(v); this.controls.update(); this.render();
-    };
-    this.renderer.domElement.addEventListener('pointerdown', this.pointerDown);
-    this.renderer.domElement.addEventListener('pointerup', this.pointerUp);
-    this.renderer.domElement.addEventListener('keydown', this.keydown);
-    this.observer = new ResizeObserver(() => this.resize()); this.observer.observe(container);
-    this.resize(); this.setProgress(0); this.resetCamera();
+class SceneEngine{
+ constructor(container,data){
+  this.container=container;this.data=data;this.progress=.44;this.sackSize=50;
+  this.scene=new THREE.Scene();this.scene.background=new THREE.Color('#edf2f4');
+  this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});
+  this.renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.8));
+  this.renderer.outputColorSpace=THREE.SRGBColorSpace;this.renderer.toneMapping=THREE.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.2;
+  this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  this.renderer.domElement.setAttribute('aria-label','Modelo CAD sombreado de la estación de bigbags');container.appendChild(this.renderer.domElement);
+  this.camera=new THREE.PerspectiveCamera(35,1,.025,100);this.camera.up.set(0,0,1);
+  this.controls=new OrbitControls(this.camera,this.renderer.domElement);this.controls.minDistance=.6;this.controls.maxDistance=35;this.controls.maxPolarAngle=Math.PI*.495;
+  this.controls.addEventListener('change',()=>this.render());
+  const hemi=new THREE.HemisphereLight('#ffffff','#728491',3);hemi.up.set(0,0,1);hemi.position.set(0,0,15);this.scene.add(hemi);
+  const light=new THREE.DirectionalLight('#fff7e9',3);light.position.set(-5,-8,13);light.castShadow=true;light.shadow.mapSize.set(2048,2048);light.shadow.camera.left=-9;light.shadow.camera.right=9;light.shadow.camera.top=9;light.shadow.camera.bottom=-9;light.shadow.normalBias=.025;this.scene.add(light);
+  const fill=new THREE.DirectionalLight('#e8f1ff',1.5);fill.position.set(8,5,9);this.scene.add(fill);
+  const ground=new THREE.Mesh(new THREE.PlaneGeometry(50,50),this.material('#e2e8eb',{roughness:1,metalness:0}));ground.position.z=-.045;ground.receiveShadow=true;this.scene.add(ground);
+  this.channels={};this.nativeCount=0;this.nativeVisible=0;
+  const refs=/^(?:BIGBAG_1t_REF|CADENA_REF|ASA_REF_\d+|SACO_50kg_REF|FIBC_MANGA_DESCARGA_D350|FIBC_CINTA_APERTURA_LATERAL|pallet_referencia|balanza_envolvente)$/;
+  const origins=data.nativeSTEPSource?.animationFramesGlobalM||{};
+  for(const channel of ['static','cruceta','gate_blade','hoistMeshes','lockPinMeshes']){
+   const group=new THREE.Group();this.channels[channel]=group;this.scene.add(group);group.position.fromArray(origins[channel]||[0,0,0]);
+   for(const part of data[channel]||[]){
+    this.nativeCount++;if(refs.test(part.tag)||part.visualContextOnly)continue;
+    const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(part.v.flat(),3));
+    const idx=[];for(const face of part.f){for(let i=1;i<face.length-1;i++)idx.push(face[0],face[i],face[i+1]);}geo.setIndex(idx);geo.computeVertexNormals();
+    const color=Array.isArray(part.c)?new THREE.Color(...part.c.map(c=>c/255)).convertSRGBToLinear():part.c||'#42667b';
+    const mesh=new THREE.Mesh(geo,this.material(color));mesh.name=part.tag;mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);this.nativeVisible++;
+   }
   }
-  parentsVisible(obj) { for (let p = obj; p; p = p.parent) if (!p.visible) return false; return true; }
-  group(id) {
-    if (!this.groupRoots.has(id)) {
-      const group = new THREE.Group(); group.name = id; this.model.add(group); this.groupRoots.set(id, group);
-    }
-    return this.groupRoots.get(id);
+  this.buildContext();this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(container);this.resize();this.setView('iso');this.setProgress(.44);
+ }
+ material(color,options={}){return new THREE.MeshStandardMaterial({color,roughness:.6,metalness:.16,side:THREE.DoubleSide,...options});}
+ box(parent,w,d,h,x,y,z,color){const m=new THREE.Mesh(new THREE.BoxGeometry(w,d,h),this.material(color));m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
+ cylinder(parent,r,h,x,y,z,color,open=false){const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,24,1,open),this.material(color));m.rotation.x=Math.PI/2;m.position.set(x,y,z);m.castShadow=true;parent.add(m);return m;}
+ tube(parent,points,r,color){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const m=new THREE.Mesh(new THREE.TubeGeometry(curve,Math.max(8,points.length*5),r,8,false),this.material(color,{metalness:0}));parent.add(m);return m;}
+ cloth(){return this.material('#f1f0e7',{roughness:1,metalness:0});}
+ bagGeometry(w,d,h,neck=1){
+  const v=[],idx=[],n=32,rings=7;for(let j=0;j<rings;j++){const t=j/(rings-1),bulge=(.92+.08*Math.sin(t*Math.PI))*lerp(1,neck,clamp((t-.65)/.35));
+   for(let i=0;i<n;i++){const a=i/n*Math.PI*2,c=Math.cos(a),s=Math.sin(a);v.push(w/2*Math.sign(c)*Math.abs(c)**.28*bulge,d/2*Math.sign(s)*Math.abs(s)**.28*bulge,t*h);}}
+  for(let j=0;j<rings-1;j++)for(let i=0;i<n;i++){const a=j*n+i,b=j*n+(i+1)%n,c=(j+1)*n+(i+1)%n,d=(j+1)*n+i;idx.push(a,b,d,b,c,d);}
+  for(let i=1;i<n-1;i++)idx.push(0,i+1,i,(rings-1)*n,(rings-1)*n+i,(rings-1)*n+i+1);
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));g.setIndex(idx);g.computeVertexNormals();return g;
+ }
+ person(x,y,z){const p=new THREE.Group();this.scene.add(p);p.position.set(x,y,z);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(.10,14,10),this.material('#c39a75'));head.position.z=1.5;p.add(head);
+  this.cylinder(p,.13,.08,0,0,1.6,'#efbc3e');this.box(p,.32,.20,.49,0,0,1.16,'#e58b32');
+  for(const dx of [-.09,.09]){this.cylinder(p,.064,.91,dx,0,.46,'#304d62');this.box(p,.13,.22,.08,dx,-.035,.045,'#334149');}
+  this.box(p,.33,.004,.04,0,-.102,1.2,'#e4e2b9');this.box(p,.33,.004,.04,0,-.102,1.06,'#e4e2b9');
+  for(const d of [-1,1])this.tube(p,[[d*.18,0,1.36],[d*.25,-.05,1.12],[d*.2,-.27,1.02]],.048,'#e58b32');return p;
+ }
+ buildContext(){
+  const C=this.data.config;this.bag=new THREE.Group();this.scene.add(this.bag);
+  this.bagBody=new THREE.Mesh(this.bagGeometry(C.bag_width,C.bag_width,C.bag_height),this.cloth());this.bagBody.castShadow=true;this.bag.add(this.bagBody);
+  for(const x of [-C.bag_width/2,C.bag_width/2])for(const y of [-C.bag_width/2,C.bag_width/2]){
+   this.tube(this.bag,[[x,y,C.bag_height*.95],[x,y,C.bag_height+.04],[x,y,C.bag_height+.25],[x+.035,y,C.bag_height+.24],[x+.035,y,C.bag_height]],.014,'#d3d7d1');
+   this.tube(this.bag,[[x*.92,y*.92,.03],[x,y,C.bag_height*.5],[x*.93,y*.93,C.bag_height*.95]],.004,'#c1c7c3');
   }
-  material(color, options = {}) {
-    return new THREE.MeshStandardMaterial({ color: Array.isArray(color) ? new THREE.Color(...color.map(v => v / 255)).convertSRGBToLinear() : color,
-      roughness: .58, metalness: .3, side: THREE.DoubleSide, ...options });
-  }
-  geometry(m) {
-    const positions = [],uv=[];
-    for (const face of m.f) {
-      let triangles;
-      if (face.length === 3) triangles = [[0, 1, 2]];
-      else {
-        const a = new THREE.Vector3(...m.v[face[0]]), b = new THREE.Vector3(...m.v[face[1]]), c = new THREE.Vector3(...m.v[face[2]]);
-        const n = b.sub(a).cross(c.sub(a)), ax = [Math.abs(n.x), Math.abs(n.y), Math.abs(n.z)];
-        const drop = ax.indexOf(Math.max(...ax)), axes = [0, 1, 2].filter(i => i !== drop);
-        triangles = THREE.ShapeUtils.triangulateShape(face.map(i => new THREE.Vector2(m.v[i][axes[0]], m.v[i][axes[1]])), []);
-      }
-      for (const t of triangles) {
-        const a=new THREE.Vector3(...m.v[face[t[0]]]),b=new THREE.Vector3(...m.v[face[t[1]]]),c=new THREE.Vector3(...m.v[face[t[2]]]);
-        const n=b.sub(a).cross(c.sub(a));const axes=Math.abs(n.z)>Math.max(Math.abs(n.x),Math.abs(n.y))?[0,1]:Math.abs(n.x)>Math.abs(n.y)?[1,2]:[0,2];
-        for (const j of t){const p=m.v[face[j]];positions.push(...p);uv.push(p[axes[0]]*4,p[axes[1]]*4);}
-      }
-    }
-    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.computeVertexNormals(); return g;
-  }
-  addDataMesh(m, parent) {
-    const tag=m.tag||'';
-    const code=m.piece||tag;
-    const kind=/LINER/.test(tag)?'polymer':/AMORT|BUFFER|P100_MANGA_FLEXIBLE/.test(code)?'rubber':/P100_(?:MARCO|PLATAFORMA|POSTE|BRAZO|SOPORTE)|CORTE_.*(?:FILO|CUCHILLA)|MG.*(?:EJE|PIÑON|PINON)|RODILLO/.test(code)?'stainless':/PERNO|ARANDELA|TUERCA|ANCLA_HAS|TC11|PASADOR|P100_CELDA|PN_ACTUADOR|P100_(?:CIERRE|COMPENSADOR)_NEUMATICO/.test(code)?'zinc':'paint';
-    const sourceColor=/P100_INDICADOR|PN_VALVULAS/.test(code)?'#283940':/^PN_|P100_MESA|CUNA_BOTONERA/.test(code)?[56,92,117]:(m.c??m.color??[56,92,117]);
-    const color=Array.isArray(sourceColor)?new THREE.Color(...sourceColor.map(v=>v/255)).convertSRGBToLinear():sourceColor;
-    const mesh = new THREE.Mesh(this.geometry(m), this.workshop.materialFor(color,kind)); parent.add(mesh);
-    mesh.castShadow = true; mesh.receiveShadow = true;
-    mesh.userData = { group: m.group || parent.name, part: m.tag || parent.name, label:m.label };
-    this.parts.push(mesh);
-    const edge = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry, 30), new THREE.LineBasicMaterial({ color: 0x203a4a, transparent: true, opacity: .27 }));
-    edge.renderOrder = 1;edge.visible=this.edgesOn; mesh.add(edge); this.edgeLines.push(edge); return mesh;
-  }
-  box(parent, w, d, h, x, y, z, color, group, options) {
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, d, h), this.material(color, options));
-    mesh.position.set(x, y, z); mesh.castShadow = true; mesh.receiveShadow = true; parent.add(mesh);
-    if (group) { mesh.userData = { group, part: groupNames[group] || group }; this.parts.push(mesh); }
-    return mesh;
-  }
-  cylinder(parent, radius, length, x, y, z, color, group, options = {}) {
-    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, length, 20, 1, options.openEnded || false), this.material(color, options));
-    mesh.rotation.x = Math.PI / 2; mesh.position.set(x, y, z); mesh.castShadow = true; parent.add(mesh);
-    if (group) { mesh.userData = { group, part: groupNames[group] || group }; this.parts.push(mesh); } return mesh;
-  }
-  tube(parent, points, radius, color, group) {
-    const curve = new THREE.CatmullRomCurve3(points.map(p => new THREE.Vector3(...p)));
-    const mesh = new THREE.Mesh(new THREE.TubeGeometry(curve, 24, radius, 6, false), this.material(color)); parent.add(mesh);
-    mesh.castShadow = true; if (group) { mesh.userData = { group, part: groupNames[group] || group }; this.parts.push(mesh); } return mesh;
-  }
-  buildHopper() {
-    const H = this.data.hopper, square = (z, w) => [[H.center_x-w/2,-w/2,z],[H.center_x+w/2,-w/2,z],[H.center_x+w/2,w/2,z],[H.center_x-w/2,w/2,z]];
-    const faces = [0, 4].flatMap(j => [0, 1, 2, 3].map(i => [j+i,j+(i+1)%4,j+(i+1)%4+4,j+i+4]));
-    const liner = H.liner_thickness_m || .01, shell = H.shell_thickness_m || .006;
-    const outside = 2 * (liner + shell);
-    if (!this.data.exactCAD) {
-    this.hopper = this.addDataMesh({ v: [...square(H.outlet_z,H.outlet_width+outside),...square(H.outlet_z+H.cone_height,H.mouth_width+outside),...square(H.mouth_z,H.mouth_width+outside)], f: faces, c: [59,98,120], tag: 'TOL-01', group: 'Tolva' }, this.group('Tolva'));
-    this.sectionMeshes.push(this.hopper);
-    if (!this.data.static.some(m => /^LINER_/.test(m.tag))) {
-      const lining = this.addDataMesh({v:[...square(H.outlet_z,H.outlet_width),...square(H.outlet_z+H.cone_height,H.mouth_width),...square(H.mouth_z,H.mouth_width)],f:faces,c:[75,94,86],tag:'UHMWPE disipativo 10 mm',group:'Tolva'},this.group('Tolva'));
-      this.sectionMeshes.push(lining);
-    }
-    }
-    this.coal = new THREE.Mesh(new THREE.BufferGeometry(), this.material('#242a2d', { roughness: 1, metalness: 0 })); this.group('Tolva').add(this.coal);
-    const connection = this.group('Tolva');
-    if (!this.data.exactCAD) {
-    const portX=H.center_x-H.mouth_width/2+.085,dustZ=H.mouth_z+.10;
-    const duct = this.cylinder(connection, .075, .20, portX, 0, dustZ, '#547b90', 'Tolva', { openEnded: true });
-    duct.userData.part='Conexión superior DN150';
-    this.cylinder(connection, .105, .02, portX, 0, H.mouth_z+.01, '#2d5266', 'Tolva', { openEnded: true });
-    }
-    this.spoutAssembly = new THREE.Group(); connection.add(this.spoutAssembly);
-    this.spoutAssembly.name='Manguito de descarga';
-    this.boot = this.cylinder(this.spoutAssembly, .128, H.bag_support_z - H.mouth_z, H.center_x, 0, (H.bag_support_z+H.mouth_z)/2, '#47555e', 'Tolva', { roughness: 1, metalness: 0, openEnded: true });
-    const bootHeight = H.bag_support_z - H.mouth_z;
-    for (let i = 0; i < 10; i++) {
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(.13,.006,6,32), this.material('#65757e'));
-      ring.position.set(H.center_x,0,H.mouth_z+bootHeight*(i+.5)/10); this.spoutAssembly.add(ring);
-    }
-    this.closedGuard = new THREE.Group(); connection.add(this.closedGuard);
-    const guardTop = this.data.config.guard_top_m || 3.43, guardBase=H.bag_support_z;
-    if (!this.data.exactCAD) {
-    for(const y of [-.64,.64]) {
-      const panel=this.box(this.closedGuard,1.32,.012,guardTop-guardBase,H.center_x,y,(guardTop+guardBase)/2,'#6c9aaa','Tolva',{transparent:true,opacity:.18,depthWrite:false});
-      this.sectionMeshes.push(panel);
-    }
-    for(const x of [H.center_x-.66,H.center_x+.66]) {
-      const panel=this.box(this.closedGuard,.012,1.28,guardTop-guardBase,x,0,(guardTop+guardBase)/2,'#6c9aaa','Tolva',{transparent:true,opacity:.18,depthWrite:false});
-      this.sectionMeshes.push(panel);
-    }
-    }
-    this.gate = new THREE.Group(); this.gate.name = 'Compuerta'; this.model.add(this.gate);
-    (this.data.gate_blade || []).forEach(m => this.addDataMesh({ ...m, group: 'Compuerta' }, this.gate));
-    if (!this.data.exactCAD) {
-    this.box(this.group('Compuerta'),.38,.31,.07,H.center_x,0,1.07,'#557e93','Compuerta');
-    this.cylinder(this.group('Compuerta'),.13,.18,H.center_x,0,.955,'#a5b1b7','Compuerta',{openEnded:true});
-    }
-  }
-  clothMaterial() {
-    const canvas = document.createElement('canvas'); canvas.width = canvas.height = 128;
-    const c = canvas.getContext('2d'); c.fillStyle = '#e8e9e1'; c.fillRect(0,0,128,128);
-    for (let i=0;i<128;i+=4) { c.fillStyle = i%8 ? '#e2e4db' : '#f4f5ed'; c.fillRect(i,0,1,128); c.fillRect(0,i,128,1); }
-    const tex = new THREE.CanvasTexture(canvas); tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(3,3); tex.colorSpace = THREE.SRGBColorSpace;
-    return this.material('#f5f4ea',{map:tex,roughness:.95,metalness:0});
-  }
-  roundedBagGeometry(width=.98,height=1) {
-    const vs=[], ids=[], n=40, rings=9;
-    for(let j=0;j<rings;j++){const h=j/(rings-1),bulge=.92+.08*Math.sin(Math.PI*h);
-      for(let i=0;i<n;i++){const a=i/n*Math.PI*2,co=Math.cos(a),si=Math.sin(a),fold=1+.012*Math.sin(i*2.4+j*.7);
-        vs.push(width/2*Math.sign(co)*Math.abs(co)**.25*bulge*fold,width/2*Math.sign(si)*Math.abs(si)**.25*bulge*fold,h*height);}}
-    for(let j=0;j<rings-1;j++)for(let i=0;i<n;i++){const a=j*n+i,b=j*n+(i+1)%n,c=(j+1)*n+(i+1)%n,d=(j+1)*n+i;ids.push(a,b,d,b,c,d);}
-    for(let i=1;i<n-1;i++)ids.push(0,i+1,i,(rings-1)*n,(rings-1)*n+i,(rings-1)*n+i+1);
-    const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(vs,3));geo.setIndex(ids);geo.computeVertexNormals();
-    const uv=[];for(let j=0;j<rings;j++)for(let i=0;i<n;i++)uv.push(i/n,j/(rings-1));geo.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));return geo;
-  }
-  buildBag() {
-    const C=this.data.config, width=C.bag_width || 1, height=C.bag_height || 1;
-    this.bagRoot = new THREE.Group(); this.bagRoot.name = 'Bigbag'; this.model.add(this.bagRoot);
-    this.bag = new THREE.Mesh(this.roundedBagGeometry(width,height),this.clothMaterial());this.bagRoot.add(this.bag);this.bag.castShadow=true;
-    this.bag.userData={group:'Bigbag',part:`Bigbag ${Math.round(width*1000)} × ${Math.round(width*1000)} × ${Math.round(height*1000)} mm`};this.parts.push(this.bag);this.sectionMeshes.push(this.bag);
-    const seamColor = '#acb8bb';
-    const anchorHalf=(C.bag_attachment_spacing_m || width)/2;
-    for(const x of [-anchorHalf,anchorHalf])for(const y of [-anchorHalf,anchorHalf]) {
-      const loop=C.bag_loop_loaded_m || .25;
-      this.tube(this.bagRoot,[[x,y,height*.95],[x+.01,y,height+.04],[x+.01,y,height+loop],[x+.035,y,height+loop-.01],[x+.035,y,height]],.016,'#d1d8d5','Bigbag');
-      this.tube(this.bagRoot,[[x,y,height*.04],[x*1.02,y*.98,height*.45],[x,y,height*.96]],.005,seamColor);
-    }
-    const stripe=this.box(this.bagRoot,.35,.004,.13,0,-width*.502,height*.54,'#235d80','Bigbag');stripe.material.roughness=1;
-    this.crucetaRoot=new THREE.Group();this.crucetaRoot.name='Cruceta';this.model.add(this.crucetaRoot);
-    this.data.cruceta.forEach(m=>this.addDataMesh({...m,group:'Cruceta'},this.crucetaRoot));
-    this.slingRoot=new THREE.Group();this.bagRoot.add(this.slingRoot);
-    this.pallet = new THREE.Group(); this.pallet.name='pallet'; this.model.add(this.pallet);
-    for(const x of [-.43,0,.43])for(const y of [-.43,0,.43])this.box(this.pallet,.14,.14,.076,x,y,.062,'#91764e');
-    for(let i=0;i<7;i++)this.box(this.pallet,.13,1.1,.05,-.48+i*.16,0,.125,'#b09165');
-    this.pallet.position.x=this.data.config.pickup_x;
-  }
-  buildHoist() {
-    this.hoist=new THREE.Group();this.hoist.name='Monorriel';this.model.add(this.hoist);
-    const z=this.data.config.beam_bottom;
-    const headroom=this.data.config.hoist_headroom || .475;
-    if (this.data.exactCAD) {
-      this.data.hoistMeshes.forEach(m=>this.addDataMesh({...m,group:'Monorriel'},this.hoist));
-      this.lockPin=new THREE.Group();this.group('Monorriel').add(this.lockPin);
-      this.data.lockPinMeshes.forEach(m=>this.addDataMesh({...m,group:'Monorriel'},this.lockPin));
-    } else {
-    this.box(this.hoist,.46,.30,.25,0,.22,z-.15,'#156087','Monorriel');
-    this.cylinder(this.hoist,.11,.48,0,.23,z-.15,'#1f7297','Monorriel').rotation.x=0;
-    this.box(this.hoist,.30,.10,.24,0,-.19,z-.15,'#223e50','Monorriel');
-    for(const x of [-.12,.12])for(const y of [-.10,.10]){
-      const wheel=this.cylinder(this.hoist,.052,.045,x,y,z+.042,'#677c88','Monorriel');wheel.rotation.x=0;
-      this.box(this.hoist,.06,.025,.17,x,y*1.42,z-.028,'#2b5268','Monorriel');
-    }
-    this.lockPin=this.cylinder(this.group('Monorriel'),.016,.22,this.data.config.discharge_x,.14,z+.075,'#e3b72d','Monorriel');this.lockPin.rotation.x=0;
-    this.lockPin.userData.part='Pasador cautivo de inmovilización del carro';
-    for(const x of [.12,3.08]) {
-      this.box(this.group('Monorriel'),.05,.20,.17,x,0,z+.04,'#5d7480','Monorriel');
-      const bumper=this.box(this.group('Monorriel'),.065,.16,.12,x+(x<1?.06:-.06),0,z+.04,'#26383f','Monorriel');
-      bumper.userData.part='Amortiguador de goma en fin de carrera';
-    }
-    }
-    this.chain=new THREE.Group();this.model.add(this.chain);
-    this.chainLine=this.cylinder(this.chain,.009,1,0,0,0,'#293940','Monorriel');
-    this.chainLine2=this.cylinder(this.chain,.009,1,.035,0,0,'#43545c','Monorriel');
-    this.hook=new THREE.Mesh(new THREE.TorusGeometry(.055,.014,8,20,Math.PI*1.6),this.material('#b4a663'));
-    this.hook.rotation.x=Math.PI/2;this.chain.add(this.hook);
-    this.controlCable=this.tube(this.hoist,[[.16,-.06,z-headroom+.08],[.19,-.06,1.7],[.19,-.06,1.15]],.005,'#293f49');
-    this.box(this.hoist,.07,.05,.22,.19,-.06,1.10,'#e0b42f','Monorriel');
-  }
-  buildScaleAndRollers() {
-    const g=this.group('Rodillos'), x=this.data.hopper.center_x;
-    // The native P100 module supplies the only weighing platform and indicator.
-    this.sack=new THREE.Group();this.sack.name='Compuerta';this.model.add(this.sack);
-    this.sackBody=new THREE.Mesh(this.roundedBagGeometry(.40,.70),this.clothMaterial());this.sack.add(this.sackBody);this.sackBody.castShadow=true;
-    this.sackBody.userData={group:'Compuerta',part:'Saco de producto'};this.parts.push(this.sackBody);this.sectionMeshes.push(this.sackBody);
-    this.tie=new THREE.Mesh(new THREE.TorusGeometry(.042,.008,6,24),this.material('#b9a36d'));this.tie.position.z=.68;this.sack.add(this.tie);
-    this.rollerStart={x,y:-.63,z:.35};
-    if (!this.data.functional3D) {
-    for(const y of [-.5,-1.8]) {
-      const crossbar=this.box(g,.60,.04,.04,x,y,.26,'#2d607c','Rodillos');
-      crossbar.userData.part='Travesaño inferior del transportador';
-    }
-    for(let i=0;i<10;i++){const roll=this.cylinder(g,.035,.58,x,-.65-i*.15,.315,'#9dadb4','Rodillos');roll.rotation.x=0;roll.rotation.z=Math.PI/2;}
-    for(const legX of [x-.23,x+.23])for(const y of [-.5,-1.8]){
-      this.box(g,.04,.045,.28,legX,y,.14,'#365e71','Rodillos');
-    }
-    for(const legX of [x-.23,x+.23])this.tube(g,[[legX,-.50,.16],[legX,-1.77,.28]],.018,'#3e728b','Rodillos');
-    }
-    this.output=new THREE.Group();this.model.add(this.output);
-    this.box(this.output,1.1,1.05,.12,0,0,.06,'#a1845b');
-    const end=this.data.functional3D?.routes?.accepted?.at(-1);
-    this.output.position.set(...(end ? [end[0],end[1],end[2]-.13] : [x-1.20,-1.8,0]));
-    if(this.data.functional3D)this.output.children[0].visible=false;
-    this.finishedBags=[];
-    for(let i=0;i<12;i++){
-      const sack=new THREE.Mesh(this.roundedBagGeometry(.38,.48),this.clothMaterial());
-      sack.position.set((i%3-1)*.34,(Math.floor(i/3)%2-.5)*.4,.13+Math.floor(i/6)*.43);
-      sack.castShadow=true;this.output.add(sack);this.finishedBags.push(sack);
-    }
-    this.rejectOutput=new THREE.Group();this.model.add(this.rejectOutput);this.rejectedBags=[];
-    const rejectedEnd=this.data.functional3D?.routes?.rejected?.at(-1);
-    this.rejectOutput.position.set(...(rejectedEnd ? [rejectedEnd[0],rejectedEnd[1],rejectedEnd[2]] : [x-1.2,-2,0]));
-    for(let i=0;i<3;i++){
-      const sack=new THREE.Mesh(this.roundedBagGeometry(.38,.48),this.clothMaterial());
-      sack.position.set(i*.30,0,0);sack.castShadow=true;sack.visible=false;
-      this.rejectOutput.add(sack);this.rejectedBags.push(sack);
-    }
-  }
-  buildForklift() {
-    this.forklift=new THREE.Group();this.model.add(this.forklift);const f=this.forklift;
-    this.box(f,1.04,1.40,.53,0,-.8,.46,'#dba829','Montacargas');
-    this.box(f,.90,.44,.65,0,-1.22,.66,'#dba829','Montacargas');
-    this.box(f,.60,.48,.13,0,-.70,.98,'#253b45','Montacargas');
-    this.box(f,.6,.12,.46,0,-.95,1.21,'#263b45','Montacargas');
-    for(const x of [-.54,.54])for(const y of [-.34,-1.16]){
-      const w=this.cylinder(f,.23,.16,x,y,.243,'#26333b','Montacargas');w.rotation.x=0;w.rotation.z=Math.PI/2;
-      const hub=this.cylinder(f,.105,.17,x,y,.243,'#8f9da3','Montacargas');hub.rotation.x=0;hub.rotation.z=Math.PI/2;
-    }
-    for(const x of [-.43,.43]){
-      this.box(f,.05,.06,1.35,x,-1.30,1.25,'#263d4a','Montacargas');
-      this.box(f,.05,.06,1.1,x,-.20,1.48,'#263d4a','Montacargas');
-      this.box(f,.075,.07,2.45,x,.04,1.36,'#294758','Montacargas');
-    }
-    this.forkCarriage=new THREE.Group();f.add(this.forkCarriage);
-    for(const x of [-.255,.255]){
-      this.box(this.forkCarriage,.10,1.03,.045,x,.52,.0775,'#687880','Montacargas');
-      this.box(this.forkCarriage,.10,.055,.62,x,.025,.36,'#687880','Montacargas');
-    }
-    for(const z of [.15,.75])this.box(this.forkCarriage,.88,.055,.045,0,.012,z,'#294758','Montacargas');
-    for(const x of [-.42,0,.42])this.box(this.forkCarriage,.035,.055,.60,x,.012,.45,'#294758','Montacargas');
-    this.box(f,.94,1.25,.06,0,-.75,2.0,'#294453','Montacargas');
-    this.box(f,.94,.07,.08,0,.04,1.40,'#294453','Montacargas');
-    this.driver=this.person(f,0,-.74,0,'#df973b');this.driver.rotation.z=Math.PI;
-  }
-  person(parent,x,y,z,color='#dc873e') {
-    const p=new THREE.Group();p.position.set(x,y,z);parent.add(p);
-    const skin=this.material('#c19d79',{metalness:0,roughness:.9}), vest=this.material(color,{metalness:0,roughness:.9});
-    const sphere=new THREE.Mesh(new THREE.SphereGeometry(.105,14,10),skin);sphere.position.z=1.49;p.add(sphere);
-    const helmet=this.cylinder(p,.125,.08,0,0,1.58,'#e1b52c','Operarios');
-    this.box(p,.33,.20,.50,0,0,1.15,color,'Operarios');
-    for(const dx of [-.09,.09]){
-      this.cylinder(p,.065,.90,dx,0,.45,'#243e50','Operarios');
-      this.box(p,.12,.22,.09,dx,-.035,.05,'#263842','Operarios');
-    }
-    const arm1=this.tube(p,[[-.19,0,1.36],[-.26,-.04,1.12],[-.24,-.22,1.0]],.047,color,'Operarios');
-    const arm2=this.tube(p,[[.19,0,1.36],[.26,-.04,1.12],[.24,-.22,1.0]],.047,color,'Operarios');
-    this.box(p,.34,.005,.036,0,-.104,1.20,'#dbe4be');
-    this.box(p,.34,.005,.036,0,-.104,1.04,'#dbe4be');p.userData.arms=[arm1,arm2];return p;
-  }
-  buildOperators() {
-    const people=this.group('Operarios');
-    this.worker1=this.person(people,this.data.config.pickup_x+1.25,-1.45,-.015);this.worker1.rotation.z=Math.PI;
-    this.worker2=this.person(people,this.data.hopper.center_x+.65,-1.17,-.015);this.worker2.rotation.z=-Math.PI/2;
-  }
-  buildFlow() {
-    this.flow=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.018,0),this.material('#252d31',{roughness:1,metalness:0}),160);
-    this.flow.instanceMatrix.setUsage(THREE.DynamicDrawUsage);this.model.add(this.flow);
-    this.dummy=new THREE.Object3D();
-  }
-  label(text) {
-    const c=document.createElement('canvas');c.width=512;c.height=96;const ctx=c.getContext('2d');
-    ctx.fillStyle='rgba(255,255,255,.94)';ctx.fillRect(0,0,512,96);ctx.font='600 44px Segoe UI,Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#285a70';ctx.fillText(text,256,48);
-    const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;
-    const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,depthTest:false}));sprite.scale.set(1.1,.206,1);sprite.renderOrder=20;return sprite;
-  }
-  buildDimensions() {
-    this.dimensions=new THREE.Group();this.dimensions.visible=false;this.scene.add(this.dimensions);
-    const line=(a,b,label,pos)=>{
-      this.dimensions.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...a),new THREE.Vector3(...b)]),new THREE.LineBasicMaterial({color:0x2b718b,depthTest:false})));
-      const d=new THREE.Vector3(...b).sub(new THREE.Vector3(...a)).normalize();
-      for(const p of [a,b]){const v=d.clone().cross(new THREE.Vector3(1,1,.3)).normalize().multiplyScalar(.08);this.dimensions.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...p).add(v),new THREE.Vector3(...p).sub(v)]),new THREE.LineBasicMaterial({color:0x2b718b,depthTest:false})));}
-      const s=this.label(label);s.position.set(...pos);this.dimensions.add(s);
-    };
-    const C=this.data.config, top=C.beam_top;
-    const mm=v=>`${Math.round(v*1000).toLocaleString('fr-FR')} mm`;
-    line([-.85,-1.2,0],[-.85,-1.2,top],mm(top),[-.85,-1.2,top/2]);
-    line([0,-1.30,top+.35],[3.2,-1.30,top+.35],'3 200 mm',[1.6,-1.30,top+.35]);
-    const floor=C.platform_floor_z_m;
-    line([-.6,1.3,0],[-.6,1.3,floor],'2 782,59 mm',[-.6,1.3,floor/2]);
-    line([C.pickup_x,-.30,C.travel_bottom+1.1],[C.discharge_x,-.30,C.travel_bottom+1.1],mm(Math.abs(C.discharge_x-C.pickup_x)),[1.7,-.3,C.travel_bottom+1.15]);
-  }
-  fillHeight(volume) {
-    const H=this.data.hopper;let lo=0,hi=H.cone_height+H.body_height;
-    for(let i=0;i<28;i++){const h=(lo+hi)/2,c=Math.min(h,H.cone_height),w=H.outlet_width+(H.mouth_width-H.outlet_width)*c/H.cone_height;
-      const v=c/3*(H.outlet_width**2+w*w+H.outlet_width*w)+Math.max(0,h-H.cone_height)*H.mouth_width**2;if(v<volume)lo=h;else hi=h;}return(lo+hi)/2;
-  }
-  updateCoal(kg) {
-    this.coal.visible=kg>.01;if(kg<=.01)return;
-    if(this.coalKg!==undefined&&Math.abs(kg-this.coalKg)<.005)return;this.coalKg=kg;
-    const H=this.data.hopper,h=this.fillHeight(kg/(this.data.densityKgM3 || 550)),w=H.outlet_width+(H.mouth_width-H.outlet_width)*Math.min(h,H.cone_height)/H.cone_height;
-    const square=(z,a)=>[[H.center_x-a/2,-a/2,z],[H.center_x+a/2,-a/2,z],[H.center_x+a/2,a/2,z],[H.center_x-a/2,a/2,z]];
-    const verts=[...square(H.outlet_z+.005,H.outlet_width-.015)];
-    if(h>H.cone_height)verts.push(...square(H.outlet_z+H.cone_height,H.mouth_width-.015));
-    verts.push(...square(H.outlet_z+h,w-.015));
-    const n=verts.length,faces=[[n-4,n-3,n-2,n-1]];
-    for(let j=0;j<n-4;j+=4)for(let i=0;i<4;i++)faces.push([j+i,j+(i+1)%4,j+(i+1)%4+4,j+i+4]);
-    const geo=this.geometry({v:verts,f:faces});
-    this.coal.geometry.dispose();this.coal.geometry=geo;
-  }
-  setProgress(v) {
-    if((this.accessOpen||this.accessResetRequired)&&this.state)return {...this.state};
-    this.progress=clamp(Number(v)||0);const s=processState(this.progress,this.payload,this.bagSize,this.mode,this.data);this.state=s;
-    const C=this.data.config;this.bagRoot.position.set(s.x,0,s.z);this.crucetaRoot.position.set(s.x,0,s.z+C.cruceta_center_above_bag_m);
-    this.slingRoot.visible=s.phaseIndex>=1;
-    const remaining=this.payload ? s.bigbagKg/this.payload : 0;
-    this.bag.scale.set(lerp(.70,1,remaining),lerp(.56,1,remaining),1);
-    this.hoist.position.x=s.x;
-    const top=C.beam_bottom-.15,bottom=s.hookM+.045,drop=Math.max(.03,top-bottom);
-    this.chain.position.x=s.x;
-    for(const l of [this.chainLine,this.chainLine2]){l.position.z=(top+bottom)/2;l.scale.y=drop;}
-    this.hook.position.z=s.hookM;
-    this.gate.position.y=.28*s.gateOpening;
-    this.spoutAssembly.visible=this.mode==='spout';this.closedGuard.visible=this.mode==='closed';
-    this.cutterMeshes.forEach(mesh=>mesh.visible=this.mode==='closed');
-    const pose=s.functionalPose||functionalPose(s,this.data);
-    this.lockPin.position.y=this.data.exactCAD?pose.pin.dy:(s.lockingPin?.02:.12);
-    for(const motion of this.functionalMotionMeshes){
-      const offset=motionOffset(motion.group,pose,motion.travel);
-      motion.mesh.position.copy(motion.base).add(new THREE.Vector3(...offset));
-      motion.mesh.quaternion.copy(motion.baseQuaternion);
-      if(motion.spring){
-        const attr=motion.mesh.geometry.getAttribute('position');
-        deformSpringPositions(motion.spring.base,motion.spring.weights,motion.spring.metadata,
-          pose.gate?.gateMm||0,pose.gate?.camMm||0,attr.array);
-        attr.needsUpdate=true;motion.mesh.geometry.computeVertexNormals();motion.mesh.geometry.computeBoundingSphere();
-        motion.mesh.userData.springEdgesDirty=true;
-        if(this.edgesOn)this.updateSpringEdges(motion.mesh);
-      }
-      if(motion.bellows){
-        const attr=motion.mesh.geometry.getAttribute('position');
-        deformBellowsPositions(motion.bellows.base,-1000*pose.collarDz,motion.bellows.contract,attr.array);
-        attr.needsUpdate=true;motion.mesh.geometry.computeVertexNormals();motion.mesh.geometry.computeBoundingSphere();
-        motion.mesh.userData.springEdgesDirty=true;
-        if(this.edgesOn)this.updateSpringEdges(motion.mesh);
-      }
-      if(motion.rotation){
-        const drive=motion.rotation.drive==='reject_belts'?pose.rejectBeltsRunning:pose.rollersRunning;
-        const zone=motion.rotation.zone||'';
-        const selected=zone==='TR_ACUMULACION_RODILLO'?pose.routeName==='accepted':
-          zone==='TR_RECHAZO_RODILLO'?pose.rejectBeltsRunning:true;
-        if(drive&&selected){
-          const angle=motion.rotation.speed_rad_s*s.progress*(C.animation_seconds||34);
-          const rotation=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(...motion.rotation.axis),angle);
-          const origin=new THREE.Vector3(...motion.rotation.origin_m);
-          motion.mesh.quaternion.premultiply(rotation);
-          motion.mesh.position.add(origin.clone().sub(origin.clone().applyQuaternion(rotation)));
-        }
-      }
-    }
-    this.updateCoal(s.hopperKg);
-    const reception=this.reception=receptionPose(s,C);
-    this.forklift.visible=reception.forkliftVisible;
-    this.forklift.position.set(...reception.forkliftPosition);this.forklift.rotation.z=reception.forkliftRotation;
-    this.forkCarriage.position.z=reception.forkLift;
-    this.pallet.position.set(...reception.palletPosition);
-    this.bagRoot.position.set(...reception.bagPosition);
-    this.worker1.position.set(...reception.receivingWorker);
-    this.sack.visible=s.sackVisible;
-    const deckHeight=pose.deckZ;
-    this.sack.position.set(...pose.sackPosition);
-    const fill=this.bagSize?s.sackKg/this.bagSize:0;
-    const sackHeight=.5465;
-    this.sackBody.scale.set(lerp(.75,1,fill),lerp(.6,1,fill),1);
-    const tieOn=s.cyclePhase==='amarre'||s.cyclePhase==='salida'||s.phaseIndex===7;
-    this.tie.visible=tieOn;this.tie.position.z=sackHeight-.025;
-    this.finishedBags.forEach((b,i)=>{b.visible=i<Math.min(12,s.acceptedSacks??s.completedSacks);});
-    this.rejectedBags.forEach((b,i)=>{b.visible=i<Math.min(3,s.rejectedSacks??0);});
-    this.worker2.position.y=-1.17-((s.cyclePhase==='salida')?s.transfer*.2:0);
-    const tying=s.cyclePhase==='amarre'||s.phaseIndex===7;
-    this.worker2.userData.arms?.forEach((a,i)=>a.rotation.z=tying?Math.sin(s.cycleProgress*Math.PI*4)*(i?-.13:.13):0);
-    this.flow.visible=s.runningFlow;
-    if(this.flow.visible){
-      const bulk=s.phaseIndex===5,z0=bulk?this.data.hopper.mouth_z+.025:deckHeight+.04+.445*clamp(s.sackKg/50),z1=bulk?C.support_z:.865,r=bulk?(this.mode==='closed'?.105:.075):.045;
-      for(let i=0;i<160;i++){
-        const angle=i*2.399963,rad=Math.sqrt((i*.618033)%1)*r,fall=(i*.071+this.progress*(bulk?70:260))%1;
-        this.dummy.position.set(this.data.hopper.center_x+Math.cos(angle)*rad,Math.sin(angle)*rad,lerp(z1,z0,fall));
-        this.dummy.scale.setScalar(.45+(i%5)*.11);this.dummy.rotation.set(i,i*.3,i*.7);this.dummy.updateMatrix();this.flow.setMatrixAt(i,this.dummy.matrix);
-      }this.flow.instanceMatrix.needsUpdate=true;
-    }
-    this.equipmentDetails?.update(s);this.processDetails?.update(s);
-    // Generic visual details may change visibility during focus updates. The
-    // exact functional conveyor remains the only physical roller representation.
-    if(this.data.functional3D)this.parts.filter(m=>m.userData.functionalSuperseded).forEach(m=>m.visible=false);
-    this.render();return {...s};
-  }
-  setMode(v) { if(this.accessOpen)return;this.mode=v==='closed'?'closed':'spout';this.setProgress(this.progress); }
-  setBagSize(v) { if(this.accessOpen)return;this.bagSize=Number(v)===25?25:50;this.setProgress(this.progress); }
-  setPayload(v) { if(this.accessOpen)return;this.payload=clamp(Number(v)||0,0,1000);this.setProgress(this.progress); }
-  setAccessOpen(value) {
-    const open=!!value,s=this.state;
-    if(open&&(!s||s.phaseIndex<5||s.phaseIndex>=9||!s.lockingPin||Math.abs(s.z-this.data.config.support_z)>.001))return false;
-    this.accessOpen=open;
-    if(open)this.accessResetRequired=true;
-    this.accessGateMeshes.forEach(mesh=>mesh.position.x=open?this.data.config.access_gate_travel_m:0);
-    if(open){this.flow.visible=false;this.render();}
-    else this.setProgress(this.progress);
-    return this.accessOpen;
-  }
-  resetAccess() {
-    if(this.accessOpen)return false;
-    this.accessResetRequired=false;this.setProgress(this.progress);return true;
-  }
-  updateSpringEdges(mesh){
-    if(!mesh.userData.springEdgesDirty)return;
-    for(const child of mesh.children)if(child.isLineSegments){child.geometry.dispose();child.geometry=new THREE.EdgesGeometry(mesh.geometry,30);}
-    mesh.userData.springEdgesDirty=false;
-  }
-  setEdges(v) { this.edgesOn=!!v;this.edgeLines.forEach(e=>e.visible=this.edgesOn);if(this.edgesOn)this.functionalMotionMeshes.forEach(m=>{if(m.spring||m.bellows)this.updateSpringEdges(m.mesh);});this.render(); }
-  setSection(v) {
-    this.section=!!v;
-    this.sectionMeshes.forEach(mesh=>{mesh.material.clippingPlanes=this.section?[new THREE.Plane(new THREE.Vector3(0,1,0),0)]:[];
-      mesh.material.transparent=this.section;mesh.material.opacity=this.section?.40:1;mesh.material.depthWrite=!this.section;mesh.material.needsUpdate=true;});
-    this.applyDetailFocus(this.currentView);this.render();
-  }
-  applyDetailFocus(name) {
-    const cutter=name==='cutter';
-    this.sectionMeshes.forEach(mesh=>{
-      if(mesh!==this.bag&&!/^TOL_GUARDA|^GUARDA_CORTE/.test(mesh.userData.part||''))return;
-      mesh.material.transparent=this.section||cutter;mesh.material.opacity=this.section?.40:cutter?.16:1;
-      mesh.material.depthWrite=!(this.section||cutter);mesh.material.needsUpdate=true;
-    });
-  }
-  setDimensions(v) { this.dimensions.visible=!!v;this.render(); }
-  setStyle(v) {
-    this.renderStyle=v==='technical'?'technical':'realistic';this.workshop.applyStyle(this.renderStyle);
-    this.camera=this.renderStyle==='technical'?this.technicalCamera:this.perspectiveCamera;
-    this.controls.object=this.camera;this.setEdges(this.renderStyle==='technical');this.resize();this.setView(this.currentView);
-  }
-  setCameraMode(v) {
-    this.cameraMode=v==='pan'?'pan':'rotate';
-    this.controls.mouseButtons.LEFT=this.cameraMode==='pan'?THREE.MOUSE.PAN:THREE.MOUSE.ROTATE;
-    this.controls.mouseButtons.RIGHT=THREE.MOUSE.PAN;
-    this.controls.touches.ONE=this.cameraMode==='pan'?THREE.TOUCH.PAN:THREE.TOUCH.ROTATE;
-    this.controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;
-    this.container.dataset.cameraMode=this.cameraMode;
-  }
-  setExploded(v) {
-    this.exploded=!!v;
-    const offsets={Porticos:[-.45,0,0],Tolva:[.35,0,.25],Plataforma:[0,.55,.08],Escalera:[-.5,.55,0],Barandas:[0,.55,.55],Monorriel:[0,0,.55],'Soporte bolsa':[0,0,.6],Complementos:[0,0,.05]};
-    this.groupRoots.forEach((g,id)=>g.position.set(...(this.exploded?(offsets[id]||[0,0,0]):[0,0,0])));
-    if(this.collectorDuct)this.collectorDuct.visible=!this.exploded&&!this.data.functional3D;
-    this.render();
-  }
-  highlight(id) {
-    id=canonicalGroup(id);this.selected=id?(groupIds[id]||id):null;
-    for(const m of this.parts){if(!m.material.emissive)continue;const selected=!!id&&((groupIds[m.userData.group]||m.userData.group)===(groupIds[id]||id));m.material.emissive.set(selected?0x1c7198:0x000000);m.material.emissiveIntensity=selected?.36:0;}
-    this.render();
-  }
-  setView(name) {
-    const aliases={isometrica:'iso','isométrica':'iso',frontal:'front',lateral:'side',posterior:'back',planta:'top',isometric:'iso'};
-    name=aliases[String(name).toLowerCase()]||name;
-    const C=this.data.config,H=this.data.hopper;this.currentView=name;
-    const focus={discharge:{target:[H.center_x,0,C.support_z],offset:[2.8,-4,2.1],height:3.2},bagging:{target:[H.center_x,-.25,.55],offset:[0,-2.4,1.0],height:2.1},pickup:{target:[C.pickup_x,-.9,1.15],offset:[3.9,-5.1,2.8],height:4.2},
-      hoist:{target:[this.state?.x??C.pickup_x,0,C.beam_bottom-.23],offset:[1.2,-1.65,.72],height:1.3},
-      locks:{target:[C.discharge_x-.55,0,C.beam_bottom+.06],offset:[-1.2,-1.9,.85],height:1.5},
-      cutter:{target:[H.center_x,0,C.support_z+.14],offset:[.65,2.25,.8],height:1.7},
-      gate:{target:[H.center_x-.20,.18,H.outlet_z+.05],offset:[-.25,-1.6,.4],height:1.4},
-      access:{target:[H.center_x,1.30,C.platform_floor_z_m+.45],offset:[-2.5,4,1.9],height:3.2},
-      collector:{target:[this.collector.position[0],this.collector.position[1],.90],offset:[-1.8,-2.9,1.25],height:2.1},
-      anchors:{target:[0,-1,.06],offset:[-1.25,-1.2,.8],height:1.05}};
-    focus.discharge.target[2]=this.data.config.support_z;
-    const overview=name==='iso'?[1.50,.25,this.data.config.beam_top/2-.25]:[1.6,.35,this.data.config.beam_top/2];
-    const view=focus[name];this.controls.target.set(...(view?.target||overview));
-    const t=this.controls.target,views={iso:[8.8,-12,8.4],front:[0,-16,.01],side:[16,0,.01],back:[0,16,.01],top:[0,-.001,17],left:[-16,0,.01]};
-    const d=view?.offset||views[name]||views.iso;
-    this.camera.up.copy(name==='top'?new THREE.Vector3(0,1,0):UP);
-    this.camera.position.copy(t).add(new THREE.Vector3(...d));this.camera.zoom=this.camera.isOrthographicCamera&&view?2*this.camera.top/view.height:1;this.camera.updateProjectionMatrix();this.controls.update();this.applyDetailFocus(name);this.render();
-  }
-  resetCamera() { this.setView('iso'); }
-  getState() { const info=this.renderer.info;return {...this.state,accessOpen:this.accessOpen,accessResetRequired:this.accessResetRequired,accessPresentationOnly:true,maintenancePermissionGranted:false,accessAvailable:this.state.phaseIndex>=5&&this.state.phaseIndex<9&&this.state.lockingPin,hoistEnabled:(this.accessOpen||this.accessResetRequired)?false:this.state.hoistEnabled,interlockState:this.accessOpen?'Revisión visual de puerta · animación pausada; sin permiso de intervención':this.accessResetRequired?'Cerrar revisión visual para continuar la animación':this.state.interlockState,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:this.data.revision,nativeParts:this.data.nativeParts,nativeComponents:this.data.nativeComponents,view:this.currentView,renderStyle:this.renderStyle,cameraMode:this.cameraMode,cameraPosition:this.camera.position.toArray(),cameraTarget:this.controls.target.toArray(),cameraZoom:this.camera.zoom,renderStats:{calls:info.render.calls,triangles:info.render.triangles,geometries:info.memory.geometries,textures:info.memory.textures}}; }
-  resize() {
-    const w=Math.max(1,this.container.clientWidth),h=Math.max(1,this.container.clientHeight);
-    this.renderer.setSize(w,h,false);const half=Math.max(4.05,(this.data.config.beam_top+.9)*.65),ratio=w/h;
-    Object.assign(this.technicalCamera,{left:-half*ratio,right:half*ratio,top:half,bottom:-half});
-    this.perspectiveCamera.aspect=ratio;this.perspectiveCamera.updateProjectionMatrix();this.technicalCamera.updateProjectionMatrix();this.render();
-  }
-  render() { if(this.renderer&&this.camera)this.renderer.render(this.scene,this.camera); }
-  toggleFullscreen() { return document.fullscreenElement?document.exitFullscreen():this.container.requestFullscreen?.(); }
-  dispose() {
-    this.observer?.disconnect();this.controls?.dispose();
-    this.workshop?.dispose();this.equipmentDetails?.dispose?.();this.processDetails?.dispose?.();
-    this.renderer.domElement.removeEventListener('pointerdown',this.pointerDown);this.renderer.domElement.removeEventListener('pointerup',this.pointerUp);this.renderer.domElement.removeEventListener('keydown',this.keydown);
-    this.scene.traverse(o=>{o.geometry?.dispose();if(o.material){const a=Array.isArray(o.material)?o.material:[o.material];a.forEach(m=>{m.map?.dispose();m.dispose();});}});
-    this.renderer.dispose();this.renderer.domElement.remove();
-  }
+  this.spout=this.cylinder(this.bag,.175,.35,0,0,-.175,'#e5e6dc',true);
+  this.tie=new THREE.Mesh(new THREE.TorusGeometry(.177,.006,6,28),this.material('#98855a'));this.bag.add(this.tie);
+  this.chain=new THREE.Group();this.scene.add(this.chain);
+  this.chain1=this.cylinder(this.chain,.008,1,0,0,0,'#3d4a50');this.chain2=this.cylinder(this.chain,.008,1,.035,0,0,'#526068');
+  this.hook=new THREE.Mesh(new THREE.TorusGeometry(.055,.014,8,22,Math.PI*1.6),this.material('#ab9a66'));this.hook.rotation.x=Math.PI/2;this.chain.add(this.hook);
+  this.pallet=new THREE.Group();this.scene.add(this.pallet);for(const x of [-.43,0,.43])for(const y of [-.43,0,.43])this.box(this.pallet,.14,.14,.076,x,y,.062,'#b99a6b');
+  for(let i=0;i<7;i++)this.box(this.pallet,.13,1.1,.05,-.48+i*.16,0,.125,'#b99a6b');
+  this.sack=new THREE.Group();this.scene.add(this.sack);
+  this.sackBody=new THREE.Mesh(this.bagGeometry(.46,.46,.5065,.59),this.cloth());this.sackBody.castShadow=true;this.sack.add(this.sackBody);this.sackBase=new Float32Array(this.sackBody.geometry.getAttribute('position').array);
+  this.output=new THREE.Group();this.scene.add(this.output);this.output.position.set(-1.25,-1.7,0);this.box(this.output,1.15,1,.13,0,0,.065,'#b99a6b');this.outputSacks=[];
+  for(let i=0;i<8;i++){const s=new THREE.Mesh(this.bagGeometry(.46,.38,.42),this.cloth());s.position.set((i%2-.5)*.49,(Math.floor(i/2)%2-.5)*.42,.14+Math.floor(i/4)*.4);s.castShadow=true;this.output.add(s);this.outputSacks.push(s);}
+  this.buildForklift();this.groundWorker=this.person(C.discharge_x+.55,-1.65,0);this.groundWorker.rotation.z=-.45;
+  this.platformWorker=this.person(C.discharge_x,1.55,C.platform_floor_z_m);this.platformWorker.rotation.z=0;
+  this.flow=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.016,0),this.material('#303538',{roughness:1,metalness:0}),64);this.scene.add(this.flow);this.dummy=new THREE.Object3D();
+  this.coal=this.box(this.scene,1.50,1.50,.015,C.discharge_x,0,2.62,'#303538');
+ }
+ buildForklift(){
+  const f=new THREE.Group();this.forklift=f;this.scene.add(f);
+  this.box(f,1.03,1.4,.53,0,-.8,.46,'#d9a333');this.box(f,.9,.44,.65,0,-1.22,.66,'#d9a333');this.box(f,.6,.48,.13,0,-.7,.98,'#33474e');
+  for(const x of [-.54,.54])for(const y of [-.34,-1.16]){const wheel=this.cylinder(f,.23,.16,x,y,.24,'#303c43');wheel.rotation.set(0,0,Math.PI/2);}
+  for(const x of [-.43,.43]){this.box(f,.075,.07,2.45,x,.04,1.36,'#3b5666');this.box(f,.05,.06,1.35,x,-1.3,1.25,'#3b5666');this.box(f,.05,.06,1.1,x,-.20,1.48,'#3b5666');}
+  this.box(f,.94,1.25,.06,0,-.75,2,'#3b5666');for(const x of [-.255,.255]){this.box(f,.10,1.03,.045,x,.52,.0775,'#6b7a82');this.box(f,.1,.055,.62,x,.025,.36,'#6b7a82');}
+  this.box(f,.9,.05,.06,0,.012,.75,'#3b5666');
+ }
+ setProgress(p){
+  this.progress=clamp(Number(p)||0);const C=this.data.config,s=processState(this.progress,C,this.sackSize);this.state=s;
+  this.bag.visible=s.phaseIndex!==7;this.bag.position.set(s.x,0,s.z); // Generic FIBC envelope is held constant; no cloth analysis is implied.
+  this.spout.scale.y=Math.max(.06,s.spoutDeployed);this.spout.position.z=-.175*Math.max(.06,s.spoutDeployed);this.tie.position.z=-.27*s.spoutDeployed;this.tie.visible=!s.spoutOpen;
+  this.channels.cruceta.position.set(s.phaseIndex===0?C.pickup_x:s.x,0,(s.phaseIndex===0?C.pickup_bottom:s.z)+C.cruceta_center_above_bag_m);
+  this.channels.hoistMeshes.position.x=s.phaseIndex===0?C.pickup_x:s.x;
+  const travel=C.manual_gate_travel||C.manual_gate_travel_m||[0,-.28,0];this.channels.gate_blade.position.set(...travel.map(v=>v*s.gate));
+  this.chain.position.x=s.phaseIndex===0?C.pickup_x:s.x;const chainTop=C.beam_bottom-.15,chainBottom=s.hookM+.045,length=Math.max(.025,chainTop-chainBottom);
+  for(const line of [this.chain1,this.chain2]){line.position.z=(chainTop+chainBottom)/2;line.scale.y=length;}this.hook.position.z=s.hookM;
+  const receptionX=s.phaseIndex===0?s.x:C.pickup_x;this.pallet.position.set(receptionX,0,0);this.pallet.visible=s.phaseIndex<2||s.phaseIndex>=6;
+  this.forklift.visible=s.phaseIndex<2;this.forklift.rotation.z=Math.PI/2;this.forklift.position.set(receptionX+.64+(s.phaseIndex===1?2.5*smooth(s.phaseProgress):0),0,0);
+  this.platformWorker.visible=s.phaseIndex===4||s.phaseIndex===5;
+  this.groundWorker.visible=s.phaseIndex===7;
+  this.sack.visible=s.phaseIndex===7&&s.progress<1;this.sack.position.set(lerp(C.discharge_x,-1.25,clamp((s.removal-.55)/.45)),lerp(0,-1.7,clamp(s.removal/.55)),C.scale_deck_z_m??.35);
+  const sackPositions=this.sackBody.geometry.getAttribute('position');for(let i=0;i<this.sackBase.length;i+=3){const top=this.sackBase[i+2]/.5065,factor=lerp(lerp(.65,1,s.sackFill),1,smooth((top-.55)/.45));sackPositions.array[i]=this.sackBase[i]*factor;sackPositions.array[i+1]=this.sackBase[i+1]*factor;}sackPositions.needsUpdate=true;this.sackBody.geometry.computeVertexNormals();
+  this.output.visible=s.finished>0;this.outputSacks.forEach((m,i)=>m.visible=i<Math.min(8,s.finished));
+  this.coal.visible=s.hopperFill>.025;this.coal.position.z=lerp(1.25,2.62,s.hopperFill);const coalW=lerp(.25,1.50,clamp((this.coal.position.z-1.1)/1.2124));this.coal.scale.set(coalW/1.5,coalW/1.5,1);
+  this.flow.visible=s.phaseIndex===5;
+  for(let i=0;i<64;i++){const t=(i/64+s.progress*17)%1;this.dummy.position.set(C.discharge_x+.12*Math.sin(i*2.399),.12*Math.cos(i*2.399),lerp(C.support_z-.35,Math.max(1.4,this.coal.position.z),t));this.dummy.updateMatrix();this.flow.setMatrixAt(i,this.dummy.matrix);}this.flow.instanceMatrix.needsUpdate=true;
+  this.render();return s;
+ }
+ setView(name){
+  const C=this.data.config;const views={iso:[[10,-13,9],[1.3,.6,3.1]],front:[[1.6,-17,4.6],[1.6,.5,3.25]],back:[[8,13,8],[1.5,.8,2.9]],bagging:[[-1.4,-4.5,2.45],[C.discharge_x,-.10,1.0]]};
+  const [eye,target]=views[name]||views.iso;this.camera.position.set(...eye);this.controls.target.set(...target);this.controls.update();this.render();
+ }
+ resize(){const w=this.container.clientWidth,h=this.container.clientHeight;if(!w||!h)return;this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);this.render();}
+ render(){this.renderer.render(this.scene,this.camera);}
+ getState(){return {...this.state,nativeComponents:this.nativeCount,visibleNativeComponents:this.nativeVisible,sourceStepSha256:this.data.nativeSTEPSource?.stepSha256,webgl:true};}
+ dispose(){this.observer.disconnect();this.controls.dispose();this.scene.traverse(o=>{o.geometry?.dispose();if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();});this.renderer.dispose();this.renderer.domElement.remove();}
 }

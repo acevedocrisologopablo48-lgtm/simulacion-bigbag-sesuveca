@@ -1,10 +1,10 @@
 {
-  "revision": "P05_CONEXIONES_20261102_8918d9c5",
+  "revision": "P05_SIMPLE_20261103",
   "published_date": "2026-11-03",
-  "source_STEP_sha256": "8918d9c531a5a7c9cc741e7cee8c3d955cd9674b76485f9aea7e60b404a19197",
-  "uncompressed_model_sha256": "788ab83d75d3e150620507eccbb6885041e2ec3823aeb2ac801787f48b00d84b",
-  "gzip_model_sha256": "4c6bc020e8b3291bfb479c38857c4edc2031310dabf601db5756c2536fac7dfc",
-  "master_sha256": "5fcb69d3ff4ede66bda89696fdcae41de5af137632592fe770df1fb88bae8a0a",
-  "components": 1704,
-  "download": "assets/docs/P05_CONEXIONES_8918d9c5.zip"
+  "source_STEP_sha256": "97826dcc57099bc74842802d0f8527a7f7c3d1d699de84b1b26495481d217722",
+  "uncompressed_model_sha256": "4261fb2ecd2f855f709eb23edd415fef5671beb7c26de5f3dbfdd417b1c77dd9",
+  "gzip_model_sha256": "e8d320aafa04561694578310266f41dab30b70536468e772ce8cdeb0ec489061",
+  "master_sha256": "0ef8d04cd6269c924a47f23c441e74c6e64bb450c4c951516a067201a6773049",
+  "components": 881,
+  "download": "assets/docs/P05_SIMPLE_20261103.zip"
 }

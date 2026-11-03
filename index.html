@@ -1,48 +1,37 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#123147">
-  <meta name="description" content="Estación de bigbags SESUVECA: cruceta nominal de 2 t, proceso de 1 t, tolva a 60°, cortador piramidal y ensacado.">
-  <title>SESUVECA · Estación de bigbags</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="src/style.css?v=p0520261102_8918d9c5">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123147">
+<meta name="description" content="Estación simple de bigbags SESUVECA: monorriel, tecle, tolva y ensacado manual de 25 o 50 kg.">
+<title>SESUVECA · Estación simple de bigbags</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="src/style.css?v=p05simple20261103">
 </head>
 <body>
-<a class="skip" href="#main">Ir al simulador</a>
-<header class="header">
-  <a class="brand" href="#simulacion" aria-label="SESUVECA · Simulación"><img src="assets/logo-sesuveca.svg" alt="SESUVECA" width="159" height="58"></a>
-  <div class="project-title"><span>INGENIERÍA MECÁNICA</span><strong>Izaje de bigbags <i>/</i> descarga y ensacado</strong></div>
-  <nav aria-label="Secciones del proyecto"><button class="nav-tab active" data-tab="simulacion" aria-current="page"><span aria-hidden="true">◇</span> Simulación</button><button class="nav-tab" data-tab="calculos"><span aria-hidden="true">∑</span> Antecedentes</button><button class="nav-tab" data-tab="piezas"><span aria-hidden="true">▦</span> Archivo de piezas</button></nav>
-  <span class="rev">SESUVECA</span>
-</header>
-<main id="main">
-  <div class="page-heading"><div><p class="eyebrow">ESTACIÓN BIGBAG</p><h1 id="pageTitle">Izaje, descarga y ensacado</h1></div><span class="model-state"><i></i> Javier Acevedo</span></div>
-  <div class="revision-strip"><span><strong>Revisión funcional 3D P05</strong><small>Revisión nominal de proyecto · FIBC 1050 × 1050 × 1650 mm · proceso 1 t</small></span><div class="document-links" aria-label="Modelo 3D y lógica de esta revisión"><a href="assets/docs/P05_CONEXIONES_8918d9c5.zip?v=p0520261102_8918d9c5" target="_blank" rel="noopener">CAD STEP (ZIP) ↗</a><a href="data/control_maestro_p05.json?v=p0520261102_8918d9c5" target="_blank" rel="noopener">Secuencia maestra ↗</a><a href="data/revision_cinematica.json?v=p0520261102_8918d9c5" target="_blank" rel="noopener">Revisión cinemática ↗</a></div></div>
-  <section id="simulacion" class="tab-panel" aria-label="Simulación interactiva">
-    <div class="view-toolbar"><div class="view-buttons" role="group" aria-label="Vistas del modelo"><button class="view-btn active" data-view="iso">Isométrica</button><button class="view-btn" data-view="front">Frontal</button><button class="view-btn" data-view="side">Lateral</button><button class="view-btn" data-view="back">Posterior</button><button class="view-btn" data-view="top">Planta</button><label class="sr-only" for="extraView">Detalle de equipo</label><select id="extraView"><option value="">Detalle de equipo</option><option value="hoist">Tecle y carro</option><option value="locks">Traba y topes</option><option value="cutter">Corte de bolsa</option><option value="gate">Compuerta</option><option value="bagging">Balanza y mesa</option><option value="collector">Colector de polvo</option><option value="access">Acceso superior</option><option value="anchors">Bases y anclajes</option><option value="discharge">Descarga</option><option value="pickup">Recepción</option></select></div><div class="display-buttons" role="group" aria-label="Visualización"><div class="camera-modes" role="group" aria-label="Movimiento de la vista"><button type="button" data-camera-mode="rotate" class="active" aria-pressed="true" title="Arrastra para girar la vista">Girar</button><button type="button" data-camera-mode="pan" aria-pressed="false" title="Arrastra para desplazar la vista">Desplazar</button></div><label class="render-style" for="renderStyle">Vista <select id="renderStyle"><option value="realistic" selected>Realista</option><option value="technical">Técnica</option></select></label><button id="dimensionsBtn" aria-pressed="false">Cotas</button><button id="sectionBtn" aria-pressed="false">Sección</button><button id="edgesBtn" aria-pressed="false">Aristas</button><button id="fullscreenBtn" class="icon-btn" aria-label="Pantalla completa" title="Pantalla completa">⛶</button></div></div>
-    <div class="sim-layout">
-      <div class="viewer-column">
-        <div id="viewer" class="viewer"><div class="viewer-label"><span id="viewName">CONJUNTO / ISOMÉTRICA</span><span>m · Z VERTICAL</span></div><div id="scene" role="img" tabindex="0" aria-label="Modelo 3D de la estación. Elige Girar o Desplazar y arrastra. Rueda para acercar; dos dedos para mover y acercar."></div><div id="loading" class="loading"><span class="spinner"></span><strong>Preparando el modelo</strong><small>Geometría de la estación de bigbags</small></div><div class="viewer-bottom"><span id="cameraHelp">Arrastrar: girar · Botón derecho: desplazar · Rueda: acercar</span><button id="fitBtn">↺ Encuadrar</button></div><div id="selection" class="selection" hidden><span><small>COMPONENTE</small><strong id="selectionName"></strong></span><button id="clearSelection" aria-label="Cerrar selección">×</button></div><div class="axis" aria-hidden="true"><span class="z">Z</span><span class="y">Y</span><span class="x">X</span></div></div>
-        <div class="live-values" aria-label="Lecturas de operación"><div><span>GANCHO</span><strong id="hookValue">—<small>m</small></strong></div><div><span>EN BIGBAG</span><strong id="bigbagValue">1 000<small>kg</small></strong></div><div><span>EN TOLVA</span><strong id="hopperValue">0<small>kg</small></strong></div><div><span>EN BALANZA</span><strong id="sackValue">0<small>kg</small></strong></div><div><span>ENSACADO</span><strong id="finishedValue">0<small>kg</small></strong></div></div>
-      </div>
-      <aside class="control-panel" aria-label="Controles de funcionamiento"><div class="panel-heading"><span>FUNCIONAMIENTO</span><span id="runStatus"><i></i> EN REPOSO</span></div><div class="panel-content"><div class="phase-description"><span id="phaseNumber">01</span><div><h2 id="phaseTitle">Recepción del bigbag</h2><p id="phaseDetail">El montacargas acerca la bolsa a la zona de enganche.</p></div></div>
-        <p id="interlockReadout" class="interlock-readout" aria-live="polite">Recepción y traslado · zona de descarga sin habilitar</p>
-        <label class="mini-label" for="timeline">AVANCE DEL CICLO</label><div class="progress-heading"><output id="progressValue" for="timeline">0<small>%</small></output><span id="phasePill">Recepción</span></div><input id="timeline" aria-label="Avance del ciclo" type="range" min="0" max="1000" step="1" value="0"><div class="range-labels"><span>Inicio · Recepción</span><span>Fin · Retorno</span></div>
-        <div class="jump-buttons"><button data-progress="0" class="active">Recepción</button><button data-progress="0.45">Descarga</button><button data-progress="0.65">Ensacado</button></div>
-        <div class="access-control"><button id="accessBtn" disabled aria-pressed="false">Mostrar puerta abierta</button><span id="accessHint">Vista geométrica. La intervención requiere aislamiento y retención según la secuencia maestra.</span></div><div class="playback"><button id="playBtn" class="primary" disabled><span id="playIcon" aria-hidden="true">▶</span><span id="playText">Reproducir ciclo</span></button><button id="pauseBtn" class="icon-btn" aria-label="Pausar ciclo" title="Pausar">Ⅱ</button><button id="resetBtn" class="icon-btn" aria-label="Reiniciar ciclo" title="Reiniciar">↺</button></div>
-        <div class="setting-row"><label for="speed">Velocidad de reproducción</label><select id="speed"><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></div>
-        <div class="config"><label for="bagMode">Tipo de bigbag</label><select id="bagMode"><option value="closed" selected>Fondo cerrado · corte piramidal fijo</option></select><div class="config-grid"><div><label for="sackSize">Peso por saco</label><select id="sackSize"><option value="50">50 kg</option><option value="25">25 kg</option></select></div><div><label for="payload">Carga del bigbag</label><select id="payload"><option value="1000">1 000 kg</option><option value="595.65">595,65 kg · llenado parcial</option><option value="500">500 kg · llenado parcial</option></select></div></div></div>
-        <div class="sequence-mini" aria-label="Secuencia resumida"><span class="active">Recibir</span><span>Izar</span><span>Vaciar</span><span>Ensacar</span></div><div class="panel-foot"><span><i></i> Ciclo de trabajo</span><span id="sackCount">0 / 20 sacos</span></div></div></aside>
-    </div>
-    <section class="cycle-section" aria-labelledby="cycleTitle"><div class="section-heading"><div><h2 id="cycleTitle">Secuencia de operación</h2></div><span>Dos operarios + montacarguista compartido</span></div><div id="stageList" class="stage-list"></div></section>
-    <div class="bottom-note"><span class="note-mark">i</span><p>Dosificación gruesa/fina por peso. Apertura, flujo con carbón húmedo, cierre y precisión se comprueban en SAT sobre el equipo fabricado. Simulación de secuencia; reproducción acelerada.</p></div>
-  </section>
-  <section id="calculos" class="tab-panel" aria-label="Antecedentes de cálculo y condiciones" hidden><div class="info-intro"><p>ESTACIÓN BIGBAG</p><h2>Antecedentes de cálculo</h2><span>Revisión anterior conservada como archivo. Las cargas no se reevalúan en esta etapa; las condiciones funcionales actuales se describen abajo.</span></div><div id="calcCards" class="calc-grid"></div><article class="anchor-comparison"><strong>Pernos pasantes M16 grado 10.9 / L340</strong><p>Acero del pasante: Fy mínimo 900 MPa; tuercas con brida lisa clase 10. Contraplacas A36 de 18 mm; losa de 200 mm. Cálculo local y condiciones de apoyo en memoria.</p></article><div class="technical-grid"><section class="data-card"><h3>Dimensiones</h3><dl id="dimensionList"></dl></section><section class="data-card"><h3>Condiciones de funcionamiento</h3><dl id="operatingList"></dl></section></div><div id="engineeringNotice" class="bottom-note"></div></section>
-  <section id="piezas" class="tab-panel" aria-label="Archivo previo de piezas" hidden><div class="info-intro"><p>ESTACIÓN BIGBAG</p><h2>Archivo previo de piezas</h2><span>Catálogo de la revisión anterior. No corresponde al ensamble funcional3D actual ni se reemite como lista de materiales en esta etapa.</span></div><div class="parts-toolbar"><label for="partSearch">Buscar pieza o material</label><input id="partSearch" type="search" placeholder="Ej. tolva, A36, cruceta…"><label class="sr-only" for="groupFilter">Filtrar conjunto</label><select id="groupFilter"><option value="">Todos los conjuntos</option></select><button id="explodedBtn" aria-pressed="false">Ver conjunto separado</button></div><div id="groupCards" class="group-grid"></div><div class="parts-table-wrap"><table><thead><tr><th scope="col">POS.</th><th scope="col">Pieza / elemento</th><th scope="col">Material</th><th scope="col">Cantidad</th><th scope="col">Medidas (mm) / suministro</th></tr></thead><tbody id="partsBody"></tbody></table><p id="noParts" hidden>No hay coincidencias con esa búsqueda.</p></div><details class="scope-note"><summary>Alcance del archivo</summary><p>Referencias y cantidades históricas. La geometría funcional vigente se entrega en STEP y las dependencias abiertas figuran en la secuencia maestra.</p></details></section>
+<a class="skip" href="#scene">Ir al modelo 3D</a>
+<header><a class="brand" href="./" aria-label="SESUVECA"><img src="assets/logo-sesuveca.svg" alt="SESUVECA" width="159" height="58"></a><span class="header-project">INGENIERÍA MECÁNICA <b>Estación de bigbags</b></span><span class="revision">P05 · DISEÑO SIMPLE</span></header>
+<main>
+<div class="heading"><div><p class="eyebrow">DEL BIGBAG AL SACO</p><h1>Simple, directo y funcional.</h1><p class="subtitle">Monorriel con tecle, tolva y ensacado manual.</p></div><a class="download" href="assets/docs/P05_SIMPLE_20261103.zip?v=p05simple20261103" download>Descargar modelo 3D <span aria-hidden="true">↗</span></a></div>
+<section class="workspace" aria-label="Modelo y secuencia de operación">
+<div class="viewer-column">
+<div class="toolbar"><div class="views" role="group" aria-label="Vistas"><button class="active" data-view="iso" aria-pressed="true">General</button><button data-view="front" aria-pressed="false">Frontal</button><button data-view="back" aria-pressed="false">Plataforma</button><button data-view="bagging" aria-pressed="false">Ensacado</button></div><button id="fullscreen" class="icon" aria-label="Pantalla completa">⛶</button></div>
+<div class="viewer" id="viewer"><div class="view-label"><span id="viewName">CONJUNTO GENERAL</span><span>SOMBREADO SÓLIDO</span></div><div id="scene" tabindex="0" aria-label="Modelo tridimensional. Arrastra para girar, rueda para acercar y botón derecho para desplazar."></div><div id="loading"><i class="spinner"></i><strong>Cargando el modelo 3D</strong><span>Preparando la geometría de la estación</span></div><div class="view-footer"><span>Arrastra para girar · Rueda para acercar</span><button id="fit">↺ Encuadrar</button></div></div>
+<div class="facts"><div><span>BIGBAG</span><strong>1 t</strong></div><div><span>APERTURA</span><strong>Boca inferior</strong></div><div><span>DOSIFICACIÓN</span><strong>Manual</strong></div><div><span>PESAJE</span><strong>Balanza fija</strong></div></div>
+</div>
+<aside class="controls">
+<div class="panel-header"><span>ASÍ FUNCIONA</span><span class="status" id="runStatus">EN PAUSA</span></div>
+<div class="phase"><span id="phaseNumber">01</span><h2 id="phaseTitle">Recepción del bigbag</h2><p id="phaseDetail">El montacargas entrega el bigbag en la zona de enganche.</p></div>
+<div class="playback"><button id="play" class="primary" disabled>▶ Reproducir recorrido</button><button id="reset" class="icon" aria-label="Volver al inicio">↺</button></div>
+<div class="progress-label"><label for="timeline">Recorrido del proceso</label><output id="progress" for="timeline">0 %</output></div>
+<input id="timeline" type="range" min="0" max="1000" value="0" step="1" aria-label="Avance del proceso">
+<div class="settings"><label for="sackSize">Saco de producto</label><select id="sackSize"><option value="50">50 kg</option><option value="25">25 kg</option></select></div>
+<ol id="stages" class="stages" aria-label="Etapas del proceso"></ol>
+<p class="manual-note">El operario abre la boca del bigbag, regula la compuerta y retira cada saco después del pesaje.</p>
+</aside>
+</section>
+<div class="scope"><span>Vista del proceso con el modelo CAD.</span><span>Bolsa y material: representación esquemática del movimiento.</span><a href="data/control_maestro_p05.json?v=p05simple20261103" target="_blank" rel="noopener">Secuencia de operación ↗</a></div>
 </main>
-<footer><span>SESUVECA <i>/</i> Ingeniería mecánica</span><span>Estación de bigbags</span></footer>
-<noscript><p class="noscript">Activa JavaScript para usar la simulación interactiva.</p></noscript>
-<script type="module" src="src/app.js?v=p0520261102_8918d9c5"></script>
-</body></html>
+<footer><span>SESUVECA DEL PERÚ</span><span>Izaje · Descarga · Ensacado</span></footer>
+<noscript>Activa JavaScript para visualizar el modelo.</noscript>
+<script type="module" src="src/app.js?v=p05simple20261103"></script>
+</body>
+</html>
