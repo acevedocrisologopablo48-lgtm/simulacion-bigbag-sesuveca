@@ -118,7 +118,7 @@ class SceneEngine{
   this.pallet=new THREE.Group();this.scene.add(this.pallet);for(const x of [-.43,0,.43])for(const y of [-.43,0,.43])this.box(this.pallet,.14,.14,.076,x,y,.062,'#b99a6b');
   for(let i=0;i<7;i++)this.box(this.pallet,.13,1.1,.05,-.48+i*.16,0,.125,'#b99a6b');
   this.sack=new THREE.Group();this.scene.add(this.sack);
-  this.sackBody=new THREE.Mesh(this.bagGeometry(.46,.46,.5065,.59),this.cloth());this.sackBody.castShadow=true;this.sack.add(this.sackBody);this.sackBase=new Float32Array(this.sackBody.geometry.getAttribute('position').array);
+  this.sackBody=new THREE.Mesh(this.bagGeometry(.46,.46,.5465,.59),this.cloth());this.sackBody.castShadow=true;this.sack.add(this.sackBody);this.sackBase=new Float32Array(this.sackBody.geometry.getAttribute('position').array);
   this.output=new THREE.Group();this.scene.add(this.output);this.output.position.set(-1.25,-1.7,0);this.box(this.output,1.15,1,.13,0,0,.065,'#b99a6b');this.outputSacks=[];
   for(let i=0;i<8;i++){const s=new THREE.Mesh(this.bagGeometry(.46,.38,.42),this.cloth());s.position.set((i%2-.5)*.49,(Math.floor(i/2)%2-.5)*.42,.14+Math.floor(i/4)*.4);s.castShadow=true;this.output.add(s);this.outputSacks.push(s);}
   this.buildForklift();this.groundWorker=this.person(C.discharge_x+.55,-1.65,0);this.groundWorker.rotation.z=-.45;
@@ -148,7 +148,7 @@ class SceneEngine{
   this.platformWorker.visible=s.phaseIndex===4||s.phaseIndex===5;
   this.groundWorker.visible=s.phaseIndex===7;
   this.sack.visible=s.phaseIndex===7&&s.progress<1;this.sack.position.set(lerp(C.discharge_x,-1.25,clamp((s.removal-.55)/.45)),lerp(0,-1.7,clamp(s.removal/.55)),C.scale_deck_z_m??.35);
-  const sackPositions=this.sackBody.geometry.getAttribute('position');for(let i=0;i<this.sackBase.length;i+=3){const top=this.sackBase[i+2]/.5065,factor=lerp(lerp(.65,1,s.sackFill),1,smooth((top-.55)/.45));sackPositions.array[i]=this.sackBase[i]*factor;sackPositions.array[i+1]=this.sackBase[i+1]*factor;}sackPositions.needsUpdate=true;this.sackBody.geometry.computeVertexNormals();
+  const sackPositions=this.sackBody.geometry.getAttribute('position');for(let i=0;i<this.sackBase.length;i+=3){const top=this.sackBase[i+2]/.5465,factor=lerp(lerp(.65,1,s.sackFill),1,smooth((top-.55)/.45));sackPositions.array[i]=this.sackBase[i]*factor;sackPositions.array[i+1]=this.sackBase[i+1]*factor;}sackPositions.needsUpdate=true;this.sackBody.geometry.computeVertexNormals();
   this.output.visible=s.finished>0;this.outputSacks.forEach((m,i)=>m.visible=i<Math.min(8,s.finished));
   this.coal.visible=s.hopperFill>.025;this.coal.position.z=lerp(1.25,2.62,s.hopperFill);const coalW=lerp(.25,1.50,clamp((this.coal.position.z-1.1)/1.2124));this.coal.scale.set(coalW/1.5,coalW/1.5,1);
   this.flow.visible=s.phaseIndex===5;
