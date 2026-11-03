@@ -1,8 +1,8 @@
 {
-  "revision": "P05_SIMPLE_20261103",
-  "step_sha256": "97826dcc57099bc74842802d0f8527a7f7c3d1d699de84b1b26495481d217722",
-  "model_sha256": "4261fb2ecd2f855f709eb23edd415fef5671beb7c26de5f3dbfdd417b1c77dd9",
-  "master_sha256": "0ef8d04cd6269c924a47f23c441e74c6e64bb450c4c951516a067201a6773049",
+  "revision": "P05_CIERRE_SIMPLE_20261103",
+  "step_sha256": "5a0cb77ff5a85d3c30ab6ebc11248479ae5379707617b571c44c6d5d06401e7b",
+  "model_sha256": "a652bcc5a4f71af3bda7d49884301da99cc0e619def7d15854936266a31d5773",
+  "master_sha256": "c4029873e440ca54c7f10933d053d1448cc1c23212a5e65358fc30c29d8c20b3",
   "nominal_path": [
     {
       "phase": "Izaje cargado",
@@ -14,7 +14,7 @@
       "to_m": [
         2.55,
         0,
-        3.527926
+        3.467926
       ],
       "reference": "Centro XY y fondo del BigBag"
     },
@@ -23,12 +23,12 @@
       "from_m": [
         2.55,
         0,
-        3.527926
+        3.467926
       ],
       "to_m": [
         0.85,
         0,
-        3.527926
+        3.467926
       ],
       "reference": "Centro XY y fondo del BigBag"
     },
@@ -37,7 +37,7 @@
       "from_m": [
         0.85,
         0,
-        3.527926
+        3.467926
       ],
       "to_m": [
         0.85,
@@ -57,12 +57,17 @@
         [
           0.85,
           0,
-          3.527926
+          3.467926
         ],
         [
           2.55,
           0,
-          3.527926
+          3.467926
+        ],
+        [
+          2.55,
+          0,
+          1.0
         ],
         [
           2.55,
@@ -70,106 +75,2049 @@
           0.15
         ]
       ],
-      "condition": "Manga recogida antes de izar; iniciar el tramo horizontal solo después de llegar a la altura de traslado."
+      "condition": "Retornar con la manga vacía colgante; iniciar la traslación solo en la altura de traslado. En recepción detener a fondoZ1,00m, recoger y amarrar la manga desde un lateral con movimientos parados y después descender al pallet.",
+      "manual_stop": {
+        "waypoint_index": 3,
+        "all_electric_motion_stopped": true,
+        "release_required_before_restart": true
+      }
     }
   ],
-  "checks": {
-    "STEP_reopened": true,
-    "modified_BReps_valid": true,
-    "gate_exact_motion_pairs": 1863,
-    "gate_interpenetrations": 0,
+  "static_check": {
+    "unexpected": [],
+    "vendor_internal": [
+      {
+        "a": "TECLE_ELECTRICO_2t_REF",
+        "b": "CARRO_2t_REF",
+        "intersection_mm3": 2801920.0000000126,
+        "intentional_vendor_reference": true
+      }
+    ],
+    "invalid": [],
+    "physical_components": 830,
+    "total_components": 839
+  },
+  "connections": {
     "connections": [
-      {
-        "a": "MAN_TIRADOR_COMPUERTA",
-        "b": "MG01_HOJA_CERRADA",
-        "gap_m": 0.0
-      },
-      {
-        "a": "MAN_TOPE_HOJA",
-        "b": "MG01_HOJA_CERRADA",
-        "gap_m": 0.0
-      },
-      {
-        "a": "MAN_TOPE_GUIA",
-        "b": "MG04_SUP_1",
-        "gap_m": 0.0
-      },
-      {
-        "a": "MAN_TOPE_GUIA",
-        "b": "MG04_SUP_2",
-        "gap_m": 0.0
-      },
-      {
-        "a": "MS02_CUELLO",
-        "b": "MS01_TRANSICION",
-        "gap_m": 2.2466758580694415e-30
-      },
-      {
-        "a": "MAN_LABIO_SOPORTE_ABRAZADERA",
-        "b": "MS02_CUELLO",
-        "gap_m": 0.0
-      },
-      {
-        "a": "MAN_ABRAZADERA_SACO",
-        "b": "MAN_LABIO_SOPORTE_ABRAZADERA",
-        "gap_m": 1.1368683772161603e-16
-      },
       {
         "a": "BALANZA_SOPORTE_INDICADOR",
         "b": "BALANZA_BASTIDOR_FIJO",
-        "gap_m": 0.0
+        "gap_mm": 0.0
       },
       {
         "a": "BALANZA_SOPORTE_INDICADOR",
         "b": "AUTO_P100_INDICADOR_REF_1",
-        "gap_m": 0.0
+        "gap_mm": 0.0
+      },
+      {
+        "a": "AC_CIERRE_PUERTA",
+        "b": "AC_GUIA_PUERTA",
+        "gap_mm": 0.0
+      },
+      {
+        "a": "AC_CIERRE_PUERTA",
+        "b": "COL-3.2-1",
+        "gap_mm": 0.0
+      },
+      {
+        "a": "AC_BLOQUEO_PUERTA",
+        "b": "UNIONES_BR_POSTE_06_CHS60_CIERRE3_1",
+        "gap_mm": 6.431098710768743e-13
+      },
+      {
+        "a": "MS01_TRANSICION",
+        "b": "MS02_CUELLO",
+        "gap_mm": 0.0
+      },
+      {
+        "a": "MS02_CUELLO",
+        "b": "MAN_LABIO_SOPORTE_ABRAZADERA",
+        "gap_mm": 0.0
       },
       {
         "a": "BALANZA_BASTIDOR_FIJO",
         "b": "AUTO_P100_CELDA_75KG_REF_1",
-        "gap_m": 0.0
+        "gap_mm": 0.0
+      },
+      {
+        "a": "BALANZA_BASTIDOR_FIJO",
+        "b": "AUTO_P100_CELDA_75KG_REF_2",
+        "gap_mm": 0.0
+      },
+      {
+        "a": "BALANZA_BASTIDOR_FIJO",
+        "b": "AUTO_P100_CELDA_75KG_REF_3",
+        "gap_mm": 0.0
+      },
+      {
+        "a": "BALANZA_BASTIDOR_FIJO",
+        "b": "AUTO_P100_CELDA_75KG_REF_4",
+        "gap_mm": 0.0
       },
       {
         "a": "BALANZA_PLATO_FIJO",
         "b": "AUTO_P100_CELDA_75KG_REF_1",
-        "gap_m": 0.0
-      },
-      {
-        "a": "BALANZA_BASTIDOR_FIJO",
-        "b": "AUTO_P100_CELDA_75KG_REF_2",
-        "gap_m": 0.0
+        "gap_mm": 0.0
       },
       {
         "a": "BALANZA_PLATO_FIJO",
         "b": "AUTO_P100_CELDA_75KG_REF_2",
-        "gap_m": 0.0
-      },
-      {
-        "a": "BALANZA_BASTIDOR_FIJO",
-        "b": "AUTO_P100_CELDA_75KG_REF_3",
-        "gap_m": 0.0
+        "gap_mm": 0.0
       },
       {
         "a": "BALANZA_PLATO_FIJO",
         "b": "AUTO_P100_CELDA_75KG_REF_3",
-        "gap_m": 0.0
-      },
-      {
-        "a": "BALANZA_BASTIDOR_FIJO",
-        "b": "AUTO_P100_CELDA_75KG_REF_4",
-        "gap_m": 0.0
+        "gap_mm": 0.0
       },
       {
         "a": "BALANZA_PLATO_FIJO",
         "b": "AUTO_P100_CELDA_75KG_REF_4",
-        "gap_m": 0.0
+        "gap_mm": 0.0
       }
     ],
-    "spout_support_clear": true
+    "scale_mast_plate_gap_mm": 20.0
   },
-  "limits": [
-    "Recorrido nominal rígido; el plegado de tela se representa de forma esquemática.",
-    "FIBC con manga inferior y tecle/carro con frenos propios son requisitos de selección pendientes de proveedor."
-  ],
-  "prior_automated_motion_evidence_applied": false
+  "kinematics": {
+    "revision": "P05_CIERRE_SIMPLE_20261103",
+    "step_sha256": "5a0cb77ff5a85d3c30ab6ebc11248479ae5379707617b571c44c6d5d06401e7b",
+    "model_sha256": "a652bcc5a4f71af3bda7d49884301da99cc0e619def7d15854936266a31d5773",
+    "components": 839,
+    "hook_max_m": 5.945,
+    "travel_bottom_m": 3.467926,
+    "rail_prism_proof": {
+      "method": "Exact section extruded20m alongX; verified to contain actualMON-01",
+      "rail_material_outside_prism_mm3": 0.0
+    },
+    "existing_access_gate_new_mount_checks": [
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 104.40306508910558
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 44.999999999836284
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 70.00000000000007
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 729.1947613633657
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 670.0
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 264.05491853016514
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 75.00666637039679
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 715.7660232225153
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 675.0007407403342
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 210.52553289321116
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 611.6999998999981
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 301.7414289398411
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 744.122899687719
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 4.99999989983535
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 59.999999899997825
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 141.78818699263445
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_CIERRE_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 59.99999989999738
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BLOQUEO_PUERTA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 756.6999998998364
+      }
+    ],
+    "full_motion_envelopes": [
+      {
+        "name": "Charged BigBag vertical lift",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          2.025,
+          -0.525,
+          0.15,
+          3.0749999999999997,
+          0.525,
+          5.117926
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "KNE--1",
+            "conservative_gap_mm": 94.99999989999975
+          },
+          {
+            "tag": "KNE-1",
+            "conservative_gap_mm": 94.99999989999975
+          },
+          {
+            "tag": "HUP-4",
+            "conservative_gap_mm": 149.99999999999991
+          },
+          {
+            "tag": "GRID_DIAFRAGMA_GRID--0.25_0",
+            "conservative_gap_mm": 155.99999999999991
+          },
+          {
+            "tag": "GRID_DIAFRAGMA_GRID-0.25_0",
+            "conservative_gap_mm": 155.99999999999991
+          }
+        ]
+      },
+      {
+        "name": "Charged BigBag transfer",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          0.32499999999999996,
+          -0.525,
+          3.467926,
+          3.0749999999999997,
+          0.525,
+          5.117926
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "KNE--1",
+            "conservative_gap_mm": 94.99999989999975
+          },
+          {
+            "tag": "KNE-1",
+            "conservative_gap_mm": 94.99999989999975
+          },
+          {
+            "tag": "U02_CARTELA_KNE--1_0",
+            "conservative_gap_mm": 180.27756377319955
+          },
+          {
+            "tag": "U02_CARTELA_KNE-1_0",
+            "conservative_gap_mm": 180.27756377319955
+          },
+          {
+            "tag": "UNIF_SHS60X60X4_L748810_SLOT_JUNTA_3_2",
+            "conservative_gap_mm": 294.9999999
+          }
+        ]
+      },
+      {
+        "name": "Charged BigBag lowering onto support",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          0.32499999999999996,
+          -0.525,
+          3.01,
+          1.375,
+          0.525,
+          5.117926
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "GRID--0.5",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "GRID-0.5",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "GRID--0.25",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "GRID-0.25",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "HUP-1",
+            "conservative_gap_mm": 224.99999999999997
+          }
+        ]
+      },
+      {
+        "name": "Empty BigBag return with full-height body conservative bound",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          0.32499999999999996,
+          -0.525,
+          3.01,
+          3.0749999999999997,
+          0.525,
+          5.117926
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "HUP-4",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "GRID--0.5",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "GRID-0.5",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "GRID--0.25",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "GRID-0.25",
+            "conservative_gap_mm": 0.0
+          }
+        ]
+      },
+      {
+        "name": "Empty BigBag reception lowering to handling stop1.0m",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          2.025,
+          -0.525,
+          1.0,
+          3.0749999999999997,
+          0.525,
+          5.117926
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "KNE--1",
+            "conservative_gap_mm": 94.99999989999975
+          },
+          {
+            "tag": "KNE-1",
+            "conservative_gap_mm": 94.99999989999975
+          },
+          {
+            "tag": "HUP-4",
+            "conservative_gap_mm": 149.99999999999991
+          },
+          {
+            "tag": "GRID_DIAFRAGMA_GRID--0.25_0",
+            "conservative_gap_mm": 155.99999999999991
+          },
+          {
+            "tag": "GRID_DIAFRAGMA_GRID-0.25_0",
+            "conservative_gap_mm": 155.99999999999991
+          }
+        ]
+      },
+      {
+        "name": "Empty BigBag final lowering after manual spout gathering",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          2.025,
+          -0.525,
+          0.15,
+          3.0749999999999997,
+          0.525,
+          2.65
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "HLOW-4",
+            "conservative_gap_mm": 194.99999999999983
+          },
+          {
+            "tag": "HBRA-1.250",
+            "conservative_gap_mm": 194.99999999999983
+          },
+          {
+            "tag": "U04_CARTELA_0_1",
+            "conservative_gap_mm": 213.9953270517794
+          },
+          {
+            "tag": "U04_CARTELA_1_1",
+            "conservative_gap_mm": 213.9953270517794
+          },
+          {
+            "tag": "BASE_TOLVA_1",
+            "conservative_gap_mm": 251.24689052802213
+          }
+        ]
+      },
+      {
+        "name": "Spout deployment and vertical empty lift over hopper",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          0.675,
+          -0.175,
+          2.6599999999999997,
+          1.025,
+          0.175,
+          3.4699259999999996
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "GRID--0.25",
+            "conservative_gap_mm": 140.0
+          },
+          {
+            "tag": "GRID-0.25",
+            "conservative_gap_mm": 140.0
+          },
+          {
+            "tag": "GRID--0.5",
+            "conservative_gap_mm": 285.00000000000006
+          },
+          {
+            "tag": "GRID-0.5",
+            "conservative_gap_mm": 285.00000000000006
+          },
+          {
+            "tag": "LINER_CONO_1",
+            "conservative_gap_mm": 347.5644347018676
+          }
+        ]
+      },
+      {
+        "name": "Hanging spout transfer on empty return",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          0.675,
+          -0.175,
+          3.1179259999999998,
+          2.7249999999999996,
+          0.175,
+          3.4699259999999996
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "HUP-4",
+            "conservative_gap_mm": 107.92599999999996
+          },
+          {
+            "tag": "GRID--0.25",
+            "conservative_gap_mm": 176.7710990971092
+          },
+          {
+            "tag": "GRID-0.25",
+            "conservative_gap_mm": 176.7710990971092
+          },
+          {
+            "tag": "GRID_DIAFRAGMA_GRID--0.25_0",
+            "conservative_gap_mm": 224.97807332271282
+          },
+          {
+            "tag": "GRID_DIAFRAGMA_GRID-0.25_0",
+            "conservative_gap_mm": 224.97807332271282
+          }
+        ]
+      },
+      {
+        "name": "Hanging spout lowering at reception to handling stop",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          2.375,
+          -0.175,
+          0.65,
+          2.7249999999999996,
+          0.175,
+          3.4699259999999996
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "HUP-4",
+            "conservative_gap_mm": 500.0
+          },
+          {
+            "tag": "GRID_DIAFRAGMA_GRID--0.25_0",
+            "conservative_gap_mm": 541.9151225053606
+          },
+          {
+            "tag": "GRID_DIAFRAGMA_GRID-0.25_0",
+            "conservative_gap_mm": 541.9151225053606
+          },
+          {
+            "tag": "HBRA-1.250",
+            "conservative_gap_mm": 544.9999999999999
+          },
+          {
+            "tag": "HR-2.6826-4",
+            "conservative_gap_mm": 608.9999999999998
+          }
+        ]
+      },
+      {
+        "name": "Sack forward removal after closing and folding70mm mouth",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          0.6,
+          -1.9,
+          0.35,
+          1.1,
+          0.2,
+          0.8265
+        ],
+        "candidate_checks": [
+          {
+            "tag": "BRL-A--1",
+            "intersection_mm3": 0.0
+          },
+          {
+            "tag": "BRL-B--1",
+            "intersection_mm3": 0.0
+          }
+        ],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "BRL-A--1",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "BRL-B--1",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "BALANZA_PLATO_FIJO",
+            "conservative_gap_mm": 0.0
+          },
+          {
+            "tag": "MS02_CUELLO",
+            "conservative_gap_mm": 30.00000000000003
+          },
+          {
+            "tag": "MAN_MARIPOSA_ABRAZADERA",
+            "conservative_gap_mm": 46.00000000000004
+          }
+        ]
+      },
+      {
+        "name": "Sack lateral removal outside frame",
+        "method": "Continuous rectangular swept envelope against actual fixed STEP BRep",
+        "bbox_m": [
+          -1.5,
+          -1.9,
+          0.35,
+          1.1,
+          -1.5,
+          0.8265
+        ],
+        "candidate_checks": [],
+        "nearest_AABB_interfaces": [
+          {
+            "tag": "BRL-B--1",
+            "conservative_gap_mm": 424.9999998999998
+          },
+          {
+            "tag": "COL-3.2--1",
+            "conservative_gap_mm": 425.00000000000006
+          },
+          {
+            "tag": "U02_CARTELA_BRL-B--1_1",
+            "conservative_gap_mm": 452.2620921545381
+          },
+          {
+            "tag": "ANCLA_37",
+            "conservative_gap_mm": 465.75637408413434
+          },
+          {
+            "tag": "ANCLA_39",
+            "conservative_gap_mm": 465.75637408413434
+          }
+        ]
+      }
+    ],
+    "rigid_checks": [
+      {
+        "test": "Hoist transfer",
+        "part": "CARRO_2t_REF",
+        "obstacle": "MON-01",
+        "collision": false,
+        "continuous_method": "X-invariant conservative rail prism",
+        "gap_mm": 1.0,
+        "intersection_mm3": 0.0
+      },
+      {
+        "test": "Manual gate complete280mm stroke",
+        "part": "MG01_HOJA_CERRADA",
+        "obstacle": "BRL-A--1",
+        "collision": false,
+        "sampled_min_gap_mm": 1368.042849894087,
+        "evaluations": 1,
+        "near_contact_intervals": []
+      },
+      {
+        "test": "Manual gate complete280mm stroke",
+        "part": "MG01_HOJA_CERRADA",
+        "obstacle": "BRL-B--1",
+        "collision": false,
+        "sampled_min_gap_mm": 158.5036319937082,
+        "evaluations": 1,
+        "near_contact_intervals": []
+      },
+      {
+        "test": "Manual gate complete280mm stroke",
+        "part": "MG01_HOJA_CERRADA",
+        "obstacle": "MG07_UHMW_SUP_1",
+        "collision": false,
+        "sampled_min_gap_mm": 0.7000000000000455,
+        "evaluations": 511,
+        "near_contact_intervals": []
+      },
+      {
+        "test": "Manual gate complete280mm stroke",
+        "part": "MG01_HOJA_CERRADA",
+        "obstacle": "MG07_UHMW_SUP_2",
+        "collision": false,
+        "sampled_min_gap_mm": 0.7000000000000455,
+        "evaluations": 511,
+        "near_contact_intervals": []
+      },
+      {
+        "test": "Manual gate complete280mm stroke",
+        "part": "MG01_HOJA_CERRADA",
+        "obstacle": "MG08_UHMW_INF_1",
+        "collision": false,
+        "sampled_min_gap_mm": 0.75,
+        "evaluations": 511,
+        "near_contact_intervals": []
+      },
+      {
+        "test": "Manual gate complete280mm stroke",
+        "part": "MG01_HOJA_CERRADA",
+        "obstacle": "MG08_UHMW_INF_2",
+        "collision": false,
+        "sampled_min_gap_mm": 0.75,
+        "evaluations": 511,
+        "near_contact_intervals": []
+      }
+    ],
+    "moving_interfaces": [
+      {
+        "part": "CR-END--0.5",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 347.63486591537503,
+        "collision": false
+      },
+      {
+        "part": "CR-END--0.5",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 700.0714534959997,
+        "collision": false
+      },
+      {
+        "part": "CR-END--0.5",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 821.0852574489459,
+        "collision": false
+      },
+      {
+        "part": "CR-END--0.5",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 866.019052908192,
+        "collision": false
+      },
+      {
+        "part": "CR-END--0.5",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 821.0852574489459,
+        "collision": false
+      },
+      {
+        "part": "CR-END--0.5",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 866.019052908192,
+        "collision": false
+      },
+      {
+        "part": "CR-END-0.5",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 347.63486591537503,
+        "collision": false
+      },
+      {
+        "part": "CR-END-0.5",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 700.0714534959997,
+        "collision": false
+      },
+      {
+        "part": "CR-END-0.5",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 866.019052908192,
+        "collision": false
+      },
+      {
+        "part": "CR-END-0.5",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 821.0852574489459,
+        "collision": false
+      },
+      {
+        "part": "CR-END-0.5",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 866.019052908192,
+        "collision": false
+      },
+      {
+        "part": "CR-END-0.5",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 821.0852574489459,
+        "collision": false
+      },
+      {
+        "part": "CR-MAIN",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 264.9999998999997,
+        "collision": false
+      },
+      {
+        "part": "CR-MAIN",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 625.1999998999995,
+        "collision": false
+      },
+      {
+        "part": "CR-MAIN",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 734.9999998999995,
+        "collision": false
+      },
+      {
+        "part": "CR-MAIN",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 734.9999998999995,
+        "collision": false
+      },
+      {
+        "part": "CR-MAIN",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 734.9999998999995,
+        "collision": false
+      },
+      {
+        "part": "CR-MAIN",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 734.9999998999995,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_CENTRAL",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 15.000000000001457,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_CENTRAL",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 375.2000000000013,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_CENTRAL",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 485.5450545520994,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_CENTRAL",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 485.5450545520994,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_CENTRAL",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 485.5450545520994,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_CENTRAL",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 485.5450545520994,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_1",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 545.6060850100567,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_1",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 910.3977372555371,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_1",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1039.5965563621312,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_1",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1079.1964603351894,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_1",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1080.2319195432071,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_1",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1118.3939377518113,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_2",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 545.6060850100567,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_2",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 910.3977372555371,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_2",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1080.2319195432074,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_2",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1118.3939377518113,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_2",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1039.5965563621312,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_2",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1079.1964603351894,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_3",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 545.6060850100567,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_3",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 910.3977372555371,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_3",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1079.1964603351894,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_3",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1039.5965563621312,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_3",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1118.3939377518113,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_3",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1080.2319195432071,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_4",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 545.6060850100567,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_4",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 910.3977372555371,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_4",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1118.3939377518113,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_4",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1080.2319195432074,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_4",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1079.1964603351894,
+        "collision": false
+      },
+      {
+        "part": "CR_OREJA_ASA_4",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1039.5965563621312,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_5",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 590.4117207508682,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_5",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 946.4269860903175,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_5",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1120.4021599407965,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_5",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1161.2084222911933,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_5",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1075.8071388497112,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_5",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1118.2419237356478,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_6",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 590.4117207508682,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_6",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 946.4269860903175,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_6",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1161.2084222911933,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_6",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1120.4021599407965,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_6",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1118.2419237356478,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_6",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1075.8071388497112,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_7",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 590.4117207508682,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_7",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 946.4269860903175,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_7",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1118.2419237356478,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_7",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1075.8071388497112,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_7",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1161.208422291193,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_7",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1120.4021599407965,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_8",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 590.4117207508682,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_8",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 946.4269860903175,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_8",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1075.8071388497112,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_8",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1118.2419237356478,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_8",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1120.4021599407965,
+        "collision": false
+      },
+      {
+        "part": "AUTO_OREJA_EXTREMA_90X120X12_8",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1161.208422291193,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_1",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 508.87130003567705,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_1",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 876.219173494851,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_1",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1005.3939526374722,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_1",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1042.4130659196476,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_1",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1047.357150164164,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_1",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1082.9427501027003,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_2",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 508.87130003567705,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_2",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 876.219173494851,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_2",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1047.3571501641643,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_2",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1082.9427501027003,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_2",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1005.3939526374722,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_2",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1042.4130659196478,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_3",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 508.87130003567705,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_3",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 876.219173494851,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_3",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1042.4130659196476,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_3",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1005.3939526374722,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_3",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1082.9427501027003,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_3",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1047.357150164164,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_4",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 508.87130003567705,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_4",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 876.219173494851,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_4",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1082.9427501027003,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_4",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1047.3571501641643,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_4",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1042.4130659196478,
+        "collision": false
+      },
+      {
+        "part": "CR_RESPALDO_EXTREMA_4",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1005.3939526374722,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_1",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 272.04595200076125,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_1",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 641.961244936173,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_1",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 762.1089161005801,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_1",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 796.0012562804164,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_1",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 764.0196332555867,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_1",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 797.8308091318617,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_2",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 426.8782027698299,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_2",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 798.1447487768118,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_2",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 917.227343683124,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_2",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 945.5760149242363,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_2",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 918.8155418798702,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_2",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 947.1166770783838,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_3",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 272.04595200076125,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_3",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 641.961244936173,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_3",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 796.0012562804164,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_3",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 762.1089161005801,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_3",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 797.8308091318617,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_3",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 764.0196332555867,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_4",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 426.8782027698299,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_4",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 798.1447487768118,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_4",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 945.5760149242363,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_4",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 917.227343683124,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_4",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 947.1166770783838,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_4",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 918.8155418798702,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_5",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 272.04595200076125,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_5",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 641.961244936173,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_5",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 764.0196332555867,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_5",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 797.8308091318617,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_5",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 762.1089161005801,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_5",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 796.0012562804164,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_6",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 426.8782027698299,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_6",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 798.1447487768118,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_6",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 918.8155418798702,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_6",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 947.1166770783838,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_6",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 917.227343683124,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_6",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 945.5760149242363,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_7",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 272.04595200076125,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_7",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 641.961244936173,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_7",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 797.8308091318617,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_7",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 764.0196332555867,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_7",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 796.0012562804164,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_7",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 762.1089161005801,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_8",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 426.8782027698299,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_8",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 798.1447487768118,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_8",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 947.1166770783838,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_8",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 918.8155418798702,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_8",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 945.5760149242363,
+        "collision": false
+      },
+      {
+        "part": "CR_CARTELA_8",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 917.227343683124,
+        "collision": false
+      },
+      {
+        "part": "CR_CAP_CENTRAL",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 235.0000000000003,
+        "collision": false
+      },
+      {
+        "part": "CR_CAP_CENTRAL",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 595.2000000000002,
+        "collision": false
+      },
+      {
+        "part": "CR_CAP_CENTRAL",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 705.0000000000001,
+        "collision": false
+      },
+      {
+        "part": "CR_CAP_CENTRAL",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 705.0000000000001,
+        "collision": false
+      },
+      {
+        "part": "CR_CAP_CENTRAL",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 705.0000000000001,
+        "collision": false
+      },
+      {
+        "part": "CR_CAP_CENTRAL",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 705.0000000000001,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_-1",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 265.0000000000015,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_-1",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 625.2000000000013,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_-1",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 735.0000000000013,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_-1",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 735.0000000000013,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_-1",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 739.2333866919173,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_-1",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 739.2333866919173,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_1",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 265.0000000000015,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_1",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 625.2000000000013,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_1",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 739.2333866919173,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_1",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 739.2333866919173,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_1",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 735.0000000000013,
+        "collision": false
+      },
+      {
+        "part": "CR_CHEEK_1",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 735.0000000000013,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_1",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 624.4007852425531,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_1",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 987.5158510097766,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_1",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1116.9563020904102,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_1",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1154.1670852954887,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_1",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1162.7138000296907,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_1",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1198.5047604325496,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_2",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 624.4007852425531,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_2",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 987.5158510097766,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_2",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1154.1670852954887,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_2",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1116.9563020904102,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_2",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1198.5047604325496,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_2",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1162.7138000296907,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_3",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 624.4007852425532,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_3",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 987.5158510097767,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_3",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1162.7138000296907,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_3",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1198.5047604325496,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_3",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1116.9563020904102,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_3",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1154.1670852954887,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_4",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 624.4007852425532,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_4",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 987.5158510097767,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_4",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1198.5047604325496,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_4",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1162.7138000296907,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_4",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1154.1670852954887,
+        "collision": false
+      },
+      {
+        "part": "GRILLETE_ASA_4",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1116.9563020904102,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_1",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 708.8765781685538,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_1",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 1074.230111603629,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_1",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1203.5954316446778,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_1",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1241.5965379606719,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_1",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1246.0763070839355,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_1",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1282.819614394762,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_2",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 708.876578168564,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_2",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 1074.2301116036379,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_2",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1241.596537960682,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_2",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1203.5954316446866,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_2",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1282.819614394772,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_2",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1246.076307083944,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_3",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 708.8765781685537,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_3",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 1074.230111603629,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_3",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1246.0763070839355,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_3",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1282.819614394762,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_3",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1203.5954316446778,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_3",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1241.5965379606719,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_4",
+        "obstacle": "TECLE_ELECTRICO_2t_REF",
+        "full_approach_bbox_gap_mm": 708.876578168564,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_4",
+        "obstacle": "CARRO_2t_REF",
+        "full_approach_bbox_gap_mm": 1074.2301116036379,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_4",
+        "obstacle": "KITO_RUEDA_-0.059_-1",
+        "full_approach_bbox_gap_mm": 1282.819614394772,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_4",
+        "obstacle": "KITO_RUEDA_-0.059_1",
+        "full_approach_bbox_gap_mm": 1246.076307083944,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_4",
+        "obstacle": "KITO_RUEDA_0.059_-1",
+        "full_approach_bbox_gap_mm": 1241.596537960682,
+        "collision": false
+      },
+      {
+        "part": "GANCHO_ASA_4",
+        "obstacle": "KITO_RUEDA_0.059_1",
+        "full_approach_bbox_gap_mm": 1203.5954316446866,
+        "collision": false
+      }
+    ],
+    "ear_to_hoist_at_max_hook": {
+      "gap_mm": 15.0,
+      "intersection_mm3": 0.0
+    },
+    "intended_contacts": [
+      {
+        "test": "Hoist transfer",
+        "part": "KITO_RUEDA_-0.059_-1",
+        "obstacle": "MON-01",
+        "reason": "Declared rolling contact of existing trolley wheels on rail"
+      },
+      {
+        "test": "Hoist transfer",
+        "part": "KITO_RUEDA_-0.059_1",
+        "obstacle": "MON-01",
+        "reason": "Declared rolling contact of existing trolley wheels on rail"
+      },
+      {
+        "test": "Hoist transfer",
+        "part": "KITO_RUEDA_0.059_-1",
+        "obstacle": "MON-01",
+        "reason": "Declared rolling contact of existing trolley wheels on rail"
+      },
+      {
+        "test": "Hoist transfer",
+        "part": "KITO_RUEDA_0.059_1",
+        "obstacle": "MON-01",
+        "reason": "Declared rolling contact of existing trolley wheels on rail"
+      },
+      {
+        "test": "Manual gate stop",
+        "part": "MG01_HOJA_CERRADA",
+        "obstacle": "MAN_TOPE_GUIA",
+        "method": "Continuous material partition: drawbar within clear slot; grip stays in front; leaf/tab rear envelope touches terminal stop only",
+        "slot_guide_intersection_mm3": 0.0,
+        "remaining_leaf_swept_bbox_m": [
+          0.695,
+          -0.63,
+          1.07525,
+          1.005,
+          0.14,
+          1.0813
+        ],
+        "guide_bbox_m": [
+          0.668,
+          -0.638,
+          1.0565,
+          1.032,
+          -0.63,
+          1.106
+        ]
+      }
+    ],
+    "hanging_spout_minimum_z_on_transfer_m": 3.1179259999999998,
+    "spout_clearance_above_support_plane_mm": 107.92599999999996,
+    "reception_handling_stop": {
+      "bag_bottom_m": 1.0,
+      "spout_bottom_m": 0.65,
+      "movement_paused": true,
+      "operator_action": "Gather and re-tie empty spout from side, then withdraw before lowering to pallet"
+    },
+    "sack_filling_envelope_m": [
+      0.5,
+      0.4,
+      0.5465
+    ],
+    "sack_removal_envelope_m": [
+      0.5,
+      0.4,
+      0.4765
+    ],
+    "sack_requirement": "Close, fold upper70mm and release collar before forward then lateral handling",
+    "failures": [],
+    "uncertain_intervals": [],
+    "cloth_mechanics_simulated": false,
+    "forklift_solid_envelope_validated": false,
+    "scope": "Nominal CAD functional geometry and declared motion paths; not physical testing or fabric FEA",
+    "passed": true
+  },
+  "status": "CORRECCIONES_FUNCIONALES_VERIFICADAS_EN_CAD",
+  "scope": "Diseño funcional nominal; FIBC genérico y equipo de izaje de selección de proyecto"
 }

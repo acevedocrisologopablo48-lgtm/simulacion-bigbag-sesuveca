@@ -1,9 +1,9 @@
 {
   "schema": "sesuveca.p05.operator_view.v1",
-  "revision": "P05-SIMPLE-20261103",
+  "revision": "P05-CIERRE-SIMPLE-20261103",
   "date": "2026-11-03",
   "derived_from": "control_maestro_p05.json",
-  "master_sha256": "0ef8d04cd6269c924a47f23c441e74c6e64bb450c4c951516a067201a6773049",
+  "master_sha256": "c4029873e440ca54c7f10933d053d1448cc1c23212a5e65358fc30c29d8c20b3",
   "executable_plc_program": false,
   "operator_checks_are_not_sensors": true,
   "scope": "Ensacado manual de 25 y 50 kg sobre balanza fija",
@@ -57,11 +57,11 @@
       "actions_by_operator": [
         "Aflojar el tornillo de la abrazadera con el saco apoyado en la balanza para medir el peso final sin tracción del cuello.",
         "Leer el peso estable. Si falta producto, volver a sujetar y completar manualmente; si sobra, corregir con la compuerta cerrada.",
-        "Cerrar o atar el saco cuando el operario acepta el peso final."
+        "Cerrar o atar el saco cuando el operario acepta el peso final y plegar70mm de su boca flexible para despejar el cuello fijo."
       ],
       "operator_checks_before_advancing": [
         "Peso final aceptado por el operario.",
-        "Saco cerrado, abrazadera libre y compuerta cerrada."
+        "Saco cerrado, boca plegada70mm, abrazadera libre y compuerta cerrada."
       ],
       "electric_motion": [],
       "advance": {
@@ -79,7 +79,7 @@
       "id": "S12",
       "name": "Retirar el saco y repetir",
       "actions_by_operator": [
-        "Retirar el saco de la balanza por manejo del operario y llevarlo al pallet de despacho.",
+        "Retirar manualmente el saco ya cerrado y con la boca plegada: primero hacia el frente y, una vez fuera de la estructura, hacia el pallet lateral de despacho.",
         "Repetir desde S09 mientras haya producto para ensacar.",
         "Al terminar el lote, dejar la compuerta cerrada y comenzar la siguiente recepción en S01."
       ],

@@ -3,13 +3,13 @@
   "company": "SESUVECA DEL PERÚ",
   "author": "Javier Acevedo",
   "summary": "Recepción, izaje por monorriel, descarga manual a tolva y ensacado25/50kg sobre balanza fija.",
-  "revision": "P05_SIMPLE_20261103",
+  "revision": "P05_CIERRE_SIMPLE_20261103",
   "nativeSTEPSource": {
     "stepFile": "ESTACION_BIGBAG_P05.step",
-    "stepSha256": "97826dcc57099bc74842802d0f8527a7f7c3d1d699de84b1b26495481d217722",
+    "stepSha256": "5a0cb77ff5a85d3c30ab6ebc11248479ae5379707617b571c44c6d5d06401e7b",
     "exporter": "OpenCascade; simplified from current delivered BRep",
     "units": "m",
-    "meshedFrom": "Reopened STEP; original meshes reused only for identical retained BReps",
+    "meshedFrom": "Reopened correctedSTEP; fitted existing parts and retained identical original meshes only where unchanged",
     "animationFramesGlobalM": {
       "static": [
         0.0,
@@ -37,12 +37,12 @@
         0.0
       ]
     },
-    "sourceBaselineSha256": "8918d9c531a5a7c9cc741e7cee8c3d955cd9674b76485f9aea7e60b404a19197",
+    "sourceBaselineSha256": "97826dcc57099bc74842802d0f8527a7f7c3d1d699de84b1b26495481d217722",
     "finalCutterPresent": false
   },
-  "components": 881,
+  "components": 839,
   "design": {
-    "revision": "P05_SIMPLE_20261103",
+    "revision": "P05_CIERRE_SIMPLE_20261103",
     "manual_spout": true,
     "manual_gate": true,
     "fixed_scale": true,
@@ -51,6 +51,7 @@
     "cutter": false,
     "external_trolley_lock": false,
     "pneumatics": false,
-    "simulation": "Nominal rigid paths and illustrative flexible FIBC; not cloth or physical validation"
+    "simulation": "Nominal rigid paths and illustrative flexible FIBC; not cloth or physical validation",
+    "empty_bag_gathering": "Stopped at reception, body bottom1.0m, spout end.65m; gather from side at floor level before lowering onto pallet"
   }
 }

@@ -1,6 +1,6 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import { loadModel } from './model-data.js?v=p05simple20261103_97826dcc';
+import { loadModel } from './model-data.js?v=p05cierre20261103';
 
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -12,15 +12,15 @@ export const STAGES=[
   {start:.32,end:.42,title:'Traslado sobre la tolva',short:'Trasladar',detail:'El carro recorre el monorriel y centra la bolsa sobre el apoyo.'},
   {start:.42,end:.52,title:'Apoyo y apertura manual',short:'Apoyar y abrir',detail:'La bolsa queda apoyada. Desde la plataforma se libera el amarre de la boca inferior.'},
   {start:.52,end:.62,title:'Descarga a la tolva',short:'Vaciar',detail:'El carbón cae por gravedad. La compuerta inferior permanece cerrada.'},
-  {start:.62,end:.74,title:'Retorno del bigbag vacío',short:'Retornar',detail:'Se recoge la boca de descarga, se devuelve la bolsa vacía al punto de recepción y se desenganchan las asas.'},
-  {start:.74,end:1,title:'Ensacado manual',short:'Pesar y retirar',detail:'El operario regula la compuerta, comprueba 25 o 50 kg y retira el saco. Se repite hasta vaciar la tolva.'}
+  {start:.62,end:.74,title:'Retorno del bigbag vacío',short:'Retornar',detail:'La bolsa vacía retorna con la manga colgante. Se detiene en recepción para recogerla desde el suelo y luego baja al pallet.'},
+  {start:.74,end:1,title:'Ensacado manual',short:'Pesar y retirar',detail:'El operario regula la compuerta, comprueba 25 o 50 kg, cierra la boca y retira el saco por el frente. Se repite hasta vaciar la tolva.'}
 ];
 
 export function processState(progress,config,sackSize=50){
  const p=clamp(progress),found=STAGES.findIndex(s=>p<s.end),index=found<0?7:found;
  const stage=STAGES[index],q=clamp((p-stage.start)/(stage.end-stage.start));
  const C=config,x0=C.pickup_x,x1=C.discharge_x,z0=C.pickup_bottom,zt=C.travel_bottom,zs=C.support_z;
- let x=x0,z=z0,bagFill=1,hopperFill=0,gate=0,sackFill=0,removal=0,finished=0;
+ let x=x0,z=z0,bagFill=1,hopperFill=0,gate=0,sackFill=0,sackMouthFold=0,removal=0,finished=0;
  if(index===0)x=x0+2.4*(1-smooth(q));
  if(index===2)z=lerp(z0,zt,smooth(q));
  if(index===3){x=lerp(x0,x1,smooth(q));z=zt;}
@@ -28,20 +28,24 @@ export function processState(progress,config,sackSize=50){
  if(index===5){bagFill=1-smooth(q);hopperFill=1-bagFill;}
  if(index===6){
   bagFill=0;hopperFill=1;
-  if(q<.15){x=x1;z=zs;}
-  else if(q<.4){x=x1;z=lerp(zs,zt,smooth((q-.15)/.25));}
-  else if(q<.7){x=lerp(x1,x0,smooth((q-.4)/.3));z=zt;}
-  else{x=x0;z=lerp(zt,z0,smooth((q-.7)/.3));}
+  if(q<.10){x=x1;z=zs;}
+  else if(q<.30){x=x1;z=lerp(zs,zt,smooth((q-.10)/.20));}
+  else if(q<.55){x=lerp(x1,x0,smooth((q-.30)/.25));z=zt;}
+  else if(q<.75){x=x0;z=lerp(zt,C.empty_bag_gathering_bottom_z_m??1,smooth((q-.55)/.20));}
+  else if(q<.88){x=x0;z=C.empty_bag_gathering_bottom_z_m??1;}
+  else{x=x0;z=lerp(C.empty_bag_gathering_bottom_z_m??1,z0,smooth((q-.88)/.12));}
  }
  if(index===7){
   bagFill=0;const totalSacks=1000/sackSize,cycles=Math.min(totalSacks-1e-8,q*totalSacks),n=Math.floor(cycles),t=cycles-n;
   sackFill=clamp((t-.12)/.48);gate=t>=.12&&t<.60?(t>.48?.2:1):0;
-  removal=smooth((t-.76)/.24);finished=n;hopperFill=1-(n+sackFill)/totalSacks;
+  sackMouthFold=smooth((t-.64)/.12);removal=smooth((t-.76)/.24);finished=n;hopperFill=1-(n+sackFill)/totalSacks;
   if(p===1){finished=totalSacks;hopperFill=0;gate=0;}
  }
- return {progress:p,phaseIndex:index,phaseProgress:q,stage,x,z,bagFill,hopperFill,gate,sackFill,removal,finished,
-  sackSize,hookM:(index===0?z0:z)+C.bag_height+C.headpack,spoutOpen:index===5,
-  spoutDeployed:index===6?1-smooth(q/.15):index===5?1:index===4?smooth((q-.45)/.3):0};
+ const gatheringSpout=index===6&&q>=.75&&q<.88;
+ const displayedStage=gatheringSpout?{...stage,title:'Recogida de la manga en recepción',detail:'Con la bolsa vacía detenida, el operario recoge y amarra la manga desde un lateral, a nivel de suelo. Después se retira para continuar el descenso.'}:stage;
+ return {progress:p,phaseIndex:index,phaseProgress:q,stage:displayedStage,x,z,bagFill,hopperFill,gate,sackFill,sackMouthFold,removal,finished,gatheringSpout,
+  sackSize,hookM:(index===0?z0:z)+C.bag_height+C.headpack,spoutOpen:index===5||(index===6&&q<.84),
+  spoutDeployed:index===6?1-smooth((q-.77)/.08):index===5?1:index===4?smooth((q-.45)/.3):0};
 }
 
 let active;
@@ -123,6 +127,7 @@ class SceneEngine{
   for(let i=0;i<8;i++){const s=new THREE.Mesh(this.bagGeometry(.46,.38,.42),this.cloth());s.position.set((i%2-.5)*.49,(Math.floor(i/2)%2-.5)*.42,.14+Math.floor(i/4)*.4);s.castShadow=true;this.output.add(s);this.outputSacks.push(s);}
   this.buildForklift();this.groundWorker=this.person(C.discharge_x+.55,-1.65,0);this.groundWorker.rotation.z=-.45;
   this.platformWorker=this.person(C.discharge_x,1.55,C.platform_floor_z_m);this.platformWorker.rotation.z=0;
+  this.receivingWorker=this.person(C.pickup_x,-.90,0);this.receivingWorker.rotation.z=0;
   this.flow=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.016,0),this.material('#303538',{roughness:1,metalness:0}),64);this.scene.add(this.flow);this.dummy=new THREE.Object3D();
   this.coal=this.box(this.scene,1.50,1.50,.015,C.discharge_x,0,2.62,'#303538');
  }
@@ -147,8 +152,9 @@ class SceneEngine{
   this.forklift.visible=s.phaseIndex<2;this.forklift.rotation.z=Math.PI/2;this.forklift.position.set(receptionX+.64+(s.phaseIndex===1?2.5*smooth(s.phaseProgress):0),0,0);
   this.platformWorker.visible=s.phaseIndex===4||s.phaseIndex===5;
   this.groundWorker.visible=s.phaseIndex===7;
+  this.receivingWorker.visible=s.gatheringSpout;
   this.sack.visible=s.phaseIndex===7&&s.progress<1;this.sack.position.set(lerp(C.discharge_x,-1.25,clamp((s.removal-.55)/.45)),lerp(0,-1.7,clamp(s.removal/.55)),C.scale_deck_z_m??.35);
-  const sackPositions=this.sackBody.geometry.getAttribute('position');for(let i=0;i<this.sackBase.length;i+=3){const top=this.sackBase[i+2]/.5465,factor=lerp(lerp(.65,1,s.sackFill),1,smooth((top-.55)/.45));sackPositions.array[i]=this.sackBase[i]*factor;sackPositions.array[i+1]=this.sackBase[i+1]*factor;}sackPositions.needsUpdate=true;this.sackBody.geometry.computeVertexNormals();
+  const sackPositions=this.sackBody.geometry.getAttribute('position');for(let i=0;i<this.sackBase.length;i+=3){const top=this.sackBase[i+2]/.5465,neckWeight=smooth((top-.75)/.25),factor=lerp(lerp(.65,1,s.sackFill),1,smooth((top-.55)/.45))*(1-.75*s.sackMouthFold*neckWeight);sackPositions.array[i]=this.sackBase[i]*factor;sackPositions.array[i+1]=this.sackBase[i+1]*factor;sackPositions.array[i+2]=this.sackBase[i+2]-.07*s.sackMouthFold*neckWeight;}sackPositions.needsUpdate=true;this.sackBody.geometry.computeVertexNormals();
   this.output.visible=s.finished>0;this.outputSacks.forEach((m,i)=>m.visible=i<Math.min(8,s.finished));
   this.coal.visible=s.hopperFill>.025;this.coal.position.z=lerp(1.25,2.62,s.hopperFill);const coalW=lerp(.25,1.50,clamp((this.coal.position.z-1.1)/1.2124));this.coal.scale.set(coalW/1.5,coalW/1.5,1);
   this.flow.visible=s.phaseIndex===5;

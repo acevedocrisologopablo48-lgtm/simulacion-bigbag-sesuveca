@@ -1,10 +1,10 @@
 {
-  "revision": "P05_SIMPLE_20261103",
+  "revision": "P05_CIERRE_SIMPLE_20261103",
   "published_date": "2026-11-03",
-  "source_STEP_sha256": "97826dcc57099bc74842802d0f8527a7f7c3d1d699de84b1b26495481d217722",
-  "uncompressed_model_sha256": "4261fb2ecd2f855f709eb23edd415fef5671beb7c26de5f3dbfdd417b1c77dd9",
-  "gzip_model_sha256": "e8d320aafa04561694578310266f41dab30b70536468e772ce8cdeb0ec489061",
-  "master_sha256": "0ef8d04cd6269c924a47f23c441e74c6e64bb450c4c951516a067201a6773049",
-  "components": 881,
-  "download": "assets/docs/P05_SIMPLE_20261103.zip"
+  "source_STEP_sha256": "5a0cb77ff5a85d3c30ab6ebc11248479ae5379707617b571c44c6d5d06401e7b",
+  "uncompressed_model_sha256": "a652bcc5a4f71af3bda7d49884301da99cc0e619def7d15854936266a31d5773",
+  "gzip_model_sha256": "4d7d577c188a7a3c38e187405aa205bb8341a01c15ea1fee4c4ddf6a954ce60b",
+  "master_sha256": "c4029873e440ca54c7f10933d053d1448cc1c23212a5e65358fc30c29d8c20b3",
+  "components": 839,
+  "download": "assets/docs/P05_CIERRE_SIMPLE_20261103.zip"
 }

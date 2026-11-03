@@ -1,9 +1,9 @@
 {
   "schema": "sesuveca.p05.operator_view.v1",
-  "revision": "P05-SIMPLE-20261103",
+  "revision": "P05-CIERRE-SIMPLE-20261103",
   "date": "2026-11-03",
   "derived_from": "control_maestro_p05.json",
-  "master_sha256": "0ef8d04cd6269c924a47f23c441e74c6e64bb450c4c951516a067201a6773049",
+  "master_sha256": "c4029873e440ca54c7f10933d053d1448cc1c23212a5e65358fc30c29d8c20b3",
   "executable_plc_program": false,
   "operator_checks_are_not_sensors": true,
   "scope": "Recepción, izaje, traslado, vaciado manual y retorno del BigBag",
@@ -62,11 +62,11 @@
       "name": "Izar hasta la altura de traslado",
       "actions_by_operator": [
         "Izar verticalmente con mando mantenido, sin mover todavía el carro.",
-        "Detener el izaje en la cota nominal de traslado: gancho a 6,005 m."
+        "Detener el izaje en la cota nominal de traslado: gancho a 5,945 m."
       ],
       "operator_checks_before_advancing": [
         "BigBag libre del pallet y sin enganches.",
-        "Fondo de la bolsa a la cota nominal de traslado de 3,527926 m."
+        "Fondo de la bolsa a la cota nominal de traslado de 3,467926 m."
       ],
       "electric_motion": [
         "tecle_subir"
@@ -135,13 +135,14 @@
     },
     {
       "id": "S07",
-      "name": "Recoger la manga y despejar el recorrido",
+      "name": "Comprobar manga libre y despejar el recorrido",
       "actions_by_operator": [
-        "Recoger y amarrar la manga inferior de la bolsa vacía para evitar arrastres.",
+        "Comprobar que la bolsa está vacía y que la manga inferior puede salir libremente por el hueco de los apoyos; dejarla colgante.",
+        "Comprobar que la cinta lateral queda libre de la estructura. No intentar recoger ni amarrar la manga central desde la plataforma.",
         "Retirarse de la zona del BigBag y cerrar el acceso antes de volver a moverlo."
       ],
       "operator_checks_before_advancing": [
-        "Manga recogida y libre de la tolva.",
+        "Bolsa vacía; manga colgante y cinta libres, sin enganches en los apoyos.",
         "Personas fuera del recorrido y acceso cerrado."
       ],
       "electric_motion": [],
@@ -154,14 +155,17 @@
       "id": "S08",
       "name": "Retornar el BigBag vacío",
       "actions_by_operator": [
-        "Mantener el carro detenido por su freno e izar verticalmente hasta la altura de traslado.",
-        "Detener el izaje antes de accionar la traslación; el freno del carro se libera mediante el mando del propio equipo.",
-        "Trasladar hacia recepción, detener el carro y bajar la bolsa vacía al pallet.",
+        "Con el carro detenido por su freno, izar verticalmente la bolsa vacía con la manga colgante hasta la altura de traslado.",
+        "Detener el izaje antes de accionar la traslación. Trasladar hacia recepción y detener el carro.",
+        "Bajar el fondo de la bolsa vacía hasta Z1,00m y detener el tecle; el extremo nominal de la manga queda a Z0,65m.",
+        "Desde el suelo y a un lateral de la bolsa vacía, recoger y amarrar la manga con todos los movimientos detenidos; no situarse debajo de la bolsa.",
+        "Retirarse, continuar el descenso hasta el pallet a Z0,15m y detener el tecle.",
         "Desenganchar las cuatro asas únicamente con la bolsa apoyada; retirar la bolsa vacía."
       ],
       "operator_checks_before_advancing": [
-        "Retorno realizado en orden: subir, detener izaje, trasladar, detener carro, bajar.",
-        "Bolsa vacía retirada y tecle detenido."
+        "Retorno realizado en orden: subir, detener izaje, trasladar, detener carro, bajar a la parada de recogida y detener.",
+        "Manga recogida desde un lateral con el tecle detenido; zona despejada antes de continuar el descenso.",
+        "Bolsa apoyada en el pallet antes del desenganche; bolsa vacía retirada y tecle detenido."
       ],
       "electric_motion": [
         "tecle_subir",
@@ -171,6 +175,14 @@
       "advance": {
         "type": "operator_decision",
         "next": "S09"
+      },
+      "manual_handling_stop": {
+        "location": "recepcion",
+        "bag_bottom_z_m": 1.0,
+        "spout_lower_end_nominal_z_m": 0.65,
+        "all_electric_motion_stopped": true,
+        "operator_position": "Suelo, lateral de la bolsa; nunca debajo",
+        "purpose": "Recoger y reamarrar manga vacía antes del descenso final"
       }
     }
   ],
