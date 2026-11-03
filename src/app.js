@@ -1,4 +1,5 @@
-import {BigbagScene} from './scene.js?v=auto20261021-427829517726';
+import {BigbagScene} from './scene.js?v=p0520261102_8918d9c5';
+import {loadModel} from './model-data.js?v=p0520261102_8918d9c5';
 
 const $=id=>document.getElementById(id);
 const all=selector=>[...document.querySelectorAll(selector)];
@@ -22,9 +23,9 @@ function renderReadings(){
   if(!ready)return;
   const s=BigbagScene.getState();
   $('accessBtn').disabled=!s.accessAvailable&&!s.accessOpen;
-  $('accessBtn').textContent=s.accessOpen?'Cerrar acceso superior':s.accessResetRequired?'Rearmar controles':'Abrir acceso superior';
+  $('accessBtn').textContent=s.accessOpen?'Cerrar vista de puerta':s.accessResetRequired?'Volver al ciclo':'Mostrar puerta abierta';
   $('accessBtn').setAttribute('aria-pressed',String(s.accessOpen));
-  $('accessHint').textContent=s.accessOpen?'Puerta abierta: ciclo detenido.':s.accessResetRequired?'Puerta cerrada: rearma para continuar.':'Habilitado con bolsa apoyada y carro trabado.';
+  $('accessHint').textContent=s.accessOpen?'Revisión visual: animación pausada. No habilita intervención.':s.accessResetRequired?'Puerta cerrada en vista: confirma para continuar la animación.':'Vista geométrica. La intervención requiere aislamiento y retención según la secuencia maestra.';
   for(const id of ['playBtn','resetBtn','timeline','bagMode','sackSize','payload'])$(id).disabled=s.accessOpen||s.accessResetRequired;
   $('timeline').value=String(Math.round(progress*1000));
   $('progressValue').innerHTML=`${number(progress*100)}<small>%</small>`;
@@ -82,7 +83,7 @@ function setCameraMode(value){
 function showTab(id){
   all('.tab-panel').forEach(panel=>panel.hidden=panel.id!==id);
   all('.nav-tab').forEach(button=>{const active=button.dataset.tab===id;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
-  $('pageTitle').textContent=id==='simulacion'?'Izaje, descarga y ensacado':id==='calculos'?'Cálculos':'Piezas y materiales';
+  $('pageTitle').textContent=id==='simulacion'?'Izaje, descarga y ensacado':id==='calculos'?'Antecedentes y condiciones':'Archivo previo de piezas';
   if(id==='simulacion')requestAnimationFrame(()=>BigbagScene.resize());
   else setPlaying(false);
   history.replaceState(null,'',`#${id}`);
@@ -153,9 +154,12 @@ document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT',
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(['simulacion','calculos','piezas'].includes(id))showTab(id);});
 
 try{
-  const responses=await Promise.all([fetch('data/project.json?v=auto20261021-c5c6e5952fbe'),fetch('data/model.json?v=auto20261021-1e9fec7fb95c')]);
-  if(responses.some(r=>!r.ok))throw new Error('No se pudieron cargar los datos del proyecto.');
-  [project,model]=await Promise.all(responses.map(r=>r.json()));
+  [project,model]=await Promise.all([
+    fetch('data/project.json?v=p0520261102_8918d9c5').then(r=>{
+      if(!r.ok)throw new Error('No se pudieron cargar los datos del proyecto.');
+      return r.json();
+    }),loadModel()
+  ]);
   populateProject();populateStages();
   await BigbagScene.init($('scene'),selectPart);ready=true;
   $('loading').hidden=true;$('playBtn').disabled=false;

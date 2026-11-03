@@ -4130,10 +4130,6 @@
       "value": "Fondo cerrado: cuatro hojas304 de6 mm, altura250 mm, punta60° incluidos y bisel15° por cara, respaldos16 y núcleo cónico macizo. Descender centrado y de forma controlada con las cuatro asas enganchadas; mantenerlas durante vaciado y retirada. Validar apertura y flujo con el FIBC y producto reales."
     },
     {
-      "label": "Alternativa de manga",
-      "value": "Visualización de referencia; el módulo de manga no se instala simultáneamente con el cortador fijo"
-    },
-    {
       "label": "Condiciones de corte",
       "value": "Carro detenido e inmovilizado con pasador; bolsa centrada; cuatro asas enganchadas; recinto cerrado, tolva disponible y captación activa. Personal fuera de la trayectoria y sin acceso al cortador durante el ciclo."
     },
@@ -4143,7 +4139,7 @@
     },
     {
       "label": "Compuerta",
-      "value": "Tajadera neumática3pos: cerrado0/fino52,5/abierto280mm; retorno por muelle"
+      "value": "Tajadera0/fino52,5/abierto280mm: cilindro CP96 y válvulas OEM integrados; retorno por muelle, acople y tope fino siguen por resolver."
     },
     {
       "label": "Captación",
@@ -4166,25 +4162,29 @@
       "value": "25 bigbags / jornada de 8 h · 430 min productivos y 50 min de reserva"
     },
     {
-      "label": "Planos",
-      "value": "19 hojas por conjuntos y detalles"
-    },
-    {
-      "label": "Lote compacto",
-      "value": "950×950×1200mm; 1,083m³; 595,65kg teóricos:23sacos25kg+20,65kg remanente"
-    },
-    {
       "label": "SAT / puesta en servicio",
-      "value": "SAT sobre equipo fabricado: plegado de pétalos, corte dinámico, flujo de carbón húmedo según Jenike y Johanson (fricción de pared y cohesión), cierre efectivo<0,15s y pesaje±20g. Criterios de aceptación de campo."
+      "value": "Verificar con bolsa y producto reales corte, plegado, flujo y pesaje. Objetivo de cierre fino0,15s aún no demostrado; carrera total280mm: mínimo cinemático0,4s antes de retardos."
+    },
+    {
+      "label": "Traba del carro",
+      "value": "Cilindro OEM dedicado, retirada100mm y confirmación insertada/retirada; bloqueo fail-hold todavía como interfaz de suministro."
+    },
+    {
+      "label": "Evacuación",
+      "value": "Mesa900×1000, rodillos, acumulación y desvío por peso; mesa350→250→350mm. Motorizaciones y transmisión del desvío siguen como interfaces."
+    },
+    {
+      "label": "Alcance de la simulación",
+      "value": "Poses nominales y barridos BRep. FIBC/tecle sin suministro confirmado; plegado real y varias interfaces de retorno, retención y accionamiento siguen abiertos."
     }
   ],
   "notice": "Cruceta nominal2 t; proceso máximo1 t. Ajuste y prueba de apertura con bolsa y producto reales; capacidad global de losa y selección final de equipos según memoria.",
   "nativeSTEPSource": {
-    "stepFile": "ESTACION_BIGBAG.step",
-    "stepSha256": "ed74637ef7d8a10817d94b397236d665d06f01518d7ac01595effce0d1135e24",
-    "exporter": "SolidWorks / SwSTEP",
+    "stepFile": "ESTACION_BIGBAG_P05.step",
+    "stepSha256": "8918d9c531a5a7c9cc741e7cee8c3d955cd9674b76485f9aea7e60b404a19197",
+    "exporter": "OpenCascade; completar conjuntos existentes",
     "units": "m",
-    "meshedFrom": "STEP BRep solids",
+    "meshedFrom": "STEP reabierto y comparado; cambios triangulados desde relectura",
     "animationFramesGlobalM": {
       "static": [
         0.0,
@@ -4213,7 +4213,9 @@
       ]
     },
     "noParametricRegeneration": true,
-    "finalCutterPresent": true
+    "finalCutterPresent": true,
+    "sourceBaselineSha256": "c7efe876dde657260fb884f2f579c52ca51ab97c5acdaec471717dbb4ddd240b",
+    "intermediateCombinedStepSha256": "dfad327fe6442dc5d953685a9abaacd5b13518102525691e5b63425626b53a4c"
   },
   "structuralUniformity": {
     "columnUtilization": 0.8041906656248192,
@@ -4229,5 +4231,42 @@
     ],
     "modeledMaterialMassKg": 5241.861662370368,
     "sourceSTEPsha256": "6d74ba338d01ed2aa155d8a206fb9287125b4492f613a706a8e5439ba1649cb9"
+  },
+  "functionalRevision": {
+    "revision": "P05-FUNC-20261102-CONJUNTOS-EXISTENTES",
+    "status": "REVISION_FUNCIONAL_3D_DE_PROYECTO; ALCANCE_Y_RESULTADOS_EN_INFORME_DE_CIERRE",
+    "scope": "Modelo3D, secuencia y cinemática de las mismas funciones. El catálogo histórico no se reemite.",
+    "control": "control_maestro_p05.json",
+    "kinematics": "revision_cinematica.json",
+    "full_approval": false,
+    "open_interfaces": [
+      "FIBC_REAL",
+      "TECLE_CARRO_REAL"
+    ],
+    "source_geometry_sha256": "8918d9c531a5a7c9cc741e7cee8c3d955cd9674b76485f9aea7e60b404a19197",
+    "geometry_components": 1704,
+    "service_verification_status": "VER_REPORTE_DE_GUIAS_DE_ESTA_REVISION",
+    "execution_scope": {
+      "date": "2026-10-31",
+      "authority": "Respuesta directa del usuario: Completar los conjuntos existentes, sin nuevas funciones",
+      "supersedes_for_this_revision": "output/cierre_funcional_3d_20261030/alcance_congelado.json",
+      "station_functions_frozen": true,
+      "existing_assemblies_completion_allowed": true,
+      "necessary_subcomponents_allowed": true,
+      "preserve_current_revision_source_sha256": "c7efe876dde657260fb884f2f579c52ca51ab97c5acdaec471717dbb4ddd240b",
+      "allowed": [
+        "Completar acoples, transmisión, accionamiento y retenciones de los conjuntos existentes",
+        "Corregir secuencia necesaria para esas mismas funciones",
+        "Verificar cinemática y reexportar 3D/modelo/JSON"
+      ],
+      "excluded": [
+        "Nuevas funciones o transportadores",
+        "Rediseño general por ampliación de prestaciones",
+        "Planos2D",
+        "BOM",
+        "PDF de fabricación"
+      ],
+      "automatic_approval": false
+    }
   }
 }

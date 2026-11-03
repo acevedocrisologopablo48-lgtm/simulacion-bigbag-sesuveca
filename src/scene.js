@@ -1,8 +1,11 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
+import {loadModel} from './model-data.js?v=p0520261102_8918d9c5';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import {buildWorkshop} from './workshop.js?v=auto20261021-ce89291614b4';
-import {buildEquipmentDetails} from './equipment-details.js?v=auto20261021-a567b17c9252';
-import {buildProcessDetails} from './process-details.js?v=auto20261021-03c45b3d935a';
+import {buildWorkshop} from './workshop.js?v=p0520261102_8918d9c5';
+import {buildEquipmentDetails} from './equipment-details.js?v=p0520261102_8918d9c5';
+import {buildProcessDetails} from './process-details.js?v=p0520261102_8918d9c5';
+import {processState, functionalPose, motionOffset, validateMotionGroups, springVertexWeights, deformSpringPositions, deformBellowsPositions} from './functional-poses.js?v=p0520261102_8918d9c5';
+export {processState} from './functional-poses.js?v=p0520261102_8918d9c5';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
@@ -38,76 +41,11 @@ export function receptionPose(state, config) {
   };
 }
 
-// The progress bar is a process diagram. Mass transfer is conservative; it is not a flow solver.
-export function processState(progress, payload = 1000, bagSize = 50, mode = 'closed', data) {
-  const p = clamp(Number(progress) || 0), C = data.config, stages = data.stages;
-  const index = Math.min(stages.findIndex(s => p < s.b) < 0 ? stages.length - 1 : stages.findIndex(s => p < s.b), stages.length - 1);
-  const stage = stages[index], q = clamp((p - stage.a) / (stage.b - stage.a));
-  payload = clamp(Number(payload) || 0, 0, 1000);
-  const count = payload > 0 ? Math.ceil(payload / bagSize) : 0;
-  let x = C.pickup_x, z = C.pickup_bottom, bigbagKg = payload, hopperKg = 0;
-  let sackKg = 0, finishedKg = 0, completedSacks = 0, transfer = 0, gate = 0, cyclePhase = stage.id;
-  let cycleProgress = q;
-  if (index === 2) z = lerp(C.pickup_bottom, C.travel_bottom, smooth(q));
-  if (index === 3) { z = C.travel_bottom; x = lerp(C.pickup_x, C.discharge_x, smooth(q)); }
-  if (index >= 4) { x = C.discharge_x; z = C.support_z; }
-  if (index === 4) z = q < .08 ? C.travel_bottom : lerp(C.travel_bottom, C.support_z, smooth((q-.08)/.92));
-  if (index === 5) { bigbagKg = payload * (1 - q); hopperKg = payload * q; }
-  if (index >= 6) { bigbagKg = 0; hopperKg = payload; }
-  const dose=q=>{const u=clamp(q);return u<.6?1.5*u:.9+.1*clamp((u-.6)/.4);};
-  const gateAt=f=>f>=1?0:f<.9?1:52.5/280;
-  const first = Math.min(payload, bagSize);
-  if (index === 6) { sackKg = first * dose(q); hopperKg -= sackKg; gate = gateAt(sackKg/first); }
-  if (index === 7) { sackKg = first; hopperKg -= sackKg; }
-  if (index === 8 && count) {
-    if (q < .055) {
-      sackKg = first; hopperKg -= sackKg; transfer = smooth(q / .055);
-      cyclePhase = 'salida'; cycleProgress = q / .055;
-    } else if (count === 1) {
-      finishedKg = payload; completedSacks = 1; hopperKg = 0; transfer = 1;
-    } else {
-      const cycles = count - 1, v = clamp((q - .055) / .945) * cycles;
-      const j = Math.min(cycles - 1, Math.floor(v)), u = p >= .94 ? 1 : v - j;
-      completedSacks = 1 + j; finishedKg = Math.min(payload, completedSacks * bagSize);
-      const currentTarget = Math.min(bagSize, payload - finishedKg);
-      if (u < .62) { cyclePhase = 'llenado'; cycleProgress = u / .62; sackKg = currentTarget * dose(cycleProgress); gate = gateAt(sackKg/currentTarget); }
-      else if (u < .78) { cyclePhase = 'amarre'; cycleProgress = (u - .62) / .16; sackKg = currentTarget; }
-      else { cyclePhase = 'salida'; cycleProgress = (u - .78) / .22; sackKg = currentTarget; transfer = smooth(cycleProgress); }
-      hopperKg = Math.max(0, payload - finishedKg - sackKg);
-    }
-  }
-  if (index === 9) {
-    finishedKg = payload; completedSacks = count; hopperKg = 0;
-    z = q < .24 ? lerp(C.support_z, C.travel_bottom, smooth(q / .24)) :
-      q > .82 ? lerp(C.travel_bottom, C.pickup_bottom, smooth((q - .82) / .18)) : C.travel_bottom;
-    x = q < .24 ? C.discharge_x : lerp(C.discharge_x, C.pickup_x, smooth((q - .24) / .58));
-  }
-  const carriageLocked = (index >= 4 && index < 9) || (index === 9 && q < .24);
-  const lockingPin = carriageLocked && (index !== 4 || q >= .08);
-  const hoistEnabled = index < 4 || (index === 4 && lockingPin) || index === 9;
-  const interlockState = index === 9 && q < .24 ? 'Retorno vertical · carro bloqueado y pasador insertado' :
-    index === 9 ? 'Cortador despejado · pasador retirado y traslado habilitado' :
-    index >= 5 && index < 9 ? 'Descarga · carro bloqueado, pasador insertado e izaje inhibido' :
-    index === 4 ? (lockingPin ? 'Apoyo · pasador insertado y descenso controlado' : 'Posición de descarga · traslación inhibida') :
-    'Recepción y traslado · zona de descarga sin habilitar';
-  return { progress: p, phaseIndex: index, phase: stage.name, phaseId: stage.id, phaseProgress: q,
-    detail: index === 5 ? (mode === 'spout' ? 'Alternativa de manga: cortador retirado del módulo antes del ciclo.' : 'Corte por descenso sobre cuatro filos fijos AISI 304 dentro del recinto.') : stage.detail,
-    cyclePhase, cycleProgress, bigbagKg, hopperKg, sackKg, finishedKg, completedSacks,
-    fullSacks:Math.floor((payload+1e-9)/bagSize),remainderKg:Math.max(0,payload-Math.floor((payload+1e-9)/bagSize)*bagSize),dosingStage:gate===0?'Cerrado':gate===1?'Grueso':'Fino', totalSacks: count, sackNumber: count ? Math.min(count, completedSacks + 1) : 0,
-    hopperM3: hopperKg / (data.densityKgM3 || 550), bagBottomM: z, hookM: z + (C.bag_height || 1) + C.headpack,
-    carriageM: Math.abs(x - C.pickup_x), x, z, transfer, gateOpening: clamp(gate),
-    mode, bagSize, payload, runningFlow: (index === 5 && q > 0 && q < 1) || gate > .01,
-    carriageLocked, lockingPin, hoistEnabled, interlockState,
-    massBalanceKg: bigbagKg + hopperKg + sackKg + finishedKg };
-}
-
 let active = null;
 export const BigbagScene = {
   async init(container, onSelect) {
     if (active) active.dispose();
-    const response = await fetch(new URL('../data/model.json?v=auto20261021-1e9fec7fb95c', import.meta.url));
-    if (!response.ok) throw new Error('No se pudo cargar la geometría.');
-    active = new SceneEngine(container, await response.json(), onSelect);
+    active = new SceneEngine(container, await loadModel(), onSelect);
     return BigbagScene;
   },
   setProgress(v) { return active?.setProgress(v); },
@@ -119,19 +57,10 @@ export const BigbagScene = {
   highlight(id) { active?.highlight(id); },
   setMode(v) { active?.setMode(v); }, setBagSize(v) { active?.setBagSize(v); },
   setPayload(v) {
-    if(!active)return;
-    const compact=Math.abs(Number(v)-595.65)<.01;
-    if(Boolean(active.data.config.compact_format)!==compact){
-      const old=active,data=structuredClone(active.data),container=active.container,select=active.onSelect,progress=active.progress,size=active.bagSize;
-      const C=data.config,delta=compact?-.05:.05;
-      C.compact_format=compact;C.bag_width=compact?.95:1.05;C.bag_height=compact?1.2:1.65;
-      C.bag_attachment_spacing_m=compact?.95:1.05;C.cruceta_center_above_bag_m=compact?1.772074:2.222074;
-      for(const m of data.cruceta)if(/GANCHO_L320AN|GRILLETE_G2130/.test(m.piece)){
-        const x=m.v.reduce((n,p)=>n+p[0],0)/m.v.length,y=m.v.reduce((n,p)=>n+p[1],0)/m.v.length;
-        for(const p of m.v){p[0]+=Math.sign(x)*delta;p[1]+=Math.sign(y)*delta;}
-      }
-      old.dispose();active=new SceneEngine(container,data,select);active.setBagSize(size);active.setPayload(v);active.setProgress(progress);
-    }else active.setPayload(v);
+    // Payload is a mass setting. A partly filled1050x1050x1650 FIBC keeps
+    // its supplied geometry and attachment pattern; never infer another bag
+    // from595.65kg or500kg. Other formats require an explicit separate study.
+    active?.setPayload(v);
   }, getState() { return active?.getState(); },
   setAccessOpen(v) { return active?.setAccessOpen(v); },
   resetAccess() { return active?.resetAccess(); },
@@ -147,6 +76,8 @@ class SceneEngine {
     this.edgesOn = false; this.section = false; this.exploded = false; this.selected = null;this.renderStyle='realistic';this.currentView='iso';this.cameraMode='rotate';
     this.parts = []; this.groupRoots = new Map(); this.edgeLines = []; this.sectionMeshes = [];
     this.accessGateMeshes = []; this.accessOpen = false; this.accessResetRequired = false;
+    this.functionalMotionMeshes = [];
+    this.motionGroupCounts=data.functional3D?validateMotionGroups(data):{};
     this.scene = new THREE.Scene(); this.scene.background = new THREE.Color('#edf2f4');
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -174,9 +105,19 @@ class SceneEngine {
     this.model = new THREE.Group(); this.scene.add(this.model);
     this.cutterMeshes = []; this.spoutMeshes = [];
     data.static.forEach(m => {
-      if (m.tag === 'pallet_referencia' || m.tag === 'balanza_envolvente' || /^BALANZA_|^MESA_/i.test(m.tag)) return;
+      if (m.tag === 'pallet_referencia' || m.tag === 'balanza_envolvente' || (!data.functional3D && /^BALANZA_|^MESA_/i.test(m.tag))) return;
       if (/^(?:BIGBAG_1t_REF|CADENA_REF|ASA_REF_\d+|SACO_50kg_REF)$/.test(m.tag)) return;
       const mesh = this.addDataMesh(m, this.group(m.group));
+      if ((m.motion?.group && m.motion.group !== 'access_gate') || m.motion?.rotation) {
+        const spring=m.motion.kind==='pitch_change'?{base:new Float32Array(mesh.geometry.getAttribute('position').array),
+          weights:springVertexWeights(mesh.geometry.getAttribute('position').array,m.motion),metadata:m.motion}:null;
+        const rc=data.functional3D?.completionContracts?.retentions;
+        const bellows=m.motion.kind==='bellows_extension'?{base:new Float32Array(mesh.geometry.getAttribute('position').array),
+          contract:rc?.collar_sequential_completion?.flexible_connector||rc?.sequential_collar?.flexible_connector}:null;
+        this.functionalMotionMeshes.push({mesh, group:m.motion.group || 'static',
+          travel:m.motion.travel || data.functional3D?.motion_groups?.[m.motion.group]?.displacement_m || [0,0,0],
+          base:mesh.position.clone(),baseQuaternion:mesh.quaternion.clone(),rotation:m.motion.rotation,spring,bellows});
+      }
       if (m.motion?.group==='access_gate') this.accessGateMeshes.push(mesh);
       if (/^TOL_PANEL|^TOL_TAPA_POLVO|^LINER_|^TOL_GUARDA|^GUARDA_CORTE/.test(m.tag)) this.sectionMeshes.push(mesh);
       if (/^CORTE_/.test(m.tag)) this.cutterMeshes.push(mesh);
@@ -185,6 +126,32 @@ class SceneEngine {
     this.buildHopper(); this.buildBag(); this.buildHoist(); this.buildScaleAndRollers();
     this.buildForklift(); this.buildOperators(); this.buildFlow(); this.buildDimensions();
     this.equipmentDetails=buildEquipmentDetails(this);this.processDetails=buildProcessDetails(this);
+    // Functional CAD is the physical source. Earlier decorative hoist, bumper,
+    // roller and duct overlays must not become a second conflicting machine.
+    if (data.functional3D) {
+      this.parts.filter(m=>m.userData.equipmentDetail && (m.userData.group==='Monorriel' ||
+        /Cojinete sellado de rodillo|Eje de rodillo|Larguero de transportador/.test(m.userData.part||'')))
+        .forEach(mesh=>{mesh.visible=false;mesh.userData.functionalSuperseded=true;});
+      this.parts.filter(m=>!m.userData.equipmentDetail && /^(TECLE_ELECTRICO_2t_REF|CARRO_2t_REF)$/.test(m.userData.part||''))
+        .forEach(mesh=>mesh.visible=true);
+      if(this.collectorDuct)this.collectorDuct.visible=false;
+      // The external collector remains a labelled commercial reference. Shift
+      // it horizontally only, retaining its floor datum; the short flexible
+      // adapter is a viewer interface, not an OEM duct or fabricated CAD part.
+      if(this.collector?.root){
+        const endpoint=new THREE.Vector3(-1.5,-.6,.85);
+        const delta=new THREE.Vector3(endpoint.x-this.collector.inlet.x,endpoint.y-this.collector.inlet.y,0);
+        this.collector.root.position.add(delta);this.collector.inlet.add(delta);
+        this.collector.position=this.collector.root.position.toArray();
+        const inlet=this.collector.inlet;
+        const adapter=this.tube(this.group('Colector'),[endpoint.toArray(),[endpoint.x,endpoint.y-.16,.89],
+          [inlet.x,inlet.y-.16,inlet.z],inlet.toArray()],.073,'#68757b','Colector');
+        adapter.userData.part='Adaptador flexible al colector externo · interfaz visual de referencia';
+        adapter.userData.label=adapter.userData.part;
+        this.collector.connection={source:endpoint.toArray(),inlet:inlet.toArray(),
+          status:'Interfaz visual de referencia; no es tramoOEM ni validación de captación.'};
+      }
+    }
     this.raycaster = new THREE.Raycaster(); this.pointer = new THREE.Vector2();
     this.pointerDown = e => { this.clickOrigin = [e.clientX, e.clientY]; };
     this.pointerUp = e => {
@@ -404,6 +371,7 @@ class SceneEngine {
     this.sackBody.userData={group:'Compuerta',part:'Saco de producto'};this.parts.push(this.sackBody);this.sectionMeshes.push(this.sackBody);
     this.tie=new THREE.Mesh(new THREE.TorusGeometry(.042,.008,6,24),this.material('#b9a36d'));this.tie.position.z=.68;this.sack.add(this.tie);
     this.rollerStart={x,y:-.63,z:.35};
+    if (!this.data.functional3D) {
     for(const y of [-.5,-1.8]) {
       const crossbar=this.box(g,.60,.04,.04,x,y,.26,'#2d607c','Rodillos');
       crossbar.userData.part='Travesaño inferior del transportador';
@@ -413,14 +381,25 @@ class SceneEngine {
       this.box(g,.04,.045,.28,legX,y,.14,'#365e71','Rodillos');
     }
     for(const legX of [x-.23,x+.23])this.tube(g,[[legX,-.50,.16],[legX,-1.77,.28]],.018,'#3e728b','Rodillos');
+    }
     this.output=new THREE.Group();this.model.add(this.output);
     this.box(this.output,1.1,1.05,.12,0,0,.06,'#a1845b');
-    this.output.position.set(x-1.20,-1.8,0);
+    const end=this.data.functional3D?.routes?.accepted?.at(-1);
+    this.output.position.set(...(end ? [end[0],end[1],end[2]-.13] : [x-1.20,-1.8,0]));
+    if(this.data.functional3D)this.output.children[0].visible=false;
     this.finishedBags=[];
     for(let i=0;i<12;i++){
       const sack=new THREE.Mesh(this.roundedBagGeometry(.38,.48),this.clothMaterial());
       sack.position.set((i%3-1)*.34,(Math.floor(i/3)%2-.5)*.4,.13+Math.floor(i/6)*.43);
       sack.castShadow=true;this.output.add(sack);this.finishedBags.push(sack);
+    }
+    this.rejectOutput=new THREE.Group();this.model.add(this.rejectOutput);this.rejectedBags=[];
+    const rejectedEnd=this.data.functional3D?.routes?.rejected?.at(-1);
+    this.rejectOutput.position.set(...(rejectedEnd ? [rejectedEnd[0],rejectedEnd[1],rejectedEnd[2]] : [x-1.2,-2,0]));
+    for(let i=0;i<3;i++){
+      const sack=new THREE.Mesh(this.roundedBagGeometry(.38,.48),this.clothMaterial());
+      sack.position.set(i*.30,0,0);sack.castShadow=true;sack.visible=false;
+      this.rejectOutput.add(sack);this.rejectedBags.push(sack);
     }
   }
   buildForklift() {
@@ -529,7 +508,41 @@ class SceneEngine {
     this.gate.position.y=.28*s.gateOpening;
     this.spoutAssembly.visible=this.mode==='spout';this.closedGuard.visible=this.mode==='closed';
     this.cutterMeshes.forEach(mesh=>mesh.visible=this.mode==='closed');
-    this.lockPin.position.y=this.data.exactCAD?(s.lockingPin?0:.08):(s.lockingPin?.02:.24);
+    const pose=s.functionalPose||functionalPose(s,this.data);
+    this.lockPin.position.y=this.data.exactCAD?pose.pin.dy:(s.lockingPin?.02:.12);
+    for(const motion of this.functionalMotionMeshes){
+      const offset=motionOffset(motion.group,pose,motion.travel);
+      motion.mesh.position.copy(motion.base).add(new THREE.Vector3(...offset));
+      motion.mesh.quaternion.copy(motion.baseQuaternion);
+      if(motion.spring){
+        const attr=motion.mesh.geometry.getAttribute('position');
+        deformSpringPositions(motion.spring.base,motion.spring.weights,motion.spring.metadata,
+          pose.gate?.gateMm||0,pose.gate?.camMm||0,attr.array);
+        attr.needsUpdate=true;motion.mesh.geometry.computeVertexNormals();motion.mesh.geometry.computeBoundingSphere();
+        motion.mesh.userData.springEdgesDirty=true;
+        if(this.edgesOn)this.updateSpringEdges(motion.mesh);
+      }
+      if(motion.bellows){
+        const attr=motion.mesh.geometry.getAttribute('position');
+        deformBellowsPositions(motion.bellows.base,-1000*pose.collarDz,motion.bellows.contract,attr.array);
+        attr.needsUpdate=true;motion.mesh.geometry.computeVertexNormals();motion.mesh.geometry.computeBoundingSphere();
+        motion.mesh.userData.springEdgesDirty=true;
+        if(this.edgesOn)this.updateSpringEdges(motion.mesh);
+      }
+      if(motion.rotation){
+        const drive=motion.rotation.drive==='reject_belts'?pose.rejectBeltsRunning:pose.rollersRunning;
+        const zone=motion.rotation.zone||'';
+        const selected=zone==='TR_ACUMULACION_RODILLO'?pose.routeName==='accepted':
+          zone==='TR_RECHAZO_RODILLO'?pose.rejectBeltsRunning:true;
+        if(drive&&selected){
+          const angle=motion.rotation.speed_rad_s*s.progress*(C.animation_seconds||34);
+          const rotation=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(...motion.rotation.axis),angle);
+          const origin=new THREE.Vector3(...motion.rotation.origin_m);
+          motion.mesh.quaternion.premultiply(rotation);
+          motion.mesh.position.add(origin.clone().sub(origin.clone().applyQuaternion(rotation)));
+        }
+      }
+    }
     this.updateCoal(s.hopperKg);
     const reception=this.reception=receptionPose(s,C);
     this.forklift.visible=reception.forkliftVisible;
@@ -538,15 +551,16 @@ class SceneEngine {
     this.pallet.position.set(...reception.palletPosition);
     this.bagRoot.position.set(...reception.bagPosition);
     this.worker1.position.set(...reception.receivingWorker);
-    this.sack.visible=s.phaseIndex>=6&&s.phaseIndex<=8&&s.sackKg>=0;
-    const deckHeight=this.data.config.scale_deck_z_m||.35;
-    this.sack.position.set(this.data.hopper.center_x,-s.transfer*1.82,deckHeight);
+    this.sack.visible=s.sackVisible;
+    const deckHeight=pose.deckZ;
+    this.sack.position.set(...pose.sackPosition);
     const fill=this.bagSize?s.sackKg/this.bagSize:0;
     const sackHeight=.5465;
     this.sackBody.scale.set(lerp(.75,1,fill),lerp(.6,1,fill),1);
     const tieOn=s.cyclePhase==='amarre'||s.cyclePhase==='salida'||s.phaseIndex===7;
     this.tie.visible=tieOn;this.tie.position.z=sackHeight-.025;
-    this.finishedBags.forEach((b,i)=>{b.visible=i<Math.min(12,s.completedSacks);});
+    this.finishedBags.forEach((b,i)=>{b.visible=i<Math.min(12,s.acceptedSacks??s.completedSacks);});
+    this.rejectedBags.forEach((b,i)=>{b.visible=i<Math.min(3,s.rejectedSacks??0);});
     this.worker2.position.y=-1.17-((s.cyclePhase==='salida')?s.transfer*.2:0);
     const tying=s.cyclePhase==='amarre'||s.phaseIndex===7;
     this.worker2.userData.arms?.forEach((a,i)=>a.rotation.z=tying?Math.sin(s.cycleProgress*Math.PI*4)*(i?-.13:.13):0);
@@ -560,6 +574,9 @@ class SceneEngine {
       }this.flow.instanceMatrix.needsUpdate=true;
     }
     this.equipmentDetails?.update(s);this.processDetails?.update(s);
+    // Generic visual details may change visibility during focus updates. The
+    // exact functional conveyor remains the only physical roller representation.
+    if(this.data.functional3D)this.parts.filter(m=>m.userData.functionalSuperseded).forEach(m=>m.visible=false);
     this.render();return {...s};
   }
   setMode(v) { if(this.accessOpen)return;this.mode=v==='closed'?'closed':'spout';this.setProgress(this.progress); }
@@ -579,7 +596,12 @@ class SceneEngine {
     if(this.accessOpen)return false;
     this.accessResetRequired=false;this.setProgress(this.progress);return true;
   }
-  setEdges(v) { this.edgesOn=!!v;this.edgeLines.forEach(e=>e.visible=this.edgesOn);this.render(); }
+  updateSpringEdges(mesh){
+    if(!mesh.userData.springEdgesDirty)return;
+    for(const child of mesh.children)if(child.isLineSegments){child.geometry.dispose();child.geometry=new THREE.EdgesGeometry(mesh.geometry,30);}
+    mesh.userData.springEdgesDirty=false;
+  }
+  setEdges(v) { this.edgesOn=!!v;this.edgeLines.forEach(e=>e.visible=this.edgesOn);if(this.edgesOn)this.functionalMotionMeshes.forEach(m=>{if(m.spring||m.bellows)this.updateSpringEdges(m.mesh);});this.render(); }
   setSection(v) {
     this.section=!!v;
     this.sectionMeshes.forEach(mesh=>{mesh.material.clippingPlanes=this.section?[new THREE.Plane(new THREE.Vector3(0,1,0),0)]:[];
@@ -612,7 +634,7 @@ class SceneEngine {
     this.exploded=!!v;
     const offsets={Porticos:[-.45,0,0],Tolva:[.35,0,.25],Plataforma:[0,.55,.08],Escalera:[-.5,.55,0],Barandas:[0,.55,.55],Monorriel:[0,0,.55],'Soporte bolsa':[0,0,.6],Complementos:[0,0,.05]};
     this.groupRoots.forEach((g,id)=>g.position.set(...(this.exploded?(offsets[id]||[0,0,0]):[0,0,0])));
-    if(this.collectorDuct)this.collectorDuct.visible=!this.exploded;
+    if(this.collectorDuct)this.collectorDuct.visible=!this.exploded&&!this.data.functional3D;
     this.render();
   }
   highlight(id) {
@@ -641,7 +663,7 @@ class SceneEngine {
     this.camera.position.copy(t).add(new THREE.Vector3(...d));this.camera.zoom=this.camera.isOrthographicCamera&&view?2*this.camera.top/view.height:1;this.camera.updateProjectionMatrix();this.controls.update();this.applyDetailFocus(name);this.render();
   }
   resetCamera() { this.setView('iso'); }
-  getState() { const info=this.renderer.info;return {...this.state,accessOpen:this.accessOpen,accessResetRequired:this.accessResetRequired,accessAvailable:this.state.phaseIndex>=5&&this.state.phaseIndex<9&&this.state.lockingPin,hoistEnabled:(this.accessOpen||this.accessResetRequired)?false:this.state.hoistEnabled,interlockState:this.accessOpen?'Acceso superior abierto · izaje y traslación bloqueados':this.accessResetRequired?'Puerta cerrada · rearme manual requerido':this.state.interlockState,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:this.data.revision,nativeParts:this.data.nativeParts,nativeComponents:this.data.nativeComponents,view:this.currentView,renderStyle:this.renderStyle,cameraMode:this.cameraMode,cameraPosition:this.camera.position.toArray(),cameraTarget:this.controls.target.toArray(),cameraZoom:this.camera.zoom,renderStats:{calls:info.render.calls,triangles:info.render.triangles,geometries:info.memory.geometries,textures:info.memory.textures}}; }
+  getState() { const info=this.renderer.info;return {...this.state,accessOpen:this.accessOpen,accessResetRequired:this.accessResetRequired,accessPresentationOnly:true,maintenancePermissionGranted:false,accessAvailable:this.state.phaseIndex>=5&&this.state.phaseIndex<9&&this.state.lockingPin,hoistEnabled:(this.accessOpen||this.accessResetRequired)?false:this.state.hoistEnabled,interlockState:this.accessOpen?'Revisión visual de puerta · animación pausada; sin permiso de intervención':this.accessResetRequired?'Cerrar revisión visual para continuar la animación':this.state.interlockState,selected:this.selected,section:this.section,edges:this.edgesOn,exploded:this.exploded,webgl:true,revision:this.data.revision,nativeParts:this.data.nativeParts,nativeComponents:this.data.nativeComponents,view:this.currentView,renderStyle:this.renderStyle,cameraMode:this.cameraMode,cameraPosition:this.camera.position.toArray(),cameraTarget:this.controls.target.toArray(),cameraZoom:this.camera.zoom,renderStats:{calls:info.render.calls,triangles:info.render.triangles,geometries:info.memory.geometries,textures:info.memory.textures}}; }
   resize() {
     const w=Math.max(1,this.container.clientWidth),h=Math.max(1,this.container.clientHeight);
     this.renderer.setSize(w,h,false);const half=Math.max(4.05,(this.data.config.beam_top+.9)*.65),ratio=w/h;
