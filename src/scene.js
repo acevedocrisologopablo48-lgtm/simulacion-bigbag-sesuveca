@@ -1,6 +1,6 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import { loadModel } from './model-data.js?v=p05simple20261103';
+import { loadModel } from './model-data.js?v=p05simple20261103_97826dcc';
 
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const lerp=(a,b,t)=>a+(b-a)*t;
