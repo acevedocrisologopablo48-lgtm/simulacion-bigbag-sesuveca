@@ -1,9 +1,9 @@
 {
   "schema": "sesuveca.p05.operator_view.v1",
-  "revision": "P05-CIERRE-SIMPLE-20261103",
+  "revision": "P05-PRACTICO-20261103",
   "date": "2026-11-03",
   "derived_from": "control_maestro_p05.json",
-  "master_sha256": "c4029873e440ca54c7f10933d053d1448cc1c23212a5e65358fc30c29d8c20b3",
+  "master_sha256": "9ccefea7b903ae18976cab7f9e37906107259c91417c1668c95c93622e1e8460",
   "executable_plc_program": false,
   "operator_checks_are_not_sensors": true,
   "scope": "Recepción, izaje, traslado, vaciado manual y retorno del BigBag",
@@ -43,7 +43,7 @@
       "actions_by_operator": [
         "Enganchar las cuatro asas a los cuatro puntos de la cruceta y cerrar los seguros de los ganchos.",
         "Retirar las horquillas y el montacargas; el saco permanece apoyado sobre el pallet.",
-        "Tomar la holgura de la cadena con el mando mantenido del tecle."
+        "Desde la botonera fija de la columna, tomar la holgura de la cadena con mando mantenido del tecle."
       ],
       "operator_checks_before_advancing": [
         "Cuatro asas enganchadas y seguros cerrados.",
@@ -101,49 +101,55 @@
       "actions_by_operator": [
         "Soltar el mando de traslación y comprobar que el carro permanece detenido por su freno propio.",
         "Bajar lentamente con el tecle hasta apoyar la bolsa a Z = 3,01 m.",
-        "Mantener las cuatro asas enganchadas; detener todo movimiento antes de acceder a la boca inferior."
+        "Mantener las cuatro asas enganchadas; detener todo movimiento antes de acceder a la boca inferior.",
+        "Comprobar que la manga queda alineada con la entrada del sello flexible. Con la bolsa apoyada, completar la conexión desde el lateral accesible y conservar la boca amarrada."
       ],
       "operator_checks_before_advancing": [
         "Carro detenido y sin deriva; retención por el freno propio del equipo seleccionado.",
-        "Bolsa apoyada, tecle detenido y cuatro asas todavía sujetas."
+        "Bolsa apoyada, tecle detenido y cuatro asas todavía sujetas.",
+        "Manga desplegada dentro del receptor, conexión asentada y venteo filtrado libre; amarre de descarga aún cerrado."
       ],
       "electric_motion": [
         "tecle_bajar"
       ],
       "advance": {
         "type": "operator_decision",
-        "next": "S06"
+        "next": "S09"
       }
     },
     {
       "id": "S06",
-      "name": "Desatar la boca inferior y vaciar a la tolva",
+      "name": "Abrir la manga y despejar la plataforma",
       "actions_by_operator": [
-        "Desde la plataforma, tomar la cinta de apertura conducida hacia el lateral de acceso Y positivo.",
-        "Desatar mediante la cinta lateral, con la manga orientada a la tolva y la bolsa apoyada; sin alcanzar debajo de la carga.",
-        "Dejar vaciar por gravedad; la compuerta de ensacado permanece cerrada."
+        "Con el primer saco preparado abajo y la tajadera cerrada, comprobar desde la plataforma la conexión de la manga al sello flexible.",
+        "Tomar y desatar la cinta de apertura lateral con la bolsa apoyada, las cuatro asas enganchadas y los movimientos eléctricos detenidos.",
+        "Dejar que el carbón descargue por la conexión cerrada. Retirarse por la plataforma y cerrar el acceso.",
+        "Avisar al operario inferior para que inicie el ensacado mientras continúa la descarga del BigBag."
       ],
       "operator_checks_before_advancing": [
-        "La descarga ha terminado.",
-        "No hay puentes de producto ni manga enganchada en el apoyo."
+        "Bolsa apoyada, cuatro asas sujetas, carro frenado y tecle detenido.",
+        "Manga dentro del receptor flexible, conexión asentada, tapa cerrada, venteo filtrado libre y primer saco preparado con la tajadera cerrada.",
+        "Operario superior fuera de la conexión y acceso cerrado antes del llenado de sacos."
       ],
       "electric_motion": [],
       "advance": {
         "type": "operator_decision",
-        "next": "S07"
+        "next": "S10"
       }
     },
     {
       "id": "S07",
-      "name": "Comprobar manga libre y despejar el recorrido",
+      "name": "Terminar la descarga y preparar el retorno",
       "actions_by_operator": [
-        "Comprobar que la bolsa está vacía y que la manga inferior puede salir libremente por el hueco de los apoyos; dejarla colgante.",
-        "Comprobar que la cinta lateral queda libre de la estructura. No intentar recoger ni amarrar la manga central desde la plataforma.",
+        "Comprobar que el BigBag y la tolva han quedado vacíos y que se retiró el último saco.",
+        "Cerrar la tajadera, comprobar que no cae producto y esperar el asentamiento del material y el polvo antes de separar la conexión. Despejar la estación inferior.",
+        "Comprobar desde el lateral que la manga y la cinta pueden retirarse verticalmente del sello sin engancharse. Conservar las cuatro asas sujetas.",
         "Retirarse de la zona del BigBag y cerrar el acceso antes de volver a moverlo."
       ],
       "operator_checks_before_advancing": [
-        "Bolsa vacía; manga colgante y cinta libres, sin enganches en los apoyos.",
-        "Personas fuera del recorrido y acceso cerrado."
+        "BigBag vacío, tolva vacía, último saco retirado y tajadera cerrada.",
+        "Manga y cinta libres para salir del sello flexible al elevar.",
+        "Ambos operarios fuera del recorrido y acceso cerrado."
       ],
       "electric_motion": [],
       "advance": {
@@ -155,7 +161,7 @@
       "id": "S08",
       "name": "Retornar el BigBag vacío",
       "actions_by_operator": [
-        "Con el carro detenido por su freno, izar verticalmente la bolsa vacía con la manga colgante hasta la altura de traslado.",
+        "Desde la botonera fija y con el carro frenado, izar lentamente la bolsa vacía hasta extraer verticalmente la manga del sello pasivo. Continuar hasta la altura de traslado.",
         "Detener el izaje antes de accionar la traslación. Trasladar hacia recepción y detener el carro.",
         "Bajar el fondo de la bolsa vacía hasta Z1,00m y detener el tecle; el extremo nominal de la manga queda a Z0,65m.",
         "Desde el suelo y a un lateral de la bolsa vacía, recoger y amarrar la manga con todos los movimientos detenidos; no situarse debajo de la bolsa.",
@@ -174,11 +180,11 @@
       ],
       "advance": {
         "type": "operator_decision",
-        "next": "S09"
+        "next": "S01"
       },
       "manual_handling_stop": {
         "location": "recepcion",
-        "bag_bottom_z_m": 1.0,
+        "bag_bottom_z_m": 1,
         "spout_lower_end_nominal_z_m": 0.65,
         "all_electric_motion_stopped": true,
         "operator_position": "Suelo, lateral de la bolsa; nunca debajo",
@@ -193,12 +199,21 @@
     "No abrir la boca inferior hasta que la bolsa esté apoyada, el carro retenido por su freno y el tecle detenido.",
     "Mantener las cuatro asas sujetas durante vaciado y retorno; desenganchar la bolsa apoyada en recepción.",
     "No izar ni trasladar mientras el operario trabaja junto a la boca inferior.",
-    "Comprobar el peso final con el saco libre de la abrazadera y apoyado en la balanza."
+    "Comprobar el peso final con el saco libre de la abrazadera y apoyado en la balanza.",
+    "La manga vacía puede retornar extendida. Mantenerla libre del hueco de apoyo y elevar hasta la cota de traslado antes de mover horizontalmente.",
+    "En recepción, detener el fondo de la bolsa vacía a Z1,00m; soltar el mando y recoger la manga desde un lateral, con todos los movimientos detenidos. Después retirarse y bajar al pallet.",
+    "Para retirar cada saco, cerrar y plegar 70 mm de su boca flexible después de soltar la abrazadera; sacarlo primero por el frente y después hacia el pallet lateral.",
+    "Mantener detenidos tecle y carro mientras se descarga el BigBag o se llena cualquier saco.",
+    "Conectar la manga al sello flexible y comprobar la tapa cerrada antes de desatar la boca inferior.",
+    "El operario superior se retira y cierra el acceso antes de que el inferior inicie el ensacado.",
+    "Antes de retornar la bolsa, terminar el lote, cerrar la tajadera y despejar el ensacado y la plataforma."
   ],
   "stop_behavior": {
     "electric_motion": "Soltar el mando o accionar la parada detiene la orden de movimiento del equipo de izaje.",
     "manual_gate": "La compuerta manual permanece en la posición dejada por el operario; su cierre requiere accionar el mando manual.",
     "resumption": "El operario comprueba la posición de la carga, la retención del carro y el recorrido antes de reanudar con mando mantenido.",
     "automatic_restart": false
-  }
+  },
+  "cross_references_to_master": true,
+  "concurrent_unloading_and_bagging": true
 }

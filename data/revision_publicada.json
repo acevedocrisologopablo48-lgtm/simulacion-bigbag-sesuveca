@@ -1,10 +1,10 @@
 {
-  "revision": "P05_CIERRE_SIMPLE_20261103",
+  "revision": "P05_PRACTICO_20261103",
   "published_date": "2026-11-03",
-  "source_STEP_sha256": "5a0cb77ff5a85d3c30ab6ebc11248479ae5379707617b571c44c6d5d06401e7b",
-  "uncompressed_model_sha256": "a652bcc5a4f71af3bda7d49884301da99cc0e619def7d15854936266a31d5773",
-  "gzip_model_sha256": "4d7d577c188a7a3c38e187405aa205bb8341a01c15ea1fee4c4ddf6a954ce60b",
-  "master_sha256": "c4029873e440ca54c7f10933d053d1448cc1c23212a5e65358fc30c29d8c20b3",
-  "components": 839,
-  "download": "assets/docs/P05_CIERRE_SIMPLE_20261103.zip"
+  "source_STEP_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
+  "uncompressed_model_sha256": "e214428685b9db4d05e1cd7979084f5de7484009d7e40bcf39227a9a18ba2350",
+  "gzip_model_sha256": "2b748e3b02575a840299cd42a4d1c5ecbe94c178bbeea7b35c696d4edac639b7",
+  "master_sha256": "9ccefea7b903ae18976cab7f9e37906107259c91417c1668c95c93622e1e8460",
+  "components": 811,
+  "download": "assets/docs/P05_PRACTICO_20261103.zip"
 }

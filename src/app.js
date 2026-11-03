@@ -1,4 +1,4 @@
-import {BigbagScene,STAGES} from './scene.js?v=p05cierre20261103';
+import {BigbagScene,STAGES} from './scene.js?v=p05practico20261103';
 const $=id=>document.getElementById(id);
 let progress=.44,playing=false,last=0,frame,ready=false;
 const duration=95000;

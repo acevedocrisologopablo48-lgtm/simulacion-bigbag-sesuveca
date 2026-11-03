@@ -1,33 +1,43 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import { loadModel } from './model-data.js?v=p05cierre20261103';
+import { loadModel } from './model-data.js?v=p05practico20261103';
 
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const lerp=(a,b,t)=>a+(b-a)*t;
 const smooth=t=>{t=clamp(t);return t*t*(3-2*t);};
 export const STAGES=[
-  {start:0,end:.10,title:'Recepción del bigbag',short:'Recibir',detail:'El montacargas entrega la bolsa en la zona de enganche.'},
-  {start:.10,end:.18,title:'Enganche de las cuatro asas',short:'Enganchar',detail:'Se conectan las cuatro asas a la cruceta y el montacargas se retira.'},
-  {start:.18,end:.32,title:'Izaje con tecle eléctrico',short:'Izar',detail:'El operario eleva la bolsa con la botonera hasta la altura de traslado.'},
-  {start:.32,end:.42,title:'Traslado sobre la tolva',short:'Trasladar',detail:'El carro recorre el monorriel y centra la bolsa sobre el apoyo.'},
-  {start:.42,end:.52,title:'Apoyo y apertura manual',short:'Apoyar y abrir',detail:'La bolsa queda apoyada. Desde la plataforma se libera el amarre de la boca inferior.'},
-  {start:.52,end:.62,title:'Descarga a la tolva',short:'Vaciar',detail:'El carbón cae por gravedad. La compuerta inferior permanece cerrada.'},
-  {start:.62,end:.74,title:'Retorno del bigbag vacío',short:'Retornar',detail:'La bolsa vacía retorna con la manga colgante. Se detiene en recepción para recogerla desde el suelo y luego baja al pallet.'},
-  {start:.74,end:1,title:'Ensacado manual',short:'Pesar y retirar',detail:'El operario regula la compuerta, comprueba 25 o 50 kg, cierra la boca y retira el saco por el frente. Se repite hasta vaciar la tolva.'}
+ {start:0,end:.10,title:'Recepción del BigBag',short:'Recibir',detail:'El montacargas presenta el BigBag de 1 t sobre su pallet en la zona de enganche.'},
+ {start:.10,end:.18,title:'Enganche de las cuatro asas',short:'Enganchar',detail:'El operario coloca cada asa en su gancho, cierra los seguros y retira el montacargas.'},
+ {start:.18,end:.32,title:'Izaje vertical',short:'Izar',detail:'Desde la botonera fija, el operario eleva la bolsa hasta la altura de traslado.'},
+ {start:.32,end:.42,title:'Traslado sobre la tolva',short:'Trasladar',detail:'El carro centra la bolsa sobre la tolva. El operario detiene la traslación antes de bajar.'},
+ {start:.42,end:.52,title:'Apoyo y conexión de descarga',short:'Apoyar y conectar',detail:'Con la bolsa apoyada y el tecle detenido, la manga se introduce en el sello flexible. Se abre por la cinta lateral y se despeja la plataforma.'},
+ {start:.52,end:.84,title:'Descarga y ensacado',short:'Vaciar y ensacar',detail:'El BigBag descarga por la conexión cerrada mientras el operario regula la compuerta, pesa y retira sacos de 25 o 50 kg. La tolva recibe el material entre cambios de saco.'},
+ {start:.84,end:.98,title:'Retorno del BigBag vacío',short:'Retornar',detail:'Con la descarga terminada y la compuerta cerrada, se libera la manga al elevar. La bolsa vuelve a recepción para recoger la manga y bajar al pallet.'},
+ {start:.98,end:1,title:'Lote terminado',short:'Repetir el ciclo',detail:'La bolsa vacía está retirada, la compuerta cerrada y la balanza libre para recibir el siguiente BigBag.'}
 ];
 
 export function processState(progress,config,sackSize=50){
  const p=clamp(progress),found=STAGES.findIndex(s=>p<s.end),index=found<0?7:found;
  const stage=STAGES[index],q=clamp((p-stage.start)/(stage.end-stage.start));
  const C=config,x0=C.pickup_x,x1=C.discharge_x,z0=C.pickup_bottom,zt=C.travel_bottom,zs=C.support_z;
+ const target=sackSize===25?25:50,payload=C.process_payload_kg||1000,totalSacks=payload/target;
  let x=x0,z=z0,bagFill=1,hopperFill=0,gate=0,sackFill=0,sackMouthFold=0,removal=0,finished=0;
+ let incomingKg=0,completedKg=0,activeSackKg=0;
  if(index===0)x=x0+2.4*(1-smooth(q));
  if(index===2)z=lerp(z0,zt,smooth(q));
  if(index===3){x=lerp(x0,x1,smooth(q));z=zt;}
  if(index===4||index===5){x=x1;z=index===4?lerp(zt,zs,smooth(q/.45)):zs;}
- if(index===5){bagFill=1-smooth(q);hopperFill=1-bagFill;}
+ if(index===5){
+  // Inventory is conserved across the FIBC, hopper, active sack and finished sacks.
+  incomingKg=payload*clamp(q/.55);
+  const cycles=Math.min(totalSacks-1e-8,q*totalSacks),n=Math.floor(cycles),t=cycles-n;
+  sackFill=clamp((t-.12)/.48);gate=t>=.12&&t<.60?(t>.48?.2:1):0;
+  sackMouthFold=smooth((t-.64)/.12);removal=smooth((t-.76)/.24);finished=n;
+  completedKg=n*target;activeSackKg=sackFill*target;
+  bagFill=1-incomingKg/payload;hopperFill=(incomingKg-completedKg-activeSackKg)/payload;
+ }
+ if(index>=6){bagFill=0;incomingKg=payload;finished=totalSacks;completedKg=payload;}
  if(index===6){
-  bagFill=0;hopperFill=1;
   if(q<.10){x=x1;z=zs;}
   else if(q<.30){x=x1;z=lerp(zs,zt,smooth((q-.10)/.20));}
   else if(q<.55){x=lerp(x1,x0,smooth((q-.30)/.25));z=zt;}
@@ -35,17 +45,16 @@ export function processState(progress,config,sackSize=50){
   else if(q<.88){x=x0;z=C.empty_bag_gathering_bottom_z_m??1;}
   else{x=x0;z=lerp(C.empty_bag_gathering_bottom_z_m??1,z0,smooth((q-.88)/.12));}
  }
- if(index===7){
-  bagFill=0;const totalSacks=1000/sackSize,cycles=Math.min(totalSacks-1e-8,q*totalSacks),n=Math.floor(cycles),t=cycles-n;
-  sackFill=clamp((t-.12)/.48);gate=t>=.12&&t<.60?(t>.48?.2:1):0;
-  sackMouthFold=smooth((t-.64)/.12);removal=smooth((t-.76)/.24);finished=n;hopperFill=1-(n+sackFill)/totalSacks;
-  if(p===1){finished=totalSacks;hopperFill=0;gate=0;}
- }
  const gatheringSpout=index===6&&q>=.75&&q<.88;
- const displayedStage=gatheringSpout?{...stage,title:'Recogida de la manga en recepción',detail:'Con la bolsa vacía detenida, el operario recoge y amarra la manga desde un lateral, a nivel de suelo. Después se retira para continuar el descenso.'}:stage;
+ const displayedStage=gatheringSpout?{...stage,title:'Recogida de la manga en recepción',detail:'Con la bolsa vacía detenida, el operario recoge y amarra la manga desde un lateral a nivel de suelo. Después se retira para continuar el descenso.'}:stage;
+ const spoutDeployed=index===6?1-smooth((q-.77)/.08):index===5?1:index===4?smooth((q-.45)/.25):0;
+ const spoutSealed=(index===4&&q>=.70)||index===5||(index===6&&q<=.10);
+ const spoutOpen=(index===4&&q>=.88)||index===5||(index===6&&q<.84);
+ const electricMotion=index===2||index===3||(index===4&&q<.45)||(index===6&&q>=.10&&q<.75)||(index===6&&q>=.88);
  return {progress:p,phaseIndex:index,phaseProgress:q,stage:displayedStage,x,z,bagFill,hopperFill,gate,sackFill,sackMouthFold,removal,finished,gatheringSpout,
-  sackSize,hookM:(index===0?z0:z)+C.bag_height+C.headpack,spoutOpen:index===5||(index===6&&q<.84),
-  spoutDeployed:index===6?1-smooth((q-.77)/.08):index===5?1:index===4?smooth((q-.45)/.3):0};
+  sackSize:target,hookM:(index===0?z0:z)+C.bag_height+C.headpack,spoutOpen,spoutDeployed,spoutSealed,electricMotion,
+  bigbagKg:payload*bagFill,hopperKg:payload*hopperFill,activeSackKg,completedKg,
+  incomingFlow:index===5&&q<.55,upperWorkerAtConnection:index===4&&q>=.45&&q<.96};
 }
 
 let active;
@@ -128,6 +137,7 @@ class SceneEngine{
   this.buildForklift();this.groundWorker=this.person(C.discharge_x+.55,-1.65,0);this.groundWorker.rotation.z=-.45;
   this.platformWorker=this.person(C.discharge_x,1.55,C.platform_floor_z_m);this.platformWorker.rotation.z=0;
   this.receivingWorker=this.person(C.pickup_x,-.90,0);this.receivingWorker.rotation.z=0;
+  this.controlWorker=this.person(0,-1.65,0);this.controlWorker.rotation.z=0;
   this.flow=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.016,0),this.material('#303538',{roughness:1,metalness:0}),64);this.scene.add(this.flow);this.dummy=new THREE.Object3D();
   this.coal=this.box(this.scene,1.50,1.50,.015,C.discharge_x,0,2.62,'#303538');
  }
@@ -150,14 +160,15 @@ class SceneEngine{
   for(const line of [this.chain1,this.chain2]){line.position.z=(chainTop+chainBottom)/2;line.scale.y=length;}this.hook.position.z=s.hookM;
   const receptionX=s.phaseIndex===0?s.x:C.pickup_x;this.pallet.position.set(receptionX,0,0);this.pallet.visible=s.phaseIndex<2||s.phaseIndex>=6;
   this.forklift.visible=s.phaseIndex<2;this.forklift.rotation.z=Math.PI/2;this.forklift.position.set(receptionX+.64+(s.phaseIndex===1?2.5*smooth(s.phaseProgress):0),0,0);
-  this.platformWorker.visible=s.phaseIndex===4||s.phaseIndex===5;
-  this.groundWorker.visible=s.phaseIndex===7;
-  this.receivingWorker.visible=s.gatheringSpout;
-  this.sack.visible=s.phaseIndex===7&&s.progress<1;this.sack.position.set(lerp(C.discharge_x,-1.25,clamp((s.removal-.55)/.45)),lerp(0,-1.7,clamp(s.removal/.55)),C.scale_deck_z_m??.35);
+  this.platformWorker.visible=s.upperWorkerAtConnection;
+  this.groundWorker.visible=s.phaseIndex===4||s.phaseIndex===5;
+  this.controlWorker.visible=s.electricMotion;
+  this.receivingWorker.visible=s.phaseIndex===1||s.gatheringSpout;
+  this.sack.visible=s.phaseIndex===4||s.phaseIndex===5;this.sack.position.set(lerp(C.discharge_x,-1.25,clamp((s.removal-.55)/.45)),lerp(0,-1.7,clamp(s.removal/.55)),C.scale_deck_z_m??.35);
   const sackPositions=this.sackBody.geometry.getAttribute('position');for(let i=0;i<this.sackBase.length;i+=3){const top=this.sackBase[i+2]/.5465,neckWeight=smooth((top-.75)/.25),factor=lerp(lerp(.65,1,s.sackFill),1,smooth((top-.55)/.45))*(1-.75*s.sackMouthFold*neckWeight);sackPositions.array[i]=this.sackBase[i]*factor;sackPositions.array[i+1]=this.sackBase[i+1]*factor;sackPositions.array[i+2]=this.sackBase[i+2]-.07*s.sackMouthFold*neckWeight;}sackPositions.needsUpdate=true;this.sackBody.geometry.computeVertexNormals();
   this.output.visible=s.finished>0;this.outputSacks.forEach((m,i)=>m.visible=i<Math.min(8,s.finished));
   this.coal.visible=s.hopperFill>.025;this.coal.position.z=lerp(1.25,2.62,s.hopperFill);const coalW=lerp(.25,1.50,clamp((this.coal.position.z-1.1)/1.2124));this.coal.scale.set(coalW/1.5,coalW/1.5,1);
-  this.flow.visible=s.phaseIndex===5;
+  this.flow.visible=s.incomingFlow;
   for(let i=0;i<64;i++){const t=(i/64+s.progress*17)%1;this.dummy.position.set(C.discharge_x+.12*Math.sin(i*2.399),.12*Math.cos(i*2.399),lerp(C.support_z-.35,Math.max(1.4,this.coal.position.z),t));this.dummy.updateMatrix();this.flow.setMatrixAt(i,this.dummy.matrix);}this.flow.instanceMatrix.needsUpdate=true;
   this.render();return s;
  }
