@@ -6,5 +6,11 @@
   "gzip_model_sha256": "2b748e3b02575a840299cd42a4d1c5ecbe94c178bbeea7b35c696d4edac639b7",
   "master_sha256": "9ccefea7b903ae18976cab7f9e37906107259c91417c1668c95c93622e1e8460",
   "components": 811,
-  "download": "assets/docs/P05_PRACTICO_20261103.zip"
+  "download": "assets/docs/P05_PRACTICO_20261103.zip",
+  "presentation": {
+    "revision": "P05_REALISMO_20261104",
+    "marker": "p05realismo20261104",
+    "date": "2026-11-04",
+    "scope": "Apariencias, texturas e iluminacion; geometria y control conservados"
+  }
 }

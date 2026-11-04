@@ -1,6 +1,7 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import { loadModel } from './model-data.js?v=p05practico20261103';
+import { loadModel } from './model-data.js?v=p05realismo20261104';
+import { createVisualMaterials } from './visual-materials.js?v=p05realismo20261104';
 
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -69,19 +70,23 @@ window.BigbagScene=BigbagScene;
 class SceneEngine{
  constructor(container,data){
   this.container=container;this.data=data;this.progress=.44;this.sackSize=50;
-  this.scene=new THREE.Scene();this.scene.background=new THREE.Color('#edf2f4');
+  this.scene=new THREE.Scene();this.scene.background=new THREE.Color('#dce2e5');
+  this.scene.fog=new THREE.Fog('#dce2e5',28,65);
   this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});
   this.renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.8));
-  this.renderer.outputColorSpace=THREE.SRGBColorSpace;this.renderer.toneMapping=THREE.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.2;
+  this.renderer.outputColorSpace=THREE.SRGBColorSpace;this.renderer.toneMapping=THREE.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.05;
   this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   this.renderer.domElement.setAttribute('aria-label','Modelo CAD sombreado de la estación de bigbags');container.appendChild(this.renderer.domElement);
+  this.finishes=createVisualMaterials(THREE,this.renderer);
+  this.scene.environment=this.finishes.environment;
+  this.contextMaterials=new Map();
   this.camera=new THREE.PerspectiveCamera(35,1,.025,100);this.camera.up.set(0,0,1);
   this.controls=new OrbitControls(this.camera,this.renderer.domElement);this.controls.minDistance=.6;this.controls.maxDistance=35;this.controls.maxPolarAngle=Math.PI*.495;
   this.controls.addEventListener('change',()=>this.render());
-  const hemi=new THREE.HemisphereLight('#ffffff','#728491',3);hemi.up.set(0,0,1);hemi.position.set(0,0,15);this.scene.add(hemi);
-  const light=new THREE.DirectionalLight('#fff7e9',3);light.position.set(-5,-8,13);light.castShadow=true;light.shadow.mapSize.set(2048,2048);light.shadow.camera.left=-9;light.shadow.camera.right=9;light.shadow.camera.top=9;light.shadow.camera.bottom=-9;light.shadow.normalBias=.025;this.scene.add(light);
-  const fill=new THREE.DirectionalLight('#e8f1ff',1.5);fill.position.set(8,5,9);this.scene.add(fill);
-  const ground=new THREE.Mesh(new THREE.PlaneGeometry(50,50),this.material('#e2e8eb',{roughness:1,metalness:0}));ground.position.z=-.045;ground.receiveShadow=true;this.scene.add(ground);
+  const hemi=new THREE.HemisphereLight('#f5f7fa','#687780',1.35);hemi.up.set(0,0,1);hemi.position.set(0,0,15);this.scene.add(hemi);
+  const light=new THREE.DirectionalLight('#fff5e6',3.2);light.position.set(-4,-6,12);light.target.position.set(1.2,.7,2.5);light.castShadow=true;light.shadow.mapSize.set(2048,2048);light.shadow.camera.left=-7;light.shadow.camera.right=7;light.shadow.camera.top=8;light.shadow.camera.bottom=-7;light.shadow.camera.near=.5;light.shadow.camera.far=30;light.shadow.normalBias=.018;light.shadow.bias=-.00003;light.shadow.radius=3;this.scene.add(light,light.target);
+  const fill=new THREE.DirectionalLight('#dceaff',1.2);fill.position.set(7,5,8);this.scene.add(fill);
+  const ground=new THREE.Mesh(new THREE.PlaneGeometry(50,50),this.finishes.concrete);ground.position.z=-.001;ground.receiveShadow=true;this.scene.add(ground);
   this.channels={};this.nativeCount=0;this.nativeVisible=0;
   const refs=/^(?:BIGBAG_1t_REF|CADENA_REF|ASA_REF_\d+|SACO_50kg_REF|FIBC_MANGA_DESCARGA_D350|FIBC_CINTA_APERTURA_LATERAL|pallet_referencia|balanza_envolvente)$/;
   const origins=data.nativeSTEPSource?.animationFramesGlobalM||{};
@@ -92,29 +97,78 @@ class SceneEngine{
     const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(part.v.flat(),3));
     const idx=[];for(const face of part.f){for(let i=1;i<face.length-1;i++)idx.push(face[0],face[i],face[i+1]);}geo.setIndex(idx);geo.computeVertexNormals();
     const color=Array.isArray(part.c)?new THREE.Color(...part.c.map(c=>c/255)).convertSRGBToLinear():part.c||'#42667b';
-    const mesh=new THREE.Mesh(geo,this.material(color));mesh.name=part.tag;mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);this.nativeVisible++;
+    const mesh=new THREE.Mesh(geo,this.cadMaterial(part,color));mesh.name=part.tag;mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);this.nativeVisible++;
    }
   }
   this.buildContext();this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(container);this.resize();this.setView('iso');this.setProgress(.44);
  }
- material(color,options={}){return new THREE.MeshStandardMaterial({color,roughness:.6,metalness:.16,side:THREE.DoubleSide,...options});}
+ material(color,options={}){
+  if(color==='#b99a6b')return this.finishes.wood;
+  if(color==='#303c43'||color==='#334149')return this.finishes.rubber;
+  const key=String(color)+JSON.stringify(options);
+  if(!this.contextMaterials.has(key))this.contextMaterials.set(key,new THREE.MeshStandardMaterial({color,roughness:.58,metalness:.12,envMap:this.finishes.environment,envMapIntensity:.65,side:THREE.DoubleSide,...options}));
+  return this.contextMaterials.get(key);
+ }
+ cadMaterial(part,color){
+  const tag=part.tag;
+  if(/LINER_|GOMA|SELLO|CABLE|TOPE_TS75/.test(tag)||tag.startsWith('TOL_JUNTA'))return this.finishes.rubber;
+  if(tag.startsWith('GANCHO_ASA_'))return this.finishes.paint('#b83a32');
+  if(/ARANDELA|TUERCA|PERNO|TORNILLO|ANCLA|BOLT|NUT|WASHER|M8X|GRILLETE|GANCHO|CELDA|CASQUILLO/.test(tag)||tag.startsWith('AC_PELDANO')||tag==='AC_REJILLA_PISO')return this.finishes.galvanized;
+  if(/^(TOL_CONO_|TOL_CUERPO_|TOL_TAPA_|TOL_RECEPTOR_|TOL_VENTEO_|MS0[12]|MG0[23456]|BALANZA_PLATO|MAN_ABRAZADERA)/.test(tag))return this.finishes.steel;
+  if(tag==='TOL_FILTRO_VENTEO_REF')return this.finishes.cloth;
+  if(part.group==='Barandas'||part.group==='Cruceta'||tag==='MON-01')return this.finishes.paint('#deb12a');
+  if(['Porticos','Cimentacion','Plataforma','Escalera'].includes(part.group))return this.finishes.paint('#385c75');
+  return this.finishes.paint(color);
+ }
  box(parent,w,d,h,x,y,z,color){const m=new THREE.Mesh(new THREE.BoxGeometry(w,d,h),this.material(color));m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
  cylinder(parent,r,h,x,y,z,color,open=false){const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,24,1,open),this.material(color));m.rotation.x=Math.PI/2;m.position.set(x,y,z);m.castShadow=true;parent.add(m);return m;}
  tube(parent,points,r,color){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const m=new THREE.Mesh(new THREE.TubeGeometry(curve,Math.max(8,points.length*5),r,8,false),this.material(color,{metalness:0}));parent.add(m);return m;}
- cloth(){return this.material('#f1f0e7',{roughness:1,metalness:0});}
+ cloth(){return this.finishes.cloth;}
  bagGeometry(w,d,h,neck=1){
-  const v=[],idx=[],n=32,rings=7;for(let j=0;j<rings;j++){const t=j/(rings-1),bulge=(.92+.08*Math.sin(t*Math.PI))*lerp(1,neck,clamp((t-.65)/.35));
-   for(let i=0;i<n;i++){const a=i/n*Math.PI*2,c=Math.cos(a),s=Math.sin(a);v.push(w/2*Math.sign(c)*Math.abs(c)**.28*bulge,d/2*Math.sign(s)*Math.abs(s)**.28*bulge,t*h);}}
+  const v=[],uv=[],idx=[],n=64,rings=19;for(let j=0;j<rings;j++){const t=j/(rings-1),bulge=(.92+.08*Math.sin(t*Math.PI))*lerp(1,neck,clamp((t-.65)/.35));
+   for(let i=0;i<n;i++){const a=i/n*Math.PI*2,c=Math.cos(a),s=Math.sin(a),fold=1-.016*Math.sin(a*11+t*3)**2*Math.sin(t*Math.PI);v.push(w/2*Math.sign(c)*Math.abs(c)**.28*bulge*fold,d/2*Math.sign(s)*Math.abs(s)**.28*bulge*fold,t*h);uv.push(i/(n-1)*2,t);}}
   for(let j=0;j<rings-1;j++)for(let i=0;i<n;i++){const a=j*n+i,b=j*n+(i+1)%n,c=(j+1)*n+(i+1)%n,d=(j+1)*n+i;idx.push(a,b,d,b,c,d);}
   for(let i=1;i<n-1;i++)idx.push(0,i+1,i,(rings-1)*n,(rings-1)*n+i,(rings-1)*n+i+1);
-  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));g.setIndex(idx);g.computeVertexNormals();return g;
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(idx);g.computeVertexNormals();return g;
+ }
+ limb(parent,a,b,r,color){
+  const start=new THREE.Vector3(...a),end=new THREE.Vector3(...b),direction=end.clone().sub(start);
+  const mesh=new THREE.Mesh(new THREE.CapsuleGeometry(r,Math.max(.001,direction.length()-2*r),4,10),this.material(color,{roughness:.95,metalness:0}));
+  mesh.position.copy(start.add(end).multiplyScalar(.5));mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),direction.normalize());mesh.castShadow=true;parent.add(mesh);return mesh;
+ }
+ roundedBox(parent,w,d,h,x,y,z,color,r=.04){
+  const radius=Math.min(r,w/2,d/2),shape=new THREE.Shape();
+  shape.moveTo(-w/2+radius,-d/2);shape.lineTo(w/2-radius,-d/2);shape.quadraticCurveTo(w/2,-d/2,w/2,-d/2+radius);
+  shape.lineTo(w/2,d/2-radius);shape.quadraticCurveTo(w/2,d/2,w/2-radius,d/2);shape.lineTo(-w/2+radius,d/2);
+  shape.quadraticCurveTo(-w/2,d/2,-w/2,d/2-radius);shape.lineTo(-w/2,-d/2+radius);shape.quadraticCurveTo(-w/2,-d/2,-w/2+radius,-d/2);
+  const geometry=new THREE.ExtrudeGeometry(shape,{depth:h,bevelEnabled:false,curveSegments:5});geometry.translate(0,0,-h/2);
+  const mesh=new THREE.Mesh(geometry,this.material(color));mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;
  }
  person(x,y,z){const p=new THREE.Group();this.scene.add(p);p.position.set(x,y,z);
-  const head=new THREE.Mesh(new THREE.SphereGeometry(.10,14,10),this.material('#c39a75'));head.position.z=1.5;p.add(head);
-  this.cylinder(p,.13,.08,0,0,1.6,'#efbc3e');this.box(p,.32,.20,.49,0,0,1.16,'#e58b32');
-  for(const dx of [-.09,.09]){this.cylinder(p,.064,.91,dx,0,.46,'#304d62');this.box(p,.13,.22,.08,dx,-.035,.045,'#334149');}
-  this.box(p,.33,.004,.04,0,-.102,1.2,'#e4e2b9');this.box(p,.33,.004,.04,0,-.102,1.06,'#e4e2b9');
-  for(const d of [-1,1])this.tube(p,[[d*.18,0,1.36],[d*.25,-.05,1.12],[d*.2,-.27,1.02]],.048,'#e58b32');return p;
+  const head=new THREE.Mesh(new THREE.SphereGeometry(.101,16,12),this.material('#c49d7d',{roughness:.9,metalness:0}));head.position.z=1.5;head.scale.set(.88,.92,1.08);p.add(head);
+  const helmet=new THREE.Mesh(new THREE.SphereGeometry(.13,20,12,0,Math.PI*2,0,Math.PI/2),this.material('#e1b63e',{roughness:.38,metalness:.02}));helmet.rotation.x=Math.PI/2;helmet.position.z=1.555;helmet.castShadow=true;p.add(helmet);
+  this.cylinder(p,.145,.018,0,0,1.555,'#e1b63e');
+  this.limb(p,[0,0,.90],[0,0,1.41],.148,'#e27c28');
+  for(const dx of [-.09,.09]){
+   this.limb(p,[dx,0,.93],[dx,.015,.48],.068,'#2f4657');this.limb(p,[dx,.015,.48],[dx,-.018,.12],.057,'#2f4657');
+   this.roundedBox(p,.14,.25,.10,dx,-.055,.06,'#334149',.045);
+   this.box(p,.034,.007,.24,dx,-.141,1.23,'#e3e4d3');
+  }
+  this.box(p,.285,.007,.036,0,-.15,1.04,'#e3e4d3');
+  for(const side of [-1,1]){
+   this.limb(p,[side*.17,0,1.33],[side*.25,-.045,1.14],.052,'#db792b');
+   this.limb(p,[side*.25,-.045,1.14],[side*.19,-.25,1.03],.044,'#db792b');
+   this.limb(p,[side*.19,-.25,1.04],[side*.18,-.28,.99],.040,'#a8a897');
+  }
+  return p;
+ }
+ palletGeometry(parent,w,d,h){
+  const top=.028,blockHeight=h-top-.018;
+  for(const x of [-w*.36,0,w*.36]){
+   this.box(parent,.13,d,.018,x,0,.009,'#b99a6b');
+   for(const y of [-d*.36,0,d*.36])this.box(parent,.13,.14,blockHeight,x,y,.018+blockHeight/2,'#b99a6b');
+  }
+  for(let i=0;i<7;i++)this.box(parent,w/7*.87,d,top,-w/2+w/14+i*w/7,0,h-top/2,'#b99a6b');
  }
  buildContext(){
   const C=this.data.config;this.bag=new THREE.Group();this.scene.add(this.bag);
@@ -128,12 +182,11 @@ class SceneEngine{
   this.chain=new THREE.Group();this.scene.add(this.chain);
   this.chain1=this.cylinder(this.chain,.008,1,0,0,0,'#3d4a50');this.chain2=this.cylinder(this.chain,.008,1,.035,0,0,'#526068');
   this.hook=new THREE.Mesh(new THREE.TorusGeometry(.055,.014,8,22,Math.PI*1.6),this.material('#ab9a66'));this.hook.rotation.x=Math.PI/2;this.chain.add(this.hook);
-  this.pallet=new THREE.Group();this.scene.add(this.pallet);for(const x of [-.43,0,.43])for(const y of [-.43,0,.43])this.box(this.pallet,.14,.14,.076,x,y,.062,'#b99a6b');
-  for(let i=0;i<7;i++)this.box(this.pallet,.13,1.1,.05,-.48+i*.16,0,.125,'#b99a6b');
+  this.pallet=new THREE.Group();this.scene.add(this.pallet);this.palletGeometry(this.pallet,1.1,1.1,.15);
   this.sack=new THREE.Group();this.scene.add(this.sack);
   this.sackBody=new THREE.Mesh(this.bagGeometry(.46,.46,.5465,.59),this.cloth());this.sackBody.castShadow=true;this.sack.add(this.sackBody);this.sackBase=new Float32Array(this.sackBody.geometry.getAttribute('position').array);
-  this.output=new THREE.Group();this.scene.add(this.output);this.output.position.set(-1.25,-1.7,0);this.box(this.output,1.15,1,.13,0,0,.065,'#b99a6b');this.outputSacks=[];
-  for(let i=0;i<8;i++){const s=new THREE.Mesh(this.bagGeometry(.46,.38,.42),this.cloth());s.position.set((i%2-.5)*.49,(Math.floor(i/2)%2-.5)*.42,.14+Math.floor(i/4)*.4);s.castShadow=true;this.output.add(s);this.outputSacks.push(s);}
+  this.output=new THREE.Group();this.scene.add(this.output);this.output.position.set(-1.25,-1.7,0);this.palletGeometry(this.output,1.15,1,.13);this.outputSacks=[];
+  for(let i=0;i<8;i++){const sack=new THREE.Mesh(this.bagGeometry(.46,.38,.32,.88),this.cloth());sack.position.set((i%2-.5)*.49,(Math.floor(i/2)%2-.5)*.42,.13+Math.floor(i/4)*.32);sack.castShadow=true;sack.receiveShadow=true;this.output.add(sack);this.outputSacks.push(sack);}
   this.buildForklift();this.groundWorker=this.person(C.discharge_x+.55,-1.65,0);this.groundWorker.rotation.z=-.45;
   this.platformWorker=this.person(C.discharge_x,1.55,C.platform_floor_z_m);this.platformWorker.rotation.z=0;
   this.receivingWorker=this.person(C.pickup_x,-.90,0);this.receivingWorker.rotation.z=0;
@@ -143,11 +196,16 @@ class SceneEngine{
  }
  buildForklift(){
   const f=new THREE.Group();this.forklift=f;this.scene.add(f);
-  this.box(f,1.03,1.4,.53,0,-.8,.46,'#d9a333');this.box(f,.9,.44,.65,0,-1.22,.66,'#d9a333');this.box(f,.6,.48,.13,0,-.7,.98,'#33474e');
-  for(const x of [-.54,.54])for(const y of [-.34,-1.16]){const wheel=this.cylinder(f,.23,.16,x,y,.24,'#303c43');wheel.rotation.set(0,0,Math.PI/2);}
+  this.roundedBox(f,1.03,1.4,.53,0,-.8,.46,'#d9a333',.10);this.roundedBox(f,.9,.44,.65,0,-1.22,.66,'#d9a333',.09);this.roundedBox(f,.6,.48,.13,0,-.7,.98,'#33474e',.05);this.roundedBox(f,.6,.10,.38,0,-.90,1.17,'#33474e',.04);
+  for(const x of [-.54,.54])for(const y of [-.34,-1.16]){
+   const wheel=this.cylinder(f,.23,.16,x,y,.24,'#303c43');wheel.rotation.set(0,0,Math.PI/2);
+   const hub=this.cylinder(f,.105,.166,x,y,.24,'#889399');hub.rotation.set(0,0,Math.PI/2);hub.material=this.finishes.steel;
+   for(const offset of [-.055,.055]){const tread=new THREE.Mesh(new THREE.TorusGeometry(.218,.010,6,28),this.finishes.rubber);tread.rotation.y=Math.PI/2;tread.position.set(x+offset,y,.24);f.add(tread);}
+  }
   for(const x of [-.43,.43]){this.box(f,.075,.07,2.45,x,.04,1.36,'#3b5666');this.box(f,.05,.06,1.35,x,-1.3,1.25,'#3b5666');this.box(f,.05,.06,1.1,x,-.20,1.48,'#3b5666');}
   this.box(f,.94,1.25,.06,0,-.75,2,'#3b5666');for(const x of [-.255,.255]){this.box(f,.10,1.03,.045,x,.52,.0775,'#6b7a82');this.box(f,.1,.055,.62,x,.025,.36,'#6b7a82');}
   this.box(f,.9,.05,.06,0,.012,.75,'#3b5666');
+  const steering=new THREE.Mesh(new THREE.TorusGeometry(.105,.012,7,22),this.finishes.rubber);steering.rotation.x=.45;steering.position.set(0,-.28,1.14);f.add(steering);
  }
  setProgress(p){
   this.progress=clamp(Number(p)||0);const C=this.data.config,s=processState(this.progress,C,this.sackSize);this.state=s;
@@ -179,5 +237,5 @@ class SceneEngine{
  resize(){const w=this.container.clientWidth,h=this.container.clientHeight;if(!w||!h)return;this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);this.render();}
  render(){this.renderer.render(this.scene,this.camera);}
  getState(){return {...this.state,nativeComponents:this.nativeCount,visibleNativeComponents:this.nativeVisible,sourceStepSha256:this.data.nativeSTEPSource?.stepSha256,webgl:true};}
- dispose(){this.observer.disconnect();this.controls.dispose();this.scene.traverse(o=>{o.geometry?.dispose();if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();});this.renderer.dispose();this.renderer.domElement.remove();}
+ dispose(){this.observer.disconnect();this.controls.dispose();const geometries=new Set(),materials=new Set();this.scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());this.finishes.dispose();this.renderer.dispose();this.renderer.domElement.remove();}
 }
