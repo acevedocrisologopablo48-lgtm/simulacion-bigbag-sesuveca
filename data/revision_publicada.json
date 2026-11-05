@@ -7,11 +7,23 @@
   "master_sha256": "1058cad8168421821b45b04be6f265ad05e6973df76fc8b506f4fdb39792fbad",
   "components": 832,
   "download": "assets/docs/P05_PLATAFORMA_20261104.zip",
-  "download_sha256": "57eaec10f3df9d47c9144d52a0f78617f998815b3d0fd6726ea7429f305e3441",
+  "download_sha256": "efc37e367cdc13fd585d7c52c7ff768f658550e8445097b7fe8cd14950624301",
   "presentation": {
     "revision": "P05_PLATAFORMA_20261104",
     "marker": "p05plataforma20261104",
     "date": "2026-11-05",
     "scope": "Plataforma y paso completados; presentacion sin personas y secuencia conservada"
+  },
+  "documentation": {
+    "issued": "2026-11-05",
+    "status": "EMISION_GEOMETRICA_PARA_COORDINACION",
+    "drawings_pages": 230,
+    "bom_lines": 554,
+    "cad_occurrences": 832,
+    "part_drawings": 618,
+    "dxf_files": 634,
+    "not_native_slddrw": true,
+    "unassigned_material_grade_occurrences": 97,
+    "public_bundle": "assets/docs/DOCUMENTACION_P05_20261105.zip"
   }
 }
