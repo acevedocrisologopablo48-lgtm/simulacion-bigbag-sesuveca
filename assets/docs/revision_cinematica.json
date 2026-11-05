@@ -1,1545 +1,1897 @@
 {
-  "revision": "P05_PRACTICO_20261103",
-  "step_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
-  "model_sha256": "e214428685b9db4d05e1cd7979084f5de7484009d7e40bcf39227a9a18ba2350",
-  "master_sha256": "9ccefea7b903ae18976cab7f9e37906107259c91417c1668c95c93622e1e8460",
-  "static_check": {
-    "source_step_sha256": "5a0cb77ff5a85d3c30ab6ebc11248479ae5379707617b571c44c6d5d06401e7b",
-    "changed_physical_pair_checks": 213,
-    "unexpected": [],
+  "revision": "P05_PLATAFORMA_20261104",
+  "step_sha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
+  "model_sha256": "22bb0dd5b8f0ac9a0aac736e507a8086c2d528a876c4945301911a9f219e3837",
+  "master_sha256": "1058cad8168421821b45b04be6f265ad05e6973df76fc8b506f4fdb39792fbad",
+  "platform_geometry": {
+    "passed": true,
+    "source_step_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
+    "changed_components": 24,
+    "pair_checks": 76,
     "invalid": [],
-    "inherited_unchanged_pairs_report": "qa_estatico_final.json of P05_CIERRE_SIMPLE_20261103",
-    "inherited_vendor_internal": [
-      {
-        "a": "TECLE_ELECTRICO_2t_REF",
-        "b": "CARRO_2t_REF",
-        "type": "Commercial reference envelopes"
-      }
-    ],
-    "passed": true
-  },
-  "interfaces": {
-    "added": [
-      "MANDO_FIJO_CUERPO",
-      "MANDO_FIJO_PULSADOR_1",
-      "MANDO_FIJO_PULSADOR_2",
-      "MANDO_FIJO_PULSADOR_3",
-      "MANDO_FIJO_PULSADOR_4",
-      "MANDO_FIJO_PARADA",
-      "MANDO_FIJO_CABLE_CANALIZADO",
-      "TOL_TAPA_CERRADA_SIMPLE",
-      "TOL_JUNTA_PERIMETRAL_SIMPLE",
-      "TOL_RECEPTOR_MANGA_SIMPLE",
-      "TOL_SELLO_MANGA_DOBLE_LABIO",
-      "TOL_VENTEO_DN150",
-      "TOL_FILTRO_VENTEO_REF",
-      "TOL_TAPA_OREJA_M8_1",
-      "TOL_TAPA_M8_1",
-      "TOL_TAPA_OREJA_M8_2",
-      "TOL_TAPA_M8_2",
-      "TOL_TAPA_OREJA_M8_3",
-      "TOL_TAPA_M8_3",
-      "TOL_TAPA_OREJA_M8_4",
-      "TOL_TAPA_M8_4"
-    ],
-    "connections": [
-      {
-        "a": "MANDO_FIJO_CUERPO",
-        "b": "UNIF_CUNA_BOTONERA_A36_T3_1",
-        "gap_mm": 0.0,
-        "passed": true
-      },
-      {
-        "a": "MANDO_FIJO_CUERPO",
-        "b": "MANDO_FIJO_CABLE_CANALIZADO",
-        "gap_mm": 0.0,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_CERRADA_SIMPLE",
-        "b": "TOL_JUNTA_PERIMETRAL_SIMPLE",
-        "gap_mm": 4.547473508864641e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_JUNTA_PERIMETRAL_SIMPLE",
-        "b": "TOL_CUERPO_1",
-        "gap_mm": 3.8971847970969975e-10,
-        "passed": true
-      },
-      {
-        "a": "TOL_JUNTA_PERIMETRAL_SIMPLE",
-        "b": "TOL_CUERPO_2",
-        "gap_mm": 3.8971847970969975e-10,
-        "passed": true
-      },
-      {
-        "a": "TOL_JUNTA_PERIMETRAL_SIMPLE",
-        "b": "TOL_CUERPO_3",
-        "gap_mm": 3.8971847970969975e-10,
-        "passed": true
-      },
-      {
-        "a": "TOL_JUNTA_PERIMETRAL_SIMPLE",
-        "b": "TOL_CUERPO_4",
-        "gap_mm": 4.547473508864641e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_CERRADA_SIMPLE",
-        "b": "TOL_RECEPTOR_MANGA_SIMPLE",
-        "gap_mm": 4.547473508864641e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_RECEPTOR_MANGA_SIMPLE",
-        "b": "TOL_SELLO_MANGA_DOBLE_LABIO",
-        "gap_mm": 0.0,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_CERRADA_SIMPLE",
-        "b": "TOL_VENTEO_DN150",
-        "gap_mm": 4.547473508864641e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_VENTEO_DN150",
-        "b": "TOL_FILTRO_VENTEO_REF",
-        "gap_mm": 0.0,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_OREJA_M8_1",
-        "b": "TOL_CUERPO_4",
-        "gap_mm": 0.0,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_M8_1",
-        "b": "TOL_TAPA_CERRADA_SIMPLE",
-        "gap_mm": 4.547473508864641e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_OREJA_M8_2",
-        "b": "TOL_CUERPO_4",
-        "gap_mm": 0.0,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_M8_2",
-        "b": "TOL_TAPA_CERRADA_SIMPLE",
-        "gap_mm": 4.547473508864641e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_OREJA_M8_3",
-        "b": "TOL_CUERPO_3",
-        "gap_mm": 1.1368683772161603e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_M8_3",
-        "b": "TOL_TAPA_CERRADA_SIMPLE",
-        "gap_mm": 4.547473508864641e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_OREJA_M8_4",
-        "b": "TOL_CUERPO_3",
-        "gap_mm": 1.1368683772161603e-13,
-        "passed": true
-      },
-      {
-        "a": "TOL_TAPA_M8_4",
-        "b": "TOL_TAPA_CERRADA_SIMPLE",
-        "gap_mm": 4.547473508864641e-13,
-        "passed": true
-      }
-    ],
-    "dust_connection": {
-      "nominal_spout_mm": 350,
-      "receiver_clear_diameter_mm": 364,
-      "seal_contact_diameter_mm": 350,
-      "two_lips": true,
-      "vent": "DN150 passive filter",
-      "seal_access": "Passive insertion and withdrawal; existing release tape accessible from platform",
-      "limits": "Generic FIBC and filter envelope. Dust emissions and filter capacity require actual product and supply data."
-    },
-    "fixed_controls": {
-      "four_hold_to_run_directions": true,
-      "latching_stop": true,
-      "height_m": 1.25
-    }
-  },
-  "sections": {
-    "source_step_sha256": "5a0cb77ff5a85d3c30ab6ebc11248479ae5379707617b571c44c6d5d06401e7b",
-    "removed": [
-      "AC_APOYO_PELDANO_1_0",
-      "AC_APOYO_PELDANO_1_1",
-      "AC_APOYO_PELDANO_2_0",
-      "AC_APOYO_PELDANO_2_1",
-      "AC_APOYO_PELDANO_3_0",
-      "AC_APOYO_PELDANO_3_1",
-      "AC_APOYO_PELDANO_4_0",
-      "AC_APOYO_PELDANO_4_1",
-      "AC_APOYO_PELDANO_5_0",
-      "AC_APOYO_PELDANO_5_1",
-      "AC_APOYO_PELDANO_6_0",
-      "AC_APOYO_PELDANO_6_1",
-      "AC_APOYO_PELDANO_7_0",
-      "AC_APOYO_PELDANO_7_1",
-      "AC_APOYO_PELDANO_8_0",
-      "AC_APOYO_PELDANO_8_1",
-      "AC_APOYO_PELDANO_9_0",
-      "AC_APOYO_PELDANO_9_1",
-      "AC_APOYO_PELDANO_10_0",
-      "AC_APOYO_PELDANO_10_1",
-      "AC_APOYO_PELDANO_11_0",
-      "AC_APOYO_PELDANO_11_1",
-      "AC_APOYO_PELDANO_12_0",
-      "AC_APOYO_PELDANO_12_1",
-      "AC_APOYO_PELDANO_13_0",
-      "AC_APOYO_PELDANO_13_1",
-      "AC_APOYO_PELDANO_14_0",
-      "AC_APOYO_PELDANO_14_1",
-      "AC_APOYO_PELDANO_15_0",
-      "AC_APOYO_PELDANO_15_1",
-      "AC_PUENTE_CENTRAL_PELDANO_01",
-      "AC_PUENTE_CENTRAL_PELDANO_02",
-      "AC_PUENTE_CENTRAL_PELDANO_03",
-      "AC_PUENTE_CENTRAL_PELDANO_04",
-      "AC_PUENTE_CENTRAL_PELDANO_05",
-      "AC_PUENTE_CENTRAL_PELDANO_06",
-      "AC_PUENTE_CENTRAL_PELDANO_07",
-      "AC_PUENTE_CENTRAL_PELDANO_08",
-      "AC_PUENTE_CENTRAL_PELDANO_09",
-      "AC_PUENTE_CENTRAL_PELDANO_10",
-      "AC_PUENTE_CENTRAL_PELDANO_11",
-      "AC_PUENTE_CENTRAL_PELDANO_12",
-      "AC_PUENTE_CENTRAL_PELDANO_13",
-      "AC_PUENTE_CENTRAL_PELDANO_14",
-      "AC_PUENTE_CENTRAL_PELDANO_15"
-    ],
-    "changed": [
-      "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_02_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_03_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_04_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_05_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_06_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_07_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_09_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_14_CHS60_CIERRE3_1",
-      "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1",
-      "UNIONES_BR_RAIL_01_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_02_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_04_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_05_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_06_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_08_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_09_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_10_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_11_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_12_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_13_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_14_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_15_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_16_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_17_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_18_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_19_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_20_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_21_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_22_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_23_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_24_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_25_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_26_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_27_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_28_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_29_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_30_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_31_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_32_CHS48_BOCA31P15_1",
-      "UNIONES_BR_RAIL_33_CHS48_BOCA31P15_1",
-      "UNIONES_BR_PUERTA_INGLETE45_01_1",
-      "UNIONES_BR_PUERTA_INGLETE45_02_1",
-      "UNIONES_BR_PUERTA_INGLETE45_03_1",
-      "UNIONES_BR_PUERTA_INGLETE45_04_1",
-      "AC_PUERTA_PANEL",
-      "AC_BLOQUEO_PUERTA",
-      "AC_REJILLA_PISO",
-      "AC_SEPARADOR_GUIA_1.65",
-      "AC_PELDANO_01",
-      "AC_PELDANO_02",
-      "AC_PELDANO_03",
-      "AC_PELDANO_04",
-      "AC_PELDANO_05",
-      "AC_PELDANO_06",
-      "AC_PELDANO_07",
-      "AC_PELDANO_08",
-      "AC_PELDANO_09",
-      "AC_PELDANO_10",
-      "AC_PELDANO_11",
-      "AC_PELDANO_12",
-      "AC_PELDANO_13",
-      "AC_PELDANO_14",
-      "AC_PELDANO_15"
-    ],
-    "removed_underframe_mass_kg": 92.1877502501898,
-    "removed_tube_stock_families": [
-      "CHS60.3x3.91",
-      "CHS48.3x3.68"
-    ],
-    "reused_stock": [
-      "SHS60x60x4",
-      "SHS40x40x3"
-    ],
-    "rear_guard_post_shift_m": 0.005,
-    "stepping_unchanged": true,
-    "tread_dimensions_mm": [
-      800,
-      250,
-      32
-    ],
-    "tread_bearing_bar_mm": [
-      32,
-      5
-    ],
-    "tread_count": 15,
-    "tread_supplier_basis": {
-      "source": "Webforge Access brochure",
-      "url": "https://webassets.valmont.com/valmontstaging/docs/librariesprovider152/brochures/webforge-access-brochure.pdf?sfvrsn=5f5cd939_6",
-      "type": "32x5 A/B",
-      "catalogue_maximum_span_mm": 1300,
-      "project_span_mm": 800,
-      "final_supplier_tread_not_selected": true
-    },
-    "door": {
-      "outer_mm": [
-        800,
-        600
-      ],
-      "translation_open_m": [
-        -0.85,
-        0,
-        0
-      ],
-      "frame_stock": "SHS40x40x3",
-      "existing_hangers_and_panel_retained": true
-    },
-    "nominal_guardpost_check": {
-      "load_N": 900.0,
-      "effective_height_mm": 1180.0,
-      "section": "SHS60x60x4",
-      "material_Fy_MPa": 250,
-      "ASD_divisor": 1.67,
-      "corner_tolerance_factor": 0.9,
-      "diagonal_direction_factor": 1.4142135623730951,
-      "W_mm3": 14120.960000000001,
-      "bending_stress_MPa": 106.359256257381,
-      "allowable_MPa": 149.7005988023952,
-      "passes": true,
-      "SHS40x40x3_rejected_bending_stress_at1100mm_MPa": 194.17094888793
-    },
-    "copings": [
-      {
-        "tread": "AC_PELDANO_15",
-        "reason": "Upper tread end plates fitted to unchanged landing columns and stair union plates"
-      }
-    ],
-    "interface_checks": [
-      {
-        "a": "UNIONES_BR_RAIL_01_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_01_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_02_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_02_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_02_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_02_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_03_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_04_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_04_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_04_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_04_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_05_CHS60_CIERRE3_1",
-        "gap_mm": 1.1368683772161603e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_05_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_05_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_02_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_06_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_02_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_06_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_03_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_04_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_08_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_04_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_08_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_05_CHS60_CIERRE3_1",
-        "gap_mm": 1.1368683772161603e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_09_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_14_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_09_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_10_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_10_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_11_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_11_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_12_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_12_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_07_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_13_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_14_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_13_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_14_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_14_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_15_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_15_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_16_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_16_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_07_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_17_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_14_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_17_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_18_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_18_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_19_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_19_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_20_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_20_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_07_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_21_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_03_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_21_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_22_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_22_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_23_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_23_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_24_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_24_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_09_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_25_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_03_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_25_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_26_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_26_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_27_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_27_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_28_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_28_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_09_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_29_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_03_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_29_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_30_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_30_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_31_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1",
-        "gap_mm": 4.547473508864641e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_31_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_32_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_32_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_09_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_33_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_14_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_RAIL_33_CHS48_BOCA31P15_1",
-        "b": "UNIONES_BR_POSTE_06_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_PUERTA_INGLETE45_01_1",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_02_1",
-        "gap_mm": 2.2737367544323206e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_PUERTA_INGLETE45_02_1",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_03_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_PUERTA_INGLETE45_03_1",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_04_1",
-        "gap_mm": 2.2737367544323206e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_PUERTA_INGLETE45_04_1",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_01_1",
-        "gap_mm": 1.1368683772161603e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PUERTA_PANEL",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_01_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PUERTA_PANEL",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_02_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PUERTA_PANEL",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_03_1",
-        "gap_mm": 1.1368683772161603e-13,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PUERTA_PANEL",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_04_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PUERTA_COLGADOR_0",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_03_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PUERTA_COLGADOR_1",
-        "b": "UNIONES_BR_PUERTA_INGLETE45_03_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_BLOQUEO_PUERTA",
-        "b": "UNIONES_BR_POSTE_06_CHS60_CIERRE3_1",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1",
-        "b": "AC_BASE_BARANDA_TRAS_0.18",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_02_CHS60_CIERRE3_1",
-        "b": "AC_BASE_BARANDA_TRAS_0.85",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_03_CHS60_CIERRE3_1",
-        "b": "AC_BASE_BARANDA_TRAS_1.7",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_04_CHS60_CIERRE3_1",
-        "b": "AC_BASE_BARANDA_FRENTE_0.18",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_05_CHS60_CIERRE3_1",
-        "b": "AC_BASE_BARANDA_FRENTE_0.825",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_06_CHS60_CIERRE3_1",
-        "b": "AC_BASE_BARANDA_FRENTE_1.675",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_07_CHS60_CIERRE3_1",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 7.105427357601002e-14,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_09_CHS60_CIERRE3_1",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 7.105427357601002e-14,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_14_CHS60_CIERRE3_1",
-        "b": "AC_LARGUERO_1.3",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_SEPARADOR_GUIA_1.65",
-        "b": "AC_GUIA_PUERTA",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_01",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_01",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_02",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_02",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_03",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_03",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_04",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_04",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_05",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_05",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_06",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_06",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_07",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_07",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_08",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_08",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_09",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_09",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_10",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_10",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_11",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_11",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_12",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_12",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_13",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_13",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_14",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_14",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_15",
-        "b": "AC_ZANCA_1.2625",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      },
-      {
-        "a": "AC_PELDANO_15",
-        "b": "AC_ZANCA_2.1375",
-        "gap_mm": 0.0,
-        "common_mm3": 0.0
-      }
-    ],
-    "missing_contacts": [],
-    "changed_pairs_checked": 231,
     "unexpected_intersections": [],
-    "valid_all": true,
-    "solids_by_changed_tag": {
-      "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_02_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_03_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_04_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_05_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_06_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_07_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_08_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_09_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_10_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_11_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_12_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_13_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_14_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_POSTE_15_CHS60_CIERRE3_1": 1,
-      "UNIONES_BR_RAIL_01_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_02_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_04_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_05_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_06_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_08_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_09_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_10_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_11_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_12_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_13_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_14_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_15_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_16_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_17_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_18_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_19_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_20_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_21_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_22_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_23_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_24_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_25_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_26_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_27_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_28_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_29_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_30_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_31_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_32_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_RAIL_33_CHS48_BOCA31P15_1": 1,
-      "UNIONES_BR_PUERTA_INGLETE45_01_1": 1,
-      "UNIONES_BR_PUERTA_INGLETE45_02_1": 1,
-      "UNIONES_BR_PUERTA_INGLETE45_03_1": 1,
-      "UNIONES_BR_PUERTA_INGLETE45_04_1": 1,
-      "AC_PUERTA_PANEL": 1,
-      "AC_BLOQUEO_PUERTA": 1,
-      "AC_REJILLA_PISO": 1,
-      "AC_SEPARADOR_GUIA_1.65": 1,
-      "AC_PELDANO_01": 1,
-      "AC_PELDANO_02": 1,
-      "AC_PELDANO_03": 1,
-      "AC_PELDANO_04": 1,
-      "AC_PELDANO_05": 1,
-      "AC_PELDANO_06": 1,
-      "AC_PELDANO_07": 1,
-      "AC_PELDANO_08": 1,
-      "AC_PELDANO_09": 1,
-      "AC_PELDANO_10": 1,
-      "AC_PELDANO_11": 1,
-      "AC_PELDANO_12": 1,
-      "AC_PELDANO_13": 1,
-      "AC_PELDANO_14": 1,
-      "AC_PELDANO_15": 1
-    }
-  },
-  "spreader": {
-    "modified": [
-      {
-        "tag": "CR-MAIN",
-        "action": "modify",
-        "before_mass_kg": 44.390879514822984,
-        "after_mass_kg": 21.27560191299699,
-        "solids": 1,
-        "outer_envelope_retained": true
-      },
-      {
-        "tag": "CR-END--0.5",
-        "action": "modify",
-        "before_mass_kg": 62.235563374006254,
-        "after_mass_kg": 29.712716295757406,
-        "solids": 1,
-        "outer_envelope_retained": true
-      },
-      {
-        "tag": "CR-END-0.5",
-        "action": "modify",
-        "before_mass_kg": 62.235563374006254,
-        "after_mass_kg": 29.712716295757406,
-        "solids": 1,
-        "outer_envelope_retained": true
-      }
-    ],
-    "removed": [
-      "CR_OREJA_ASA_1",
-      "CR_OREJA_ASA_2",
-      "CR_OREJA_ASA_3",
-      "CR_OREJA_ASA_4"
-    ],
-    "attachment_proof": [
-      {
-        "hardware": "GRILLETE_ASA_1",
-        "used_lug": "AUTO_OREJA_EXTREMA_90X120X12_8",
-        "pin_nominal_clearance_mm": 0.5,
-        "nearest_obsolete_lug_gap_mm": 7.0
-      },
-      {
-        "hardware": "GRILLETE_ASA_2",
-        "used_lug": "AUTO_OREJA_EXTREMA_90X120X12_7",
-        "pin_nominal_clearance_mm": 0.5,
-        "nearest_obsolete_lug_gap_mm": 7.0
-      },
-      {
-        "hardware": "GRILLETE_ASA_3",
-        "used_lug": "AUTO_OREJA_EXTREMA_90X120X12_5",
-        "pin_nominal_clearance_mm": 0.5,
-        "nearest_obsolete_lug_gap_mm": 7.0
-      },
-      {
-        "hardware": "GRILLETE_ASA_4",
-        "used_lug": "AUTO_OREJA_EXTREMA_90X120X12_6",
-        "pin_nominal_clearance_mm": 0.5,
-        "nearest_obsolete_lug_gap_mm": 7.0
-      }
-    ],
+    "missing_contacts": [],
     "contacts": [
       {
-        "a": "CR-MAIN",
-        "b": "CR-END--0.5",
-        "gap_mm": 0.0
+        "tag": "AC_RODAPIE_EXTREMO",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_PELDANO_TRANSICION_16"
+        ],
+        "boundary_witness_m": [
+          0.086,
+          1.45,
+          2.9325901144200004
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR-END-0.5",
-        "gap_mm": 0.0
+        "tag": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_POSTE_APERTURA_EXTREMO"
+        ],
+        "boundary_witness_m": [
+          0.16,
+          1.39,
+          3.3125901144200003
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CARTELA_1",
-        "gap_mm": 0.0
+        "tag": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_POSTE_APERTURA_EXTREMO"
+        ],
+        "boundary_witness_m": [
+          0.16,
+          1.39,
+          3.83844011442
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CARTELA_2",
-        "gap_mm": 0.0
+        "tag": "AC_BASTIDOR_AMPLIACION_L",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.8,
+          -0.9,
+          3.07
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CARTELA_3",
-        "gap_mm": 0.0
+        "tag": "AC_REJILLA_AMPLIACION_L",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_BASTIDOR_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.795,
+          -0.895,
+          3.07
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CARTELA_4",
-        "gap_mm": 0.0
+        "tag": "AC_PELDANO_TRANSICION_16",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_SOPORTE_PELDANO_TRANSICION"
+        ],
+        "boundary_witness_m": [
+          -0.06083333333333334,
+          1.4549999999999998,
+          2.91029505721
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CARTELA_5",
-        "gap_mm": 0.0
+        "tag": "AC_SOPORTE_PELDANO_TRANSICION",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_PELDANO_TRANSICION_16"
+        ],
+        "boundary_witness_m": [
+          -0.1,
+          2.01,
+          2.9102950572100004
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CARTELA_6",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.8,
+          -0.9,
+          3.102
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CARTELA_7",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_BARANDA_AMPLIACION_EXTERIOR"
+        ],
+        "boundary_witness_m": [
+          -0.74,
+          -0.84,
+          3.252
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CARTELA_8",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_FRENTE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.74,
+          -0.9,
+          3.102
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CAP_CENTRAL",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_BARANDA_AMPLIACION_FRENTE"
+        ],
+        "boundary_witness_m": [
+          -0.6799999999999999,
+          -0.84,
+          3.252
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CHEEK_-1",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          0.275,
+          -0.84,
+          3.102
+        ]
       },
       {
-        "a": "CR-MAIN",
-        "b": "CR_CHEEK_1",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          0.275,
+          -0.78,
+          3.102
+        ]
       },
       {
-        "a": "CR-END--0.5",
-        "b": "CR-MAIN",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_RETORNO",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.1,
+          0.97,
+          3.102
+        ]
       },
       {
-        "a": "CR-END--0.5",
-        "b": "CR_RESPALDO_EXTREMA_1",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.1,
+          1.03,
+          3.102
+        ]
       },
       {
-        "a": "CR-END--0.5",
-        "b": "CR_RESPALDO_EXTREMA_2",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_TESTERO",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.74,
+          2.1,
+          3.102
+        ]
       },
       {
-        "a": "CR-END--0.5",
-        "b": "CR_CARTELA_1",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.6799999999999999,
+          2.0999999999999996,
+          3.102
+        ]
       },
       {
-        "a": "CR-END--0.5",
-        "b": "CR_CARTELA_2",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.1,
+          0.82,
+          3.102
+        ]
       },
       {
-        "a": "CR-END--0.5",
-        "b": "CR_CARTELA_5",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.1,
+          0.8200000000000001,
+          3.102
+        ]
       },
       {
-        "a": "CR-END--0.5",
-        "b": "CR_CARTELA_6",
-        "gap_mm": 0.0
+        "tag": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.1,
+          0.8260000000000001,
+          3.102
+        ]
       },
       {
-        "a": "CR-END-0.5",
-        "b": "CR-MAIN",
-        "gap_mm": 0.0
+        "tag": "AC_POSTE_APERTURA_EXTREMO",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_PELDANO_TRANSICION_16"
+        ],
+        "boundary_witness_m": [
+          0.15,
+          1.45,
+          2.94229505721
+        ]
       },
       {
-        "a": "CR-END-0.5",
-        "b": "CR_RESPALDO_EXTREMA_3",
-        "gap_mm": 0.0
+        "tag": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1"
+        ],
+        "boundary_witness_m": [
+          0.15,
+          2.11,
+          3.8625901144199997
+        ]
       },
       {
-        "a": "CR-END-0.5",
-        "b": "CR_RESPALDO_EXTREMA_4",
-        "gap_mm": 0.0
+        "tag": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "UNIONES_BR_POSTE_01_CHS60_CIERRE3_1"
+        ],
+        "boundary_witness_m": [
+          0.15,
+          2.11,
+          3.3325901144200003
+        ]
       },
       {
-        "a": "CR-END-0.5",
-        "b": "CR_CARTELA_3",
-        "gap_mm": 0.0
-      },
-      {
-        "a": "CR-END-0.5",
-        "b": "CR_CARTELA_4",
-        "gap_mm": 0.0
-      },
-      {
-        "a": "CR-END-0.5",
-        "b": "CR_CARTELA_7",
-        "gap_mm": 0.0
-      },
-      {
-        "a": "CR-END-0.5",
-        "b": "CR_CARTELA_8",
-        "gap_mm": 0.0
+        "tag": "AC_GUARDA_TRANSICION_FRENTE",
+        "nearest_mm": 0.0,
+        "contact_tags": [
+          "AC_REJILLA_AMPLIACION_L"
+        ],
+        "boundary_witness_m": [
+          -0.1,
+          1.444,
+          3.09229505721
+        ]
       }
     ],
-    "screening": {
-      "payload_screening_kg": 2000,
-      "rigging_allowance_kg": 260,
-      "dynamic_factor": 1.25,
-      "force_N": 27713.250000000004,
-      "material": "ASTM A500 Gr.B, conservativeFy250MPa",
-      "stock": "SHS150x150x6",
-      "design_thickness_factor": 0.93,
-      "section_property_factor": 0.9,
-      "area_mm2": 2901.108959999999,
-      "I_mm4": 10099859.229834044,
-      "S_mm3": 134664.7897311206,
-      "elastic_allowable_MPa": 149.7005988023952,
-      "checks": {
-        "combined_biaxial_and_shear_MPa": 106.60094673116109,
-        "central_cap_bending_MPa": 21.246825,
-        "terminal_pad_bending_MPa": 51.220024553571434,
-        "terminal_wall_bearing_MPa": 8.868807603686637,
-        "terminal_ear_net_tension_MPa": 18.62449596774194,
-        "terminal_pin_bearing_MPa": 41.23995535714286,
-        "terminal_two_sided_f6_weld_shear_MPa": 18.147395096652527
-      },
-      "elastic_deflection_bound_mm": 0.2858254565046482,
-      "operating_payload_kg": 1000,
-      "scope": "Elastic member and retained local joint screening for stock substitution. Existing hook/lug interfaces retained. No certification or procurement WLL is issued.",
-      "passed": true
+    "access": {
+      "upper_floor_z_m": 3.102,
+      "old_floor_z_m": 2.78259011442,
+      "intermediate_tread_z_m": 2.94229505721,
+      "rise_m": 0.15970494278999992,
+      "tread_going_m": 0.25,
+      "tread_width_m": 0.62,
+      "clear_return_width_m": 0.58,
+      "clear_passage_width_m": 0.58,
+      "clear_main_walkway_width_m": 0.955,
+      "route": "Hopper side along negative X, external return around column, two equal rises at platform end; outside sliding gate sweep",
+      "stock": "Existing SHS60x60x4 and SHS40x40x3; grating32x5; support risers to existing edge beams",
+      "verification_scope": "Nominal geometric validity/contact/interference, not final fabrication load certification"
     },
-    "before_mass_kg": 230.9409393372721,
-    "after_mass_kg": 140.18598299287547,
-    "saved_mass_kg": 90.75495634439665,
-    "passed": true
+    "step_sha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
+    "door_verification": {
+      "passed": true,
+      "report": "qa_motion_incremental.json",
+      "sha256": "682c772b5f010e1dba515ab5f44447cacb359d9ff42a36787d10019e0b8c1c66",
+      "gate_parts": 9,
+      "changed_obstacles": 24,
+      "continuous_pairs": 216,
+      "stroke_m": 0.85,
+      "method": "Continuous swept bounding envelopes of actual nine sliding-door components versus every changed fixed obstacle",
+      "result": "All216 conservative swept envelopes are disjoint",
+      "supersedes": "The original metadata-selected five-position loop matched no components and supplied no door evidence"
+    }
   },
-  "motion": {
-    "revision": "P05_PRACTICO_20261103",
-    "step_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
-    "model_sha256": "e214428685b9db4d05e1cd7979084f5de7484009d7e40bcf39227a9a18ba2350",
-    "components": 811,
+  "sequence": {
+    "passed": true,
+    "revision": "P05_PLATAFORMA_20261104",
+    "step_sha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
+    "baseline_step_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
+    "master_sha256": "1058cad8168421821b45b04be6f265ad05e6973df76fc8b506f4fdb39792fbad",
+    "state_graph_exactly_preserved": true,
+    "scope": "Secuencia manual conservada. Actualizadas solo identificación de revisión y vinculación al STEP."
+  },
+  "browser": {
+    "passed": true,
+    "presentationRevision": "p05plataforma20261104",
+    "date": "2026-11-04",
+    "checks": {
+      "stages_and_processState_exact": true,
+      "setProgress_exact_except_removal_people_visibility": true,
+      "native_geometry_loading_exact": true,
+      "materials_helper_unchanged": true,
+      "people_renderer_removed": true,
+      "no_person_native_tags": true,
+      "source_step_matches_export": true,
+      "browser_passed": true,
+      "browser_geometry_matches_manifest": true,
+      "all_revision_markers_present": true
+    },
+    "nativeComponents": 832,
+    "visibleNativeComponents": 823,
+    "modelSha256": "22bb0dd5b8f0ac9a0aac736e507a8086c2d528a876c4945301911a9f219e3837",
+    "sourceStepSha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
+    "browserStates": 32,
+    "peopleRemoved": 4,
+    "scope": "Completed platform STEP rendered with matching geometry manifest; visual people removed; material finishes, process state and CAD mesh renderer preserved.",
+    "screenshots": [
+      "web_general.png",
+      "web_ensacado.png",
+      "web_plataforma.png",
+      "web_plataforma_detalle.png",
+      "web_mobile.png"
+    ]
+  },
+  "incremental_motion": {
+    "revision": "P05_PLATAFORMA_20261104",
+    "step_sha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
+    "model_sha256": "22bb0dd5b8f0ac9a0aac736e507a8086c2d528a876c4945301911a9f219e3837",
+    "components": 832,
     "hook_max_m": 5.945,
     "travel_bottom_m": 3.467926,
     "rail_prism_proof": {
-      "method": "Exact section extruded20m alongX; verified to contain actualMON-01",
-      "rail_material_outside_prism_mm3": 0.0
+      "reused_unchanged": true,
+      "reason": "Rail and moving geometry unchanged from baseline"
     },
     "existing_access_gate_new_mount_checks": [
       {
         "part": "AC_PUERTA_PANEL",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 104.40306508910558
+        "conservative_gap_mm": 392.04591567825287
       },
       {
         "part": "AC_PUERTA_PANEL",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 44.99999999999993
+        "conservative_gap_mm": 279.99999999999994
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 279.99999999999994
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 252.59011442000025
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 220.5901144200002
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 693.5591759456127
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 711.6088913158669
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 780.0
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 777.212303205391
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1706.9999999999998
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1702.4640860393588
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 106.99999999999999
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 181.30627196495092
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 172.04650534085255
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 220.31560147622037
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1178.3462988442743
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1248.151819392909
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 47.00000000000004
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 81.63310758404789
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 134.00000000000003
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 519.9999999999999
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1240.0237397113785
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1239.9999999999998
+      },
+      {
+        "part": "AC_PUERTA_PANEL",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 529.9999999999999
       },
       {
         "part": "AC_PUERTA_RODILLO_0",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 70.00000000000007
+        "conservative_gap_mm": 1010.1113799972752
       },
       {
         "part": "AC_PUERTA_RODILLO_0",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 729.1947613635193
+        "conservative_gap_mm": 642.748006609122
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 262.94528423229036
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 872.5901144200003
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 840.5901144200003
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1143.9472022251541
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1172.0316058623152
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 820.0000000000001
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1067.4786677656043
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1714.9999999999998
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1843.2568204497793
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 114.99999999999999
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 712.4182101368755
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 195.00000000000003
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 724.855645031912
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1159.0621208546158
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1409.446595701529
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 55.00000000000005
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 692.326300334336
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 174.00000000000009
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 498.62310415783975
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1214.9999999999998
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1246.457125277395
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_0",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 504.9999999999999
       },
       {
         "part": "AC_PUERTA_RODILLO_1",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 670.0
+        "conservative_gap_mm": 1171.819525353627
       },
       {
         "part": "AC_PUERTA_RODILLO_1",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 264.05491853021783
+        "conservative_gap_mm": 802.2000997257479
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 547.3026790542871
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 961.9971454133891
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 933.0684543272424
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1260.759771518253
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1286.296266472152
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1420.0
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1573.6297868732117
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1762.1719552869974
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1901.0051830898908
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 421.0106887004177
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 816.5419193982813
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 783.5974731965387
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1046.0476595904365
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1385.4331452654076
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1623.126521912149
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 408.7175063537162
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 833.9908309655624
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 774.0
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 685.2189431123456
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1319.347803025827
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1348.3727194303005
+      },
+      {
+        "part": "AC_PUERTA_RODILLO_1",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 720.7486561548878
       },
       {
         "part": "AC_PUERTA_COLGADOR_0",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 75.00666637039679
+        "conservative_gap_mm": 951.3679624624741
       },
       {
         "part": "AC_PUERTA_COLGADOR_0",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 715.766023222673
+        "conservative_gap_mm": 604.6329465055636
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 291.0295904199433
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 812.5901144200003
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 780.5901144200003
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1110.6015462863165
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1137.821900947155
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 825.0000000000001
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1033.6367313540234
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1693.0
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1801.0033016083642
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 92.99999999999997
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 648.8858855023965
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 215.74522010927618
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 677.4406929054596
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1195.4020244252558
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1413.4178053230507
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 33.00000000000003
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 631.1678797310817
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 179.00000000000009
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 530.9999999999999
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1251.0
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1269.897551180987
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_0",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 540.9999999999999
       },
       {
         "part": "AC_PUERTA_COLGADOR_1",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 675.0007407403342
+        "conservative_gap_mm": 1124.233961415505
       },
       {
         "part": "AC_PUERTA_COLGADOR_1",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 210.52553289328114
+        "conservative_gap_mm": 775.1167653973172
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 565.617558514585
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 910.1663002183221
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 881.714764949657
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1232.7452269684752
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1257.324014832691
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1424.9999999999998
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1552.8054908468832
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1741.9382882295229
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1861.3202014710496
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 420.4152708929588
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 764.3748376315308
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 792.8089303230634
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1016.7231149158697
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1418.0923806296967
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1628.4194460900512
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 411.325904849184
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 786.9389381675234
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 778.9999999999999
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 712.4507000487822
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1354.4822371746322
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1371.9551455193662
+      },
+      {
+        "part": "AC_PUERTA_COLGADOR_1",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 749.8680756117021
       },
       {
         "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 620.0000000000001
+        "conservative_gap_mm": 352.27829907617036
       },
       {
         "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 310.04031995854996
+        "conservative_gap_mm": 279.99999999999994
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 586.9422650482753
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 212.5901144200002
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 180.59011442000016
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 672.4587169198992
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 689.2050562952925
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 740.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 734.6371588071411
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1670.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1664.2811526602795
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 69.99999999999996
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 133.55057132123662
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 141.4213562373095
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 188.07380226982366
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1174.2657280190033
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1240.740003022482
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 10.000000000000009
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 30.850528362229195
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 94.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 519.9999999999999
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1347.6048393718397
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1239.9999999999998
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_01_1",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 529.9999999999999
       },
       {
         "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 752.3961722390673
+        "conservative_gap_mm": 760.5103549590892
       },
       {
         "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 5.0000000000001155
+        "conservative_gap_mm": 626.0990336999412
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 626.0990336999412
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 529.5465576784621
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 517.5304719784419
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 907.9100869367832
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 920.3823170959975
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1500.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1494.3131382344966
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1739.0011500858761
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1751.2443447732326
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 490.0255095400647
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 497.26929836883033
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 865.7944328765345
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 869.3973516754171
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1452.067491544384
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1536.3058794069066
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 485.1030818290068
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 545.8724714621803
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 854.0000000000001
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 756.9015788066504
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1375.0395313987926
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1375.0395313987926
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_02_1",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 796.2623392509605
       },
       {
         "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 60.00000000000006
+        "conservative_gap_mm": 910.8786966440699
       },
       {
         "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 150.08331019803626
+        "conservative_gap_mm": 564.3580423808983
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 279.99999999999994
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 772.5901144200003
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 740.5901144200002
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1070.9487336174209
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1097.9863722734437
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 740.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 942.1001450220826
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1670.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1765.6989220279397
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 69.99999999999996
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 604.7286029704806
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 141.4213562373095
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 619.0578997562579
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1174.2657280190033
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1373.7891698694634
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 10.000000000000009
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 590.6036600382943
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 94.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 519.9999999999999
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1239.9999999999998
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1252.7480755214062
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_03_1",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 529.9999999999999
       },
       {
         "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
-        "obstacle": "AC_CIERRE_PUERTA",
+        "obstacle": "AC_RODAPIE_EXTREMO",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 60.00000000000006
+        "conservative_gap_mm": 352.27829907617036
       },
       {
         "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
-        "obstacle": "AC_BLOQUEO_PUERTA",
+        "obstacle": "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
         "collision": false,
         "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
-        "conservative_gap_mm": 765.0
+        "conservative_gap_mm": 279.99999999999994
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 279.99999999999994
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BASTIDOR_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 212.5901144200002
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_REJILLA_AMPLIACION_L",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 180.59011442000016
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_PELDANO_TRANSICION_16",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 672.4587169198992
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_SOPORTE_PELDANO_TRANSICION",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 689.2050562952925
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 740.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 734.6371588071411
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1670.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1664.2811526602795
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 69.99999999999996
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 133.55057132123662
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 141.4213562373095
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 188.07380226982366
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1174.2657280190033
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1240.740003022482
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 10.000000000000009
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 30.850528362229195
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 94.0
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_POSTE_APERTURA_EXTREMO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 519.9999999999999
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_SUPERIOR",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1239.9999999999998
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_PASAMANO_TRANSICION_INTERMEDIO",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 1239.9999999999998
+      },
+      {
+        "part": "UNIONES_BR_PUERTA_INGLETE45_04_1",
+        "obstacle": "AC_GUARDA_TRANSICION_FRENTE",
+        "collision": false,
+        "continuous_method": "Full850mm swept bounding envelope disjoint from new fixed mountingBRep bounding box",
+        "conservative_gap_mm": 529.9999999999999
       }
     ],
     "full_motion_envelopes": [
@@ -1557,24 +1909,24 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "KNE--1",
-            "conservative_gap_mm": 94.99999989999975
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 1743.9999999999998
           },
           {
-            "tag": "KNE-1",
-            "conservative_gap_mm": 94.99999989999975
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 1749.9999999999998
           },
           {
-            "tag": "HUP-4",
-            "conservative_gap_mm": 149.99999999999991
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 1750.0
           },
           {
-            "tag": "GRID_DIAFRAGMA_GRID--0.25_0",
-            "conservative_gap_mm": 155.99999999999991
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 1750.0
           },
           {
-            "tag": "GRID_DIAFRAGMA_GRID-0.25_0",
-            "conservative_gap_mm": 155.99999999999991
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 1765.708073266926
           }
         ]
       },
@@ -1592,24 +1944,24 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "KNE--1",
-            "conservative_gap_mm": 94.99999989999975
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 49.999999999999936
           },
           {
-            "tag": "KNE-1",
-            "conservative_gap_mm": 94.99999989999975
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 220.36342136570676
           },
           {
-            "tag": "U02_CARTELA_KNE--1_0",
-            "conservative_gap_mm": 180.27756377319955
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 240.26027553467924
           },
           {
-            "tag": "U02_CARTELA_KNE-1_0",
-            "conservative_gap_mm": 180.27756377319955
+            "tag": "AC_BARANDA_AMPLIACION_FRENTE",
+            "conservative_gap_mm": 318.94356867634116
           },
           {
-            "tag": "UNIF_SHS60X60X4_L748810_SLOT_JUNTA_3_2",
-            "conservative_gap_mm": 294.9999999
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 369.3261938666143
           }
         ]
       },
@@ -1627,24 +1979,24 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "GRID--0.5",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 43.99999999999993
           },
           {
-            "tag": "GRID-0.5",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 49.99999999999982
           },
           {
-            "tag": "GRID--0.25",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 49.999999999999936
           },
           {
-            "tag": "GRID-0.25",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 49.999999999999936
           },
           {
-            "tag": "TOL_FILTRO_VENTEO_REF",
-            "conservative_gap_mm": 49.99999999999996
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 240.26027553467924
           }
         ]
       },
@@ -1662,24 +2014,24 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "HUP-4",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 43.99999999999993
           },
           {
-            "tag": "GRID--0.5",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 49.99999999999982
           },
           {
-            "tag": "GRID-0.5",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 49.999999999999936
           },
           {
-            "tag": "GRID--0.25",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 49.999999999999936
           },
           {
-            "tag": "GRID-0.25",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 240.26027553467924
           }
         ]
       },
@@ -1697,24 +2049,24 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "KNE--1",
-            "conservative_gap_mm": 94.99999989999975
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 1743.9999999999998
           },
           {
-            "tag": "KNE-1",
-            "conservative_gap_mm": 94.99999989999975
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 1749.9999999999998
           },
           {
-            "tag": "HUP-4",
-            "conservative_gap_mm": 149.99999999999991
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 1750.0
           },
           {
-            "tag": "GRID_DIAFRAGMA_GRID--0.25_0",
-            "conservative_gap_mm": 155.99999999999991
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 1750.0
           },
           {
-            "tag": "GRID_DIAFRAGMA_GRID-0.25_0",
-            "conservative_gap_mm": 155.99999999999991
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 1765.708073266926
           }
         ]
       },
@@ -1732,24 +2084,24 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "HLOW-4",
-            "conservative_gap_mm": 194.99999999999983
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 1753.004487038384
           },
           {
-            "tag": "HBRA-1.250",
-            "conservative_gap_mm": 194.99999999999983
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 1799.6944185055418
           },
           {
-            "tag": "U04_CARTELA_0_1",
-            "conservative_gap_mm": 213.9953270517794
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 1801.6214918789128
           },
           {
-            "tag": "U04_CARTELA_1_1",
-            "conservative_gap_mm": 213.9953270517794
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 1807.4302199531799
           },
           {
-            "tag": "BASE_TOLVA_1",
-            "conservative_gap_mm": 251.24689052802213
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 1822.6434099954934
           }
         ]
       },
@@ -1764,44 +2116,27 @@
           0.175,
           3.4699259999999996
         ],
-        "candidate_checks": [
-          {
-            "tag": "TOL_TAPA_CERRADA_SIMPLE",
-            "intersection_mm3": 0.0
-          },
-          {
-            "tag": "TOL_JUNTA_PERIMETRAL_SIMPLE",
-            "intersection_mm3": 0.0
-          },
-          {
-            "tag": "TOL_RECEPTOR_MANGA_SIMPLE",
-            "intersection_mm3": 0.0
-          },
-          {
-            "tag": "TOL_SELLO_MANGA_DOBLE_LABIO",
-            "intersection_mm3": 0.0
-          }
-        ],
+        "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "TOL_TAPA_CERRADA_SIMPLE",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 394.0
           },
           {
-            "tag": "TOL_JUNTA_PERIMETRAL_SIMPLE",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 399.9999999999999
           },
           {
-            "tag": "TOL_RECEPTOR_MANGA_SIMPLE",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 400.0
           },
           {
-            "tag": "TOL_SELLO_MANGA_DOBLE_LABIO",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 400.0
           },
           {
-            "tag": "GRID--0.25",
-            "conservative_gap_mm": 150.00000000000003
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 708.6783473480758
           }
         ]
       },
@@ -1819,24 +2154,24 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "HUP-4",
-            "conservative_gap_mm": 107.92599999999996
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 394.0
           },
           {
-            "tag": "TOL_SELLO_MANGA_DOBLE_LABIO",
-            "conservative_gap_mm": 177.92599999999982
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 400.0
           },
           {
-            "tag": "GRID--0.25",
-            "conservative_gap_mm": 184.79183281736235
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 400.31692129611514
           },
           {
-            "tag": "GRID-0.25",
-            "conservative_gap_mm": 184.79183281736235
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 402.8608959380395
           },
           {
-            "tag": "TOL_RECEPTOR_MANGA_SIMPLE",
-            "conservative_gap_mm": 222.92599999999973
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 708.6783473480758
           }
         ]
       },
@@ -1854,24 +2189,24 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "HUP-4",
-            "conservative_gap_mm": 500.0
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 2094.0
           },
           {
-            "tag": "GRID_DIAFRAGMA_GRID--0.25_0",
-            "conservative_gap_mm": 541.9151225053606
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 2099.9999999999995
           },
           {
-            "tag": "GRID_DIAFRAGMA_GRID-0.25_0",
-            "conservative_gap_mm": 541.9151225053606
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 2100.0
           },
           {
-            "tag": "HBRA-1.250",
-            "conservative_gap_mm": 544.9999999999999
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA",
+            "conservative_gap_mm": 2100.0
           },
           {
-            "tag": "HR-2.6826-4",
-            "conservative_gap_mm": 608.9999999999998
+            "tag": "AC_BARANDA_AMPLIACION_ENTRANTE",
+            "conservative_gap_mm": 2179.959862015812
           }
         ]
       },
@@ -1886,36 +2221,27 @@
           0.2,
           0.8265
         ],
-        "candidate_checks": [
-          {
-            "tag": "BRL-A--1",
-            "intersection_mm3": 0.0
-          },
-          {
-            "tag": "BRL-B--1",
-            "intersection_mm3": 0.0
-          }
-        ],
+        "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "BRL-A--1",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 1953.3172115318212
           },
           {
-            "tag": "BRL-B--1",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_RODAPIE_EXTREMO",
+            "conservative_gap_mm": 2143.498200543133
           },
           {
-            "tag": "BALANZA_PLATO_FIJO",
-            "conservative_gap_mm": 0.0
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 2266.918006898353
           },
           {
-            "tag": "MS02_CUELLO",
-            "conservative_gap_mm": 30.00000000000003
+            "tag": "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+            "conservative_gap_mm": 2297.751346425457
           },
           {
-            "tag": "MAN_MARIPOSA_ABRAZADERA",
-            "conservative_gap_mm": 46.00000000000004
+            "tag": "AC_BARANDA_AMPLIACION_FRENTE",
+            "conservative_gap_mm": 2298.5920146907324
           }
         ]
       },
@@ -1933,93 +2259,29 @@
         "candidate_checks": [],
         "nearest_AABB_interfaces": [
           {
-            "tag": "BRL-B--1",
-            "conservative_gap_mm": 424.9999998999998
+            "tag": "AC_BASTIDOR_AMPLIACION_L",
+            "conservative_gap_mm": 2017.3802638239647
           },
           {
-            "tag": "COL-3.2--1",
-            "conservative_gap_mm": 425.00000000000006
+            "tag": "AC_REJILLA_AMPLIACION_L",
+            "conservative_gap_mm": 2322.346281242313
           },
           {
-            "tag": "U02_CARTELA_BRL-B--1_1",
-            "conservative_gap_mm": 452.2620921545381
+            "tag": "AC_BARANDA_AMPLIACION_EXTERIOR",
+            "conservative_gap_mm": 2353.2743677693006
           },
           {
-            "tag": "ANCLA_37",
-            "conservative_gap_mm": 465.75637408413434
+            "tag": "AC_BARANDA_AMPLIACION_FRENTE",
+            "conservative_gap_mm": 2353.2743677693006
           },
           {
-            "tag": "ANCLA_39",
-            "conservative_gap_mm": 465.75637408413434
+            "tag": "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+            "conservative_gap_mm": 2369.2826445994156
           }
         ]
       }
     ],
-    "rigid_checks": [
-      {
-        "test": "Hoist transfer",
-        "part": "CARRO_2t_REF",
-        "obstacle": "MON-01",
-        "collision": false,
-        "continuous_method": "X-invariant conservative rail prism",
-        "gap_mm": 1.0,
-        "intersection_mm3": 0.0
-      },
-      {
-        "test": "Manual gate complete280mm stroke",
-        "part": "MG01_HOJA_CERRADA",
-        "obstacle": "BRL-A--1",
-        "collision": false,
-        "sampled_min_gap_mm": 1368.042849894087,
-        "evaluations": 1,
-        "near_contact_intervals": []
-      },
-      {
-        "test": "Manual gate complete280mm stroke",
-        "part": "MG01_HOJA_CERRADA",
-        "obstacle": "BRL-B--1",
-        "collision": false,
-        "sampled_min_gap_mm": 158.5036319937082,
-        "evaluations": 1,
-        "near_contact_intervals": []
-      },
-      {
-        "test": "Manual gate complete280mm stroke",
-        "part": "MG01_HOJA_CERRADA",
-        "obstacle": "MG07_UHMW_SUP_1",
-        "collision": false,
-        "sampled_min_gap_mm": 0.7000000000000455,
-        "evaluations": 511,
-        "near_contact_intervals": []
-      },
-      {
-        "test": "Manual gate complete280mm stroke",
-        "part": "MG01_HOJA_CERRADA",
-        "obstacle": "MG07_UHMW_SUP_2",
-        "collision": false,
-        "sampled_min_gap_mm": 0.7000000000000455,
-        "evaluations": 511,
-        "near_contact_intervals": []
-      },
-      {
-        "test": "Manual gate complete280mm stroke",
-        "part": "MG01_HOJA_CERRADA",
-        "obstacle": "MG08_UHMW_INF_1",
-        "collision": false,
-        "sampled_min_gap_mm": 0.75,
-        "evaluations": 511,
-        "near_contact_intervals": []
-      },
-      {
-        "test": "Manual gate complete280mm stroke",
-        "part": "MG01_HOJA_CERRADA",
-        "obstacle": "MG08_UHMW_INF_2",
-        "collision": false,
-        "sampled_min_gap_mm": 0.75,
-        "evaluations": 511,
-        "near_contact_intervals": []
-      }
-    ],
+    "rigid_checks": [],
     "moving_interfaces": [
       {
         "part": "CR-END--0.5",
@@ -3142,55 +3404,7 @@
       "gap_mm": 15.0,
       "intersection_mm3": 0.0
     },
-    "intended_contacts": [
-      {
-        "test": "Hoist transfer",
-        "part": "KITO_RUEDA_-0.059_-1",
-        "obstacle": "MON-01",
-        "reason": "Declared rolling contact of existing trolley wheels on rail"
-      },
-      {
-        "test": "Hoist transfer",
-        "part": "KITO_RUEDA_-0.059_1",
-        "obstacle": "MON-01",
-        "reason": "Declared rolling contact of existing trolley wheels on rail"
-      },
-      {
-        "test": "Hoist transfer",
-        "part": "KITO_RUEDA_0.059_-1",
-        "obstacle": "MON-01",
-        "reason": "Declared rolling contact of existing trolley wheels on rail"
-      },
-      {
-        "test": "Hoist transfer",
-        "part": "KITO_RUEDA_0.059_1",
-        "obstacle": "MON-01",
-        "reason": "Declared rolling contact of existing trolley wheels on rail"
-      },
-      {
-        "test": "Manual gate stop",
-        "part": "MG01_HOJA_CERRADA",
-        "obstacle": "MAN_TOPE_GUIA",
-        "method": "Continuous material partition: drawbar within clear slot; grip stays in front; leaf/tab rear envelope touches terminal stop only",
-        "slot_guide_intersection_mm3": 0.0,
-        "remaining_leaf_swept_bbox_m": [
-          0.695,
-          -0.63,
-          1.07525,
-          1.005,
-          0.14,
-          1.0813
-        ],
-        "guide_bbox_m": [
-          0.668,
-          -0.638,
-          1.0565,
-          1.032,
-          -0.63,
-          1.106
-        ]
-      }
-    ],
+    "intended_contacts": [],
     "hanging_spout_minimum_z_on_transfer_m": 3.1179259999999998,
     "spout_clearance_above_support_plane_mm": 107.92599999999996,
     "reception_handling_stop": {
@@ -3214,43 +3428,45 @@
     "uncertain_intervals": [],
     "cloth_mechanics_simulated": false,
     "forklift_solid_envelope_validated": false,
-    "scope": "Nominal CAD functional geometry and declared motion paths; not physical testing or fabric FEA",
-    "passed": true
-  },
-  "flow": {
+    "scope": "Existing verified nominal paths tested against new/changed fixed platform geometry; unchanged obstacles retain the baseline checks",
     "passed": true,
-    "samples": 20002,
-    "sack_targets": [
-      {
-        "target_kg": 25,
-        "completed_sacks": 40,
-        "completed_kg": 1000
-      },
-      {
-        "target_kg": 50,
-        "completed_sacks": 20,
-        "completed_kg": 1000
-      }
+    "incremental": true,
+    "changed_fixed_obstacles": [
+      "AC_BARANDA_AMPLIACION_BOLSA",
+      "AC_BARANDA_AMPLIACION_BOLSA_RODAPIE",
+      "AC_BARANDA_AMPLIACION_ENLACE_RETORNO",
+      "AC_BARANDA_AMPLIACION_ENTRANTE",
+      "AC_BARANDA_AMPLIACION_ENTRANTE_RODAPIE",
+      "AC_BARANDA_AMPLIACION_EXTERIOR",
+      "AC_BARANDA_AMPLIACION_EXTERIOR_RODAPIE",
+      "AC_BARANDA_AMPLIACION_FRENTE",
+      "AC_BARANDA_AMPLIACION_FRENTE_RODAPIE",
+      "AC_BARANDA_AMPLIACION_RETORNO",
+      "AC_BARANDA_AMPLIACION_RETORNO_RODAPIE",
+      "AC_BARANDA_AMPLIACION_TESTERO",
+      "AC_BARANDA_AMPLIACION_TESTERO_RODAPIE",
+      "AC_BASTIDOR_AMPLIACION_L",
+      "AC_GUARDA_TRANSICION_FRENTE",
+      "AC_PASAMANO_TRANSICION_INTERMEDIO",
+      "AC_PASAMANO_TRANSICION_SUPERIOR",
+      "AC_PELDANO_TRANSICION_16",
+      "AC_POSTE_APERTURA_EXTREMO",
+      "AC_REJILLA_AMPLIACION_L",
+      "AC_RODAPIE_EXTREMO",
+      "AC_SOPORTE_PELDANO_TRANSICION",
+      "UNIONES_BR_RAIL_03_CHS48_BOCA31P15_1",
+      "UNIONES_BR_RAIL_07_CHS48_BOCA31P15_1"
     ],
-    "concurrent_flow_samples": 1691,
-    "maximum_hopper_kg": 450,
-    "maximum_mass_error_kg": 2.2737367544323206e-13,
-    "gathering_stop": {
-      "passed": true,
-      "progress": [
-        0.9478,
-        0.959
-      ],
-      "z_m": 1
-    },
-    "state_graph": {
-      "reachable_states": 12,
-      "closes_cycle": true,
-      "master_sha256": "9ccefea7b903ae18976cab7f9e37906107259c91417c1668c95c93622e1e8460"
-    },
-    "geometry_step_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
-    "binding_check": "Mismos estados comprobados; actualizadas únicamente las referencias de geometría y cinta lateral"
+    "baseline_step_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
+    "baseline_motion_report": "output/practicidad_P05_20261103/qa_motion.json",
+    "moving_geometry_and_config_unchanged": true
   },
-  "status": "DISEÑO_FUNCIONAL_NOMINAL_INTEGRADO_Y_VERIFICADO",
-  "scope": "Geometría CAD y movimientos nominales. FIBC, sello y filtro sujetos a datos finales de suministro."
+  "baseline_motion_report": {
+    "file": "revision_cinematica.json of P05_PRACTICO_20261103",
+    "sha256": "175ff90b643f67bcfcb4059add0bb9c77d45a75a5ce3eb5520c873e9b06631a4",
+    "step_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
+    "reuse_scope": "Recorridos y elementos originales conservados; cambios comprobados en verificacion_plataforma.json"
+  },
+  "status": "GEOMETRIA_NOMINAL_Y_SECUENCIA_COMPROBADAS",
+  "scope": "Geometría, encajes y recorridos nominales. No equivale a ensayo físico, validación estructural ni certificación."
 }

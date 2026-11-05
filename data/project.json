@@ -3,13 +3,13 @@
   "company": "SESUVECA DEL PERÚ",
   "author": "Javier Acevedo",
   "summary": "Izaje y traslado por botonera fija; descarga por manga con sello; ensacado manual durante el vaciado.",
-  "revision": "P05_PRACTICO_20261103",
+  "revision": "P05_PLATAFORMA_20261104",
   "nativeSTEPSource": {
     "stepFile": "ESTACION_BIGBAG_P05.step",
-    "stepSha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
+    "stepSha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
     "exporter": "OpenCascade; simplified from current delivered BRep",
     "units": "m",
-    "meshedFrom": "Reopened practical revision STEP; commercial stock substitutions and closed discharge interface",
+    "meshedFrom": "Reopened completed guarded platform STEP; all unchanged baseline solids preserved",
     "animationFramesGlobalM": {
       "static": [
         0.0,
@@ -37,10 +37,10 @@
         0.0
       ]
     },
-    "sourceBaselineSha256": "5a0cb77ff5a85d3c30ab6ebc11248479ae5379707617b571c44c6d5d06401e7b",
+    "sourceBaselineSha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
     "finalCutterPresent": false
   },
-  "components": 811,
+  "components": 832,
   "design": {
     "revision": "P05_PRACTICO_20261103",
     "manual_spout": true,
@@ -60,5 +60,6 @@
     "stair_treads": "15 complete commercial-type 800x250, bearing bars32x5",
     "guard_stock": "SHS60x60x4 posts and SHS40x40x3 rails/door",
     "spreader_stock": "SHS150x150x6"
-  }
+  },
+  "date": "2026-11-04"
 }

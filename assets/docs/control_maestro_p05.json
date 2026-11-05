@@ -1,13 +1,13 @@
 {
   "schema": "sesuveca.p05.operator_sequence.v1",
-  "revision": "P05-PRACTICO-20261103",
-  "date": "2026-11-03",
+  "revision": "P05-PLATAFORMA-20261104",
+  "date": "2026-11-04",
   "status": "SECUENCIA_MANUAL_CON_DESCARGA_Y_ENSACADO_CONCURRENTES",
   "authority": "Fuente única de la secuencia operativa de la revisión simple. Describe maniobras humanas y mandos existentes; no es un programa PLC.",
   "source_geometry_reference": {
     "file": "ESTACION_BIGBAG_P05.step",
-    "final_geometry_sha256": "24bb44f81554c4da0fd7734de05ff345eac1690cd71be78e607fceeca5176f26",
-    "binding_status": "Vinculado al STEP de la revisión práctica mediante SHA-256"
+    "final_geometry_sha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
+    "binding_status": "Vinculado al STEP con plataforma completada mediante SHA-256"
   },
   "operation": {
     "mode": "manual_assisted_by_electric_hoist",

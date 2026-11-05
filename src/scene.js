@@ -1,7 +1,7 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import { loadModel } from './model-data.js?v=p05realismo20261104';
-import { createVisualMaterials } from './visual-materials.js?v=p05realismo20261104';
+import { loadModel } from './model-data.js?v=p05plataforma20261104';
+import { createVisualMaterials } from './visual-materials.js?v=p05plataforma20261104';
 
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -113,7 +113,7 @@ class SceneEngine{
   const tag=part.tag;
   if(/LINER_|GOMA|SELLO|CABLE|TOPE_TS75/.test(tag)||tag.startsWith('TOL_JUNTA'))return this.finishes.rubber;
   if(tag.startsWith('GANCHO_ASA_'))return this.finishes.paint('#b83a32');
-  if(/ARANDELA|TUERCA|PERNO|TORNILLO|ANCLA|BOLT|NUT|WASHER|M8X|GRILLETE|GANCHO|CELDA|CASQUILLO/.test(tag)||tag.startsWith('AC_PELDANO')||tag==='AC_REJILLA_PISO')return this.finishes.galvanized;
+  if(/ARANDELA|TUERCA|PERNO|TORNILLO|ANCLA|BOLT|NUT|WASHER|M8X|GRILLETE|GANCHO|CELDA|CASQUILLO/.test(tag)||tag.startsWith('AC_PELDANO')||tag.startsWith('AC_REJILLA_'))return this.finishes.galvanized;
   if(/^(TOL_CONO_|TOL_CUERPO_|TOL_TAPA_|TOL_RECEPTOR_|TOL_VENTEO_|MS0[12]|MG0[23456]|BALANZA_PLATO|MAN_ABRAZADERA)/.test(tag))return this.finishes.steel;
   if(tag==='TOL_FILTRO_VENTEO_REF')return this.finishes.cloth;
   if(part.group==='Barandas'||part.group==='Cruceta'||tag==='MON-01')return this.finishes.paint('#deb12a');
@@ -131,11 +131,6 @@ class SceneEngine{
   for(let i=1;i<n-1;i++)idx.push(0,i+1,i,(rings-1)*n,(rings-1)*n+i,(rings-1)*n+i+1);
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(idx);g.computeVertexNormals();return g;
  }
- limb(parent,a,b,r,color){
-  const start=new THREE.Vector3(...a),end=new THREE.Vector3(...b),direction=end.clone().sub(start);
-  const mesh=new THREE.Mesh(new THREE.CapsuleGeometry(r,Math.max(.001,direction.length()-2*r),4,10),this.material(color,{roughness:.95,metalness:0}));
-  mesh.position.copy(start.add(end).multiplyScalar(.5));mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),direction.normalize());mesh.castShadow=true;parent.add(mesh);return mesh;
- }
  roundedBox(parent,w,d,h,x,y,z,color,r=.04){
   const radius=Math.min(r,w/2,d/2),shape=new THREE.Shape();
   shape.moveTo(-w/2+radius,-d/2);shape.lineTo(w/2-radius,-d/2);shape.quadraticCurveTo(w/2,-d/2,w/2,-d/2+radius);
@@ -143,24 +138,6 @@ class SceneEngine{
   shape.quadraticCurveTo(-w/2,d/2,-w/2,d/2-radius);shape.lineTo(-w/2,-d/2+radius);shape.quadraticCurveTo(-w/2,-d/2,-w/2+radius,-d/2);
   const geometry=new THREE.ExtrudeGeometry(shape,{depth:h,bevelEnabled:false,curveSegments:5});geometry.translate(0,0,-h/2);
   const mesh=new THREE.Mesh(geometry,this.material(color));mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;
- }
- person(x,y,z){const p=new THREE.Group();this.scene.add(p);p.position.set(x,y,z);
-  const head=new THREE.Mesh(new THREE.SphereGeometry(.101,16,12),this.material('#c49d7d',{roughness:.9,metalness:0}));head.position.z=1.5;head.scale.set(.88,.92,1.08);p.add(head);
-  const helmet=new THREE.Mesh(new THREE.SphereGeometry(.13,20,12,0,Math.PI*2,0,Math.PI/2),this.material('#e1b63e',{roughness:.38,metalness:.02}));helmet.rotation.x=Math.PI/2;helmet.position.z=1.555;helmet.castShadow=true;p.add(helmet);
-  this.cylinder(p,.145,.018,0,0,1.555,'#e1b63e');
-  this.limb(p,[0,0,.90],[0,0,1.41],.148,'#e27c28');
-  for(const dx of [-.09,.09]){
-   this.limb(p,[dx,0,.93],[dx,.015,.48],.068,'#2f4657');this.limb(p,[dx,.015,.48],[dx,-.018,.12],.057,'#2f4657');
-   this.roundedBox(p,.14,.25,.10,dx,-.055,.06,'#334149',.045);
-   this.box(p,.034,.007,.24,dx,-.141,1.23,'#e3e4d3');
-  }
-  this.box(p,.285,.007,.036,0,-.15,1.04,'#e3e4d3');
-  for(const side of [-1,1]){
-   this.limb(p,[side*.17,0,1.33],[side*.25,-.045,1.14],.052,'#db792b');
-   this.limb(p,[side*.25,-.045,1.14],[side*.19,-.25,1.03],.044,'#db792b');
-   this.limb(p,[side*.19,-.25,1.04],[side*.18,-.28,.99],.040,'#a8a897');
-  }
-  return p;
  }
  palletGeometry(parent,w,d,h){
   const top=.028,blockHeight=h-top-.018;
@@ -187,10 +164,7 @@ class SceneEngine{
   this.sackBody=new THREE.Mesh(this.bagGeometry(.46,.46,.5465,.59),this.cloth());this.sackBody.castShadow=true;this.sack.add(this.sackBody);this.sackBase=new Float32Array(this.sackBody.geometry.getAttribute('position').array);
   this.output=new THREE.Group();this.scene.add(this.output);this.output.position.set(-1.25,-1.7,0);this.palletGeometry(this.output,1.15,1,.13);this.outputSacks=[];
   for(let i=0;i<8;i++){const sack=new THREE.Mesh(this.bagGeometry(.46,.38,.32,.88),this.cloth());sack.position.set((i%2-.5)*.49,(Math.floor(i/2)%2-.5)*.42,.13+Math.floor(i/4)*.32);sack.castShadow=true;sack.receiveShadow=true;this.output.add(sack);this.outputSacks.push(sack);}
-  this.buildForklift();this.groundWorker=this.person(C.discharge_x+.55,-1.65,0);this.groundWorker.rotation.z=-.45;
-  this.platformWorker=this.person(C.discharge_x,1.55,C.platform_floor_z_m);this.platformWorker.rotation.z=0;
-  this.receivingWorker=this.person(C.pickup_x,-.90,0);this.receivingWorker.rotation.z=0;
-  this.controlWorker=this.person(0,-1.65,0);this.controlWorker.rotation.z=0;
+  this.buildForklift();
   this.flow=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.016,0),this.material('#303538',{roughness:1,metalness:0}),64);this.scene.add(this.flow);this.dummy=new THREE.Object3D();
   this.coal=this.box(this.scene,1.50,1.50,.015,C.discharge_x,0,2.62,'#303538');
  }
@@ -218,10 +192,6 @@ class SceneEngine{
   for(const line of [this.chain1,this.chain2]){line.position.z=(chainTop+chainBottom)/2;line.scale.y=length;}this.hook.position.z=s.hookM;
   const receptionX=s.phaseIndex===0?s.x:C.pickup_x;this.pallet.position.set(receptionX,0,0);this.pallet.visible=s.phaseIndex<2||s.phaseIndex>=6;
   this.forklift.visible=s.phaseIndex<2;this.forklift.rotation.z=Math.PI/2;this.forklift.position.set(receptionX+.64+(s.phaseIndex===1?2.5*smooth(s.phaseProgress):0),0,0);
-  this.platformWorker.visible=s.upperWorkerAtConnection;
-  this.groundWorker.visible=s.phaseIndex===4||s.phaseIndex===5;
-  this.controlWorker.visible=s.electricMotion;
-  this.receivingWorker.visible=s.phaseIndex===1||s.gatheringSpout;
   this.sack.visible=s.phaseIndex===4||s.phaseIndex===5;this.sack.position.set(lerp(C.discharge_x,-1.25,clamp((s.removal-.55)/.45)),lerp(0,-1.7,clamp(s.removal/.55)),C.scale_deck_z_m??.35);
   const sackPositions=this.sackBody.geometry.getAttribute('position');for(let i=0;i<this.sackBase.length;i+=3){const top=this.sackBase[i+2]/.5465,neckWeight=smooth((top-.75)/.25),factor=lerp(lerp(.65,1,s.sackFill),1,smooth((top-.55)/.45))*(1-.75*s.sackMouthFold*neckWeight);sackPositions.array[i]=this.sackBase[i]*factor;sackPositions.array[i+1]=this.sackBase[i+1]*factor;sackPositions.array[i+2]=this.sackBase[i+2]-.07*s.sackMouthFold*neckWeight;}sackPositions.needsUpdate=true;this.sackBody.geometry.computeVertexNormals();
   this.output.visible=s.finished>0;this.outputSacks.forEach((m,i)=>m.visible=i<Math.min(8,s.finished));

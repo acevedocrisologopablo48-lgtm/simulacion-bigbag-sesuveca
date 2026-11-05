@@ -1,9 +1,9 @@
 {
   "schema": "sesuveca.p05.operator_view.v1",
-  "revision": "P05-PRACTICO-20261103",
-  "date": "2026-11-03",
+  "revision": "P05-PLATAFORMA-20261104",
+  "date": "2026-11-04",
   "derived_from": "control_maestro_p05.json",
-  "master_sha256": "9ccefea7b903ae18976cab7f9e37906107259c91417c1668c95c93622e1e8460",
+  "master_sha256": "1058cad8168421821b45b04be6f265ad05e6973df76fc8b506f4fdb39792fbad",
   "executable_plc_program": false,
   "operator_checks_are_not_sensors": true,
   "scope": "Ensacado manual de 25 y 50 kg sobre balanza fija",
