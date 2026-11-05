@@ -16,6 +16,6 @@ El gancho se limita a 5,945 m. Cada saco se cierra y pliega 70 mm de boca antes 
 
 La selección final del sello y del filtro depende del FIBC y del producto suministrados. El visor muestra la geometría y el movimiento nominal del proyecto.
 
-Estado de entrega al 05/11/2026: el STEP, las mallas del visor y sus comprobaciones geométricas corresponden a la plataforma completada, con 832 componentes. El ensamble nativo de SolidWorks está guardado en el servidor; su verificación completa de 832 componentes sigue pendiente. El ZIP publicado contiene STEP, controles y comprobaciones, sin archivos nativos de SolidWorks.
+Estado de entrega al 05/11/2026: el STEP, las mallas del visor y el ensamble nativo de SolidWorks corresponden a la plataforma completada. El nativo se guardó y reabrió sin errores: 832 hojas resueltas, 24 volúmenes modificados comprobados y cero componentes suprimidos o sin resolver. El ZIP publicado incluye STEP, controles y comprobaciones, con la prueba real del nativo en `native_execution.json` y `VERIFICACION_FINAL_20261105.txt`. Los archivos SLDASM y STEP acompañante se entregan juntos en el archivo local del proyecto `P05_PLATAFORMA_ENTREGA_COMPLETA_20261105.zip`; mantener ambos archivos juntos al extraer. Se conserva el ensamble importado de STEP, sin historial paramétrico reconstruido.
 
 Los PDF de planos conservados en la raíz del proyecto pertenecen a una revisión anterior y no incorporan la nueva plataforma.

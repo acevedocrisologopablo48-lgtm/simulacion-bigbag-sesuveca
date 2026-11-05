@@ -3461,6 +3461,21 @@
     "baseline_motion_report": "output/practicidad_P05_20261103/qa_motion.json",
     "moving_geometry_and_config_unchanged": true
   },
+  "native_verification": {
+    "passed": true,
+    "revision": "P05_PLATAFORMA_20261104",
+    "saved_date_local": "2026-11-05",
+    "leaf_components": 832,
+    "changed_volume_checks": 24,
+    "volume_m3": 2.7707420755305,
+    "unresolved": 0,
+    "suppressed": 0,
+    "reopened": true,
+    "saved_flag": false,
+    "source_step_sha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
+    "verification_scope": "Resolved leaf count, total solid volume,24changed solid volumes, save and reopen",
+    "native_path": "C:\\Users\\Public\\Documents\\PROYECTO IZAJE DE BIGBAG\\REDISENO_P05_20261020\\NATIVOS\\P05_PRACTICO_20261103\\P05_PLATAFORMA_20261104\\ESTACION_BIGBAG_P05_PLATAFORMA_20261104.SLDASM"
+  },
   "baseline_motion_report": {
     "file": "revision_cinematica.json of P05_PRACTICO_20261103",
     "sha256": "175ff90b643f67bcfcb4059add0bb9c77d45a75a5ce3eb5520c873e9b06631a4",
