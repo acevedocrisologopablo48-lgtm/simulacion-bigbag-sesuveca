@@ -7,7 +7,7 @@
   "master_sha256": "1058cad8168421821b45b04be6f265ad05e6973df76fc8b506f4fdb39792fbad",
   "components": 832,
   "download": "assets/docs/P05_PLATAFORMA_20261104.zip",
-  "download_sha256": "efc37e367cdc13fd585d7c52c7ff768f658550e8445097b7fe8cd14950624301",
+  "download_sha256": "ade7294618b4e9b9000f630a4c0c8ce1aa39a6f3e682cc3bd801172ccdda4536",
   "presentation": {
     "revision": "P05_PLATAFORMA_20261104",
     "marker": "p05plataforma20261104",
@@ -18,12 +18,19 @@
     "issued": "2026-11-05",
     "status": "EMISION_GEOMETRICA_PARA_COORDINACION",
     "drawings_pages": 230,
-    "bom_lines": 554,
     "cad_occurrences": 832,
     "part_drawings": 618,
     "dxf_files": 634,
     "not_native_slddrw": true,
     "unassigned_material_grade_occurrences": 97,
-    "public_bundle": "assets/docs/DOCUMENTACION_P05_20261105.zip"
+    "public_bundle": "assets/docs/DOCUMENTACION_P05_20261105.zip",
+    "bom_summary_rows": 32,
+    "equipment_rows": 7,
+    "materials_pdf_pages": 3,
+    "bom_detail_rows": 554,
+    "steel_net_kg": 5270.6938093685985,
+    "steel_purchase_kg": 7604.510216,
+    "documentation_zip_sha256": "f72693538c26a52be5ed49772eae9c7932607354a455c87a656526407c755b06",
+    "documentation_zip_bytes": 13067046
   }
 }
