@@ -1,7 +1,7 @@
 let modelPromise;
 export function loadModel() {
   return modelPromise ??= (async () => {
-    const response = await fetch(new URL('../data/model.json.gz?v=p05plataforma20261104', import.meta.url));
+    const response = await fetch(new URL('../data/model.json.gz?v=p06mejoras20261106', import.meta.url));
     if (!response.ok) throw new Error('No se pudo cargar el modelo 3D.');
     return new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json();
   })();

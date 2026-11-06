@@ -1,18 +1,18 @@
 {
-  "revision": "P05_PLATAFORMA_20261104",
-  "published_date": "2026-11-05",
-  "source_STEP_sha256": "a8133521c5e32f99e54ab9253a6da2a82fcedeccb67797019b717d45e0ec79c9",
-  "uncompressed_model_sha256": "22bb0dd5b8f0ac9a0aac736e507a8086c2d528a876c4945301911a9f219e3837",
-  "gzip_model_sha256": "80d3500e511cbbc26984221167979f0fd08ebc9ba139864193e43e2855f4898f",
+  "revision": "P06_MEJORAS_3D_20261106",
+  "published_date": "2026-11-06",
+  "source_STEP_sha256": "926cf022ecbb24f71c89e089ed2232bf6f17727dfbedc6ba99d6f292a7489b88",
+  "uncompressed_model_sha256": "1406a2df5bdc358ba43591cd37d7250e313ae546e1bcc3b17173a65272854f83",
+  "gzip_model_sha256": "bc996b5c04f92a5228ee05f12cbb2092bea5af21a0e82e09b783fc50406b5ce7",
   "master_sha256": "1058cad8168421821b45b04be6f265ad05e6973df76fc8b506f4fdb39792fbad",
-  "components": 832,
-  "download": "assets/docs/P05_PLATAFORMA_20261104.zip",
-  "download_sha256": "ade7294618b4e9b9000f630a4c0c8ce1aa39a6f3e682cc3bd801172ccdda4536",
+  "components": 765,
+  "download": "assets/docs/P06_MEJORAS_3D_20261106.zip",
+  "download_sha256": "2de65fd3436d2e47199a47a49a74dcf17abc2836de21f7e709ba4ab91c6422fb",
   "presentation": {
-    "revision": "P05_PLATAFORMA_20261104",
-    "marker": "p05plataforma20261104",
-    "date": "2026-11-05",
-    "scope": "Plataforma y paso completados; presentacion sin personas y secuencia conservada"
+    "revision": "P06_MEJORAS_3D_20261106",
+    "marker": "p06mejoras20261106",
+    "date": "2026-11-06",
+    "scope": "Solo 3D: entrada450, paleta central90, barandas circulares y espacio800mm"
   },
   "documentation": {
     "issued": "2026-11-05",
@@ -31,6 +31,8 @@
     "steel_net_kg": 5270.6938093685985,
     "steel_purchase_kg": 7604.510216,
     "documentation_zip_sha256": "f72693538c26a52be5ed49772eae9c7932607354a455c87a656526407c755b06",
-    "documentation_zip_bytes": 13067046
+    "documentation_zip_bytes": 13067046,
+    "applies_to_revision": "P05_PLATAFORMA_20261104",
+    "updated_for_current_3d": false
   }
 }

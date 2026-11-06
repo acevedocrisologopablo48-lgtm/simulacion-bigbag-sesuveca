@@ -1,6 +1,6 @@
-import {BigbagScene,STAGES} from './scene.js?v=p05plataforma20261104';
+import {BigbagScene,STAGES} from './scene.js?v=p06mejoras20261106';
 const $=id=>document.getElementById(id);
-let progress=.44,playing=false,last=0,frame,ready=false;
+let progress=.42,playing=false,last=0,frame,ready=false;
 const duration=95000;
 function paint(state){
  $('timeline').value=Math.round(progress*1000);$('progress').textContent=`${Math.round(progress*100)} %`;
@@ -10,7 +10,7 @@ function paint(state){
 function seek(value){progress=Math.max(0,Math.min(1,Number(value)||0));if(ready)paint(BigbagScene.setProgress(progress));}
 function pause(){playing=false;$('play').textContent='▶ Reproducir recorrido';$('runStatus').textContent='EN PAUSA';$('runStatus').classList.remove('playing');cancelAnimationFrame(frame);last=0;}
 function tick(now){if(!playing)return;if(last)seek(progress+(now-last)/duration);last=now;if(progress>=1){pause();return;}frame=requestAnimationFrame(tick);}
-function play(){if(!ready)return;if(playing){pause();return;}if(progress>=1||progress===.44)seek(0);playing=true;$('play').textContent='Ⅱ Pausar recorrido';$('runStatus').textContent='REPRODUCIENDO';$('runStatus').classList.add('playing');last=0;frame=requestAnimationFrame(tick);}
+function play(){if(!ready)return;if(playing){pause();return;}if(progress>=1||progress===.42)seek(0);playing=true;$('play').textContent='Ⅱ Pausar recorrido';$('runStatus').textContent='REPRODUCIENDO';$('runStatus').classList.add('playing');last=0;frame=requestAnimationFrame(tick);}
 for(const [i,stage]of STAGES.entries()){const li=document.createElement('li'),b=document.createElement('button');b.type='button';b.dataset.stage=i;b.innerHTML=`<span>${String(i+1).padStart(2,'0')}</span>${stage.short}`;b.addEventListener('click',()=>{pause();seek(stage.start+.001);});li.append(b);$('stages').append(li);}
 $('play').addEventListener('click',play);$('reset').addEventListener('click',()=>{pause();seek(0);});$('timeline').addEventListener('input',e=>{pause();seek(e.target.value/1000);});
 $('sackSize').addEventListener('change',e=>{if(ready)paint(BigbagScene.setBagSize(e.target.value));});

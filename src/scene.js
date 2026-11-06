@@ -1,7 +1,7 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import { loadModel } from './model-data.js?v=p05plataforma20261104';
-import { createVisualMaterials } from './visual-materials.js?v=p05plataforma20261104';
+import { loadModel } from './model-data.js?v=p06mejoras20261106';
+import { createVisualMaterials } from './visual-materials.js?v=p06mejoras20261106';
 
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -10,9 +10,9 @@ export const STAGES=[
  {start:0,end:.10,title:'Recepción del BigBag',short:'Recibir',detail:'El montacargas presenta el BigBag de 1 t sobre su pallet en la zona de enganche.'},
  {start:.10,end:.18,title:'Enganche de las cuatro asas',short:'Enganchar',detail:'El operario coloca cada asa en su gancho, cierra los seguros y retira el montacargas.'},
  {start:.18,end:.32,title:'Izaje vertical',short:'Izar',detail:'Desde la botonera fija, el operario eleva la bolsa hasta la altura de traslado.'},
- {start:.32,end:.42,title:'Traslado sobre la tolva',short:'Trasladar',detail:'El carro centra la bolsa sobre la tolva. El operario detiene la traslación antes de bajar.'},
+ {start:.32,end:.42,title:'Traslado sobre la tolva',short:'Trasladar',detail:'El carro centra la bolsa sobre la tolva, con 80 cm libres entre la recepción superior y el fondo del BigBag elevado.'},
  {start:.42,end:.52,title:'Apoyo y conexión de descarga',short:'Apoyar y conectar',detail:'Con la bolsa apoyada y el tecle detenido, la manga se introduce en el sello flexible. Se abre por la cinta lateral y se despeja la plataforma.'},
- {start:.52,end:.84,title:'Descarga y ensacado',short:'Vaciar y ensacar',detail:'El BigBag descarga por la conexión cerrada mientras el operario regula la compuerta, pesa y retira sacos de 25 o 50 kg. La tolva recibe el material entre cambios de saco.'},
+ {start:.52,end:.84,title:'Descarga y ensacado',short:'Vaciar y ensacar',detail:'El BigBag descarga por la conexión cerrada. El operario gira la paleta central hasta 90°, pesa y retira sacos de 25 o 50 kg.'},
  {start:.84,end:.98,title:'Retorno del BigBag vacío',short:'Retornar',detail:'Con la descarga terminada y la compuerta cerrada, se libera la manga al elevar. La bolsa vuelve a recepción para recoger la manga y bajar al pallet.'},
  {start:.98,end:1,title:'Lote terminado',short:'Repetir el ciclo',detail:'La bolsa vacía está retirada, la compuerta cerrada y la balanza libre para recibir el siguiente BigBag.'}
 ];
@@ -69,7 +69,7 @@ window.BigbagScene=BigbagScene;
 
 class SceneEngine{
  constructor(container,data){
-  this.container=container;this.data=data;this.progress=.44;this.sackSize=50;
+  this.container=container;this.data=data;this.progress=.42;this.sackSize=50;
   this.scene=new THREE.Scene();this.scene.background=new THREE.Color('#dce2e5');
   this.scene.fog=new THREE.Fog('#dce2e5',28,65);
   this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});
@@ -100,7 +100,7 @@ class SceneEngine{
     const mesh=new THREE.Mesh(geo,this.cadMaterial(part,color));mesh.name=part.tag;mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);this.nativeVisible++;
    }
   }
-  this.buildContext();this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(container);this.resize();this.setView('iso');this.setProgress(.44);
+  this.buildContext();this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(container);this.resize();this.setView('iso');this.setProgress(.42);
  }
  material(color,options={}){
   if(color==='#b99a6b')return this.finishes.wood;
@@ -187,7 +187,13 @@ class SceneEngine{
   this.spout.scale.y=Math.max(.06,s.spoutDeployed);this.spout.position.z=-.175*Math.max(.06,s.spoutDeployed);this.tie.position.z=-.27*s.spoutDeployed;this.tie.visible=!s.spoutOpen;
   this.channels.cruceta.position.set(s.phaseIndex===0?C.pickup_x:s.x,0,(s.phaseIndex===0?C.pickup_bottom:s.z)+C.cruceta_center_above_bag_m);
   this.channels.hoistMeshes.position.x=s.phaseIndex===0?C.pickup_x:s.x;
-  const travel=C.manual_gate_travel||C.manual_gate_travel_m||[0,-.28,0];this.channels.gate_blade.position.set(...travel.map(v=>v*s.gate));
+  const rotary=C.manual_gate_motion;
+  if(rotary?.kind==='rotation'){
+   this.channels.gate_blade.position.fromArray(rotary.pivot_m);
+   this.channels.gate_blade.quaternion.setFromAxisAngle(new THREE.Vector3(...rotary.axis),rotary.open_angle_rad*s.gate);
+  }else{
+   const travel=C.manual_gate_travel||C.manual_gate_travel_m||[0,-.28,0];this.channels.gate_blade.position.set(...travel.map(v=>v*s.gate));
+  }
   this.chain.position.x=s.phaseIndex===0?C.pickup_x:s.x;const chainTop=C.beam_bottom-.15,chainBottom=s.hookM+.045,length=Math.max(.025,chainTop-chainBottom);
   for(const line of [this.chain1,this.chain2]){line.position.z=(chainTop+chainBottom)/2;line.scale.y=length;}this.hook.position.z=s.hookM;
   const receptionX=s.phaseIndex===0?s.x:C.pickup_x;this.pallet.position.set(receptionX,0,0);this.pallet.visible=s.phaseIndex<2||s.phaseIndex>=6;
@@ -206,6 +212,6 @@ class SceneEngine{
  }
  resize(){const w=this.container.clientWidth,h=this.container.clientHeight;if(!w||!h)return;this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);this.render();}
  render(){this.renderer.render(this.scene,this.camera);}
- getState(){return {...this.state,nativeComponents:this.nativeCount,visibleNativeComponents:this.nativeVisible,sourceStepSha256:this.data.nativeSTEPSource?.stepSha256,webgl:true};}
+ getState(){return {...this.state,gateRotationRad:this.channels.gate_blade.rotation.x,gateMotionType:this.data.config.manual_gate_motion?.kind,nativeComponents:this.nativeCount,visibleNativeComponents:this.nativeVisible,sourceStepSha256:this.data.nativeSTEPSource?.stepSha256,webgl:true};}
  dispose(){this.observer.disconnect();this.controls.dispose();const geometries=new Set(),materials=new Set();this.scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());this.finishes.dispose();this.renderer.dispose();this.renderer.domElement.remove();}
 }
