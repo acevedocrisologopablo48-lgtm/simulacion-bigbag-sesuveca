@@ -2,37 +2,36 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123147">
-<meta name="description" content="Estación simple de bigbags SESUVECA: monorriel, tecle, tolva y ensacado manual de 25 o 50 kg.">
-<title>SESUVECA · Estación P06 de BigBags</title>
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="src/style.css?v=p06mejoras20261106">
+<meta name="description" content="Estación de descarga de BigBags de 1 t y ensacado de 25 y 50 kg. SESUVECA DEL PERÚ.">
+<title>SESUVECA · Estación de descarga de BigBags</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="src/style.css?v=ensambles">
 </head>
 <body>
 <a class="skip" href="#scene">Ir al modelo 3D</a>
-<header><a class="brand" href="./" aria-label="SESUVECA"><img src="assets/logo-sesuveca.svg" alt="SESUVECA" width="159" height="58"></a><span class="header-project">INGENIERÍA MECÁNICA <b>Estación de bigbags</b></span><span class="revision">P06 · BIGBAG 1 t</span></header>
+<header><a class="brand" href="./" aria-label="SESUVECA DEL PERÚ"><img src="assets/logo-sesuveca.png" alt="SESUVECA DEL PERÚ" width="159" height="40"></a><span class="header-project"><b>Estación de descarga de BigBags</b></span><span class="capacity">BIGBAG 1 t</span></header>
 <main>
-<div class="heading"><div><p class="eyebrow">DEL BIGBAG AL SACO</p><h1>Estación de descarga de BigBags</h1><p class="subtitle">BigBag de 1 t · Monorriel eléctrico · Ensacado de 25 y 50 kg</p></div><a class="download" href="assets/docs/P06_MEJORAS_3D_20261106.zip?v=p06mejoras20261106&amp;release=mejoras3d20261106" download>Descargar modelo 3D <span aria-hidden="true">↗</span></a></div>
+<div class="heading"><div><h1>Estación de descarga de BigBags</h1><p class="subtitle">BigBag de 1 t · Ensacado de 25 y 50 kg</p></div><a class="download" href="assets/docs/Modelo_estacion_bigbag.zip" download>Modelo 3D <span aria-hidden="true">↗</span></a></div>
 <section class="workspace" aria-label="Modelo y secuencia de operación">
 <div class="viewer-column">
 <div class="toolbar"><div class="views" role="group" aria-label="Vistas"><button class="active" data-view="iso" aria-pressed="true">General</button><button data-view="front" aria-pressed="false">Frontal</button><button data-view="back" aria-pressed="false">Plataforma</button><button data-view="bagging" aria-pressed="false">Ensacado</button></div><button id="fullscreen" class="icon" aria-label="Pantalla completa">⛶</button></div>
-<div class="viewer" id="viewer"><div class="view-label"><span id="viewName">CONJUNTO GENERAL</span><span>SOMBREADO SÓLIDO</span></div><div id="scene" tabindex="0" aria-label="Modelo tridimensional. Arrastra para girar, rueda para acercar y botón derecho para desplazar."></div><div id="loading"><i class="spinner"></i><strong>Cargando el modelo 3D</strong><span>Preparando la geometría de la estación</span></div><div class="view-footer"><span>Arrastra para girar · Rueda para acercar</span><button id="fit">↺ Encuadrar</button></div></div>
-<div class="facts"><div><span>BIGBAG</span><strong>1 t</strong></div><div><span>APERTURA</span><strong>Boca inferior</strong></div><div><span>DOSIFICACIÓN</span><strong>Manual</strong></div><div><span>PESAJE</span><strong>Balanza fija</strong></div></div>
+<div class="viewer" id="viewer"><div class="view-label"><span id="viewName">CONJUNTO GENERAL</span></div><div id="scene" tabindex="0" aria-label="Modelo tridimensional. Arrastra para girar, rueda para acercar y botón derecho para desplazar."></div><div id="loading"><i class="spinner"></i><strong>Cargando modelo 3D</strong><span></span></div><div class="view-footer"><span>Arrastra para girar · Rueda para acercar</span><button id="fit">↺ Encuadrar</button></div></div>
+<div class="facts"><div><span>BIGBAG</span><strong>1 t</strong></div><div><span>DESCARGA</span><strong>Por manga</strong></div><div><span>DOSIFICACIÓN</span><strong>Manual</strong></div><div><span>PESAJE</span><strong>Balanza fija</strong></div></div>
 </div>
 <aside class="controls">
-<div class="panel-header"><span>ASÍ FUNCIONA</span><span class="status" id="runStatus">EN PAUSA</span></div>
-<div class="phase"><span id="phaseNumber">01</span><h2 id="phaseTitle">Recepción del bigbag</h2><p id="phaseDetail">El montacargas entrega el bigbag en la zona de enganche.</p></div>
-<div class="playback"><button id="play" class="primary" disabled>▶ Reproducir recorrido</button><button id="reset" class="icon" aria-label="Volver al inicio">↺</button></div>
-<div class="progress-label"><label for="timeline">Recorrido del proceso</label><output id="progress" for="timeline">0 %</output></div>
+<div class="panel-header"><span>OPERACIÓN</span><span class="status" id="runStatus">EN PAUSA</span></div>
+<div class="phase"><span id="phaseNumber">01</span><h2 id="phaseTitle">Recepción del BigBag</h2><p id="phaseDetail">Colocar el BigBag en la zona de enganche.</p></div>
+<div class="playback"><button id="play" class="primary" disabled>▶ Reproducir</button><button id="reset" class="icon" aria-label="Volver al inicio">↺</button></div>
+<div class="progress-label"><label for="timeline">Secuencia</label><output id="progress" for="timeline">0 %</output></div>
 <input id="timeline" type="range" min="0" max="1000" value="0" step="1" aria-label="Avance del proceso">
-<div class="settings"><label for="sackSize">Saco de producto</label><select id="sackSize"><option value="50">50 kg</option><option value="25">25 kg</option></select></div>
+<div class="settings"><label for="sackSize">Saco</label><select id="sackSize"><option value="50">50 kg</option><option value="25">25 kg</option></select></div>
 <ol id="stages" class="stages" aria-label="Etapas del proceso"></ol>
-<p class="manual-note">La botonera fija acciona el izaje y el traslado. La apertura del BigBag y el ensacado se realizan manualmente, con el equipo de izaje detenido.</p>
+<p class="manual-note">Conectar y desatar con la bolsa apoyada y el tecle detenido.</p>
 </aside>
 </section>
-<div class="scope"><span>Vista del proceso con el modelo CAD.</span><span>Bolsa y material representados para explicar la operación.</span><a href="data/control_maestro_p05.json?v=p06mejoras20261106" target="_blank" rel="noopener">Secuencia de operación ↗</a></div>
-<nav class="scope documentation" aria-label="Documentación de la revisión anterior P05"><a href="assets/docs/Planos_P05_PLATAFORMA_20261105.pdf?v=doc20261105" target="_blank" rel="noopener">Planos P05 ↗</a><a href="assets/docs/Lista_materiales_P05_20261105.xlsx?v=compra20261105" download>Materiales P05 Excel ↗</a><a href="assets/docs/Lista_materiales_P05_20261105.pdf?v=compra20261105" target="_blank" rel="noopener">Materiales P05 PDF ↗</a><a href="assets/docs/DOCUMENTACION_P05_20261105.zip?v=compra20261105" download>Documentación y DXF ↗</a></nav>
+<nav class="scope documentation" aria-label="Documentación"><a href="assets/docs/Planos_estacion_bigbag.pdf" target="_blank" rel="noopener">Planos PDF ↗</a><a href="assets/docs/Lista_materiales.pdf" target="_blank" rel="noopener">Materiales PDF ↗</a><a href="assets/docs/Lista_materiales.xlsx" download>Materiales Excel ↗</a><a href="assets/docs/Documentacion_estacion_bigbag.zip" download>Archivos de taller ↗</a></nav>
 </main>
 <footer><span>SESUVECA DEL PERÚ</span><span>Izaje · Descarga · Ensacado</span></footer>
 <noscript>Activa JavaScript para visualizar el modelo.</noscript>
-<script type="module" src="src/app.js?v=p06mejoras20261106"></script>
+<script type="module" src="src/app.js?v=ensambles"></script>
 </body>
 </html>

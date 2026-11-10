@@ -1,4 +1,4 @@
-import {BigbagScene,STAGES} from './scene.js?v=p06mejoras20261106';
+import {BigbagScene,STAGES} from './scene.js?v=ensambles';
 const $=id=>document.getElementById(id);
 let progress=.42,playing=false,last=0,frame,ready=false;
 const duration=95000;
@@ -8,9 +8,9 @@ function paint(state){
  document.querySelectorAll('[data-stage]').forEach(b=>{const active=Number(b.dataset.stage)===state.phaseIndex;b.classList.toggle('active',active);b.setAttribute('aria-current',active?'step':'false');});
 }
 function seek(value){progress=Math.max(0,Math.min(1,Number(value)||0));if(ready)paint(BigbagScene.setProgress(progress));}
-function pause(){playing=false;$('play').textContent='▶ Reproducir recorrido';$('runStatus').textContent='EN PAUSA';$('runStatus').classList.remove('playing');cancelAnimationFrame(frame);last=0;}
+function pause(){playing=false;$('play').textContent='▶ Reproducir';$('runStatus').textContent='EN PAUSA';$('runStatus').classList.remove('playing');cancelAnimationFrame(frame);last=0;}
 function tick(now){if(!playing)return;if(last)seek(progress+(now-last)/duration);last=now;if(progress>=1){pause();return;}frame=requestAnimationFrame(tick);}
-function play(){if(!ready)return;if(playing){pause();return;}if(progress>=1||progress===.42)seek(0);playing=true;$('play').textContent='Ⅱ Pausar recorrido';$('runStatus').textContent='REPRODUCIENDO';$('runStatus').classList.add('playing');last=0;frame=requestAnimationFrame(tick);}
+function play(){if(!ready)return;if(playing){pause();return;}if(progress>=1||progress===.42)seek(0);playing=true;$('play').textContent='Ⅱ Pausar';$('runStatus').textContent='REPRODUCIENDO';$('runStatus').classList.add('playing');last=0;frame=requestAnimationFrame(tick);}
 for(const [i,stage]of STAGES.entries()){const li=document.createElement('li'),b=document.createElement('button');b.type='button';b.dataset.stage=i;b.innerHTML=`<span>${String(i+1).padStart(2,'0')}</span>${stage.short}`;b.addEventListener('click',()=>{pause();seek(stage.start+.001);});li.append(b);$('stages').append(li);}
 $('play').addEventListener('click',play);$('reset').addEventListener('click',()=>{pause();seek(0);});$('timeline').addEventListener('input',e=>{pause();seek(e.target.value/1000);});
 $('sackSize').addEventListener('change',e=>{if(ready)paint(BigbagScene.setBagSize(e.target.value));});
@@ -21,5 +21,4 @@ $('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenEle
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
 try{
  await BigbagScene.init($('scene'));ready=true;seek(progress);$('loading').hidden=true;$('play').disabled=false;
- window.P05SimpleQA={ready:true,getState:()=>BigbagScene.getState(),seek,stages:STAGES.length};
-}catch(error){document.body.classList.add('error');$('loading').querySelector('strong').textContent='No se pudo abrir el modelo';$('loading').querySelector('span').textContent='Recarga la página para volver a intentarlo.';console.error(error);window.P05SimpleQA={ready:false,error:String(error)};}
+}catch(error){document.body.classList.add('error');$('loading').querySelector('strong').textContent='No se pudo abrir el modelo';$('loading').querySelector('span').textContent='Recarga la página para volver a intentarlo.';console.error(error);}

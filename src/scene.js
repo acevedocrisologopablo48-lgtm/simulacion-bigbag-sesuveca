@@ -1,20 +1,20 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import { loadModel } from './model-data.js?v=p06mejoras20261106';
-import { createVisualMaterials } from './visual-materials.js?v=p06mejoras20261106';
+import { loadModel } from './model-data.js?v=ensambles';
+import { createVisualMaterials } from './visual-materials.js?v=ensambles';
 
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const lerp=(a,b,t)=>a+(b-a)*t;
 const smooth=t=>{t=clamp(t);return t*t*(3-2*t);};
 export const STAGES=[
- {start:0,end:.10,title:'Recepción del BigBag',short:'Recibir',detail:'El montacargas presenta el BigBag de 1 t sobre su pallet en la zona de enganche.'},
- {start:.10,end:.18,title:'Enganche de las cuatro asas',short:'Enganchar',detail:'El operario coloca cada asa en su gancho, cierra los seguros y retira el montacargas.'},
- {start:.18,end:.32,title:'Izaje vertical',short:'Izar',detail:'Desde la botonera fija, el operario eleva la bolsa hasta la altura de traslado.'},
- {start:.32,end:.42,title:'Traslado sobre la tolva',short:'Trasladar',detail:'El carro centra la bolsa sobre la tolva, con 80 cm libres entre la recepción superior y el fondo del BigBag elevado.'},
- {start:.42,end:.52,title:'Apoyo y conexión de descarga',short:'Apoyar y conectar',detail:'Con la bolsa apoyada y el tecle detenido, la manga se introduce en el sello flexible. Se abre por la cinta lateral y se despeja la plataforma.'},
- {start:.52,end:.84,title:'Descarga y ensacado',short:'Vaciar y ensacar',detail:'El BigBag descarga por la conexión cerrada. El operario gira la paleta central hasta 90°, pesa y retira sacos de 25 o 50 kg.'},
- {start:.84,end:.98,title:'Retorno del BigBag vacío',short:'Retornar',detail:'Con la descarga terminada y la compuerta cerrada, se libera la manga al elevar. La bolsa vuelve a recepción para recoger la manga y bajar al pallet.'},
- {start:.98,end:1,title:'Lote terminado',short:'Repetir el ciclo',detail:'La bolsa vacía está retirada, la compuerta cerrada y la balanza libre para recibir el siguiente BigBag.'}
+ {start:0,end:.10,title:'Recepción del BigBag',short:'Recibir',detail:'Colocar el BigBag en la zona de enganche.'},
+ {start:.10,end:.18,title:'Enganche de las cuatro asas',short:'Enganchar',detail:'Colgar las cuatro asas, cerrar los seguros y retirar el montacargas.'},
+ {start:.18,end:.32,title:'Izaje vertical',short:'Izar',detail:'Elevar el BigBag con la botonera fija.'},
+ {start:.32,end:.42,title:'Traslado sobre la tolva',short:'Trasladar',detail:'Centrar el BigBag sobre la tolva, con 800 mm libres sobre la boca.'},
+ {start:.42,end:.52,title:'Apoyo y conexión de descarga',short:'Apoyar y conectar',detail:'Apoyar la bolsa, detener el tecle y conectar la manga.'},
+ {start:.52,end:.84,title:'Descarga y ensacado',short:'Vaciar y ensacar',detail:'Abrir la manga y dosificar con la paleta. Pesar y retirar cada saco.'},
+ {start:.84,end:.98,title:'Retorno del BigBag vacío',short:'Retornar',detail:'Cerrar la paleta, retirar la manga y devolver la bolsa vacía a recepción.'},
+ {start:.98,end:1,title:'Lote terminado',short:'Repetir el ciclo',detail:'Retirar el BigBag vacío y preparar el siguiente lote.'}
 ];
 
 export function processState(progress,config,sackSize=50){
@@ -47,7 +47,7 @@ export function processState(progress,config,sackSize=50){
   else{x=x0;z=lerp(C.empty_bag_gathering_bottom_z_m??1,z0,smooth((q-.88)/.12));}
  }
  const gatheringSpout=index===6&&q>=.75&&q<.88;
- const displayedStage=gatheringSpout?{...stage,title:'Recogida de la manga en recepción',detail:'Con la bolsa vacía detenida, el operario recoge y amarra la manga desde un lateral a nivel de suelo. Después se retira para continuar el descenso.'}:stage;
+ const displayedStage=gatheringSpout?{...stage,title:'Recogida de la manga en recepción',detail:'Con la bolsa detenida, recoger la manga desde un lateral antes de bajar al pallet.'}:stage;
  const spoutDeployed=index===6?1-smooth((q-.77)/.08):index===5?1:index===4?smooth((q-.45)/.25):0;
  const spoutSealed=(index===4&&q>=.70)||index===5||(index===6&&q<=.10);
  const spoutOpen=(index===4&&q>=.88)||index===5||(index===6&&q<.84);
@@ -76,7 +76,7 @@ class SceneEngine{
   this.renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.8));
   this.renderer.outputColorSpace=THREE.SRGBColorSpace;this.renderer.toneMapping=THREE.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.05;
   this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  this.renderer.domElement.setAttribute('aria-label','Modelo CAD sombreado de la estación de bigbags');container.appendChild(this.renderer.domElement);
+  this.renderer.domElement.setAttribute('aria-label','Estación de descarga de BigBags');container.appendChild(this.renderer.domElement);
   this.finishes=createVisualMaterials(THREE,this.renderer);
   this.scene.environment=this.finishes.environment;
   this.contextMaterials=new Map();
@@ -89,7 +89,7 @@ class SceneEngine{
   const ground=new THREE.Mesh(new THREE.PlaneGeometry(50,50),this.finishes.concrete);ground.position.z=-.001;ground.receiveShadow=true;this.scene.add(ground);
   this.channels={};this.nativeCount=0;this.nativeVisible=0;
   const refs=/^(?:BIGBAG_1t_REF|CADENA_REF|ASA_REF_\d+|SACO_50kg_REF|FIBC_MANGA_DESCARGA_D350|FIBC_CINTA_APERTURA_LATERAL|pallet_referencia|balanza_envolvente)$/;
-  const origins=data.nativeSTEPSource?.animationFramesGlobalM||{};
+  const origins=data.animationOrigins||{};
   for(const channel of ['static','cruceta','gate_blade','hoistMeshes','lockPinMeshes']){
    const group=new THREE.Group();this.channels[channel]=group;this.scene.add(group);group.position.fromArray(origins[channel]||[0,0,0]);
    for(const part of data[channel]||[]){
@@ -183,7 +183,7 @@ class SceneEngine{
  }
  setProgress(p){
   this.progress=clamp(Number(p)||0);const C=this.data.config,s=processState(this.progress,C,this.sackSize);this.state=s;
-  this.bag.visible=s.phaseIndex!==7;this.bag.position.set(s.x,0,s.z); // Generic FIBC envelope is held constant; no cloth analysis is implied.
+  this.bag.visible=s.phaseIndex!==7;this.bag.position.set(s.x,0,s.z);
   this.spout.scale.y=Math.max(.06,s.spoutDeployed);this.spout.position.z=-.175*Math.max(.06,s.spoutDeployed);this.tie.position.z=-.27*s.spoutDeployed;this.tie.visible=!s.spoutOpen;
   this.channels.cruceta.position.set(s.phaseIndex===0?C.pickup_x:s.x,0,(s.phaseIndex===0?C.pickup_bottom:s.z)+C.cruceta_center_above_bag_m);
   this.channels.hoistMeshes.position.x=s.phaseIndex===0?C.pickup_x:s.x;
@@ -212,6 +212,6 @@ class SceneEngine{
  }
  resize(){const w=this.container.clientWidth,h=this.container.clientHeight;if(!w||!h)return;this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);this.render();}
  render(){this.renderer.render(this.scene,this.camera);}
- getState(){return {...this.state,gateRotationRad:this.channels.gate_blade.rotation.x,gateMotionType:this.data.config.manual_gate_motion?.kind,nativeComponents:this.nativeCount,visibleNativeComponents:this.nativeVisible,sourceStepSha256:this.data.nativeSTEPSource?.stepSha256,webgl:true};}
+ getState(){return {...this.state,gateRotationRad:this.channels.gate_blade.rotation.x,gateMotionType:this.data.config.manual_gate_motion?.kind,webgl:true};}
  dispose(){this.observer.disconnect();this.controls.dispose();const geometries=new Set(),materials=new Set();this.scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());this.finishes.dispose();this.renderer.dispose();this.renderer.domElement.remove();}
 }
