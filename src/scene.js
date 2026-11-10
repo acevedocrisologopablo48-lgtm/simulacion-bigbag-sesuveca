@@ -1,7 +1,7 @@
 import * as THREE from '../assets/vendor/three.module.min.js';
 import { OrbitControls } from '../assets/vendor/OrbitControls.js';
-import { loadModel } from './model-data.js?v=ensambles';
-import { createVisualMaterials } from './visual-materials.js?v=ensambles';
+import { loadModel } from './model-data.js?v=detalle';
+import { createVisualMaterials } from './visual-materials.js?v=detalle';
 
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -62,6 +62,7 @@ let active;
 export const BigbagScene={
  async init(container){active?.dispose();active=new SceneEngine(container,await loadModel());return this;},
  setProgress(p){return active?.setProgress(p);},setView(name){active?.setView(name);},
+ setEdges(visible){active?.setEdges(visible);},
  resetCamera(){active?.setView('iso');},setBagSize(v){active.sackSize=Number(v)===25?25:50;return active.setProgress(active.progress);},
  getState(){return active?.getState();},dispose(){active?.dispose();active=null;}
 };
@@ -73,8 +74,7 @@ class SceneEngine{
   this.scene=new THREE.Scene();this.scene.background=new THREE.Color('#dce2e5');
   this.scene.fog=new THREE.Fog('#dce2e5',28,65);
   this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});
-  this.renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.8));
-  this.renderer.outputColorSpace=THREE.SRGBColorSpace;this.renderer.toneMapping=THREE.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.05;
+  this.renderer.outputColorSpace=THREE.SRGBColorSpace;this.renderer.toneMapping=THREE.NeutralToneMapping;this.renderer.toneMappingExposure=.95;
   this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   this.renderer.domElement.setAttribute('aria-label','Estación de descarga de BigBags');container.appendChild(this.renderer.domElement);
   this.finishes=createVisualMaterials(THREE,this.renderer);
@@ -83,22 +83,27 @@ class SceneEngine{
   this.camera=new THREE.PerspectiveCamera(35,1,.025,100);this.camera.up.set(0,0,1);
   this.controls=new OrbitControls(this.camera,this.renderer.domElement);this.controls.minDistance=.6;this.controls.maxDistance=35;this.controls.maxPolarAngle=Math.PI*.495;
   this.controls.addEventListener('change',()=>this.render());
-  const hemi=new THREE.HemisphereLight('#f5f7fa','#687780',1.35);hemi.up.set(0,0,1);hemi.position.set(0,0,15);this.scene.add(hemi);
-  const light=new THREE.DirectionalLight('#fff5e6',3.2);light.position.set(-4,-6,12);light.target.position.set(1.2,.7,2.5);light.castShadow=true;light.shadow.mapSize.set(2048,2048);light.shadow.camera.left=-7;light.shadow.camera.right=7;light.shadow.camera.top=8;light.shadow.camera.bottom=-7;light.shadow.camera.near=.5;light.shadow.camera.far=30;light.shadow.normalBias=.018;light.shadow.bias=-.00003;light.shadow.radius=3;this.scene.add(light,light.target);
-  const fill=new THREE.DirectionalLight('#dceaff',1.2);fill.position.set(7,5,8);this.scene.add(fill);
+  this.controls.addEventListener('start',()=>{this.currentView=null;});
+  const hemi=new THREE.HemisphereLight('#f5f7fa','#687780',1.1);hemi.up.set(0,0,1);hemi.position.set(0,0,15);this.scene.add(hemi);
+  const light=new THREE.DirectionalLight('#fffaf2',2.6);light.position.set(-4,-6,12);light.target.position.set(1.2,.7,2.5);light.castShadow=true;light.shadow.mapSize.set(2048,2048);light.shadow.camera.left=-5;light.shadow.camera.right=7;light.shadow.camera.top=7;light.shadow.camera.bottom=-5;light.shadow.camera.near=.5;light.shadow.camera.far=30;light.shadow.normalBias=.006;light.shadow.bias=-.00015;light.shadow.radius=2;this.scene.add(light,light.target);
+  const fill=new THREE.DirectionalLight('#e5eeff',.9);fill.position.set(7,5,8);this.scene.add(fill);
   const ground=new THREE.Mesh(new THREE.PlaneGeometry(50,50),this.finishes.concrete);ground.position.z=-.001;ground.receiveShadow=true;this.scene.add(ground);
-  this.channels={};this.nativeCount=0;this.nativeVisible=0;
+  this.channels={};this.cadEdges=[];this.nativeCount=0;this.nativeVisible=0;
+  this.edgeMaterial=new THREE.LineBasicMaterial({color:'#172a36',transparent:true,opacity:.3,depthWrite:false,toneMapped:false});
   const refs=/^(?:BIGBAG_1t_REF|CADENA_REF|ASA_REF_\d+|SACO_50kg_REF|FIBC_MANGA_DESCARGA_D350|FIBC_CINTA_APERTURA_LATERAL|pallet_referencia|balanza_envolvente)$/;
   const origins=data.animationOrigins||{};
   for(const channel of ['static','cruceta','gate_blade','hoistMeshes','lockPinMeshes']){
-   const group=new THREE.Group();this.channels[channel]=group;this.scene.add(group);group.position.fromArray(origins[channel]||[0,0,0]);
+   const group=new THREE.Group(),edgePositions=[];this.channels[channel]=group;this.scene.add(group);group.position.fromArray(origins[channel]||[0,0,0]);
    for(const part of data[channel]||[]){
     this.nativeCount++;if(refs.test(part.tag)||part.visualContextOnly)continue;
     const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(part.v.flat(),3));
-    const idx=[];for(const face of part.f){for(let i=1;i<face.length-1;i++)idx.push(face[0],face[i],face[i+1]);}geo.setIndex(idx);geo.computeVertexNormals();
+    const idx=[];for(const face of part.f){for(let i=1;i<face.length-1;i++)idx.push(face[0],face[i],face[i+1]);}geo.setIndex(idx);
+    if(part.n?.length===part.v.length)geo.setAttribute('normal',new THREE.Float32BufferAttribute(part.n.flat(),3));else geo.computeVertexNormals();
     const color=Array.isArray(part.c)?new THREE.Color(...part.c.map(c=>c/255)).convertSRGBToLinear():part.c||'#42667b';
     const mesh=new THREE.Mesh(geo,this.cadMaterial(part,color));mesh.name=part.tag;mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);this.nativeVisible++;
+    for(const line of part.edges||[])for(let i=1;i<line.length;i++)edgePositions.push(...line[i-1],...line[i]);
    }
+   if(edgePositions.length){const edges=new THREE.BufferGeometry();edges.setAttribute('position',new THREE.Float32BufferAttribute(edgePositions,3));const lines=new THREE.LineSegments(edges,this.edgeMaterial);lines.name='Aristas';group.add(lines);this.cadEdges.push(lines);}
   }
   this.buildContext();this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(container);this.resize();this.setView('iso');this.setProgress(.42);
  }
@@ -112,12 +117,10 @@ class SceneEngine{
  cadMaterial(part,color){
   const tag=part.tag;
   if(/LINER_|GOMA|SELLO|CABLE|TOPE_TS75/.test(tag)||tag.startsWith('TOL_JUNTA'))return this.finishes.rubber;
-  if(tag.startsWith('GANCHO_ASA_'))return this.finishes.paint('#b83a32');
-  if(/ARANDELA|TUERCA|PERNO|TORNILLO|ANCLA|BOLT|NUT|WASHER|M8X|GRILLETE|GANCHO|CELDA|CASQUILLO/.test(tag)||tag.startsWith('AC_PELDANO')||tag.startsWith('AC_REJILLA_'))return this.finishes.galvanized;
-  if(/^(TOL_CONO_|TOL_CUERPO_|TOL_TAPA_|TOL_RECEPTOR_|TOL_VENTEO_|MS0[12]|MG0[23456]|BALANZA_PLATO|MAN_ABRAZADERA)/.test(tag))return this.finishes.steel;
+  if(tag.startsWith('GANCHO_ASA_'))return this.finishes.paint(color);
+  if(/ARANDELA|TUERCA|PERNO|TORNILLO|ANCLA|BOLT|NUT|WASHER|M8X|GRILLETE|GANCHO|CELDA|CASQUILLO/.test(tag)||tag.startsWith('AC_PELDANO')||tag.startsWith('AC_REJILLA_'))return this.finishes.metal(color,true);
+  if(/^(TOL_CONO_|TOL_CUERPO_|TOL_TAPA_|TOL_RECEPTOR_|TOL_VENTEO_|MS0[12]|MG0[23456]|BALANZA_PLATO|MAN_ABRAZADERA)/.test(tag))return this.finishes.metal(color);
   if(tag==='TOL_FILTRO_VENTEO_REF')return this.finishes.cloth;
-  if(part.group==='Barandas'||part.group==='Cruceta'||tag==='MON-01')return this.finishes.paint('#deb12a');
-  if(['Porticos','Cimentacion','Plataforma','Escalera'].includes(part.group))return this.finishes.paint('#385c75');
   return this.finishes.paint(color);
  }
  box(parent,w,d,h,x,y,z,color){const m=new THREE.Mesh(new THREE.BoxGeometry(w,d,h),this.material(color));m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
@@ -209,9 +212,23 @@ class SceneEngine{
  setView(name){
   const C=this.data.config;const views={iso:[[10,-13,9],[1.3,.6,3.1]],front:[[1.6,-17,4.6],[1.6,.5,3.25]],back:[[8,13,8],[1.5,.8,2.9]],bagging:[[-1.4,-4.5,2.45],[C.discharge_x,-.10,1.0]]};
   const [eye,target]=views[name]||views.iso;this.camera.position.set(...eye);this.controls.target.set(...target);this.controls.update();this.render();
+  if(name!=='bagging'){
+   const bounds=new THREE.Box3().setFromObject(this.channels.static),centre=this.controls.target;
+   const direction=new THREE.Vector3().subVectors(this.camera.position,centre).normalize();
+   const right=new THREE.Vector3().crossVectors(this.camera.up,direction).normalize(),up=new THREE.Vector3().crossVectors(direction,right).normalize();
+   const halfV=Math.tan(THREE.MathUtils.degToRad(this.camera.fov/2)),halfH=halfV*this.camera.aspect;
+   let distance=this.camera.position.distanceTo(centre);
+   for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){
+    const corner=new THREE.Vector3(x,y,z).sub(centre),depth=corner.dot(direction);
+    distance=Math.max(distance,depth+1.08*Math.abs(corner.dot(right))/halfH,depth+1.08*Math.abs(corner.dot(up))/halfV);
+   }
+   this.camera.position.copy(centre).addScaledVector(direction,distance);this.controls.update();
+  }
+  this.currentView=name;this.render();
  }
- resize(){const w=this.container.clientWidth,h=this.container.clientHeight;if(!w||!h)return;this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);this.render();}
+ setEdges(visible){for(const lines of this.cadEdges)lines.visible=Boolean(visible);this.render();}
+ resize(){const w=this.container.clientWidth,h=this.container.clientHeight;if(!w||!h)return;this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setPixelRatio(Math.min(2.5,Math.max(1.5,devicePixelRatio||1),Math.sqrt(6000000/(w*h))));this.renderer.setSize(w,h,false);if(this.currentView)this.setView(this.currentView);else this.render();}
  render(){this.renderer.render(this.scene,this.camera);}
  getState(){return {...this.state,gateRotationRad:this.channels.gate_blade.rotation.x,gateMotionType:this.data.config.manual_gate_motion?.kind,webgl:true};}
- dispose(){this.observer.disconnect();this.controls.dispose();const geometries=new Set(),materials=new Set();this.scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());this.finishes.dispose();this.renderer.dispose();this.renderer.domElement.remove();}
+ dispose(){this.observer.disconnect();this.controls.dispose();const geometries=new Set(),materials=new Set([this.edgeMaterial]);this.scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());this.finishes.dispose();this.renderer.dispose();this.renderer.domElement.remove();}
 }

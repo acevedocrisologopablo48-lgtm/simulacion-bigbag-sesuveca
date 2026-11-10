@@ -3,6 +3,7 @@ export function createVisualMaterials(THREE, renderer) {
   const textures = [];
   const materials = new Set();
   const painted = new Map();
+  const metals = new Map();
   let seed = 20361104;
 
   function random() {
@@ -120,7 +121,7 @@ export function createVisualMaterials(THREE, renderer) {
   panelMaterial.dispose();
 
   function standard(options) {
-    const material = new THREE.MeshStandardMaterial({ envMap: environment, side: THREE.DoubleSide, ...options });
+    const material = new THREE.MeshStandardMaterial({ envMap: environment, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1, ...options });
     materials.add(material);
     return material;
   }
@@ -133,6 +134,12 @@ export function createVisualMaterials(THREE, renderer) {
   const concrete = standard({ color: '#d2d3d0', map: concreteMap, bumpMap: concreteBump, bumpScale: .003, metalness: 0, roughness: .95 });
 
   return {
+    metal(color, galvanized = false) {
+      const value = color?.isColor ? color : new THREE.Color(color);
+      const key = value.getHexString() + (galvanized ? '-zinc' : '-steel');
+      if (!metals.has(key)) metals.set(key, standard({ color: value, metalness: galvanized ? .65 : .72, roughness: galvanized ? .5 : .39, envMapIntensity: .8 }));
+      return metals.get(key);
+    },
     paint(color) {
       const value = color?.isColor ? color : new THREE.Color(color);
       const key = value.getHexString();
@@ -146,6 +153,9 @@ export function createVisualMaterials(THREE, renderer) {
           envMap: environment,
           envMapIntensity: .72,
           side: THREE.DoubleSide,
+          polygonOffset: true,
+          polygonOffsetFactor: 1,
+          polygonOffsetUnits: 1,
         });
         painted.set(key, material);
         materials.add(material);

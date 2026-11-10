@@ -1,4 +1,4 @@
-import {BigbagScene,STAGES} from './scene.js?v=ensambles';
+import {BigbagScene,STAGES} from './scene.js?v=detalle';
 const $=id=>document.getElementById(id);
 let progress=.42,playing=false,last=0,frame,ready=false;
 const duration=95000;
@@ -17,6 +17,7 @@ $('sackSize').addEventListener('change',e=>{if(ready)paint(BigbagScene.setBagSiz
 const viewLabels={iso:'CONJUNTO GENERAL',front:'VISTA FRONTAL',back:'ACCESO A PLATAFORMA',bagging:'ENSACADO MANUAL'};
 function setView(name){if(!ready)return;BigbagScene.setView(name);$('viewName').textContent=viewLabels[name];document.querySelectorAll('[data-view]').forEach(b=>{const on=b.dataset.view===name;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});}
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));$('fit').addEventListener('click',()=>setView('iso'));
+$('edges').addEventListener('click',()=>{const visible=$('edges').getAttribute('aria-pressed')!=='true';$('edges').setAttribute('aria-pressed',String(visible));$('edges').classList.toggle('active',visible);BigbagScene.setEdges(visible);});
 $('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await $('viewer').requestFullscreen();}catch{}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
 try{
